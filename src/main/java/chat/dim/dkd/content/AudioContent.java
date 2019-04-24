@@ -1,6 +1,6 @@
 package chat.dim.dkd.content;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Audio message: {
@@ -19,7 +19,7 @@ public class AudioContent extends FileContent {
         super(content);
     }
 
-    public AudioContent(HashMap<String, Object> dictionary) {
+    public AudioContent(Map<String, Object> dictionary) {
         super(dictionary);
     }
 

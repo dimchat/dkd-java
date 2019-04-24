@@ -1,8 +1,6 @@
 package chat.dim.dkd.content;
 
-import chat.dim.dkd.Utils;
-
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  File message: {
@@ -20,7 +18,7 @@ public class FileContent extends Content {
     public byte[] data;
     public String filename;
 
-    public HashMap<String, Object> password;
+    public Map<String, Object> password;
 
     public FileContent(FileContent content) {
         super(content);
@@ -30,12 +28,13 @@ public class FileContent extends Content {
         this.password = content.password;
     }
 
-    public FileContent(HashMap<String, Object> dictionary) {
+    @SuppressWarnings("unchecked")
+    public FileContent(Map<String, Object> dictionary) {
         super(dictionary);
         this.url = (String) dictionary.get("URL");
         this.data = null; // NOTICE: file data should not exists here
         this.filename = (String) dictionary.get("filename");
-        this.password = (HashMap<String, Object>) dictionary.get("password");
+        this.password = (Map<String, Object>) dictionary.get("password");
     }
 
     public FileContent(int type, byte[] data, String filename) {
@@ -65,7 +64,7 @@ public class FileContent extends Content {
         this.dictionary.put("filename", filename);
     }
 
-    public void setPassword(HashMap<String, Object> password) {
+    public void setPassword(Map<String, Object> password) {
         this.password = password;
         this.dictionary.put("password", password);
     }

@@ -3,6 +3,7 @@ package chat.dim.dkd.content;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Content {
@@ -76,7 +77,7 @@ public class Content {
 
     //-------- message types end --------
 
-    protected final HashMap<String, Object> dictionary;
+    protected final Map<String, Object> dictionary;
 
     // message type: text, image, ...
     public final int type;
@@ -93,7 +94,7 @@ public class Content {
         this.group        = content.group;
     }
 
-    public Content(HashMap<String, Object> dictionary) {
+    public Content(Map<String, Object> dictionary) {
         super();
         this.dictionary   = dictionary;
         this.type         = (int) dictionary.get("type");
@@ -103,11 +104,11 @@ public class Content {
 
     public Content(int type) {
         super();
+
         long sn = randomNumber();
-        HashMap<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("type", type);
         map.put("sn", sn);
-
         this.dictionary   = map;
         this.type         = type;
         this.serialNumber = sn;
@@ -118,15 +119,11 @@ public class Content {
         return dictionary.toString();
     }
 
-    public HashMap<String, Object> toDictionary() {
+    public Map<String, Object> toDictionary() {
         return dictionary;
     }
 
-    public static int getType(HashMap<String, Object> dictionary) {
-        return (int) dictionary.get("type");
-    }
-
-    public static long randomNumber() {
+    private static long randomNumber() {
         Random random = new Random();
         long sn = random.nextInt();
         if (sn < 0) {
@@ -144,23 +141,24 @@ public class Content {
         }
     }
 
-    //-------- Runtime begin --------
+    //-------- Runtime --------
 
-    private static HashMap<Integer, Class> contentClasses = new HashMap<>();
+    private static Map<Integer, Class> contentClasses = new HashMap<>();
 
     public static void register(Integer type, Class clazz) {
         // TODO: check whether clazz is subclass of Content
         contentClasses.put(type, clazz);
     }
 
-    private static Content createInstance(HashMap<String, Object> dictionary) throws ClassNotFoundException {
-        int type = getType(dictionary);
+    @SuppressWarnings("unchecked")
+    private static Content createInstance(Map<String, Object> dictionary) throws ClassNotFoundException {
+        int type = (int) dictionary.get("type");
         Class clazz = contentClasses.get(type);
         if (clazz == null) {
             throw new ClassNotFoundException("unknown message type:" + type);
         }
         try {
-            Constructor constructor = clazz.getConstructor(HashMap.class);
+            Constructor constructor = clazz.getConstructor(Map.class);
             return (Content) constructor.newInstance(dictionary);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
@@ -168,14 +166,15 @@ public class Content {
         }
     }
 
-    public static Content create(Object object) throws ClassNotFoundException {
+    @SuppressWarnings("unchecked")
+    public static Content getInstance(Object object) throws ClassNotFoundException {
         if (object == null) {
             return null;
         }
         if (object instanceof Content) {
             return (Content) object;
-        } else if (object instanceof HashMap) {
-            return createInstance((HashMap<String, Object>) object);
+        } else if (object instanceof Map) {
+            return createInstance((Map<String, Object>) object);
         } else {
             throw new IllegalArgumentException("unknown message content:" + object);
         }
@@ -202,17 +201,5 @@ public class Content {
         // Forward
         register(FORWARD, ForwardContent.class);
         // ...
-    }
-
-    //-------- Runtime end --------
-
-    public static void main(String args[]) throws ClassNotFoundException {
-        TextContent text = new TextContent("Hello world!");
-        System.out.println("text:" + text);
-
-        HashMap map = text.toDictionary();
-        System.out.println("dictionary:" + map);
-        Content content = Content.create(map);
-        System.out.println("content:" + content);
     }
 }

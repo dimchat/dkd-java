@@ -2,7 +2,7 @@ package chat.dim.dkd.content;
 
 import chat.dim.dkd.Utils;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Web Page message: {
@@ -30,16 +30,16 @@ public class PageContent extends Content {
         this.icon  = content.icon;
     }
 
-    public PageContent(HashMap<String, Object> dictionary) {
+    public PageContent(Map<String, Object> dictionary) {
         super(dictionary);
         this.url   = (String) dictionary.get("URL");
         this.title = (String) dictionary.get("title");
         this.desc  = (String) dictionary.get("desc");
         Object icon = dictionary.get("icon");
-        if (icon != null) {
-            this.icon = Utils.base64Decode((String) icon);
-        } else {
+        if (icon == null) {
             this.icon = null;
+        } else {
+            this.icon = Utils.base64Decode((String) icon);
         }
     }
 
@@ -68,10 +68,10 @@ public class PageContent extends Content {
 
     public void setIcon(byte[] icon) {
         this.icon = icon;
-        if (icon != null && icon.length > 0) {
-            this.dictionary.put("icon", Utils.base64Encode(icon));
-        } else {
+        if (icon == null) {
             this.dictionary.remove("icon");
+        } else {
+            this.dictionary.put("icon", Utils.base64Encode(icon));
         }
     }
 }

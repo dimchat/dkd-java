@@ -2,7 +2,7 @@ package chat.dim.dkd.content;
 
 import chat.dim.dkd.Utils;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Video message: {
@@ -24,13 +24,13 @@ public class VideoContent extends FileContent {
         this.snapshot = content.snapshot;
     }
 
-    public VideoContent(HashMap<String, Object> dictionary) {
+    public VideoContent(Map<String, Object> dictionary) {
         super(dictionary);
-        String snapshot = (String) dictionary.get("snapshot");
-        if (snapshot != null) {
-            this.snapshot = Utils.base64Decode(snapshot);
-        } else {
+        Object snapshot = dictionary.get("snapshot");
+        if (snapshot == null) {
             this.snapshot = null;
+        } else {
+            this.snapshot = Utils.base64Decode((String) snapshot);
         }
     }
 
@@ -41,10 +41,10 @@ public class VideoContent extends FileContent {
 
     public void setSnapshot(byte[] snapshot) {
         this.snapshot = snapshot;
-        if (snapshot != null && snapshot.length > 0) {
-            this.dictionary.put("snapshot", Utils.base64Encode(snapshot));
-        } else {
+        if (snapshot == null) {
             this.dictionary.remove("snapshot");
+        } else {
+            this.dictionary.put("snapshot", Utils.base64Encode(snapshot));
         }
     }
 }

@@ -1,7 +1,7 @@
 package chat.dim.dkd;
 
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Instant Message signed by an asymmetric key
@@ -28,7 +28,7 @@ public class ReliableMessage extends SecureMessage {
     public IReliableMessageDelegate delegate;
 
     // Extends for the first message package of 'Handshake' protocol
-    public HashMap<String, Object> meta;
+    public Map<String, Object> meta;
 
     public ReliableMessage(ReliableMessage message) {
         super(message);
@@ -38,7 +38,8 @@ public class ReliableMessage extends SecureMessage {
         this.meta = message.meta;
     }
 
-    public ReliableMessage(HashMap<String, Object> dictionary) throws NoSuchFieldException {
+    @SuppressWarnings("unchecked")
+    public ReliableMessage(Map<String, Object> dictionary) throws NoSuchFieldException {
         super(dictionary);
         // signature for encrypted data
         Object signature = dictionary.get("signature");
@@ -47,7 +48,7 @@ public class ReliableMessage extends SecureMessage {
         }
         this.signature = Utils.base64Decode((String) signature);
         // meta
-        this.meta = (HashMap<String, Object>) dictionary.get("meta");
+        this.meta = (Map<String, Object>) dictionary.get("meta");
     }
 
     public ReliableMessage(byte[] signature, byte[] data, byte[] key, Envelope envelope) {
@@ -55,9 +56,22 @@ public class ReliableMessage extends SecureMessage {
         this.signature = signature;
     }
 
-    public ReliableMessage(byte[] signature, byte[] data, HashMap<String, String> keys, Envelope envelope) {
+    public ReliableMessage(byte[] signature, byte[] data, Map<String, String> keys, Envelope envelope) {
         super(data, keys, envelope);
         this.signature = signature;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static ReliableMessage getInstance(Object object) throws NoSuchFieldException {
+        if (object == null) {
+            return null;
+        } else if (object instanceof ReliableMessage) {
+            return (ReliableMessage) object;
+        } else if (object instanceof Map) {
+            return new ReliableMessage((Map<String, Object>) object);
+        } else  {
+            throw new IllegalArgumentException("unknown message:" + object);
+        }
     }
 
     /**
@@ -81,7 +95,7 @@ public class ReliableMessage extends SecureMessage {
             throw new RuntimeException("message signature not match:" + this);
         }
         // 2. pack message
-        HashMap<String, Object> map = new HashMap<>(dictionary);
+        Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("signature");
         try {
             return new SecureMessage(map);

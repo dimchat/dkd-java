@@ -2,6 +2,7 @@ package chat.dim.dkd;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Common Message
@@ -17,7 +18,7 @@ import java.util.HashMap;
  */
 public class Message {
 
-    protected final HashMap<String, Object> dictionary;
+    protected final Map<String, Object> dictionary;
 
     public final Envelope envelope;
 
@@ -27,11 +28,11 @@ public class Message {
         this.envelope   = message.envelope;
     }
 
-    public Message(HashMap<String, Object> dictionary) {
+    public Message(Map<String, Object> dictionary) {
         super();
         this.dictionary = dictionary;
 
-        HashMap<String, Object> env = new HashMap<>();
+        Map<String, Object> env = new HashMap<>();
         env.put("sender", dictionary.get("sender"));
         env.put("receiver", dictionary.get("receiver"));
         env.put("time", dictionary.get("time"));
@@ -40,7 +41,7 @@ public class Message {
 
     public Message(Envelope envelope) {
         super();
-        this.dictionary = (HashMap<String, Object>) envelope.toDictionary().clone();
+        this.dictionary = new HashMap<>(envelope.toDictionary());
         this.envelope = envelope;
     }
 
@@ -56,7 +57,7 @@ public class Message {
         return dictionary.toString();
     }
 
-    public HashMap<String, Object> toDictionary() {
+    public Map<String, Object> toDictionary() {
         return dictionary;
     }
 }

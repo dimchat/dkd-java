@@ -2,6 +2,7 @@ package chat.dim.dkd;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Envelope for message
@@ -14,7 +15,7 @@ import java.util.HashMap;
  */
 public class Envelope {
 
-    private final HashMap<String, Object> dictionary;
+    private final Map<String, Object> dictionary;
 
     public final String sender;
     public final String receiver;
@@ -28,7 +29,7 @@ public class Envelope {
         this.time       = envelope.time;
     }
 
-    public Envelope(HashMap<String, Object> dictionary) {
+    public Envelope(Map<String, Object> dictionary) {
         super();
         this.dictionary = dictionary;
         this.sender     = (String) dictionary.get("sender");
@@ -39,7 +40,7 @@ public class Envelope {
     public Envelope(String sender, String receiver, Date time) {
         super();
 
-        HashMap<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("sender", sender);
         map.put("receiver", receiver);
         map.put("time", getTimestamp(time));
@@ -54,11 +55,24 @@ public class Envelope {
         this(sender, receiver, new Date());
     }
 
+    @SuppressWarnings("unchecked")
+    public static Envelope getInstance(Object object) {
+        if (object == null) {
+            return null;
+        } else if (object instanceof Envelope) {
+            return (Envelope) object;
+        } else if (object instanceof Map) {
+            return new Envelope((Map<String, Object>) object);
+        } else {
+            throw new IllegalArgumentException("unknown meta:" + object);
+        }
+    }
+
     public String toString() {
         return dictionary.toString();
     }
 
-    public HashMap<String, Object> toDictionary() {
+    public Map<String, Object> toDictionary() {
         return dictionary;
     }
 

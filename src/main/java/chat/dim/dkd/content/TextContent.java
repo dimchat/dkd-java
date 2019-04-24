@@ -1,6 +1,6 @@
 package chat.dim.dkd.content;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Text message: {
@@ -19,7 +19,7 @@ public class TextContent extends Content {
         this.text = content.text;
     }
 
-    public TextContent(HashMap<String, Object> dictionary) {
+    public TextContent(Map<String, Object> dictionary) {
         super(dictionary);
         this.text = (String) dictionary.get("text");
     }

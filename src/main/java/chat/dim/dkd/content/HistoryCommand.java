@@ -1,7 +1,7 @@
 package chat.dim.dkd.content;
 
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  History command: {
@@ -33,25 +33,21 @@ public class HistoryCommand extends CommandContent {
     public static final String RESIGN   = "resign";
     //-------- command names end --------
 
-    public Date time;
+    public final Date time;
 
     public HistoryCommand(HistoryCommand content) {
         super(content);
         this.time = content.time;
     }
 
-    public HistoryCommand(HashMap<String, Object> dictionary) {
+    public HistoryCommand(Map<String, Object> dictionary) {
         super(dictionary);
-        this.time = getDate((Long) dictionary.get("time"));
+        this.time = getDate((long) dictionary.get("time"));
     }
 
     public HistoryCommand(String command) {
         super(HISTORY, command);
-        setTime(new Date());
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
+        this.time = new Date();
         this.dictionary.put("time", getTimestamp(time));
     }
 

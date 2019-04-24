@@ -6,6 +6,7 @@ import chat.dim.dkd.content.FileContent;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  Instant Message
@@ -27,23 +28,16 @@ public class InstantMessage extends Message {
 
     public InstantMessage(InstantMessage message) {
         super(message);
-        // content
         this.content = message.content;
     }
 
-    public InstantMessage(HashMap<String, Object> dictionary) throws NoSuchFieldException {
+    public InstantMessage(Map<String, Object> dictionary) throws ClassNotFoundException {
         super(dictionary);
-        // content
-        Object content = dictionary.get("content");
-        if (content == null) {
-            throw new NoSuchFieldException("message content not found:" + dictionary);
-        }
-        this.content = new Content((HashMap<String, Object>) content);
+        this.content = Content.getInstance(dictionary.get("content"));
     }
 
     public InstantMessage(Content content, Envelope envelope) {
         super(envelope);
-        // content
         this.content = content;
         this.dictionary.put("content", content.toDictionary());
     }
@@ -54,6 +48,19 @@ public class InstantMessage extends Message {
 
     public InstantMessage(Content content, String sender, String receiver) {
         this(content, sender, receiver, new Date());
+    }
+
+    @SuppressWarnings("unchecked")
+    public static InstantMessage getInstance(Object object) throws ClassNotFoundException {
+        if (object == null) {
+            return null;
+        } else if (object instanceof InstantMessage) {
+            return (InstantMessage) object;
+        } else if (object instanceof Map) {
+            return new InstantMessage((Map<String, Object>) object);
+        } else {
+            throw new IllegalArgumentException("unknown message:" + object);
+        }
     }
 
     /**
@@ -69,9 +76,9 @@ public class InstantMessage extends Message {
      *                      +----------+
      */
 
-    public SecureMessage encrypt(HashMap<String, Object> password) {
+    public SecureMessage encrypt(Map<String, Object> password) {
         // 1. encrypt 'content' to 'data'
-        HashMap<String, Object> map = encryptContent(password);
+        Map<String, Object> map = encryptContent(password);
 
         // 2. encrypt password to 'key'
         byte[] key = delegate.encryptKey(this, password, envelope.receiver);
@@ -90,18 +97,16 @@ public class InstantMessage extends Message {
         }
     }
 
-    public SecureMessage encrypt(HashMap<String, Object> password, List<String> members) throws NoSuchFieldException {
+    public SecureMessage encrypt(Map<String, Object> password, List<String> members) throws NoSuchFieldException {
         // 1. encrypt 'content' to 'data'
-        HashMap<String, Object> map = encryptContent(password);
+        Map<String, Object> map = encryptContent(password);
 
         // 2. encrypt password to 'keys'
-        HashMap<String, String> keys = new HashMap<>();
+        Map<String, String> keys = new HashMap<>();
         byte[] key;
         for (String ID: members) {
             key = delegate.encryptKey(this, password, ID);
-            if (key == null) {
-                // NOTICE: reused key
-            } else {
+            if (key != null) {
                 keys.put(ID, Utils.base64Encode(key));
             }
         }
@@ -124,7 +129,7 @@ public class InstantMessage extends Message {
         }
     }
 
-    private HashMap<String, Object> encryptContent(HashMap<String, Object> password) {
+    private Map<String, Object> encryptContent(Map<String, Object> password) {
         Content result = content;
 
         // 1. check attachment for File/Image/Audio/Video message content
@@ -153,7 +158,7 @@ public class InstantMessage extends Message {
             throw new NullPointerException("failed to encrypt content with key:" + password);
         }
 
-        HashMap<String, Object> map = new HashMap<>(dictionary);
+        Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");
         map.put("data", Utils.base64Encode(data));
         return map;

@@ -3,8 +3,10 @@ package chat.dim.dkd;
 import chat.dim.dkd.content.Content;
 import chat.dim.dkd.content.FileContent;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *  Secure Message
@@ -27,7 +29,7 @@ public class SecureMessage extends Message {
 
     public final byte[] data;
     public final byte[] key;
-    public final HashMap<String, String> keys;
+    public final Map<String, String> keys;
 
     public ISecureMessageDelegate delegate;
 
@@ -41,7 +43,8 @@ public class SecureMessage extends Message {
         this.keys = message.keys;
     }
 
-    public SecureMessage(HashMap<String, Object> dictionary) throws NoSuchFieldException {
+    @SuppressWarnings("unchecked")
+    public SecureMessage(Map<String, Object> dictionary) throws NoSuchFieldException {
         super(dictionary);
         // encrypted data
         Object data = dictionary.get("data");
@@ -61,7 +64,7 @@ public class SecureMessage extends Message {
         if (keys == null) {
             this.keys = null;
         } else {
-            this.keys = (HashMap<String, String>) keys;
+            this.keys = (Map<String, String>) keys;
         }
     }
 
@@ -79,7 +82,7 @@ public class SecureMessage extends Message {
         this.keys = null;
     }
 
-    public SecureMessage(byte[] data, HashMap<String, String> keys, Envelope envelope) {
+    public SecureMessage(byte[] data, Map<String, String> keys, Envelope envelope) {
         super(envelope);
         // encrypted data
         this.data = data;
@@ -89,6 +92,102 @@ public class SecureMessage extends Message {
         // keys for group message
         this.keys = keys;
         this.dictionary.put("keys", keys);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static SecureMessage getInstance(Object object) throws NoSuchFieldException {
+        if (object == null) {
+            return null;
+        } else if (object instanceof SecureMessage) {
+            return (SecureMessage) object;
+        } else if (object instanceof Map) {
+            return new SecureMessage((Map<String, Object>) object);
+        } else  {
+            throw new IllegalArgumentException("unknown message:" + object);
+        }
+    }
+
+    /**
+     *  Group ID
+     *      when a group message was splitted/trimmed to a single message
+     *      the 'receiver' will be changed to a member ID, and
+     *      the group ID will be saved as 'group'.
+     */
+    public String getGroup() {
+        return (String) dictionary.get("group");
+    }
+
+    public void setGroup(String ID) {
+        dictionary.put("group", ID);
+    }
+
+    /**
+     *  Split the group message to single person messages
+     *
+     *  @param members - group members
+     *  @return secure/reliable message(s)
+     */
+    public List<SecureMessage> split(List<String> members) {
+        List<SecureMessage> messages = new ArrayList<>(members.size());
+
+        Map<String, Object> msg = new HashMap<>(dictionary);
+        // NOTICE: this help the receiver knows the group ID when the group message separated to multi-messages
+        //         if don't want the others know you are the group members, modify it
+        msg.put("group", envelope.receiver);
+
+        // keys
+        Map<String, String> keys = this.keys;
+        if (keys == null) {
+            keys = new HashMap<>();
+        }
+
+        String base64;
+        for (String member : members) {
+            // 1. change receiver to the group member
+            msg.put("receiver", member);
+
+            // 2. get encrypted key
+            base64 = keys.get(member);
+            if (base64 == null) {
+                msg.remove("key");
+            } else {
+                msg.put("key", base64);
+            }
+
+            // 3. repack message
+            try {
+                messages.add(new SecureMessage(msg));
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return messages;
+    }
+
+    /**
+     *  Trim the group message for a member
+     *
+     * @param member - group member ID
+     * @return SecureMessage
+     */
+    public SecureMessage trim(String member) {
+        Map<String, Object> msg = new HashMap<>(dictionary);
+        // get key from keys
+        if (keys != null) {
+            String base64 = keys.get(member);
+            if (base64 != null) {
+                msg.put("key", base64);
+            }
+            msg.remove("keys");
+        }
+        // repack
+        try {
+            return new SecureMessage(msg);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -148,7 +247,7 @@ public class SecureMessage extends Message {
 
     private InstantMessage decryptData(byte[] key, String sender, String receiver) {
         // 1. decrypt 'key' to symmetric key
-        HashMap<String, Object> password = delegate.decryptKey(this, key, sender, receiver);
+        Map<String, Object> password = delegate.decryptKey(this, key, sender, receiver);
         if (password == null) {
             throw new NullPointerException("failed to decrypt symmetric key:" + this);
         }
@@ -176,13 +275,13 @@ public class SecureMessage extends Message {
         }
 
         // 4. pack message
-        HashMap<String, Object> map = new HashMap<>(dictionary);
+        Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("key");
         map.remove("data");
         map.put("content", content.toDictionary());
         try {
             return new InstantMessage(map);
-        } catch (NoSuchFieldException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }
@@ -209,7 +308,7 @@ public class SecureMessage extends Message {
             throw new NullPointerException("failed to sign message:" + this);
         }
         // 2. pack message
-        HashMap<String, Object> map = new HashMap<>(dictionary);
+        Map<String, Object> map = new HashMap<>(dictionary);
         map.put("signature", Utils.base64Encode(signature));
         try {
             return new ReliableMessage(map);

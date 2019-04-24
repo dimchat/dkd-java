@@ -2,7 +2,7 @@ package chat.dim.dkd.content;
 
 import chat.dim.dkd.ReliableMessage;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Top-Secret message: {
@@ -21,14 +21,9 @@ public class ForwardContent extends Content {
         this.forwardMessage = content.forwardMessage;
     }
 
-    public ForwardContent(HashMap<String, Object> dictionary) throws NoSuchFieldException {
+    public ForwardContent(Map<String, Object> dictionary) throws NoSuchFieldException {
         super(dictionary);
-        // top-secret message to forward
-        Object forward = dictionary.get("forward");
-        if (forward == null) {
-            throw new NoSuchFieldException("forward message not found:" + dictionary);
-        }
-        this.forwardMessage = new ReliableMessage((HashMap<String, Object>) forward);
+        this.forwardMessage = ReliableMessage.getInstance(dictionary.get("forward"));
     }
 
     public ForwardContent(ReliableMessage message) {

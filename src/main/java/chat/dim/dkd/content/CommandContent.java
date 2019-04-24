@@ -1,6 +1,6 @@
 package chat.dim.dkd.content;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Command message: {
@@ -21,29 +21,25 @@ public class CommandContent extends Content {
     public static final String PROFILE   = "profile";
     //-------- command names end --------
 
-    public String command;
+    public final String command;
 
     public CommandContent(CommandContent content) {
         super(content);
         this.command = content.command;
     }
 
-    public CommandContent(HashMap<String, Object> dictionary) {
+    public CommandContent(Map<String, Object> dictionary) {
         super(dictionary);
         this.command = (String) dictionary.get("command");
     }
 
     public CommandContent(int type, String command) {
         super(type);
-        setCommand(command);
+        this.command = command;
+        this.dictionary.put("command", command);
     }
 
     public CommandContent(String command) {
         this(COMMAMD, command);
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
-        this.dictionary.put("command", command);
     }
 }
