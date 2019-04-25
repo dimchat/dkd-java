@@ -14,26 +14,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/IInstantMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/IInstantMessageDelegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ISecureMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ISecureMessageDelegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/AudioContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/AudioContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/CommandContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/CommandContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/FileContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/FileContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ForwardContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ForwardContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/HistoryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/HistoryCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ImageContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ImageContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/PageContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/PageContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/TextContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/TextContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/VideoContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/VideoContent.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -248,7 +228,7 @@
       <file leaf-file-name="Envelope.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="582">
+            <state relative-caret-position="825">
               <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -1052,7 +1032,7 @@
       <updated>1555927737862</updated>
       <workItem from="1555927743595" duration="23689000" />
       <workItem from="1556034008311" duration="17997000" />
-      <workItem from="1556123252784" duration="3357000" />
+      <workItem from="1556123252784" duration="3867000" />
     </task>
     <servers />
   </component>
@@ -1068,11 +1048,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45043000" />
+    <option name="totallyTimeSpent" value="45553000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="87" y="23" width="1455" height="1417" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1082,7 +1061,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25763217" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25763217" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
@@ -1456,7 +1435,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="582">
+        <state relative-caret-position="825">
           <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
