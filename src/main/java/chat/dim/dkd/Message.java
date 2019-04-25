@@ -53,11 +53,15 @@ public class Message {
         this(sender, receiver, new Date());
     }
 
+    public Map<String, Object> toDictionary() {
+        return dictionary;
+    }
+
     public String toString() {
         return dictionary.toString();
     }
 
-    public Map<String, Object> toDictionary() {
-        return dictionary;
+    public String toJSONString() {
+        return Utils.jsonEncode(dictionary);
     }
 }

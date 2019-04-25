@@ -1,5 +1,7 @@
 package chat.dim.dkd.content;
 
+import chat.dim.dkd.Utils;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -102,6 +104,10 @@ public class Content {
         this.group        = (String) dictionary.get("group");
     }
 
+    public Content(String jsonString) {
+        this(Utils.jsonDecode(jsonString));
+    }
+
     public Content(int type) {
         super();
 
@@ -115,12 +121,16 @@ public class Content {
         this.group        = null;
     }
 
+    public Map<String, Object> toDictionary() {
+        return dictionary;
+    }
+
     public String toString() {
         return dictionary.toString();
     }
 
-    public Map<String, Object> toDictionary() {
-        return dictionary;
+    public String toJSONString() {
+        return Utils.jsonEncode(dictionary);
     }
 
     private static long randomNumber() {
@@ -170,11 +180,12 @@ public class Content {
     public static Content getInstance(Object object) throws ClassNotFoundException {
         if (object == null) {
             return null;
-        }
-        if (object instanceof Content) {
+        } else if (object instanceof Content) {
             return (Content) object;
         } else if (object instanceof Map) {
             return createInstance((Map<String, Object>) object);
+        } else if (object instanceof String) {
+            return new Content((String) object);
         } else {
             throw new IllegalArgumentException("unknown message content:" + object);
         }

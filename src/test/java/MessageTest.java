@@ -1,9 +1,9 @@
 import chat.dim.dkd.content.Content;
 import chat.dim.dkd.content.TextContent;
-import junit.framework.TestCase;
-import org.junit.Test;
 
 import java.util.Map;
+import junit.framework.TestCase;
+import org.junit.Test;
 
 public class MessageTest extends TestCase {
 

@@ -51,6 +51,10 @@ public class ReliableMessage extends SecureMessage {
         this.meta = (Map<String, Object>) dictionary.get("meta");
     }
 
+    public ReliableMessage(String jsonString) throws NoSuchFieldException {
+        this(Utils.jsonDecode(jsonString));
+    }
+
     public ReliableMessage(byte[] signature, byte[] data, byte[] key, Envelope envelope) {
         super(data, key, envelope);
         this.signature = signature;
@@ -69,6 +73,8 @@ public class ReliableMessage extends SecureMessage {
             return (ReliableMessage) object;
         } else if (object instanceof Map) {
             return new ReliableMessage((Map<String, Object>) object);
+        } else if (object instanceof String) {
+            return new ReliableMessage((String) object);
         } else  {
             throw new IllegalArgumentException("unknown message:" + object);
         }

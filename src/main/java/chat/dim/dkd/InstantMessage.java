@@ -36,6 +36,10 @@ public class InstantMessage extends Message {
         this.content = Content.getInstance(dictionary.get("content"));
     }
 
+    public InstantMessage(String jsonString) throws ClassNotFoundException {
+        this(Utils.jsonDecode(jsonString));
+    }
+
     public InstantMessage(Content content, Envelope envelope) {
         super(envelope);
         this.content = content;
@@ -58,6 +62,8 @@ public class InstantMessage extends Message {
             return (InstantMessage) object;
         } else if (object instanceof Map) {
             return new InstantMessage((Map<String, Object>) object);
+        } else if (object instanceof String) {
+            return new InstantMessage((String) object);
         } else {
             throw new IllegalArgumentException("unknown message:" + object);
         }

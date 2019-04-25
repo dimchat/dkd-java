@@ -37,6 +37,10 @@ public class Envelope {
         this.time       = getDate((Long) dictionary.get("time"));
     }
 
+    public Envelope(String jsonString) {
+        this(Utils.jsonDecode(jsonString));
+    }
+
     public Envelope(String sender, String receiver, Date time) {
         super();
 
@@ -63,6 +67,8 @@ public class Envelope {
             return (Envelope) object;
         } else if (object instanceof Map) {
             return new Envelope((Map<String, Object>) object);
+        } else if (object instanceof String) {
+            return new Envelope((String) object);
         } else {
             throw new IllegalArgumentException("unknown meta:" + object);
         }

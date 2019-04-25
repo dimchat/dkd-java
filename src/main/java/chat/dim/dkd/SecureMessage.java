@@ -68,6 +68,10 @@ public class SecureMessage extends Message {
         }
     }
 
+    public SecureMessage(String jsonString) throws NoSuchFieldException {
+        this(Utils.jsonDecode(jsonString));
+    }
+
     public SecureMessage(byte[] data, byte[] key, Envelope envelope) {
         super(envelope);
         // encrypted data
@@ -102,6 +106,8 @@ public class SecureMessage extends Message {
             return (SecureMessage) object;
         } else if (object instanceof Map) {
             return new SecureMessage((Map<String, Object>) object);
+        } else if (object instanceof String) {
+            return new SecureMessage((String) object);
         } else  {
             throw new IllegalArgumentException("unknown message:" + object);
         }
