@@ -27,6 +27,8 @@ public class HistoryCommand extends CommandContent {
     public static final String EXPEL    = "expel";
     public static final String JOIN     = "join";
     public static final String QUIT     = "quit";
+    public static final String QUERY    = "query";
+    public static final String RESET    = "reset";
     // group: administrator/assistant
     public static final String HIRE     = "hire";
     public static final String FIRE     = "fire";
