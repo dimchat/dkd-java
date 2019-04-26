@@ -162,7 +162,11 @@ public class SecureMessage extends Message {
 
             // 3. repack message
             try {
-                messages.add(new SecureMessage(msg));
+                if (msg.containsKey("signature")) {
+                    messages.add(new ReliableMessage(msg));
+                } else {
+                    messages.add(new SecureMessage(msg));
+                }
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             }
@@ -189,7 +193,11 @@ public class SecureMessage extends Message {
         }
         // repack
         try {
-            return new SecureMessage(msg);
+            if (msg.containsKey("signature")) {
+                return new ReliableMessage(msg);
+            } else {
+                return new SecureMessage(msg);
+            }
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
             return null;
@@ -248,7 +256,7 @@ public class SecureMessage extends Message {
                 key = Utils.base64Decode(base64);
             }
         }
-        return decryptData(key, sender, receiver);
+        return decryptData(key, sender, group);
     }
 
     private InstantMessage decryptData(byte[] key, String sender, String receiver) {
