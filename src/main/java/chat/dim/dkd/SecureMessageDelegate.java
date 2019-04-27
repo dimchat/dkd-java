@@ -4,7 +4,7 @@ import chat.dim.dkd.content.Content;
 
 import java.util.Map;
 
-public interface ISecureMessageDelegate {
+public interface SecureMessageDelegate {
 
     /**
      *  Decrypt key data to a symmetric key with receiver's private key

@@ -24,12 +24,7 @@ public class InstantMessage extends Message {
 
     public final Content content;
 
-    public IInstantMessageDelegate delegate;
-
-    public InstantMessage(InstantMessage message) {
-        super(message);
-        this.content = message.content;
-    }
+    public InstantMessageDelegate delegate;
 
     public InstantMessage(Map<String, Object> dictionary) throws ClassNotFoundException {
         super(dictionary);
@@ -43,7 +38,7 @@ public class InstantMessage extends Message {
     public InstantMessage(Content content, Envelope envelope) {
         super(envelope);
         this.content = content;
-        this.dictionary.put("content", content.toDictionary());
+        dictionary.put("content", content);
     }
 
     public InstantMessage(Content content, String sender, String receiver, Date time) {
@@ -144,7 +139,7 @@ public class InstantMessage extends Message {
             case Content.AUDIO:
             case Content.VIDEO:
             case Content.FILE: {
-                FileContent file = new FileContent(content.toDictionary());
+                FileContent file = new FileContent(content);
                 String url = delegate.uploadFileData(this, file.data, file.filename, password);
                 if (url != null) {
                     file.setUrl(url);

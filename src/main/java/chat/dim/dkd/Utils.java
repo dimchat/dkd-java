@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Utils {
 
-    public static String jsonEncode(Map<String, Object> dictionary) {
-        return JSON.toJSONString(dictionary);
+    public static String jsonEncode(Object container) {
+        return JSON.toJSONString(container);
     }
 
     public static Map<String, Object> jsonDecode(String jsonString) {

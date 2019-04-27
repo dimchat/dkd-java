@@ -4,7 +4,7 @@ import chat.dim.dkd.content.Content;
 
 import java.util.Map;
 
-public interface IInstantMessageDelegate {
+public interface InstantMessageDelegate {
 
     /**
      *  Upload the message.content.data to CDN and return the URL

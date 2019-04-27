@@ -29,6 +29,6 @@ public class ForwardContent extends Content {
     public ForwardContent(ReliableMessage message) {
         super(FORWARD);
         this.forwardMessage = message;
-        this.dictionary.put("forward", message.toDictionary());
+        this.dictionary.put("forward", message);
     }
 }

@@ -25,28 +25,20 @@ public class ReliableMessage extends SecureMessage {
 
     public final byte[] signature;
 
-    public IReliableMessageDelegate delegate;
+    public ReliableMessageDelegate delegate;
 
     // Extends for the first message package of 'Handshake' protocol
     public Map<String, Object> meta;
-
-    public ReliableMessage(ReliableMessage message) {
-        super(message);
-        // signature for encrypted data
-        this.signature = message.signature;
-        // meta
-        this.meta = message.meta;
-    }
 
     @SuppressWarnings("unchecked")
     public ReliableMessage(Map<String, Object> dictionary) throws NoSuchFieldException {
         super(dictionary);
         // signature for encrypted data
-        Object signature = dictionary.get("signature");
+        String signature = (String) dictionary.get("signature");
         if (signature == null) {
             throw new NoSuchFieldException("signature not found:" + dictionary);
         }
-        this.signature = Utils.base64Decode((String) signature);
+        this.signature = Utils.base64Decode(signature);
         // meta
         this.meta = (Map<String, Object>) dictionary.get("meta");
     }

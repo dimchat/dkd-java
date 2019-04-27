@@ -13,28 +13,17 @@ import java.util.Map;
  *          time     : 123
  *      }
  */
-public class Envelope {
-
-    private final Map<String, Object> dictionary;
+public class Envelope extends Dictionary {
 
     public final String sender;
     public final String receiver;
     public final Date time;
 
-    public Envelope(Envelope envelope) {
-        super();
-        this.dictionary = envelope.dictionary;
-        this.sender     = envelope.sender;
-        this.receiver   = envelope.receiver;
-        this.time       = envelope.time;
-    }
-
     public Envelope(Map<String, Object> dictionary) {
-        super();
-        this.dictionary = dictionary;
-        this.sender     = (String) dictionary.get("sender");
-        this.receiver   = (String) dictionary.get("receiver");
-        this.time       = getDate((Long) dictionary.get("time"));
+        super(dictionary);
+        this.sender   = (String) dictionary.get("sender");
+        this.receiver = (String) dictionary.get("receiver");
+        this.time     = getTime(dictionary);
     }
 
     public Envelope(String jsonString) {
@@ -43,20 +32,25 @@ public class Envelope {
 
     public Envelope(String sender, String receiver, Date time) {
         super();
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("sender", sender);
-        map.put("receiver", receiver);
-        map.put("time", getTimestamp(time));
-
-        this.dictionary = map;
-        this.sender     = sender;
-        this.receiver   = receiver;
-        this.time       = time;
+        this.sender   = sender;
+        this.receiver = receiver;
+        this.time     = time;
+        dictionary.put("sender", sender);
+        dictionary.put("receiver", receiver);
+        dictionary.put("time", getTimestamp(time));
     }
 
     public Envelope(String sender, String receiver) {
         this(sender, receiver, new Date());
+    }
+
+    private static Date getTime(Map<String, Object> map) {
+        long timestamp = (long) map.get("time");
+        return new Date(timestamp * 1000);
+    }
+
+    private static long getTimestamp(Date time) {
+        return time.getTime() / 1000;
     }
 
     @SuppressWarnings("unchecked")
@@ -72,21 +66,5 @@ public class Envelope {
         } else {
             throw new IllegalArgumentException("unknown meta:" + object);
         }
-    }
-
-    public String toString() {
-        return dictionary.toString();
-    }
-
-    public Map<String, Object> toDictionary() {
-        return dictionary;
-    }
-
-    private long getTimestamp(Date time) {
-        return time.getTime() / 1000;
-    }
-
-    private Date getDate(long timestamp) {
-        return new Date(timestamp * 1000);
     }
 }

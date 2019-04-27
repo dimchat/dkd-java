@@ -16,22 +16,13 @@ import java.util.Map;
  *          ...
  *      }
  */
-public class Message {
-
-    protected final Map<String, Object> dictionary;
+public class Message extends Dictionary {
 
     public final Envelope envelope;
 
-    public Message(Message message) {
-        super();
-        this.dictionary = message.dictionary;
-        this.envelope   = message.envelope;
-    }
-
     public Message(Map<String, Object> dictionary) {
-        super();
-        this.dictionary = dictionary;
-
+        super(dictionary);
+        // build envelope
         Map<String, Object> env = new HashMap<>();
         env.put("sender", dictionary.get("sender"));
         env.put("receiver", dictionary.get("receiver"));
@@ -41,8 +32,11 @@ public class Message {
 
     public Message(Envelope envelope) {
         super();
-        this.dictionary = new HashMap<>(envelope.toDictionary());
         this.envelope = envelope;
+        // copy values from envelope
+        dictionary.put("sender", envelope.sender);
+        dictionary.put("receiver", envelope.receiver);
+        dictionary.put("time", envelope.time);
     }
 
     public Message(String sender, String receiver, Date time) {
@@ -51,17 +45,5 @@ public class Message {
 
     public Message(String sender, String receiver) {
         this(sender, receiver, new Date());
-    }
-
-    public Map<String, Object> toDictionary() {
-        return dictionary;
-    }
-
-    public String toString() {
-        return dictionary.toString();
-    }
-
-    public String toJSONString() {
-        return Utils.jsonEncode(dictionary);
     }
 }

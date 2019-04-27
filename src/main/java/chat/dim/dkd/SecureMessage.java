@@ -31,17 +31,7 @@ public class SecureMessage extends Message {
     public final byte[] key;
     public final Map<String, String> keys;
 
-    public ISecureMessageDelegate delegate;
-
-    public SecureMessage(SecureMessage message) {
-        super(message);
-        // encrypted data
-        this.data = message.data;
-        // decrypt key
-        this.key = message.key;
-        // keys for group message
-        this.keys = message.keys;
-    }
+    public SecureMessageDelegate delegate;
 
     @SuppressWarnings("unchecked")
     public SecureMessage(Map<String, Object> dictionary) throws NoSuchFieldException {
@@ -278,7 +268,7 @@ public class SecureMessage extends Message {
             case Content.AUDIO:
             case Content.VIDEO:
             case Content.FILE: {
-                FileContent file = new FileContent(content.toDictionary());
+                FileContent file = new FileContent(content);
                 file.setPassword(password);
                 content = file;
                 break;
@@ -292,7 +282,7 @@ public class SecureMessage extends Message {
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("key");
         map.remove("data");
-        map.put("content", content.toDictionary());
+        map.put("content", content);
         try {
             return new InstantMessage(map);
         } catch (ClassNotFoundException e) {

@@ -1,6 +1,6 @@
 package chat.dim.dkd;
 
-public interface IReliableMessageDelegate {
+public interface ReliableMessageDelegate {
 
     /**
      *  Verify the message data and signature with sender's public key

@@ -1,5 +1,6 @@
 package chat.dim.dkd.content;
 
+import chat.dim.dkd.Dictionary;
 import chat.dim.dkd.Utils;
 
 import java.lang.reflect.Constructor;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Content {
+public class Content extends Dictionary {
 
     /**
      *  @enum DKDMessageType
@@ -79,8 +80,6 @@ public class Content {
 
     //-------- message types end --------
 
-    protected final Map<String, Object> dictionary;
-
     // message type: text, image, ...
     public final int type;
     // random number to identify message content
@@ -88,19 +87,10 @@ public class Content {
     // Group ID for group message
     public String group;
 
-    public Content(Content content) {
-        super();
-        this.dictionary   = content.dictionary;
-        this.type         = content.type;
-        this.serialNumber = content.serialNumber;
-        this.group        = content.group;
-    }
-
     public Content(Map<String, Object> dictionary) {
-        super();
-        this.dictionary   = dictionary;
+        super(dictionary);
         this.type         = (int) dictionary.get("type");
-        this.serialNumber = (long) dictionary.get("sn");
+        this.serialNumber = Long.valueOf(dictionary.get("sn").toString());
         this.group        = (String) dictionary.get("group");
     }
 
@@ -110,27 +100,11 @@ public class Content {
 
     public Content(int type) {
         super();
-
-        long sn = randomNumber();
-        Map<String, Object> map = new HashMap<>();
-        map.put("type", type);
-        map.put("sn", sn);
-        this.dictionary   = map;
         this.type         = type;
-        this.serialNumber = sn;
+        this.serialNumber = randomNumber();
         this.group        = null;
-    }
-
-    public Map<String, Object> toDictionary() {
-        return dictionary;
-    }
-
-    public String toString() {
-        return dictionary.toString();
-    }
-
-    public String toJSONString() {
-        return Utils.jsonEncode(dictionary);
+        dictionary.put("type", type);
+        dictionary.put("sn", serialNumber);
     }
 
     private static long randomNumber() {
@@ -144,11 +118,7 @@ public class Content {
 
     public void setGroup(String group) {
         this.group = group;
-        if (group != null && group.length() > 0) {
-            dictionary.put("group", group);
-        } else {
-            dictionary.remove("group");
-        }
+        dictionary.put("group", group);
     }
 
     //-------- Runtime --------
