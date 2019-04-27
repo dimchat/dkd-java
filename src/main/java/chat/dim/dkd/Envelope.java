@@ -15,8 +15,8 @@ import java.util.Map;
  */
 public class Envelope extends Dictionary {
 
-    public final String sender;
-    public final String receiver;
+    public final Object sender;
+    public final Object receiver;
     public final Date time;
 
     public Envelope(Map<String, Object> dictionary) {
@@ -30,7 +30,7 @@ public class Envelope extends Dictionary {
         this(Utils.jsonDecode(jsonString));
     }
 
-    public Envelope(String sender, String receiver, Date time) {
+    public Envelope(Object sender, Object receiver, Date time) {
         super();
         this.sender   = sender;
         this.receiver = receiver;
@@ -40,7 +40,7 @@ public class Envelope extends Dictionary {
         dictionary.put("time", getTimestamp(time));
     }
 
-    public Envelope(String sender, String receiver) {
+    public Envelope(Object sender, Object receiver) {
         this(sender, receiver, new Date());
     }
 

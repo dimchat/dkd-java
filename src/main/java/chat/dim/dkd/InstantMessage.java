@@ -41,11 +41,11 @@ public class InstantMessage extends Message {
         dictionary.put("content", content);
     }
 
-    public InstantMessage(Content content, String sender, String receiver, Date time) {
+    public InstantMessage(Content content, Object sender, Object receiver, Date time) {
         this(content, new Envelope(sender, receiver, time));
     }
 
-    public InstantMessage(Content content, String sender, String receiver) {
+    public InstantMessage(Content content, Object sender, Object receiver) {
         this(content, sender, receiver, new Date());
     }
 
@@ -98,17 +98,17 @@ public class InstantMessage extends Message {
         }
     }
 
-    public SecureMessage encrypt(Map<String, Object> password, List<String> members) throws NoSuchFieldException {
+    public SecureMessage encrypt(Map<String, Object> password, List<Object> members) throws NoSuchFieldException {
         // 1. encrypt 'content' to 'data'
         Map<String, Object> map = encryptContent(password);
 
         // 2. encrypt password to 'keys'
-        Map<String, String> keys = new HashMap<>();
+        Map<Object, String> keys = new HashMap<>();
         byte[] key;
-        for (String ID: members) {
-            key = delegate.encryptKey(this, password, ID);
+        for (Object member: members) {
+            key = delegate.encryptKey(this, password, member);
             if (key != null) {
-                keys.put(ID, Utils.base64Encode(key));
+                keys.put(member, Utils.base64Encode(key));
             }
         }
         map.put("keys", keys);

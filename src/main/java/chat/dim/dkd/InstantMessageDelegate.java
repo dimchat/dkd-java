@@ -42,8 +42,8 @@ public interface InstantMessageDelegate {
      *
      *  @param iMsg - instant message object
      *  @param password - symmetric key to be encrypted
-     *  @param receiver - receiver ID string
+     *  @param receiver - receiver ID/string
      *  @return encrypted key data
      */
-    public byte[] encryptKey(InstantMessage iMsg, Map<String, Object> password, String receiver);
+    public byte[] encryptKey(InstantMessage iMsg, Map<String, Object> password, Object receiver);
 }

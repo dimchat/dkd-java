@@ -11,11 +11,11 @@ public interface SecureMessageDelegate {
      *
      *  @param sMsg - secure message object
      *  @param key - encrypted key data
-     *  @param sender - sender/member ID string
-     *  @param receiver - receiver/group ID string
+     *  @param sender - sender ID/string
+     *  @param receiver - receiver(group) ID/string
      *  @return symmetric key
      */
-    public Map<String, Object> decryptKey(SecureMessage sMsg, byte[] key, String sender, String receiver);
+    public Map<String, Object> decryptKey(SecureMessage sMsg, byte[] key, Object sender, Object receiver);
 
     /**
      *  Decrypt encrypted data to message.content with symmetric key
@@ -32,8 +32,8 @@ public interface SecureMessageDelegate {
      *
      *  @param sMsg - secure message object
      *  @param data - encrypted message data
-     *  @param sender - sender ID string
+     *  @param sender - sender ID/string
      *  @return signature
      */
-    public byte[] signData(SecureMessage sMsg, byte[] data, String sender);
+    public byte[] signData(SecureMessage sMsg, byte[] data, Object sender);
 }

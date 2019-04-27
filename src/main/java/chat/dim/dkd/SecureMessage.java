@@ -29,7 +29,7 @@ public class SecureMessage extends Message {
 
     public final byte[] data;
     public final byte[] key;
-    public final Map<String, String> keys;
+    public final Map<Object, String> keys;
 
     public SecureMessageDelegate delegate;
 
@@ -54,7 +54,7 @@ public class SecureMessage extends Message {
         if (keys == null) {
             this.keys = null;
         } else {
-            this.keys = (Map<String, String>) keys;
+            this.keys = (Map<Object, String>) keys;
         }
     }
 
@@ -76,7 +76,7 @@ public class SecureMessage extends Message {
         this.keys = null;
     }
 
-    public SecureMessage(byte[] data, Map<String, String> keys, Envelope envelope) {
+    public SecureMessage(byte[] data, Map<Object, String> keys, Envelope envelope) {
         super(envelope);
         // encrypted data
         this.data = data;
@@ -109,11 +109,11 @@ public class SecureMessage extends Message {
      *      the 'receiver' will be changed to a member ID, and
      *      the group ID will be saved as 'group'.
      */
-    public String getGroup() {
-        return (String) dictionary.get("group");
+    public Object getGroup() {
+        return dictionary.get("group");
     }
 
-    public void setGroup(String ID) {
+    public void setGroup(Object ID) {
         dictionary.put("group", ID);
     }
 
@@ -123,7 +123,7 @@ public class SecureMessage extends Message {
      *  @param members - group members
      *  @return secure/reliable message(s)
      */
-    public List<SecureMessage> split(List<String> members) {
+    public List<SecureMessage> split(List<Object> members) {
         List<SecureMessage> messages = new ArrayList<>(members.size());
 
         Map<String, Object> msg = new HashMap<>(dictionary);
@@ -132,13 +132,13 @@ public class SecureMessage extends Message {
         msg.put("group", envelope.receiver);
 
         // keys
-        Map<String, String> keys = this.keys;
+        Map<Object, String> keys = this.keys;
         if (keys == null) {
             keys = new HashMap<>();
         }
 
         String base64;
-        for (String member : members) {
+        for (Object member : members) {
             // 1. change receiver to the group member
             msg.put("receiver", member);
 
@@ -168,10 +168,10 @@ public class SecureMessage extends Message {
     /**
      *  Trim the group message for a member
      *
-     * @param member - group member ID
+     * @param member - group member ID/string
      * @return SecureMessage
      */
-    public SecureMessage trim(String member) {
+    public SecureMessage trim(Object member) {
         Map<String, Object> msg = new HashMap<>(dictionary);
         // get key from keys
         if (keys != null) {
@@ -211,16 +211,16 @@ public class SecureMessage extends Message {
         if (dictionary.containsKey("group")) {
             throw new RuntimeException("group message must be decrypted with member ID");
         }
-        String sender = envelope.sender;
-        String receiver = envelope.receiver;
+        Object sender = envelope.sender;
+        Object receiver = envelope.receiver;
         return decryptData(key, sender, receiver);
     }
 
-    public InstantMessage decrypt(String member) {
-        String sender = envelope.sender;
-        String receiver = envelope.receiver;
+    public InstantMessage decrypt(Object member) {
+        Object sender = envelope.sender;
+        Object receiver = envelope.receiver;
         // check group
-        String group = (String) dictionary.get("group");
+        Object group = dictionary.get("group");
         if (group == null) {
             // if 'group' not exists, the 'receiver' must be a group ID, and
             // it is not equal to the member of course
@@ -249,7 +249,7 @@ public class SecureMessage extends Message {
         return decryptData(key, sender, group);
     }
 
-    private InstantMessage decryptData(byte[] key, String sender, String receiver) {
+    private InstantMessage decryptData(byte[] key, Object sender, Object receiver) {
         // 1. decrypt 'key' to symmetric key
         Map<String, Object> password = delegate.decryptKey(this, key, sender, receiver);
         if (password == null) {

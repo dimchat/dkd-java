@@ -39,11 +39,11 @@ public class Message extends Dictionary {
         dictionary.put("time", envelope.time);
     }
 
-    public Message(String sender, String receiver, Date time) {
+    public Message(Object sender, Object receiver, Date time) {
         this(new Envelope(sender, receiver, time));
     }
 
-    public Message(String sender, String receiver) {
+    public Message(Object sender, Object receiver) {
         this(sender, receiver, new Date());
     }
 }

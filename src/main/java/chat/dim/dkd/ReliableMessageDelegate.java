@@ -8,8 +8,8 @@ public interface ReliableMessageDelegate {
      *  @param rMsg - reliable message object
      *  @param data - message data
      *  @param signature - signature for message data
-     *  @param sender - sender ID string
+     *  @param sender - sender ID/string
      *  @return YES on signature match
      */
-    public boolean verifyData(ReliableMessage rMsg, byte[] data, byte[] signature, String sender);
+    public boolean verifyData(ReliableMessage rMsg, byte[] data, byte[] signature, Object sender);
 }

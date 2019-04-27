@@ -52,7 +52,7 @@ public class ReliableMessage extends SecureMessage {
         this.signature = signature;
     }
 
-    public ReliableMessage(byte[] signature, byte[] data, Map<String, String> keys, Envelope envelope) {
+    public ReliableMessage(byte[] signature, byte[] data, Map<Object, String> keys, Envelope envelope) {
         super(data, keys, envelope);
         this.signature = signature;
     }
