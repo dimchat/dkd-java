@@ -17,34 +17,35 @@ import java.util.Map;
  */
 public class VideoContent extends FileContent {
 
-    public byte[] snapshot;
-
-    public VideoContent(VideoContent content) {
-        super(content);
-        this.snapshot = content.snapshot;
-    }
+    private byte[] snapshot;
 
     public VideoContent(Map<String, Object> dictionary) {
         super(dictionary);
-        Object snapshot = dictionary.get("snapshot");
-        if (snapshot == null) {
-            this.snapshot = null;
+        String base64 = (String) dictionary.get("snapshot");
+        if (base64 == null) {
+            snapshot = null;
         } else {
-            this.snapshot = Utils.base64Decode((String) snapshot);
+            snapshot = Utils.base64Decode(base64);
         }
     }
 
     public VideoContent(byte[] data, String filename) {
         super(VIDEO, data, filename);
-        this.snapshot = null;
+        snapshot = null;
     }
 
-    public void setSnapshot(byte[] snapshot) {
-        this.snapshot = snapshot;
-        if (snapshot == null) {
-            this.dictionary.remove("snapshot");
+    //-------- setter/getter --------
+
+    public void setSnapshot(byte[] imageData) {
+        snapshot = imageData;
+        if (imageData == null) {
+            dictionary.remove("snapshot");
         } else {
-            this.dictionary.put("snapshot", Utils.base64Encode(snapshot));
+            dictionary.put("snapshot", Utils.base64Encode(imageData));
         }
+    }
+
+    public byte[] getSnapshot() {
+        return snapshot;
     }
 }

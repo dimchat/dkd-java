@@ -12,25 +12,25 @@ import java.util.Map;
  */
 public class TextContent extends Content {
 
-    public String text;
-
-    public TextContent(TextContent content) {
-        super(content);
-        this.text = content.text;
-    }
+    private String text;
 
     public TextContent(Map<String, Object> dictionary) {
         super(dictionary);
-        this.text = (String) dictionary.get("text");
     }
 
-    public TextContent(String text) {
+    public TextContent(String message) {
         super(TEXT);
-        setText(text);
+        setText(message);
     }
 
-    public void setText(String text) {
-        this.text = text;
-        this.dictionary.put("text", text);
+    //-------- setter/getter --------
+
+    public void setText(String message) {
+        text = message;
+        dictionary.put("text", message);
+    }
+
+    public String getText() {
+        return text;
     }
 }

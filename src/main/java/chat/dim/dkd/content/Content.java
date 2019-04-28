@@ -1,7 +1,6 @@
 package chat.dim.dkd.content;
 
 import chat.dim.dkd.Dictionary;
-import chat.dim.dkd.Utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -72,7 +71,7 @@ public class Content extends Dictionary {
     // quote a message before and reply it with text
     public static final int QUOTE   = 0x37; // 0011 0111
 
-    public static final int COMMAMD = 0x88; // 1000 1000
+    public static final int COMMAND = 0x88; // 1000 1000
     public static final int HISTORY = 0x89; // 1000 1001 (Entity history command)
 
     // top-secret message forward by proxy (Service Provider)
@@ -83,26 +82,22 @@ public class Content extends Dictionary {
     // message type: text, image, ...
     public final int type;
     // random number to identify message content
-    public final long serialNumber;
-    // Group ID for group message
-    public String group;
+    protected final long serialNumber;
+    // Group ID/string for group message
+    private Object group;
 
     public Content(Map<String, Object> dictionary) {
         super(dictionary);
-        this.type         = (int) dictionary.get("type");
-        this.serialNumber = Long.valueOf(dictionary.get("sn").toString());
-        this.group        = (String) dictionary.get("group");
+        type         = (int) dictionary.get("type");
+        serialNumber = Long.valueOf(dictionary.get("sn").toString());
+        group        = dictionary.get("group");
     }
 
-    public Content(String jsonString) {
-        this(Utils.jsonDecode(jsonString));
-    }
-
-    public Content(int type) {
+    protected Content(int msgType) {
         super();
-        this.type         = type;
-        this.serialNumber = randomNumber();
-        this.group        = null;
+        type         = msgType;
+        serialNumber = randomNumber();
+        group        = null;
         dictionary.put("type", type);
         dictionary.put("sn", serialNumber);
     }
@@ -116,9 +111,15 @@ public class Content extends Dictionary {
         return sn;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
-        dictionary.put("group", group);
+    //-------- setter/getter --------
+
+    public void setGroup(Object groupID) {
+        group = groupID;
+        dictionary.put("group", groupID);
+    }
+
+    public Object getGroup() {
+        return group;
     }
 
     //-------- Runtime --------
@@ -154,8 +155,6 @@ public class Content extends Dictionary {
             return (Content) object;
         } else if (object instanceof Map) {
             return createInstance((Map<String, Object>) object);
-        } else if (object instanceof String) {
-            return new Content((String) object);
         } else {
             throw new IllegalArgumentException("unknown message content:" + object);
         }
@@ -176,7 +175,7 @@ public class Content extends Dictionary {
         register(PAGE, PageContent.class);
         // Quote
         // Command
-        register(COMMAMD, CommandContent.class);
+        register(COMMAND, CommandContent.class);
         // History
         register(HISTORY, HistoryCommand.class);
         // Forward

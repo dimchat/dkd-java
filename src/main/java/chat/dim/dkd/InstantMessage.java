@@ -28,25 +28,21 @@ public class InstantMessage extends Message {
 
     public InstantMessage(Map<String, Object> dictionary) throws ClassNotFoundException {
         super(dictionary);
-        this.content = Content.getInstance(dictionary.get("content"));
+        content = Content.getInstance(dictionary.get("content"));
     }
 
-    public InstantMessage(String jsonString) throws ClassNotFoundException {
-        this(Utils.jsonDecode(jsonString));
+    public InstantMessage(Content body, Envelope head) {
+        super(head);
+        content = body;
+        dictionary.put("content", body);
     }
 
-    public InstantMessage(Content content, Envelope envelope) {
-        super(envelope);
-        this.content = content;
-        dictionary.put("content", content);
+    public InstantMessage(Content body, Object from, Object to, Date when) {
+        this(body, new Envelope(from, to, when));
     }
 
-    public InstantMessage(Content content, Object sender, Object receiver, Date time) {
-        this(content, new Envelope(sender, receiver, time));
-    }
-
-    public InstantMessage(Content content, Object sender, Object receiver) {
-        this(content, sender, receiver, new Date());
+    public InstantMessage(Content body, Object from, Object to) {
+        this(body, from, to, new Date());
     }
 
     @SuppressWarnings("unchecked")
@@ -57,8 +53,6 @@ public class InstantMessage extends Message {
             return (InstantMessage) object;
         } else if (object instanceof Map) {
             return new InstantMessage((Map<String, Object>) object);
-        } else if (object instanceof String) {
-            return new InstantMessage((String) object);
         } else {
             throw new IllegalArgumentException("unknown message:" + object);
         }
@@ -113,7 +107,7 @@ public class InstantMessage extends Message {
         }
         map.put("keys", keys);
         // group ID
-        String group = content.group;
+        Object group = content.getGroup();
         if (group == null) {
             throw new NoSuchFieldException("group message error:" + this);
         }
@@ -131,7 +125,7 @@ public class InstantMessage extends Message {
     }
 
     private Map<String, Object> encryptContent(Map<String, Object> password) {
-        Content result = content;
+        Content body = content;
 
         // 1. check attachment for File/Image/Audio/Video message content
         switch (content.type) {
@@ -140,11 +134,11 @@ public class InstantMessage extends Message {
             case Content.VIDEO:
             case Content.FILE: {
                 FileContent file = new FileContent(content);
-                String url = delegate.uploadFileData(this, file.data, file.filename, password);
+                String url = delegate.uploadFileData(this, file.getData(), file.getFilename(), password);
                 if (url != null) {
                     file.setUrl(url);
                     file.setData(null);
-                    result = file;
+                    body = file;
                 }
                 break;
             }
@@ -154,7 +148,7 @@ public class InstantMessage extends Message {
         }
 
         // 2. encrypt message content
-        byte[] data = delegate.encryptContent(this, result, password);
+        byte[] data = delegate.encryptContent(this, body, password);
         if (data == null) {
             throw new NullPointerException("failed to encrypt content with key:" + password);
         }

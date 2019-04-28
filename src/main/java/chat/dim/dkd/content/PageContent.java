@@ -17,29 +17,21 @@ import java.util.Map;
  */
 public class PageContent extends Content {
 
-    public String url;
-    public String title;
-    public String desc;
-    public byte[] icon;
-
-    public PageContent(PageContent content) {
-        super(content);
-        this.url   = content.url;
-        this.title = content.title;
-        this.desc  = content.desc;
-        this.icon  = content.icon;
-    }
+    private String url;
+    private String title;
+    private String desc;
+    private byte[] icon;
 
     public PageContent(Map<String, Object> dictionary) {
         super(dictionary);
-        this.url   = (String) dictionary.get("URL");
-        this.title = (String) dictionary.get("title");
-        this.desc  = (String) dictionary.get("desc");
-        Object icon = dictionary.get("icon");
-        if (icon == null) {
-            this.icon = null;
+        url   = (String) dictionary.get("URL");
+        title = (String) dictionary.get("title");
+        desc  = (String) dictionary.get("desc");
+        String base64 = (String) dictionary.get("icon");
+        if (base64 == null) {
+            icon = null;
         } else {
-            this.icon = Utils.base64Decode((String) icon);
+            icon = Utils.base64Decode(base64);
         }
     }
 
@@ -51,27 +43,45 @@ public class PageContent extends Content {
         setIcon(icon);
     }
 
-    public void setURL(String url) {
-        this.url = url;
-        this.dictionary.put("URL", url);
+    //-------- setters/getters --------
+
+    public void setURL(String urlString) {
+        url = urlString;
+        dictionary.put("URL", urlString);
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-        this.dictionary.put("title", title);
+    public String getUrl() {
+        return url;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-        this.dictionary.put("desc", desc);
+    public void setTitle(String text) {
+        title = text;
+        dictionary.put("title", text);
     }
 
-    public void setIcon(byte[] icon) {
-        this.icon = icon;
-        if (icon == null) {
-            this.dictionary.remove("icon");
+    public String getTitle() {
+        return title;
+    }
+
+    public void setDesc(String text) {
+        desc = text;
+        dictionary.put("desc", text);
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setIcon(byte[] imageData) {
+        icon = imageData;
+        if (imageData == null) {
+            dictionary.remove("icon");
         } else {
-            this.dictionary.put("icon", Utils.base64Encode(icon));
+            dictionary.put("icon", Utils.base64Encode(imageData));
         }
+    }
+
+    public byte[] getIcon() {
+        return icon;
     }
 }

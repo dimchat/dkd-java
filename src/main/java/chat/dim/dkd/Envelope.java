@@ -21,31 +21,34 @@ public class Envelope extends Dictionary {
 
     public Envelope(Map<String, Object> dictionary) {
         super(dictionary);
-        this.sender   = (String) dictionary.get("sender");
-        this.receiver = (String) dictionary.get("receiver");
-        this.time     = getTime(dictionary);
+        sender   = dictionary.get("sender");
+        receiver = dictionary.get("receiver");
+        time     = getTime(dictionary);
     }
 
-    public Envelope(String jsonString) {
-        this(Utils.jsonDecode(jsonString));
-    }
-
-    public Envelope(Object sender, Object receiver, Date time) {
+    public Envelope(Object from, Object to, Date when) {
         super();
-        this.sender   = sender;
-        this.receiver = receiver;
-        this.time     = time;
-        dictionary.put("sender", sender);
-        dictionary.put("receiver", receiver);
-        dictionary.put("time", getTimestamp(time));
+        sender   = from;
+        receiver = to;
+        time     = when;
+        dictionary.put("sender", from);
+        dictionary.put("receiver", to);
+        dictionary.put("time", getTimestamp(when));
     }
 
-    public Envelope(Object sender, Object receiver) {
-        this(sender, receiver, new Date());
+    public Envelope(Object from, Object to) {
+        this(from, to, new Date());
     }
 
     private static Date getTime(Map<String, Object> map) {
-        long timestamp = (long) map.get("time");
+        long timestamp = 0;
+        Object time = map.get("time");
+        if (time == null) {
+            // timestamp = 0;
+            return new Date();
+        } else {
+            timestamp = (long) map.get("time");
+        }
         return new Date(timestamp * 1000);
     }
 
@@ -61,8 +64,6 @@ public class Envelope extends Dictionary {
             return (Envelope) object;
         } else if (object instanceof Map) {
             return new Envelope((Map<String, Object>) object);
-        } else if (object instanceof String) {
-            return new Envelope((String) object);
         } else {
             throw new IllegalArgumentException("unknown meta:" + object);
         }

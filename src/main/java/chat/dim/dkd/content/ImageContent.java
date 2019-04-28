@@ -17,34 +17,35 @@ import java.util.Map;
  */
 public class ImageContent extends FileContent {
 
-    public byte[] thumbnail;
-
-    public ImageContent(ImageContent content) {
-        super(content);
-        this.thumbnail = content.thumbnail;
-    }
+    private byte[] thumbnail;
 
     public ImageContent(Map<String, Object> dictionary) {
         super(dictionary);
-        Object thumbnail = dictionary.get("thumbnail");
-        if (thumbnail == null) {
-            this.thumbnail = null;
+        String base64 = (String) dictionary.get("thumbnail");
+        if (base64 == null) {
+            thumbnail = null;
         } else {
-            this.thumbnail = Utils.base64Decode((String) thumbnail);
+            thumbnail = Utils.base64Decode(base64);
         }
     }
 
     public ImageContent(byte[] data, String filename) {
         super(IMAGE, data, filename);
-        this.thumbnail = null;
+        thumbnail = null;
     }
 
-    public void setThumbnail(byte[] thumbnail) {
-        this.thumbnail = thumbnail;
-        if (thumbnail == null) {
-            this.dictionary.remove("thumbnail");
+    //-------- setter/getter --------
+
+    public void setThumbnail(byte[] imageData) {
+        thumbnail = imageData;
+        if (imageData == null) {
+            dictionary.remove("thumbnail");
         } else {
-            this.dictionary.put("thumbnail", Utils.base64Encode(thumbnail));
+            dictionary.put("thumbnail", Utils.base64Encode(imageData));
         }
+    }
+
+    public byte[] getThumbnail() {
+        return thumbnail;
     }
 }

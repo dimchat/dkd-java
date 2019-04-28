@@ -15,10 +15,6 @@ import java.util.Map;
  */
 public class AudioContent extends FileContent {
 
-    public AudioContent(AudioContent content) {
-        super(content);
-    }
-
     public AudioContent(Map<String, Object> dictionary) {
         super(dictionary);
     }

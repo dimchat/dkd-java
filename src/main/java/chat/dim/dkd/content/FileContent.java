@@ -14,30 +14,22 @@ import java.util.Map;
  */
 public class FileContent extends Content {
 
-    public String url;
-    public byte[] data;
-    public String filename;
+    private String url;
+    private byte[] data; // file data (plaintext)
+    private String filename;
 
-    public Map<String, Object> password;
-
-    public FileContent(FileContent content) {
-        super(content);
-        this.url      = content.url;
-        this.data     = content.data;
-        this.filename = content.filename;
-        this.password = content.password;
-    }
+    private Map<String, Object> password; // symmetric key to decrypt the encrypted data from URL
 
     @SuppressWarnings("unchecked")
     public FileContent(Map<String, Object> dictionary) {
         super(dictionary);
-        this.url = (String) dictionary.get("URL");
-        this.data = null; // NOTICE: file data should not exists here
-        this.filename = (String) dictionary.get("filename");
-        this.password = (Map<String, Object>) dictionary.get("password");
+        url = (String) dictionary.get("URL");
+        data = null; // NOTICE: file data should not exists here
+        filename = (String) dictionary.get("filename");
+        password = (Map<String, Object>) dictionary.get("password");
     }
 
-    public FileContent(int type, byte[] data, String filename) {
+    protected FileContent(int type, byte[] data, String filename) {
         super(type);
         setUrl(null);
         setData(data);
@@ -49,23 +41,53 @@ public class FileContent extends Content {
         this(FILE, data, filename);
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-        this.dictionary.put("URL", url);
+    //-------- setters/getters --------
+
+    public void setUrl(String urlString) {
+        url = urlString;
+        if (urlString == null) {
+            dictionary.remove("URL");
+        } else {
+            dictionary.put("URL", urlString);
+        }
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public String getUrl() {
+        return url;
+    }
+
+    public void setData(byte[] fileData) {
+        data = fileData;
         // NOTICE: do not set file data in dictionary, which will be post onto the DIM network
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-        this.dictionary.put("filename", filename);
+    public byte[] getData() {
+        return data;
     }
 
-    public void setPassword(Map<String, Object> password) {
-        this.password = password;
-        this.dictionary.put("password", password);
+    public void setFilename(String name) {
+        filename = name;
+        if (name == null) {
+            dictionary.remove("filename");
+        } else {
+            dictionary.put("filename", name);
+        }
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setPassword(Map<String, Object> key) {
+        password = key;
+        if (key == null) {
+            dictionary.remove("password");
+        } else {
+            dictionary.put("password", key);
+        }
+    }
+
+    public Map<String, Object> getPassword() {
+        return password;
     }
 }

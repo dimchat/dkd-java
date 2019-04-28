@@ -16,19 +16,14 @@ public class ForwardContent extends Content {
 
     public final ReliableMessage forwardMessage;
 
-    public ForwardContent(ForwardContent content) {
-        super(content);
-        this.forwardMessage = content.forwardMessage;
-    }
-
     public ForwardContent(Map<String, Object> dictionary) throws NoSuchFieldException {
         super(dictionary);
-        this.forwardMessage = ReliableMessage.getInstance(dictionary.get("forward"));
+        forwardMessage = ReliableMessage.getInstance(dictionary.get("forward"));
     }
 
     public ForwardContent(ReliableMessage message) {
         super(FORWARD);
-        this.forwardMessage = message;
-        this.dictionary.put("forward", message);
+        forwardMessage = message;
+        dictionary.put("forward", message);
     }
 }

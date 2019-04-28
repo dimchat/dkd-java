@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Dictionary implements Map<String, Object> {
+public abstract class Dictionary implements Map<String, Object> {
 
     protected final Map<String, Object> dictionary;
 
-    public Dictionary() {
+    protected Dictionary() {
         super();
         dictionary = new HashMap<>();
     }
 
-    public Dictionary(Map<String, Object> map) {
+    protected Dictionary(Map<String, Object> map) {
         super();
         dictionary = map;
     }
@@ -23,6 +23,7 @@ public class Dictionary implements Map<String, Object> {
         return dictionary.equals(map);
     }
 
+    @Override
     public String toString() {
         return dictionary.toString();
     }

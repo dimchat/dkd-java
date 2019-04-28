@@ -1,14 +1,13 @@
-import chat.dim.dkd.Utils;
+import chat.dim.dkd.*;
 import chat.dim.dkd.content.Content;
 import chat.dim.dkd.content.TextContent;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
-public class MessageTest extends TestCase {
+import java.util.HashMap;
+import java.util.Map;
+
+public class MessageTest {
 
     private void log(String msg) {
         StackTraceElement[] traces = Thread.currentThread().getStackTrace();
@@ -17,37 +16,52 @@ public class MessageTest extends TestCase {
         System.out.println("[" + method + ":" + line + "] " + msg);
     }
 
-    @Test
-    public void testTextContent() throws ClassNotFoundException {
-        TextContent text = new TextContent("Hello world!");
-        log("text:" + text);
-        assertEquals(text.type, Content.TEXT);
+    public static String sender = "moki@4WDfe3zZ4T7opFSi3iDAKiuTnUHjxmXekk";
+    public static String receiver = "hulk@4YeVEN3aUnvC1DNUufCq1bs9zoBSJTzVEj";
 
-        Map map = text;
-        log("dictionary:" + map);
-        Content content = Content.getInstance(map);
-        log("content:" + content);
-        assertEquals(text.type, content.type);
+    @Test
+    public void testEnvelope() {
+
+        Envelope envelope = new Envelope(sender, receiver);
+        log("envelope:" + envelope);
+
+        Envelope env = Envelope.getInstance(envelope);
+        Assert.assertSame(envelope, env);
     }
 
     @Test
-    public void testJSON() throws ClassNotFoundException {
-        String json = "{\"sn\":1952110619,\"text\":\"Hey guy!\",\"type\":1}";
-        Map<String, Object> dictionary = Utils.jsonDecode(json);
-        Content content = Content.getInstance(dictionary);
-        log("content:" + content);
+    public void testInstantMessage() throws ClassNotFoundException {
 
-        String string1 = Utils.jsonEncode(content);
-        log("json string1:" + string1);
+        Message message;
 
-        String string2 = Utils.jsonEncode(content);
-        log("json string2:" + string2);
-        assertEquals(string1, string2);
+        Content content = new TextContent("Hello world!");
 
-        List<Content> array = new ArrayList<>();
-        array.add(content);
-        array.add(new Content(content));
-        String string3 = Utils.jsonEncode(array);
-        log("json string3:" + string3);
+        InstantMessage iMsg = new InstantMessage(content, sender, receiver);
+        log("instant message:" + iMsg);
+
+        message = InstantMessage.getInstance(iMsg);
+        log("message:" + message);
+        Assert.assertSame(iMsg, message);
+    }
+
+    @Test
+    public void testSecureMessage() throws NoSuchFieldException {
+
+        byte[] data = new byte[64];
+
+        Map<String, Object> dictionary = new HashMap<>();
+        dictionary.put("sender", sender);
+        dictionary.put("receiver", receiver);
+        dictionary.put("data", Utils.base64Encode(data));
+
+        SecureMessage sMsg = SecureMessage.getInstance(dictionary);
+        log("secure message:" + sMsg);
+
+        sMsg.setGroup("group12345");
+        log("group:" + sMsg.getGroup());
+
+        dictionary.put("signature", Utils.base64Encode(data));
+        ReliableMessage rMsg = ReliableMessage.getInstance(dictionary);
+        log("reliable message:" + rMsg);
     }
 }

@@ -27,23 +27,15 @@ public class Message extends Dictionary {
         env.put("sender", dictionary.get("sender"));
         env.put("receiver", dictionary.get("receiver"));
         env.put("time", dictionary.get("time"));
-        this.envelope = new Envelope(env);
+        envelope = new Envelope(env);
     }
 
-    public Message(Envelope envelope) {
+    public Message(Envelope head) {
         super();
-        this.envelope = envelope;
+        envelope = head;
         // copy values from envelope
-        dictionary.put("sender", envelope.sender);
-        dictionary.put("receiver", envelope.receiver);
-        dictionary.put("time", envelope.time);
-    }
-
-    public Message(Object sender, Object receiver, Date time) {
-        this(new Envelope(sender, receiver, time));
-    }
-
-    public Message(Object sender, Object receiver) {
-        this(sender, receiver, new Date());
+        dictionary.put("sender", head.get("sender"));
+        dictionary.put("receiver", head.get("receiver"));
+        dictionary.put("time", head.get("time"));
     }
 }

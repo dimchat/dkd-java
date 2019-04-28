@@ -27,34 +27,25 @@ public class ReliableMessage extends SecureMessage {
 
     public ReliableMessageDelegate delegate;
 
-    // Extends for the first message package of 'Handshake' protocol
-    public Map<String, Object> meta;
-
     @SuppressWarnings("unchecked")
     public ReliableMessage(Map<String, Object> dictionary) throws NoSuchFieldException {
         super(dictionary);
         // signature for encrypted data
-        String signature = (String) dictionary.get("signature");
-        if (signature == null) {
+        String base64 = (String) dictionary.get("signature");
+        if (base64 == null) {
             throw new NoSuchFieldException("signature not found:" + dictionary);
         }
-        this.signature = Utils.base64Decode(signature);
-        // meta
-        this.meta = (Map<String, Object>) dictionary.get("meta");
+        signature = Utils.base64Decode(base64);
     }
 
-    public ReliableMessage(String jsonString) throws NoSuchFieldException {
-        this(Utils.jsonDecode(jsonString));
+    public ReliableMessage(byte[] sig, byte[] data, byte[] key, Envelope head) {
+        super(data, key, head);
+        signature = sig;
     }
 
-    public ReliableMessage(byte[] signature, byte[] data, byte[] key, Envelope envelope) {
-        super(data, key, envelope);
-        this.signature = signature;
-    }
-
-    public ReliableMessage(byte[] signature, byte[] data, Map<Object, String> keys, Envelope envelope) {
-        super(data, keys, envelope);
-        this.signature = signature;
+    public ReliableMessage(byte[] sig, byte[] data, Map<Object, String> keys, Envelope head) {
+        super(data, keys, head);
+        signature = sig;
     }
 
     @SuppressWarnings("unchecked")
@@ -65,11 +56,22 @@ public class ReliableMessage extends SecureMessage {
             return (ReliableMessage) object;
         } else if (object instanceof Map) {
             return new ReliableMessage((Map<String, Object>) object);
-        } else if (object instanceof String) {
-            return new ReliableMessage((String) object);
         } else  {
             throw new IllegalArgumentException("unknown message:" + object);
         }
+    }
+
+    /**
+     *  Sender's Meta
+     *      Extends for the first message package of 'Handshake' protocol.
+     */
+    public void setMeta(Map<String, Object> meta) {
+        dictionary.put("meta", meta);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getMeta() {
+        return (Map<String, Object>) dictionary.get("meta");
     }
 
     /**

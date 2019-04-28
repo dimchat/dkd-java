@@ -36,56 +36,61 @@ public class SecureMessage extends Message {
     @SuppressWarnings("unchecked")
     public SecureMessage(Map<String, Object> dictionary) throws NoSuchFieldException {
         super(dictionary);
+
         // encrypted data
-        Object data = dictionary.get("data");
-        if (data == null) {
+        String base64 = (String) dictionary.get("data");
+        if (base64 == null) {
             throw new NoSuchFieldException("encrypted data not found:" + dictionary);
         }
-        this.data = Utils.base64Decode((String) data);
+        data = Utils.base64Decode(base64);
+
         // decrypt key
-        Object key = dictionary.get("key");
-        if (key == null) {
-            this.key = null;
+        base64 = (String) dictionary.get("key");
+        if (base64 == null) {
+            key = null;
         } else {
-            this.key = Utils.base64Decode((String) key);
+            key = Utils.base64Decode(base64);
         }
+
         // keys for group message
-        Object keys = dictionary.get("keys");
-        if (keys == null) {
-            this.keys = null;
+        Map<Object, String> map = (Map<Object, String>) dictionary.get("keys");
+        if (map == null) {
+            keys = null;
         } else {
-            this.keys = (Map<Object, String>) keys;
+            keys = map;
         }
     }
 
-    public SecureMessage(String jsonString) throws NoSuchFieldException {
-        this(Utils.jsonDecode(jsonString));
-    }
+    public SecureMessage(byte[] encryptedData, byte[] keyData, Envelope head) {
+        super(head);
 
-    public SecureMessage(byte[] data, byte[] key, Envelope envelope) {
-        super(envelope);
         // encrypted data
-        this.data = data;
-        this.dictionary.put("data", Utils.base64Encode(data));
+        data = encryptedData;
+        dictionary.put("data", Utils.base64Encode(encryptedData));
+
         // decrypt key
-        this.key = key;
+        key = keyData;
         if (key != null) {
-            this.dictionary.put("key", Utils.base64Encode(key));
+            dictionary.put("key", Utils.base64Encode(keyData));
         }
+
         // keys for group message
-        this.keys = null;
+        keys = null;
     }
 
-    public SecureMessage(byte[] data, Map<Object, String> keys, Envelope envelope) {
-        super(envelope);
+    public SecureMessage(byte[] encryptedData, Map<Object, String> keyMap, Envelope head) {
+        super(head);
+
         // encrypted data
-        this.data = data;
-        this.dictionary.put("data", Utils.base64Encode(data));
+        data = encryptedData;
+        dictionary.put("data", Utils.base64Encode(encryptedData));
+
         // decrypt key
-        this.key = null;
+        key = null;
+
         // keys for group message
-        this.keys = keys;
-        this.dictionary.put("keys", keys);
+        keys = keyMap;
+        dictionary.put("keys", keyMap);
     }
 
     @SuppressWarnings("unchecked")
@@ -96,8 +101,6 @@ public class SecureMessage extends Message {
             return (SecureMessage) object;
         } else if (object instanceof Map) {
             return new SecureMessage((Map<String, Object>) object);
-        } else if (object instanceof String) {
-            return new SecureMessage((String) object);
         } else  {
             throw new IllegalArgumentException("unknown message:" + object);
         }
@@ -131,23 +134,19 @@ public class SecureMessage extends Message {
         //         if don't want the others know you are the group members, modify it
         msg.put("group", envelope.receiver);
 
-        // keys
-        Map<Object, String> keys = this.keys;
-        if (keys == null) {
-            keys = new HashMap<>();
-        }
-
         String base64;
         for (Object member : members) {
             // 1. change receiver to the group member
             msg.put("receiver", member);
 
-            // 2. get encrypted key
-            base64 = keys.get(member);
-            if (base64 == null) {
-                msg.remove("key");
-            } else {
-                msg.put("key", base64);
+            if (keys != null) {
+                // 2. get encrypted key from map
+                base64 = keys.get(member);
+                if (base64 == null) {
+                    msg.remove("key");
+                } else {
+                    msg.put("key", base64);
+                }
             }
 
             // 3. repack message

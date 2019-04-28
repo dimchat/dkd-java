@@ -23,23 +23,18 @@ public class CommandContent extends Content {
 
     public final String command;
 
-    public CommandContent(CommandContent content) {
-        super(content);
-        this.command = content.command;
-    }
-
     public CommandContent(Map<String, Object> dictionary) {
         super(dictionary);
-        this.command = (String) dictionary.get("command");
+        command = (String) dictionary.get("command");
     }
 
-    public CommandContent(int type, String command) {
+    protected CommandContent(int type, String cmd) {
         super(type);
-        this.command = command;
-        this.dictionary.put("command", command);
+        command = cmd;
+        dictionary.put("command", cmd);
     }
 
     public CommandContent(String command) {
-        this(COMMAMD, command);
+        this(COMMAND, command);
     }
 }

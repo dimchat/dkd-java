@@ -37,20 +37,15 @@ public class HistoryCommand extends CommandContent {
 
     public final Date time;
 
-    public HistoryCommand(HistoryCommand content) {
-        super(content);
-        this.time = content.time;
-    }
-
     public HistoryCommand(Map<String, Object> dictionary) {
         super(dictionary);
-        this.time = getDate((long) dictionary.get("time"));
+        time = getDate((long) dictionary.get("time"));
     }
 
     public HistoryCommand(String command) {
         super(HISTORY, command);
-        this.time = new Date();
-        this.dictionary.put("time", getTimestamp(time));
+        time = new Date();
+        dictionary.put("time", getTimestamp(time));
     }
 
     private long getTimestamp(Date time) {
