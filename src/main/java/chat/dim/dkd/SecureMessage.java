@@ -17,7 +17,7 @@ import java.util.Map;
  *          sender   : "moki@xxx",
  *          receiver : "hulk@yyy",
  *          time     : 123,
- *          //-- content data & key/keys
+ *          //-- content data and key/keys
  *          data     : "...",  // base64_encode(symmetric)
  *          key      : "...",  // base64_encode(asymmetric)
  *          keys     : {
@@ -111,6 +111,8 @@ public class SecureMessage extends Message {
      *      when a group message was splitted/trimmed to a single message
      *      the 'receiver' will be changed to a member ID, and
      *      the group ID will be saved as 'group'.
+     *
+     * @return group ID/string
      */
     public Object getGroup() {
         return dictionary.get("group");
@@ -193,7 +195,7 @@ public class SecureMessage extends Message {
         }
     }
 
-    /**
+    /*
      *  Decrypt the Secure Message to Instant Message
      *
      *    +----------+      +----------+
@@ -206,6 +208,11 @@ public class SecureMessage extends Message {
      *    +----------+
      */
 
+    /**
+     *  Decrypt message, replace encrypted 'data' with 'content' field
+     *
+     * @return InstantMessage object
+     */
     public InstantMessage decrypt() {
         if (dictionary.containsKey("group")) {
             throw new RuntimeException("group message must be decrypted with member ID");
@@ -215,6 +222,12 @@ public class SecureMessage extends Message {
         return decryptData(key, sender, receiver);
     }
 
+    /**
+     *  Decrypt group message, replace encrypted 'data' with 'content' field
+     *
+     * @param member - receiver (as group member) ID
+     * @return InstantMessage object
+     */
     public InstantMessage decrypt(Object member) {
         Object sender = envelope.sender;
         Object receiver = envelope.receiver;
@@ -290,7 +303,7 @@ public class SecureMessage extends Message {
         }
     }
 
-    /**
+    /*
      *  Sign the Secure Message to Reliable Message
      *
      *    +----------+      +----------+
@@ -304,6 +317,11 @@ public class SecureMessage extends Message {
      *                      +----------+
      */
 
+    /**
+     *  Sign message.data, add 'signature' field
+     *
+     * @return ReliableMessage object
+     */
     public ReliableMessage sign() {
         // 1. sign
         byte[] signature = delegate.signData(this, data, envelope.sender);

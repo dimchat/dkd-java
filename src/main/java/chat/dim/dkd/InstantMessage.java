@@ -58,7 +58,7 @@ public class InstantMessage extends Message {
         }
     }
 
-    /**
+    /*
      *  Encrypt the Instant Message to Secure Message
      *
      *    +----------+      +----------+
@@ -71,6 +71,12 @@ public class InstantMessage extends Message {
      *                      +----------+
      */
 
+    /**
+     *  Encrypt message, replace 'content' field with encrypted 'data'
+     *
+     * @param password - symmetric key
+     * @return SecureMessage object
+     */
     public SecureMessage encrypt(Map<String, Object> password) {
         // 1. encrypt 'content' to 'data'
         Map<String, Object> map = encryptContent(password);
@@ -92,6 +98,14 @@ public class InstantMessage extends Message {
         }
     }
 
+    /**
+     *  Encrypt group message, replace 'content' field with encrypted 'data'
+     *
+     * @param password - symmetric key
+     * @param members - group members
+     * @return SecureMessage object
+     * @throws NoSuchFieldException when 'group' field not found
+     */
     public SecureMessage encrypt(Map<String, Object> password, List<Object> members) throws NoSuchFieldException {
         // 1. encrypt 'content' to 'data'
         Map<String, Object> map = encryptContent(password);

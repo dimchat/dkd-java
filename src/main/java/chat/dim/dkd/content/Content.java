@@ -11,11 +11,11 @@ import java.util.Random;
 public class Content extends Dictionary {
 
     /**
-     *  @enum DKDMessageType
+     *  enum DKDMessageType
      *
-     *  @abstract A flag to indicate what kind of message content this is.
+     *  abstract A flag to indicate what kind of message content this is.
      *
-     *  @discussion A message is something send from one place to another one,
+     *  discussion A message is something send from one place to another one,
      *      it can be an instant message, a system command, or something else.
      *
      *      DKDMessageType_Text indicates this is a normal message with plaintext.
@@ -81,8 +81,10 @@ public class Content extends Dictionary {
 
     // message type: text, image, ...
     public final int type;
+
     // random number to identify message content
     protected final long serialNumber;
+
     // Group ID/string for group message
     private Object group;
 

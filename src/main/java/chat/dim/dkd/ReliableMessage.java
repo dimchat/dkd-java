@@ -11,7 +11,7 @@ import java.util.Map;
  *          sender   : "moki@xxx",
  *          receiver : "hulk@yyy",
  *          time     : 123,
- *          //-- content data & key/keys
+ *          //-- content data and key/keys
  *          data     : "...",  // base64_encode(symmetric)
  *          key      : "...",  // base64_encode(asymmetric)
  *          keys     : {
@@ -64,6 +64,8 @@ public class ReliableMessage extends SecureMessage {
     /**
      *  Sender's Meta
      *      Extends for the first message package of 'Handshake' protocol.
+     *
+     * @param meta - Meta object or dictionary
      */
     public void setMeta(Map<String, Object> meta) {
         dictionary.put("meta", meta);
@@ -74,7 +76,7 @@ public class ReliableMessage extends SecureMessage {
         return (Map<String, Object>) dictionary.get("meta");
     }
 
-    /**
+    /*
      *  Verify the Reliable Message to Secure Message
      *
      *    +----------+      +----------+
@@ -88,6 +90,11 @@ public class ReliableMessage extends SecureMessage {
      *    +----------+
      */
 
+    /**
+     *  Verify 'data' and 'signature' field with sender's public key
+     *
+     * @return SecureMessage object
+     */
     public SecureMessage verify() {
         // 1. verify
         boolean OK = delegate.verifyData(this, data, signature, envelope.sender);
