@@ -1,7 +1,5 @@
 package chat.dim.dkd;
 
-import chat.dim.dkd.content.Content;
-
 import java.util.Map;
 
 public interface SecureMessageDelegate {
@@ -15,7 +13,7 @@ public interface SecureMessageDelegate {
      *  @param receiver - receiver(group) ID/string
      *  @return symmetric key
      */
-    public Map<String, Object> decryptKey(SecureMessage sMsg, byte[] key, Object sender, Object receiver);
+    Map<String, Object> decryptKey(SecureMessage sMsg, byte[] key, Object sender, Object receiver);
 
     /**
      *  Decrypt encrypted data to message.content with symmetric key
@@ -25,7 +23,7 @@ public interface SecureMessageDelegate {
      *  @param password - symmetric key
      *  @return message content
      */
-    public Content decryptContent(SecureMessage sMsg, byte[] data, Map<String, Object> password);
+    Content decryptContent(SecureMessage sMsg, byte[] data, Map<String, Object> password);
 
     /**
      *  Sign the message data(encrypted) with sender's private key
@@ -35,5 +33,5 @@ public interface SecureMessageDelegate {
      *  @param sender - sender ID/string
      *  @return signature
      */
-    public byte[] signData(SecureMessage sMsg, byte[] data, Object sender);
+    byte[] signData(SecureMessage sMsg, byte[] data, Object sender);
 }

@@ -1,6 +1,4 @@
 import chat.dim.dkd.*;
-import chat.dim.dkd.content.Content;
-import chat.dim.dkd.content.TextContent;
 import org.junit.Assert;
 import org.junit.Test;
 

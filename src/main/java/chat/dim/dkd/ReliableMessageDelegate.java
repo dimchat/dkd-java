@@ -11,5 +11,5 @@ public interface ReliableMessageDelegate {
      *  @param sender - sender ID/string
      *  @return YES on signature match
      */
-    public boolean verifyData(ReliableMessage rMsg, byte[] data, byte[] signature, Object sender);
+    boolean verifyData(ReliableMessage rMsg, byte[] data, byte[] signature, Object sender);
 }

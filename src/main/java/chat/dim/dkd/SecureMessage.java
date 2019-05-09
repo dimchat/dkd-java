@@ -1,8 +1,5 @@
 package chat.dim.dkd;
 
-import chat.dim.dkd.content.Content;
-import chat.dim.dkd.content.FileContent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -269,28 +266,13 @@ public class SecureMessage extends Message {
         }
 
         // 2. decrypt 'data' to 'content'
+        //    (remember to save password for decrypted File/Image/Audio/Video data)
         Content content = delegate.decryptContent(this, data, password);
         if (content == null) {
             throw new NullPointerException("failed to decrypt message data:" + this);
         }
 
-        // 3. check attachment for File/Image/Audio/Video message content
-        switch (content.type) {
-            case Content.IMAGE:
-            case Content.AUDIO:
-            case Content.VIDEO:
-            case Content.FILE: {
-                FileContent file = new FileContent(content);
-                file.setPassword(password);
-                content = file;
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-
-        // 4. pack message
+        // 3. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("key");
         map.remove("data");

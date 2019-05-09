@@ -1,31 +1,8 @@
 package chat.dim.dkd;
 
-import chat.dim.dkd.content.Content;
-
 import java.util.Map;
 
 public interface InstantMessageDelegate {
-
-    /**
-     *  Upload the message.content.data to CDN and return the URL
-     *
-     *  @param iMsg - instant message object
-     *  @param data - content.data
-     *  @param filename - content.filename
-     *  @param password - SymmetricKey to decrypt the content.data
-     *  @return URL to download the file data
-     */
-    public String uploadFileData(InstantMessage iMsg, byte[] data, String filename, Map<String, Object> password);
-
-    /**
-     *  Download file data from the URL
-     *
-     *  @param iMsg - instant message object
-     *  @param url - URL to download the file data
-     *  @param password - SymmetricKey to decrypt the file data
-     *  @return decrypted file data
-     */
-    public byte[] downloadFileData(InstantMessage iMsg, String url, Map<String, Object> password);
 
     /**
      *  Encrypt the message.content to message.data with symmetric key
@@ -35,7 +12,7 @@ public interface InstantMessageDelegate {
      *  @param password - symmetric key
      *  @return encrypted message content data
      */
-    public byte[] encryptContent(InstantMessage iMsg, Content content, Map<String, Object> password);
+    byte[] encryptContent(InstantMessage iMsg, Content content, Map<String, Object> password);
 
     /**
      *  Encrypt the symmetric key with receiver's public key
@@ -45,5 +22,5 @@ public interface InstantMessageDelegate {
      *  @param receiver - receiver ID/string
      *  @return encrypted key data
      */
-    public byte[] encryptKey(InstantMessage iMsg, Map<String, Object> password, Object receiver);
+    byte[] encryptKey(InstantMessage iMsg, Map<String, Object> password, Object receiver);
 }

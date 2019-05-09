@@ -1,8 +1,5 @@
 package chat.dim.dkd;
 
-import chat.dim.dkd.content.Content;
-import chat.dim.dkd.content.FileContent;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -139,34 +136,14 @@ public class InstantMessage extends Message {
     }
 
     private Map<String, Object> encryptContent(Map<String, Object> password) {
-        Content body = content;
-
-        // 1. check attachment for File/Image/Audio/Video message content
-        switch (content.type) {
-            case Content.IMAGE:
-            case Content.AUDIO:
-            case Content.VIDEO:
-            case Content.FILE: {
-                FileContent file = new FileContent(content);
-                String url = delegate.uploadFileData(this, file.getData(), file.getFilename(), password);
-                if (url != null) {
-                    file.setUrl(url);
-                    file.setData(null);
-                    body = file;
-                }
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-
-        // 2. encrypt message content
-        byte[] data = delegate.encryptContent(this, body, password);
+        // 1. encrypt message content
+        //    (remember to check attachment for File/Image/Audio/Video message content first)
+        byte[] data = delegate.encryptContent(this, content, password);
         if (data == null) {
             throw new NullPointerException("failed to encrypt content with key:" + password);
         }
 
+        // 2. replace 'content' with encrypted 'data'
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");
         map.put("data", Utils.base64Encode(data));

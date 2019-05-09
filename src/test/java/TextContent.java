@@ -1,4 +1,4 @@
-package chat.dim.dkd.content;
+import chat.dim.dkd.Content;
 
 import java.util.Map;
 
@@ -11,6 +11,8 @@ import java.util.Map;
  *  }
  */
 public class TextContent extends Content {
+
+    public static final int TEXT    = 0x01; // 0000 0001
 
     private String text;
 
@@ -33,4 +35,8 @@ public class TextContent extends Content {
     public String getText() {
         return text;
     }
+
+//    static {
+//        Content.register(TEXT, TextContent.class);
+//    }
 }
