@@ -50,7 +50,7 @@ public class MessageTest {
         Map<String, Object> dictionary = new HashMap<>();
         dictionary.put("sender", sender);
         dictionary.put("receiver", receiver);
-        dictionary.put("data", Utils.base64Encode(data));
+        dictionary.put("data", Base64.encode(data));
 
         SecureMessage sMsg = SecureMessage.getInstance(dictionary);
         log("secure message:" + sMsg);
@@ -58,7 +58,7 @@ public class MessageTest {
         sMsg.setGroup("group12345");
         log("group:" + sMsg.getGroup());
 
-        dictionary.put("signature", Utils.base64Encode(data));
+        dictionary.put("signature", Base64.encode(data));
         ReliableMessage rMsg = ReliableMessage.getInstance(dictionary);
         log("reliable message:" + rMsg);
     }

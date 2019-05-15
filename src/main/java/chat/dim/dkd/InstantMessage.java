@@ -1,3 +1,28 @@
+/* license: https://mit-license.org
+ * ==============================================================================
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2019 Albert Moky
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * ==============================================================================
+ */
 package chat.dim.dkd;
 
 import java.util.Date;
@@ -80,10 +105,8 @@ public class InstantMessage extends Message {
 
         // 2. encrypt password to 'key'
         byte[] key = delegate.encryptKey(this, password, envelope.receiver);
-        if (key == null) {
-            // NOTICE: reused key
-        } else {
-            map.put("key", Utils.base64Encode(key));
+        if (key != null) {
+            map.put("key", Base64.encode(key));
         }
 
         // 3. pack message
@@ -113,7 +136,7 @@ public class InstantMessage extends Message {
         for (Object member: members) {
             key = delegate.encryptKey(this, password, member);
             if (key != null) {
-                keys.put(member, Utils.base64Encode(key));
+                keys.put(member, Base64.encode(key));
             }
         }
         map.put("keys", keys);
@@ -127,12 +150,7 @@ public class InstantMessage extends Message {
         map.put("group", group);
 
         // 3. pack message
-        try {
-            return new SecureMessage(map);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return new SecureMessage(map);
     }
 
     private Map<String, Object> encryptContent(Map<String, Object> password) {
@@ -146,7 +164,7 @@ public class InstantMessage extends Message {
         // 2. replace 'content' with encrypted 'data'
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");
-        map.put("data", Utils.base64Encode(data));
+        map.put("data", Base64.encode(data));
         return map;
     }
 }

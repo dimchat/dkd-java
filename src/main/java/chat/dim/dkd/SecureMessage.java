@@ -1,3 +1,28 @@
+/* license: https://mit-license.org
+ * ==============================================================================
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2019 Albert Moky
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * ==============================================================================
+ */
 package chat.dim.dkd;
 
 import java.util.ArrayList;
@@ -39,14 +64,14 @@ public class SecureMessage extends Message {
         if (base64 == null) {
             throw new NoSuchFieldException("encrypted data not found:" + dictionary);
         }
-        data = Utils.base64Decode(base64);
+        data = Base64.decode(base64);
 
         // decrypt key
         base64 = (String) dictionary.get("key");
         if (base64 == null) {
             key = null;
         } else {
-            key = Utils.base64Decode(base64);
+            key = Base64.decode(base64);
         }
 
         // keys for group message
@@ -63,12 +88,12 @@ public class SecureMessage extends Message {
 
         // encrypted data
         data = encryptedData;
-        dictionary.put("data", Utils.base64Encode(encryptedData));
+        dictionary.put("data", Base64.encode(encryptedData));
 
         // decrypt key
         key = keyData;
         if (key != null) {
-            dictionary.put("key", Utils.base64Encode(keyData));
+            dictionary.put("key", Base64.encode(keyData));
         }
 
         // keys for group message
@@ -80,7 +105,7 @@ public class SecureMessage extends Message {
 
         // encrypted data
         data = encryptedData;
-        dictionary.put("data", Utils.base64Encode(encryptedData));
+        dictionary.put("data", Base64.encode(encryptedData));
 
         // decrypt key
         key = null;
@@ -252,7 +277,7 @@ public class SecureMessage extends Message {
         if (keys != null) {
             String base64 = keys.get(member);
             if (base64 != null) {
-                key = Utils.base64Decode(base64);
+                key = Base64.decode(base64);
             }
         }
         return decryptData(key, sender, group);
@@ -312,7 +337,7 @@ public class SecureMessage extends Message {
         }
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
-        map.put("signature", Utils.base64Encode(signature));
+        map.put("signature", Base64.encode(signature));
         try {
             return new ReliableMessage(map);
         } catch (NoSuchFieldException e) {

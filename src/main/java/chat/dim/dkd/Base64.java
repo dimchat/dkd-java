@@ -25,27 +25,15 @@
  */
 package chat.dim.dkd;
 
-import java.util.Map;
+public final class Base64 {
 
-public interface InstantMessageDelegate {
+    public static String encode(byte[] data) {
+        java.util.Base64.Encoder encoder = java.util.Base64.getEncoder();
+        return encoder.encodeToString(data);
+    }
 
-    /**
-     *  Encrypt the message.content to message.data with symmetric key
-     *
-     *  @param iMsg - instant message object
-     *  @param content - message.content
-     *  @param password - symmetric key
-     *  @return encrypted message content data
-     */
-    byte[] encryptContent(InstantMessage iMsg, Content content, Map<String, Object> password);
-
-    /**
-     *  Encrypt the symmetric key with receiver's public key
-     *
-     *  @param iMsg - instant message object
-     *  @param password - symmetric key to be encrypted
-     *  @param receiver - receiver ID/string
-     *  @return encrypted key data
-     */
-    byte[] encryptKey(InstantMessage iMsg, Map<String, Object> password, Object receiver);
+    public static byte[] decode(String string) {
+        java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();
+        return decoder.decode(string);
+    }
 }
