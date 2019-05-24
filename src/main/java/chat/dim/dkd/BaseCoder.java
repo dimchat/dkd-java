@@ -25,31 +25,9 @@
  */
 package chat.dim.dkd;
 
-public final class Base64 {
+public interface BaseCoder {
 
-    public static String encode(byte[] data) {
-        java.util.Base64.Encoder encoder = java.util.Base64.getEncoder();
-        return encoder.encodeToString(data);
-    }
+    String encode(byte[] data);
 
-    public static byte[] decode(String string) {
-        java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();
-        return decoder.decode(string);
-    }
-
-    // default coder
-    public static BaseCoder coder = new BaseCoder() {
-
-        @Override
-        public String encode(byte[] data) {
-            java.util.Base64.Encoder encoder = java.util.Base64.getEncoder();
-            return encoder.encodeToString(data);
-        }
-
-        @Override
-        public byte[] decode(String string) {
-            java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();
-            return decoder.decode(string);
-        }
-    };
+    byte[] decode(String string);
 }

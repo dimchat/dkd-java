@@ -65,15 +65,14 @@ public final class Envelope extends Dictionary {
     }
 
     private static Date getTime(Map<String, Object> map) {
-        long timestamp = 0;
         Object time = map.get("time");
         if (time == null) {
-            // timestamp = 0;
+            // now
             return new Date();
         } else {
-            timestamp = (long) map.get("time");
+            long timestamp = (long) time;
+            return new Date(timestamp * 1000);
         }
-        return new Date(timestamp * 1000);
     }
 
     private static long getTimestamp(Date time) {
