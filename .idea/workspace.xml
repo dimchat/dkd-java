@@ -8,17 +8,14 @@
   <component name="ChangeListManager">
     <list default="true" id="ab6dd2a9-82b4-480e-8183-817cf663523a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/IInstantMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/IReliableMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ISecureMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Content.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Content.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ForwardContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ForwardContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/MessageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MessageTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -30,6 +27,20 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -57,27 +68,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="DaoKeDao" type="f1a62948:ProjectNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-                <item name="test" type="396b929e:GradleViewContributor$SourceSetNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="DaoKeDao" type="f1a62948:ProjectNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-                <item name="test" type="396b929e:GradleViewContributor$SourceSetNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="DaoKeDao" type="f1a62948:ProjectNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-                <item name="test" type="396b929e:GradleViewContributor$SourceSetNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-                <item name="junit:junit:4.12" type="cfea851d:ExternalSystemViewDefaultContributor$LibraryDependencyDataExternalSystemNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="DaoKeDao" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
@@ -90,13 +80,31 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="DaoKeDao" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build setup" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DaoKeDao" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="documentation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DaoKeDao" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="help" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="DaoKeDao" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="other" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="DaoKeDao" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="upload" type="c8890929:TasksNode$1" />
+                <item name="publishing" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -118,25 +126,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Content.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java">
+      <file leaf-file-name="SecureMessage.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="88" lean-forward="true" selection-start-line="88" selection-end-line="88" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4084#4085#0" expanded="true" />
-                <element signature="e#4134#4135#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="36" />
+            <state relative-caret-position="598">
+              <caret line="333" column="72" selection-start-line="333" selection-start-column="72" selection-end-line="333" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -147,8 +141,8 @@
       <file leaf-file-name="ReliableMessage.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="617">
-              <caret line="44" selection-start-line="44" selection-end-line="44" />
+            <state relative-caret-position="611">
+              <caret line="124" column="79" selection-start-line="124" selection-start-column="79" selection-end-line="124" selection-end-column="79" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -156,14 +150,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SecureMessage.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java">
+      <file leaf-file-name="BaseCoder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/BaseCoder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="35" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="405">
+              <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#1463#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TextContent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/TextContent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="41" column="1" lean-forward="true" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Log.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/Log.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
@@ -171,72 +195,39 @@
       <file leaf-file-name="InstantMessage.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="40" column="18" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="18" />
+            <state relative-caret-position="634">
+              <caret line="158" column="69" selection-start-line="158" selection-start-column="69" selection-end-line="158" selection-end-column="69" />
               <folding>
+                <element signature="e#0#6106#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Envelope.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java">
+      <file leaf-file-name="InstantMessageDelegate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#900#901#0" expanded="true" />
-                <element signature="e#950#951#0" expanded="true" />
-                <element signature="e#1517#1518#0" expanded="true" />
-                <element signature="e#1567#1568#0" expanded="true" />
-                <element signature="e#1732#1733#0" expanded="true" />
-                <element signature="e#1776#1777#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="375">
+              <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Utils.java">
+      <file leaf-file-name="ReliableMessageDelegate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="165">
+              <caret line="35" column="45" lean-forward="true" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JSON.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/1.2.47/80217385515cb624ad9d1e7b47162b5ecff0c040/fastjson-1.2.47-sources.jar!/com/alibaba/fastjson/JSON.java">
+      <file leaf-file-name="SecureMessageDelegate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="659" column="51" selection-start-line="659" selection-start-column="51" selection-end-line="659" selection-end-column="51" />
-              <folding>
-                <element signature="e#20721#20722#0" expanded="true" />
-                <element signature="e#20778#20779#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JSONSerializer.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/1.2.47/80217385515cb624ad9d1e7b47162b5ecff0c040/fastjson-1.2.47-sources.jar!/com/alibaba/fastjson/serializer/JSONSerializer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="195" column="5" selection-start-line="195" selection-start-column="5" selection-end-line="195" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Object.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/Object.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="41" column="3" selection-start-line="41" selection-start-column="3" selection-end-line="41" selection-end-column="3" />
+            <state relative-caret-position="495">
+              <caret line="57" column="43" lean-forward="true" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -253,9 +244,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>seconds</find>
-      <find>group</find>
-      <find>copy</find>
       <find>entries</find>
       <find>error</find>
       <find>catch</find>
@@ -273,6 +261,19 @@
       <find>getChars</find>
       <find>String</find>
       <find>writeNonStringValueAsString</find>
+      <find>iseq</find>
+      <find>equals</find>
+      <find>keyMap</find>
+      <find>Content</find>
+      <find>this.</find>
+      <find>createInstance</find>
+      <find>getInstance</find>
+      <find>maven</find>
+      <find>decode(</find>
+      <find>randomNumber</find>
+      <find>getPublicKey</find>
+      <find>plain</find>
+      <find>cipher</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -330,6 +331,10 @@
                 <option name="name" value="projects" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="sourceJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles main classes." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="classes" />
@@ -338,6 +343,11 @@
                 <option name="description" value="Displays the dependent components of components in root project 'DaoKeDao'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependentComponents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Publishes artifacts to bintray.com." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="bintrayUpload" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays all buildscript dependencies declared in root project 'DaoKeDao'." />
@@ -358,6 +368,10 @@
                 <option name="description" value="Generates Javadoc API documentation for the main source code." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="javadoc" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="signArchives" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles a jar archive containing the main classes." />
@@ -393,6 +407,10 @@
                 <option name="description" value="Compiles main Java source." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="compileJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="javadocJar" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays the insight into a specific dependency in root project 'DaoKeDao'." />
@@ -440,14 +458,14 @@
                 <option name="name" value="build" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Installs the 'archives' artifacts into the local Maven repository." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="install" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project and all projects it depends on." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="buildNeeded" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Uploads all artifacts belonging to configuration ':archives'" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="uploadArchives" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays the properties of root project 'DaoKeDao'." />
@@ -461,9 +479,10 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="6224392533000" />
+        <entry key="$USER_HOME$/.gradle/gradle.properties" value="2515849785" />
+        <entry key="$PROJECT_DIR$" value="7784343545000" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="4168048122" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="2087555636" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="2083459160" />
         <entry key="$PROJECT_DIR$/settings.gradle" value="1298234506" />
       </map>
@@ -478,6 +497,82 @@
                   <entry key="$PROJECT_DIR$">
                     <value>
                       <ExternalModuleBuildClasspathPojo>
+                        <option name="entries">
+                          <list>
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jfrog.bintray.gradle/gradle-bintray-plugin/1.6/cfb9663e11e4321d040d64038e93f86fa4105483/gradle-bintray-plugin-1.6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jfrog.bintray.gradle/gradle-bintray-plugin/1.6/1dfdf1464f019fe1316ecec354ff7f6d39309035/gradle-bintray-plugin-1.6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy.modules.http-builder/http-builder/0.7.2/f1860181de06236f28f3f247aed57fa4631016d8/http-builder-0.7.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy.modules.http-builder/http-builder/0.7.2/323092cd786480311c1cf693770f9e6fc20a8bef/http-builder-0.7.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-ant-tasks/2.1.3/49136cf7eb0e463e080ad2ebb0f65e91b19c8101/maven-ant-tasks-2.1.3-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-ant-tasks/2.1.3/b09be554228d66d208e5fef5266844aacf443abc/maven-ant-tasks-2.1.3.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.2.1/6b27312b9c28b59aaeb6c21f3490045690c703d3/httpclient-4.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.2.1/b69bd03af60bf487b3ae1209a644ecac587bf6fc/httpclient-4.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.json-lib/json-lib/2.3/f35340c0a0380141f62c72b76c8fb4bfa638d8c1/json-lib-2.3-jdk15.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.nekohtml/nekohtml/1.9.16/2d40ea21fae95418331ddc66efb6744a38bf59a/nekohtml-1.9.16-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.nekohtml/nekohtml/1.9.16/61e35204e5a8fdb864152f84e2e3b33ab56f50ab/nekohtml-1.9.16.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xml-resolver/xml-resolver/1.2/6b72432ea1c5296783007365bb7c9a6b39dfb730/xml-resolver-1.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xml-resolver/xml-resolver/1.2/3d0f97750b3a03e0971831566067754ba4bfd68c/xml-resolver-1.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.ant/ant/1.8.0/2e585348c06d55d4c27c4afe46721fd5d6a43d9d/ant-1.8.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.ant/ant/1.8.0/7b456ca6b93900f96e58cc8371f03d90a9c1c8d1/ant-1.8.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/classworlds/classworlds/1.1-alpha-2/5adf2e681c57d7f48038b602f3ca2254ee82d47/classworlds-1.1-alpha-2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-container-default/1.0-alpha-9-stable-1/e9b8cdfbdca8f10c3d86f8c9ef16ab231bc379a7/plexus-container-default-1.0-alpha-9-stable-1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-container-default/1.0-alpha-9-stable-1/94aea3010e250a334d9dab7f591114cd6c767458/plexus-container-default-1.0-alpha-9-stable-1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-utils/1.5.15/1b1039b7725a6d1dd7b9f123acc5ad4b3b10d4ef/plexus-utils-1.5.15-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-utils/1.5.15/c689598ce1eb94c304817877ed15911099972526/plexus-utils-1.5.15.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-interpolation/1.11/80d47c6b183bd5ba343c36cf84d73daf28a31c64/plexus-interpolation-1.11-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-interpolation/1.11/ad9dddff6043194904ad1d2c00ff1d003c3915f7/plexus-interpolation-1.11.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/2.2.1/2254a7c4df37ee565bb557e46325f8483942a368/maven-artifact-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/2.2.1/23600f790d4dab2cb965419eaa982e3e84c428f8/maven-artifact-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact-manager/2.2.1/4cbd2b82fd13793898272e3efde94553e0a34766/maven-artifact-manager-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact-manager/2.2.1/ec355b913c34d37080810f98e3f51abecbe1572b/maven-artifact-manager-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-model/2.2.1/3d7c035d8455862ea4e4d7df0f19f96426da8cd6/maven-model-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-model/2.2.1/c0a1c17436ec3ff5a56207c031d82277b4250a29/maven-model-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-project/2.2.1/48d00094f3534d54ac9103cc1e1ac0d19373f96d/maven-project-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-project/2.2.1/8239e98c16f641d55a4ad0e0bab0aee3aff8933f/maven-project-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-error-diagnostics/2.2.1/8a39928ed8627f01b9c36e0e2aea8915d5aef848/maven-error-diagnostics-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-error-diagnostics/2.2.1/e81bb342d7d172f23d108dc8fa979a1facdcde8e/maven-error-diagnostics-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-settings/2.2.1/9b5adc6a8a8de7bba166f189551630ed6c879c0/maven-settings-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-settings/2.2.1/2236ffe71fa5f78ce42b0f5fc22c54ed45f14294/maven-settings-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.wagon/wagon-file/1.0-beta-6/9615a8a9e38f6303e863624c1391868d622ecb8/wagon-file-1.0-beta-6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.wagon/wagon-file/1.0-beta-6/6c53633505460caf49d2660de1e24744d915afb9/wagon-file-1.0-beta-6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.wagon/wagon-http-lightweight/1.0-beta-6/a7c0a4d1d9f226f4cff661117e2248fe93abc222/wagon-http-lightweight-1.0-beta-6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.wagon/wagon-http-lightweight/1.0-beta-6/b3815078570c3b1f0667e123d59717c6b726c6c2/wagon-http-lightweight-1.0-beta-6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.wagon/wagon-provider-api/1.0-beta-6/2ed36dee4bd5ed91a9ab12a4378189d97dddd932/wagon-provider-api-1.0-beta-6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.wagon/wagon-provider-api/1.0-beta-6/3f952e0282ae77ae59851d96bb18015e520b6208/wagon-provider-api-1.0-beta-6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.2.1/3f6caf5334fa83607b82e2f32dd128a9d8a0ea5e/httpcore-4.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.2.1/2d503272bf0a8b5f92d64db78b4ba9abbaccc6fd/httpcore-4.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/f3f156cbff0e0fb0d64bfce31a352cce4a33bc19/commons-logging-1.1.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/5043bfebc3db072ed80fbd362e7caf00e885d8ae/commons-logging-1.1.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/61e9f9d11fe3e12ec62f633006e99d75fd7f19c8/commons-codec-1.6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/b7f0fc8f61ecadeb3695f0b9464755eee44374d4/commons-codec-1.6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-beanutils/commons-beanutils/1.8.0/2818502bbb50bbcbd3f57e92a2bfe4d496f37688/commons-beanutils-1.8.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-beanutils/commons-beanutils/1.8.0/c651d5103c649c12b20d53731643e5fffceb536/commons-beanutils-1.8.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.1/fa095ef874374e5b2a11f8b06c26a5d68c7cb3a4/commons-collections-3.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.1/761ea405b9b37ced573d2df0d1e3a4e0f9edc668/commons-collections-3.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.4/2b8c4b3035e45520ef42033e823c7d33e4b4402c/commons-lang-2.4-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.4/16313e02a793435009f1e458fa4af5d879f6fb11/commons-lang-2.4.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.ezmorph/ezmorph/1.0.6/298992280d62b944afd0ae9bfe3329f5487dd434/ezmorph-1.0.6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.ezmorph/ezmorph/1.0.6/1e55d2a0253ea37745d33062852fd2c90027432/ezmorph-1.0.6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xerces/xercesImpl/2.9.1/e30837a0843d5ea477b9334efdb730e66ffbd253/xercesImpl-2.9.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xerces/xercesImpl/2.9.1/1136d197e2755bbde296ceee217ec5fe2917477b/xercesImpl-2.9.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.ant/ant-launcher/1.8.0/8b53ba16fa62fb1034da8f1de200ddc407c8381/ant-launcher-1.8.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/3.8.1/525753763e53f6f76da052b316d0f2e3bfa4d73/junit-3.8.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/3.8.1/99129f16442844f6a4a11ae22fbbee40b14d774f/junit-3.8.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-repository-metadata/2.2.1/3b32786962e043891fc08265618c8b1d37c120b9/maven-repository-metadata-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-repository-metadata/2.2.1/98f0c07fcf1eeb213bef8d9316a9935184084b06/maven-repository-metadata-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/backport-util-concurrent/backport-util-concurrent/3.1/eff8366924cf1a666dd20aa632febf1c2c05b8cb/backport-util-concurrent-3.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/backport-util-concurrent/backport-util-concurrent/3.1/682f7ac17fed79e92f8e87d8455192b63376347b/backport-util-concurrent-3.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-profile/2.2.1/c20d767b267a679af494ee62c313e2ff8ba43116/maven-profile-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-profile/2.2.1/3950071587027e5086e9c395574a60650c432738/maven-profile-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-plugin-registry/2.2.1/4bb2899cf7f21818266035efab67a8cd5068ebd0/maven-plugin-registry-2.2.1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-plugin-registry/2.2.1/72a24b7775649af78f3986b5aa7eb354b9674cfd/maven-plugin-registry-2.2.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.wagon/wagon-http-shared/1.0-beta-6/18bd7878bf8ce32f353563190b2e88f1d45da470/wagon-http-shared-1.0-beta-6-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.maven.wagon/wagon-http-shared/1.0-beta-6/ccd70d7e0d8c085e648a83f072da06ca9a53be94/wagon-http-shared-1.0-beta-6.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/nekohtml/xercesMinimal/1.9.6.2/d1c5e063683a0e6f77cd5f051a9d4af48346fa6/xercesMinimal-1.9.6.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/nekohtml/nekohtml/1.9.6.2/c007e4add79842d6b76f0b056ddb14e848424b86/nekohtml-1.9.6.2-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/nekohtml/nekohtml/1.9.6.2/2d960be7b62ae6622dbbbe49ab4ffdc609f85c80/nekohtml-1.9.6.2.jar" />
+                          </list>
+                        </option>
                         <option name="path" value="$PROJECT_DIR$" />
                       </ExternalModuleBuildClasspathPojo>
                     </value>
@@ -648,9 +743,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/Envelope.java" />
-        <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/Content.java" />
-        <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/Command.java" />
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/TextContent.java" />
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/HistoryContent.java" />
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/Utils.java" />
@@ -671,28 +763,37 @@
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/ReliableMessage.java" />
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/InstantMessage.java" />
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/SecureMessage.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/AudioContent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/CommandContent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ImageContent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/PageContent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/TextContent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/VideoContent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/FileContent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/HistoryCommand.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/IInstantMessageDelegate.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/IReliableMessageDelegate.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ISecureMessageDelegate.java" />
-        <option value="$PROJECT_DIR$/src/test/java/MessageTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ImageContent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/VideoContent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/CommandContent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/HistoryCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ForwardContent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/FileContent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/TextContent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/AudioContent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/PageContent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java" />
+        <option value="$PROJECT_DIR$/src/test/java/ContentTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/TextContent.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Dictionary.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Utils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64Coder.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Content.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" />
+        <option value="$PROJECT_DIR$/src/test/java/Log.java" />
+        <option value="$PROJECT_DIR$/src/test/java/MessageTest.java" />
       </list>
     </option>
   </component>
@@ -702,14 +803,20 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="619" />
+    <option name="x" value="417" />
     <option name="y" value="23" />
-    <option name="width" value="1455" />
-    <option name="height" value="1417" />
+    <option name="width" value="1520" />
+    <option name="height" value="1377" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -719,9 +826,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -775,15 +879,6 @@
               <item name="DaoKeDao" type="b2602c69:ProjectViewProjectNode" />
               <item name="dkd-java" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dkd" type="462c0819:PsiDirectoryNode" />
-              <item name="content" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DaoKeDao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dkd-java" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
@@ -801,6 +896,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -830,9 +928,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.dkd-java [uploadArchives]">
+  <component name="RunManager" selected="Gradle.dkd-java [install]">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="dkd-java [bintrayUpload]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bintrayUpload" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
     </configuration>
     <configuration name="dkd-java [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -868,7 +983,7 @@
         <option name="vmOptions" />
       </ExternalSystemSettings>
     </configuration>
-    <configuration name="dkd-java [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="dkd-java [install]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -879,24 +994,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="jar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-    </configuration>
-    <configuration name="dkd-java [uploadArchives]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="uploadArchives" />
+            <option value="install" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -961,16 +1059,16 @@
       <item itemvalue="Gradle.dkd-java [build]" />
       <item itemvalue="Gradle.dkd-java [clean]" />
       <item itemvalue="JUnit.MessageTest" />
-      <item itemvalue="Gradle.dkd-java [jar]" />
-      <item itemvalue="Gradle.dkd-java [uploadArchives]" />
+      <item itemvalue="Gradle.dkd-java [install]" />
+      <item itemvalue="Gradle.dkd-java [bintrayUpload]" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.dkd-java [uploadArchives]" />
         <item itemvalue="JUnit.MessageTest" />
-        <item itemvalue="Gradle.dkd-java [build]" />
-        <item itemvalue="Gradle.dkd-java [jar]" />
+        <item itemvalue="Gradle.dkd-java [install]" />
+        <item itemvalue="Gradle.dkd-java [bintrayUpload]" />
         <item itemvalue="Gradle.dkd-java [clean]" />
+        <item itemvalue="Gradle.dkd-java [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -990,79 +1088,90 @@
       <workItem from="1556178584371" duration="8191000" />
       <workItem from="1556192922252" duration="90000" />
       <workItem from="1556262431940" duration="5472000" />
-      <workItem from="1556355037603" duration="9957000" />
+      <workItem from="1556355037603" duration="10506000" />
+      <workItem from="1556431300726" duration="11377000" />
+      <workItem from="1556533552185" duration="806000" />
+      <workItem from="1556535425574" duration="8000" />
+      <workItem from="1556621951048" duration="1981000" />
+      <workItem from="1557393907163" duration="7705000" />
+      <workItem from="1557402145474" duration="6256000" />
+      <workItem from="1557737249434" duration="1622000" />
+      <workItem from="1557910335778" duration="5386000" />
+      <workItem from="1558340067214" duration="598000" />
+      <workItem from="1558429272672" duration="4104000" />
+      <workItem from="1558946047211" duration="6596000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="MessageTest - 2019.04.27 at 17h 31m 25s.xml">
+    <history-entry file="dkd-java_[test] - 2019.04.28 at 19h 02m 10s.xml">
+      <configuration name="dkd-java [test]" configurationId="GradleRunConfiguration" />
+    </history-entry>
+    <history-entry file="dkd-java_[test] - 2019.05.09 at 17h 54m 28s.xml">
+      <configuration name="dkd-java [test]" configurationId="GradleRunConfiguration" />
+    </history-entry>
+    <history-entry file="MessageTest - 2019.05.09 at 17h 54m 43s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 17h 33m 55s.xml">
+    <history-entry file="MessageTest - 2019.05.09 at 19h 40m 00s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 17h 35m 58s.xml">
+    <history-entry file="MessageTest - 2019.05.25 at 03h 00m 46s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 17h 37m 05s.xml">
+    <history-entry file="MessageTest - 2019.05.25 at 03h 02m 42s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 17h 38m 11s.xml">
+    <history-entry file="MessageTest - 2019.05.25 at 03h 03m 08s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 17h 40m 39s.xml">
+    <history-entry file="MessageTest - 2019.05.25 at 03h 04m 50s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 18h 04m 50s.xml">
+    <history-entry file="MessageTest - 2019.05.25 at 03h 10m 27s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 18h 04m 56s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 18h 06m 30s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.04.27 at 18h 28m 36s.xml">
+    <history-entry file="MessageTest - 2019.05.29 at 19h 08m 39s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69263000" />
+    <option name="totallyTimeSpent" value="116251000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="619" y="23" width="1455" height="1417" extended-state="0" />
+    <frame x="417" y="23" width="1520" height="1377" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32911393" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info anchor="right" id="Maven Projects" order="3" weight="0.32949933" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25763217" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25703126" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23367697" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" id="Gradle" order="3" visible="true" weight="0.195189" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26589987" />
+      <window_info anchor="right" id="Database" order="3" weight="0.32949933" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Gradle" order="3" visible="true" weight="0.18673883" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.2496617" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39921874" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.32911393" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.1859375" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1071,49 +1180,28 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java</url>
+          <line>53</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/chat/dim/dkd/Message.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/chat/dim/dkd/SecureMessage.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/AudioContent.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/CommandContent.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/Content.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/DaoKeDao.java" />
-    <entry file="file://$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" />
-    <entry file="file://$PROJECT_DIR$/.idea/artifacts/DaoKeDao_jar.xml" />
-    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="16" selection-start-line="2" selection-end-line="2" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/classes/chat/dim/dkd/content/Content.class" />
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/HashMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="138" column="18" selection-start-line="138" selection-start-column="15" selection-end-line="138" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/ClassNotFoundException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="80" column="11" selection-start-line="80" selection-start-column="11" selection-end-line="80" selection-end-column="11" />
-          <folding>
-            <element signature="e#2215#2216#0" expanded="true" />
-            <element signature="e#2269#2270#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/IllegalArgumentException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="50" column="11" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
-          <folding>
-            <element signature="e#828#829#0" expanded="true" />
-            <element signature="e#852#853#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1131,115 +1219,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ImageContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/PageContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/VideoContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/AudioContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/CommandContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/FileContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
-          <folding>
-            <element signature="e#676#706#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/HistoryCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Base64.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2489">
           <caret line="86" column="26" selection-start-line="86" selection-start-column="26" selection-end-line="86" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/TextContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
@@ -1261,49 +1244,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
           <caret line="106" column="40" selection-start-line="106" selection-start-column="40" selection-end-line="106" selection-end-column="40" />
-          <folding>
-            <element signature="e#6283#6284#0" expanded="true" />
-            <element signature="e#6351#6352#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="48" column="37" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Map.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1402">
-          <caret line="128" column="17" selection-start-line="128" selection-start-column="17" selection-end-line="128" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ForwardContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="46" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Dictionary.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#476#477#0" expanded="true" />
-            <element signature="e#521#522#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1342,24 +1282,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/1.2.47/80217385515cb624ad9d1e7b47162b5ecff0c040/fastjson-1.2.47-sources.jar!/com/alibaba/fastjson/JSON.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
+        <state relative-caret-position="9165">
           <caret line="659" column="51" selection-start-line="659" selection-start-column="51" selection-end-line="659" selection-end-column="51" />
-          <folding>
-            <element signature="e#20721#20722#0" expanded="true" />
-            <element signature="e#20778#20779#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1379,54 +1305,177 @@
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/1.2.47/80217385515cb624ad9d1e7b47162b5ecff0c040/fastjson-1.2.47-sources.jar!/com/alibaba/fastjson/serializer/JSONSerializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
+        <state relative-caret-position="2370">
           <caret line="195" column="5" selection-start-line="195" selection-start-column="5" selection-end-line="195" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Map.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="88" lean-forward="true" selection-start-line="88" selection-end-line="88" />
+        <state relative-caret-position="-94">
+          <caret line="426" column="54" selection-start-line="426" selection-start-column="48" selection-end-line="426" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/org/junit/Assert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="780" column="23" selection-start-line="780" selection-start-column="23" selection-end-line="780" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/VideoContent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/TextContent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/PageContent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ImageContent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/ForwardContent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/FileContent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/CommandContent.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/AudioContent.java" />
+    <entry file="file://$PROJECT_DIR$/.idea/gradle.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="15" lean-forward="true" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-686" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/HistoryCommand.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java" />
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="20" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Date.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="163" column="11" selection-start-line="163" selection-start-column="11" selection-end-line="163" selection-end-column="11" />
+          <folding>
+            <element signature="e#6390#6391#0" expanded="true" />
+            <element signature="e#6438#6439#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/reflect/Constructor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="405" column="13" selection-start-line="405" selection-start-column="13" selection-end-line="405" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="53" selection-start-line="53" selection-end-line="53" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4084#4085#0" expanded="true" />
-            <element signature="e#4134#4135#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#2215#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Random.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="603">
+          <caret line="430" column="42" lean-forward="true" selection-start-line="430" selection-start-column="42" selection-end-line="430" selection-end-column="42" />
+          <folding>
+            <element signature="e#11985#11986#0" expanded="true" />
+            <element signature="e#12016#12017#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Dictionary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#3420#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="255">
+          <caret line="41" column="31" lean-forward="true" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#900#901#0" expanded="true" />
-            <element signature="e#950#951#0" expanded="true" />
-            <element signature="e#1517#1518#0" expanded="true" />
-            <element signature="e#1567#1568#0" expanded="true" />
-            <element signature="e#1732#1733#0" expanded="true" />
-            <element signature="e#1776#1777#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Content.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="36" />
+        <state relative-caret-position="783">
+          <caret line="98" column="34" lean-forward="true" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2815#2816#0" expanded="true" />
+            <element signature="e#2843#2844#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="35" column="45" lean-forward="true" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="57" column="43" lean-forward="true" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="18" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="18" />
+        <state relative-caret-position="634">
+          <caret line="158" column="69" selection-start-line="158" selection-start-column="69" selection-end-line="158" selection-end-column="69" />
           <folding>
+            <element signature="e#0#6106#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -1434,18 +1483,52 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="617">
-          <caret line="44" selection-start-line="44" selection-end-line="44" />
+        <state relative-caret-position="611">
+          <caret line="124" column="79" selection-start-line="124" selection-start-column="79" selection-end-line="124" selection-end-column="79" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/BaseCoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#1463#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="598">
+          <caret line="333" column="72" selection-start-line="333" selection-start-column="72" selection-end-line="333" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/Log.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/TextContent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="41" column="1" lean-forward="true" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

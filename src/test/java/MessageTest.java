@@ -7,13 +7,6 @@ import java.util.Map;
 
 public class MessageTest {
 
-    private void log(String msg) {
-        StackTraceElement[] traces = Thread.currentThread().getStackTrace();
-        String method = traces[2].getMethodName();
-        int line = traces[2].getLineNumber();
-        System.out.println("[" + method + ":" + line + "] " + msg);
-    }
-
     public static String sender = "moki@4WDfe3zZ4T7opFSi3iDAKiuTnUHjxmXekk";
     public static String receiver = "hulk@4YeVEN3aUnvC1DNUufCq1bs9zoBSJTzVEj";
 
@@ -21,7 +14,7 @@ public class MessageTest {
     public void testEnvelope() {
 
         Envelope envelope = new Envelope(sender, receiver);
-        log("envelope:" + envelope);
+        Log.info("envelope:" + envelope);
 
         Envelope env = Envelope.getInstance(envelope);
         Assert.assertSame(envelope, env);
@@ -35,10 +28,10 @@ public class MessageTest {
         Content content = new TextContent("Hello world!");
 
         InstantMessage iMsg = new InstantMessage(content, sender, receiver);
-        log("instant message:" + iMsg);
+        Log.info("instant message:" + iMsg);
 
         message = InstantMessage.getInstance(iMsg);
-        log("message:" + message);
+        Log.info("message:" + message);
         Assert.assertSame(iMsg, message);
     }
 
@@ -53,13 +46,13 @@ public class MessageTest {
         dictionary.put("data", Base64.encode(data));
 
         SecureMessage sMsg = SecureMessage.getInstance(dictionary);
-        log("secure message:" + sMsg);
+        Log.info("secure message:" + sMsg);
 
         sMsg.setGroup("group12345");
-        log("group:" + sMsg.getGroup());
+        Log.info("group:" + sMsg.getGroup());
 
         dictionary.put("signature", Base64.encode(data));
         ReliableMessage rMsg = ReliableMessage.getInstance(dictionary);
-        log("reliable message:" + rMsg);
+        Log.info("reliable message:" + rMsg);
     }
 }

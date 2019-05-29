@@ -122,7 +122,7 @@ public class ReliableMessage extends SecureMessage {
      */
     public SecureMessage verify() {
         // 1. verify
-        boolean OK = delegate.verifyData(this, data, signature, envelope.sender);
+        boolean OK = delegate.verifyData(data, signature, envelope.sender, this);
         if (!OK) {
             throw new RuntimeException("message signature not match:" + this);
         }

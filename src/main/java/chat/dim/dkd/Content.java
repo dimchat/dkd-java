@@ -52,19 +52,22 @@ public class Content extends Dictionary {
     protected Content(int msgType) {
         super();
         type         = msgType;
-        serialNumber = randomNumber();
+        serialNumber = randomPositiveInteger();
         group        = null;
         dictionary.put("type", type);
         dictionary.put("sn", serialNumber);
     }
 
-    private static long randomNumber() {
+    private static long randomPositiveInteger() {
         Random random = new Random();
-        long sn = random.nextInt();
-        if (sn < 0) {
-            return sn + 1 + Integer.MAX_VALUE - Integer.MIN_VALUE;
+        long sn = random.nextLong();
+        if (sn > 0) {
+            return sn;
+        } else if (sn < 0) {
+            return -sn;
         }
-        return sn;
+        // ZERO? do it again!
+        return 9527 + 9394; // randomPositiveInteger();
     }
 
     //-------- setter/getter --------

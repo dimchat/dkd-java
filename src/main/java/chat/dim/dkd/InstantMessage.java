@@ -104,7 +104,7 @@ public class InstantMessage extends Message {
         Map<String, Object> map = encryptContent(password);
 
         // 2. encrypt password to 'key'
-        byte[] key = delegate.encryptKey(this, password, envelope.receiver);
+        byte[] key = delegate.encryptKey(password, envelope.receiver, this);
         if (key != null) {
             map.put("key", Base64.encode(key));
         }
@@ -134,7 +134,7 @@ public class InstantMessage extends Message {
         Map<Object, String> keys = new HashMap<>();
         byte[] key;
         for (Object member: members) {
-            key = delegate.encryptKey(this, password, member);
+            key = delegate.encryptKey(password, member, this);
             if (key != null) {
                 keys.put(member, Base64.encode(key));
             }
@@ -156,7 +156,7 @@ public class InstantMessage extends Message {
     private Map<String, Object> encryptContent(Map<String, Object> password) {
         // 1. encrypt message content
         //    (remember to check attachment for File/Image/Audio/Video message content first)
-        byte[] data = delegate.encryptContent(this, content, password);
+        byte[] data = delegate.encryptContent(content, password, this);
         if (data == null) {
             throw new NullPointerException("failed to encrypt content with key:" + password);
         }

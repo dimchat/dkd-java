@@ -285,14 +285,14 @@ public class SecureMessage extends Message {
 
     private InstantMessage decryptData(byte[] key, Object sender, Object receiver) {
         // 1. decrypt 'key' to symmetric key
-        Map<String, Object> password = delegate.decryptKey(this, key, sender, receiver);
+        Map<String, Object> password = delegate.decryptKey(key, sender, receiver, this);
         if (password == null) {
             throw new NullPointerException("failed to decrypt symmetric key:" + this);
         }
 
         // 2. decrypt 'data' to 'content'
         //    (remember to save password for decrypted File/Image/Audio/Video data)
-        Content content = delegate.decryptContent(this, data, password);
+        Content content = delegate.decryptContent(data, password, this);
         if (content == null) {
             throw new NullPointerException("failed to decrypt message data:" + this);
         }
@@ -331,7 +331,7 @@ public class SecureMessage extends Message {
      */
     public ReliableMessage sign() {
         // 1. sign
-        byte[] signature = delegate.signData(this, data, envelope.sender);
+        byte[] signature = delegate.signData(data, envelope.sender, this);
         if (signature == null) {
             throw new NullPointerException("failed to sign message:" + this);
         }
