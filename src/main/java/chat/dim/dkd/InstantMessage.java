@@ -48,7 +48,7 @@ public class InstantMessage extends Message {
 
     public InstantMessageDelegate delegate;
 
-    public InstantMessage(Map<String, Object> dictionary) throws ClassNotFoundException {
+    public InstantMessage(Map<String, Object> dictionary) {
         super(dictionary);
         content = Content.getInstance(dictionary.get("content"));
     }
@@ -68,7 +68,7 @@ public class InstantMessage extends Message {
     }
 
     @SuppressWarnings("unchecked")
-    public static InstantMessage getInstance(Object object) throws ClassNotFoundException {
+    public static InstantMessage getInstance(Object object) {
         if (object == null) {
             return null;
         } else if (object instanceof InstantMessage) {
@@ -110,12 +110,7 @@ public class InstantMessage extends Message {
         }
 
         // 3. pack message
-        try {
-            return new SecureMessage(map);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return new SecureMessage(map);
     }
 
     /**

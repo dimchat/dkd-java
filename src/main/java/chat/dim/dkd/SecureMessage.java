@@ -56,13 +56,13 @@ public class SecureMessage extends Message {
     public SecureMessageDelegate delegate;
 
     @SuppressWarnings("unchecked")
-    public SecureMessage(Map<String, Object> dictionary) throws NoSuchFieldException {
+    public SecureMessage(Map<String, Object> dictionary) {
         super(dictionary);
 
         // encrypted data
         String base64 = (String) dictionary.get("data");
         if (base64 == null) {
-            throw new NoSuchFieldException("encrypted data not found:" + dictionary);
+            throw new NullPointerException("encrypted data not found:" + dictionary);
         }
         data = Base64.decode(base64);
 
@@ -116,7 +116,7 @@ public class SecureMessage extends Message {
     }
 
     @SuppressWarnings("unchecked")
-    public static SecureMessage getInstance(Object object) throws NoSuchFieldException {
+    public static SecureMessage getInstance(Object object) {
         if (object == null) {
             return null;
         } else if (object instanceof SecureMessage) {
@@ -174,14 +174,10 @@ public class SecureMessage extends Message {
             }
 
             // 3. repack message
-            try {
-                if (msg.containsKey("signature")) {
-                    messages.add(new ReliableMessage(msg));
-                } else {
-                    messages.add(new SecureMessage(msg));
-                }
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
+            if (msg.containsKey("signature")) {
+                messages.add(new ReliableMessage(msg));
+            } else {
+                messages.add(new SecureMessage(msg));
             }
         }
 
@@ -205,15 +201,10 @@ public class SecureMessage extends Message {
             msg.remove("keys");
         }
         // repack
-        try {
-            if (msg.containsKey("signature")) {
-                return new ReliableMessage(msg);
-            } else {
-                return new SecureMessage(msg);
-            }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            return null;
+        if (msg.containsKey("signature")) {
+            return new ReliableMessage(msg);
+        } else {
+            return new SecureMessage(msg);
         }
     }
 
@@ -302,12 +293,7 @@ public class SecureMessage extends Message {
         map.remove("key");
         map.remove("data");
         map.put("content", content);
-        try {
-            return new InstantMessage(map);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return new InstantMessage(map);
     }
 
     /*
@@ -338,11 +324,6 @@ public class SecureMessage extends Message {
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
         map.put("signature", Base64.encode(signature));
-        try {
-            return new ReliableMessage(map);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return new ReliableMessage(map);
     }
 }

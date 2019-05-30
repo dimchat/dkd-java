@@ -67,6 +67,10 @@ install {
                         id 'moky'
                         name 'Albert Moky'
                         email 'albert.moky@gmail.com'
+                        roles {
+                            role 'architect'
+                        }
+                        organization 'DIM Group'
                     }
                 }
                 scm {

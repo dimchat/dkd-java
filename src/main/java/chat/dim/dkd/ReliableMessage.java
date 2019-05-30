@@ -53,12 +53,12 @@ public class ReliableMessage extends SecureMessage {
     public ReliableMessageDelegate delegate;
 
     @SuppressWarnings("unchecked")
-    public ReliableMessage(Map<String, Object> dictionary) throws NoSuchFieldException {
+    public ReliableMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // signature for encrypted data
         String base64 = (String) dictionary.get("signature");
         if (base64 == null) {
-            throw new NoSuchFieldException("signature not found:" + dictionary);
+            throw new NullPointerException("signature not found:" + dictionary);
         }
         signature = Base64.decode(base64);
     }
@@ -74,7 +74,7 @@ public class ReliableMessage extends SecureMessage {
     }
 
     @SuppressWarnings("unchecked")
-    public static ReliableMessage getInstance(Object object) throws NoSuchFieldException {
+    public static ReliableMessage getInstance(Object object) {
         if (object == null) {
             return null;
         } else if (object instanceof ReliableMessage) {
@@ -129,11 +129,6 @@ public class ReliableMessage extends SecureMessage {
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("signature");
-        try {
-            return new SecureMessage(map);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return new SecureMessage(map);
     }
 }
