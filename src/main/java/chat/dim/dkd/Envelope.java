@@ -47,7 +47,8 @@ public final class Envelope extends Dictionary {
         super(dictionary);
         sender   = dictionary.get("sender");
         receiver = dictionary.get("receiver");
-        time     = getTime(dictionary);
+        Object timestamp = dictionary.get("time");
+        time     = (timestamp == null) ? null : new Date((long) timestamp * 1000);
     }
 
     public Envelope(Object from, Object to, Date when) {
@@ -57,26 +58,15 @@ public final class Envelope extends Dictionary {
         time     = when;
         dictionary.put("sender", from);
         dictionary.put("receiver", to);
-        dictionary.put("time", getTimestamp(when));
+        dictionary.put("time", when.getTime() / 1000);
+    }
+
+    public Envelope(Object from, Object to, long timestamp) {
+        this(from, to, new Date(timestamp * 1000));
     }
 
     public Envelope(Object from, Object to) {
         this(from, to, new Date());
-    }
-
-    private static Date getTime(Map<String, Object> map) {
-        Object time = map.get("time");
-        if (time == null) {
-            // now
-            return new Date();
-        } else {
-            long timestamp = (long) time;
-            return new Date(timestamp * 1000);
-        }
-    }
-
-    private static long getTimestamp(Date time) {
-        return time.getTime() / 1000;
     }
 
     @SuppressWarnings("unchecked")

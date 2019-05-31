@@ -18,10 +18,13 @@ public class MessageTest {
 
         Envelope env = Envelope.getInstance(envelope);
         Assert.assertSame(envelope, env);
+
+        env = Envelope.getInstance(new HashMap<>(envelope));
+        Assert.assertEquals(envelope, env);
     }
 
     @Test
-    public void testInstantMessage() throws ClassNotFoundException {
+    public void testInstantMessage() {
 
         Message message;
 
@@ -36,7 +39,7 @@ public class MessageTest {
     }
 
     @Test
-    public void testSecureMessage() throws NoSuchFieldException {
+    public void testSecureMessage() {
 
         byte[] data = new byte[64];
 
