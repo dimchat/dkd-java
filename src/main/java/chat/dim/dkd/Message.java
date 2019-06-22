@@ -25,6 +25,7 @@
  */
 package chat.dim.dkd;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.Map;
 
@@ -74,5 +75,34 @@ abstract class Message extends Dictionary {
     Message(Object from, Object to, long timestamp) {
         super();
         envelope = new Envelope(from, to, timestamp);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Message getInstance(Object object)
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if (object == null) {
+            return null;
+        } else if (object instanceof Message) {
+            // return Message object directly
+            return (Message) object;
+        } else if (object instanceof Map) {
+            Map<String, Object> dictionary = (Map<String, Object>) object;
+            // instant message
+            Object content = dictionary.get("content");
+            if (content != null) {
+                return new InstantMessage(dictionary);
+            }
+            // reliable message
+            String signature = (String) dictionary.get("signature");
+            if (signature != null) {
+                return new ReliableMessage(dictionary);
+            }
+            // secure message
+            String data = (String) dictionary.get("data");
+            if (data != null) {
+                return new SecureMessage(dictionary);
+            }
+        }
+        throw new IllegalArgumentException("unknown message: " + object);
     }
 }

@@ -82,6 +82,7 @@ public final class Envelope extends Dictionary {
         if (object == null) {
             return null;
         } else if (object instanceof Envelope) {
+            // return Envelope object directly
             return (Envelope) object;
         } else if (object instanceof Map) {
             return new Envelope((Map<String, Object>) object);
