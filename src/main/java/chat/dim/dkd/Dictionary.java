@@ -30,16 +30,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class Dictionary implements Map<String, Object> {
+abstract class Dictionary implements Map<String, Object> {
 
     protected final Map<String, Object> dictionary;
 
-    protected Dictionary() {
+    Dictionary() {
         super();
         dictionary = new HashMap<>();
     }
 
-    protected Dictionary(Map<String, Object> map) {
+    Dictionary(Map<String, Object> map) {
         super();
         dictionary = map;
     }

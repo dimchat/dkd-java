@@ -27,6 +27,7 @@ package chat.dim.dkd;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -37,15 +38,15 @@ public class Content extends Dictionary {
     public final int type;
 
     // random number to identify message content
-    protected final long serialNumber;
+    public final long serialNumber;
 
     // Group ID/string for group message
     private Object group;
 
-    public Content(Map<String, Object> dictionary) {
+    protected Content(Map<String, Object> dictionary) {
         super(dictionary);
         type         = (int) dictionary.get("type");
-        serialNumber = Long.valueOf(dictionary.get("sn").toString());
+        serialNumber = (long) dictionary.get("sn");
         group        = dictionary.get("group");
     }
 
@@ -85,30 +86,41 @@ public class Content extends Dictionary {
 
     private static Map<Integer, Class> contentClasses = new HashMap<>();
 
+    @SuppressWarnings("unchecked")
     public static void register(Integer type, Class clazz) {
-        // TODO: check whether clazz is subclass of Content
+        // check whether clazz is subclass of Content
+        if (clazz.equals(Content.class)) {
+            throw new IllegalArgumentException("should not add Content.class itself!");
+        }
+        clazz = clazz.asSubclass(Content.class);
         contentClasses.put(type, clazz);
     }
 
     @SuppressWarnings("unchecked")
-    private static Content createInstance(Map<String, Object> dictionary) {
+    private static Content createInstance(Map<String, Object> dictionary)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         int type = (int) dictionary.get("type");
         Class clazz = contentClasses.get(type);
         if (clazz == null) {
-            //throw new ClassNotFoundException("unknown message type:" + type);
-            clazz = Content.class;
+            //throw new ClassNotFoundException("unknown content type: " + type);
+            return new Content(dictionary);
         }
+        // try 'getInstance()'
         try {
-            Constructor constructor = clazz.getConstructor(Map.class);
-            return (Content) constructor.newInstance(dictionary);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            return null;
+            Method method = clazz.getMethod("getInstance", Object.class);
+            if (method.getDeclaringClass().equals(clazz)) {
+                return (Content) method.invoke(null, dictionary);
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
         }
+        Constructor constructor = clazz.getConstructor(Map.class);
+        return (Content) constructor.newInstance(dictionary);
     }
 
     @SuppressWarnings("unchecked")
-    public static Content getInstance(Object object) {
+    public static Content getInstance(Object object)
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (object == null) {
             return null;
         } else if (object instanceof Content) {
@@ -116,7 +128,7 @@ public class Content extends Dictionary {
         } else if (object instanceof Map) {
             return createInstance((Map<String, Object>) object);
         } else {
-            throw new IllegalArgumentException("unknown message content:" + object);
+            throw new IllegalArgumentException("content error: " + object);
         }
     }
 }

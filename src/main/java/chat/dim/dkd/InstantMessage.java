@@ -25,6 +25,7 @@
  */
 package chat.dim.dkd;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +49,8 @@ public class InstantMessage extends Message {
 
     public InstantMessageDelegate delegate;
 
-    public InstantMessage(Map<String, Object> dictionary) {
+    public InstantMessage(Map<String, Object> dictionary)
+            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         super(dictionary);
         content = Content.getInstance(dictionary.get("content"));
     }
@@ -60,7 +62,15 @@ public class InstantMessage extends Message {
     }
 
     public InstantMessage(Content body, Object from, Object to, Date when) {
-        this(body, new Envelope(from, to, when));
+        super(from, to, when);
+        content = body;
+        dictionary.put("content", body);
+    }
+
+    public InstantMessage(Content body, Object from, Object to, long timestamp) {
+        super(from, to, timestamp);
+        content = body;
+        dictionary.put("content", body);
     }
 
     public InstantMessage(Content body, Object from, Object to) {
@@ -68,7 +78,8 @@ public class InstantMessage extends Message {
     }
 
     @SuppressWarnings("unchecked")
-    public static InstantMessage getInstance(Object object) {
+    public static InstantMessage getInstance(Object object)
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (object == null) {
             return null;
         } else if (object instanceof InstantMessage) {
@@ -76,7 +87,7 @@ public class InstantMessage extends Message {
         } else if (object instanceof Map) {
             return new InstantMessage((Map<String, Object>) object);
         } else {
-            throw new IllegalArgumentException("unknown message:" + object);
+            throw new IllegalArgumentException("unknown message: " + object);
         }
     }
 
@@ -121,7 +132,7 @@ public class InstantMessage extends Message {
      * @return SecureMessage object
      * @throws NoSuchFieldException when 'group' field not found
      */
-    public SecureMessage encrypt(Map<String, Object> password, List<Object> members) throws NoSuchFieldException {
+    public SecureMessage encrypt(Map<String, Object> password, List members) throws NoSuchFieldException {
         // 1. encrypt 'content' to 'data'
         Map<String, Object> map = encryptContent(password);
 
@@ -138,7 +149,7 @@ public class InstantMessage extends Message {
         // group ID
         Object group = content.getGroup();
         if (group == null) {
-            throw new NoSuchFieldException("group message error:" + this);
+            throw new NoSuchFieldException("group message error: " + this);
         }
         // NOTICE: this help the receiver knows the group ID when the group message separated to multi-messages
         //         if don't want the others know you are the group members, modify it
@@ -153,7 +164,7 @@ public class InstantMessage extends Message {
         //    (remember to check attachment for File/Image/Audio/Video message content first)
         byte[] data = delegate.encryptContent(content, password, this);
         if (data == null) {
-            throw new NullPointerException("failed to encrypt content with key:" + password);
+            throw new NullPointerException("failed to encrypt content with key: " + password);
         }
 
         // 2. replace 'content' with encrypted 'data'

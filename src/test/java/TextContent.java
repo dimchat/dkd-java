@@ -36,7 +36,7 @@ public class TextContent extends Content {
         return text;
     }
 
-//    static {
-//        Content.register(TEXT, TextContent.class);
-//    }
+    static {
+        Content.register(TEXT, TextContent.class);
+    }
 }

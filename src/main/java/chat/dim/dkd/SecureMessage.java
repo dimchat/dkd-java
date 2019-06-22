@@ -25,6 +25,7 @@
  */
 package chat.dim.dkd;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +63,7 @@ public class SecureMessage extends Message {
         // encrypted data
         String base64 = (String) dictionary.get("data");
         if (base64 == null) {
-            throw new NullPointerException("encrypted data not found:" + dictionary);
+            throw new NullPointerException("encrypted data not found: " + dictionary);
         }
         data = Base64.decode(base64);
 
@@ -124,7 +125,7 @@ public class SecureMessage extends Message {
         } else if (object instanceof Map) {
             return new SecureMessage((Map<String, Object>) object);
         } else  {
-            throw new IllegalArgumentException("unknown message:" + object);
+            throw new IllegalArgumentException("unknown message: " + object);
         }
     }
 
@@ -150,7 +151,7 @@ public class SecureMessage extends Message {
      *  @param members - group members
      *  @return secure/reliable message(s)
      */
-    public List<SecureMessage> split(List<Object> members) {
+    public List<SecureMessage> split(List members) {
         List<SecureMessage> messages = new ArrayList<>(members.size());
 
         Map<String, Object> msg = new HashMap<>(dictionary);
@@ -226,7 +227,8 @@ public class SecureMessage extends Message {
      *
      * @return InstantMessage object
      */
-    public InstantMessage decrypt() {
+    public InstantMessage decrypt()
+            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         if (dictionary.containsKey("group")) {
             throw new RuntimeException("group message must be decrypted with member ID");
         }
@@ -241,7 +243,8 @@ public class SecureMessage extends Message {
      * @param member - receiver (as group member) ID
      * @return InstantMessage object
      */
-    public InstantMessage decrypt(Object member) {
+    public InstantMessage decrypt(Object member)
+            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Object sender = envelope.sender;
         Object receiver = envelope.receiver;
         // check group
@@ -250,18 +253,18 @@ public class SecureMessage extends Message {
             // if 'group' not exists, the 'receiver' must be a group ID, and
             // it is not equal to the member of course
             if (receiver.equals(member)) {
-                throw new IllegalArgumentException("receiver error:" + receiver);
+                throw new IllegalArgumentException("receiver error: " + receiver);
             }
             group = receiver;
         } else {
             // if 'group' exists and the 'receiver' is a group ID too,
             // they must be equal; or the 'receiver' must equal to member
             if (!receiver.equals(group) && !receiver.equals(member)) {
-                throw new IllegalArgumentException("receiver error:" + receiver);
+                throw new IllegalArgumentException("receiver error: " + receiver);
             }
             // and the 'group' must not equal to member of course
             if (group.equals(member)) {
-                throw new IllegalArgumentException("member error:" + member);
+                throw new IllegalArgumentException("member error: " + member);
             }
         }
         byte[] key = null;
@@ -274,18 +277,19 @@ public class SecureMessage extends Message {
         return decryptData(key, sender, group);
     }
 
-    private InstantMessage decryptData(byte[] key, Object sender, Object receiver) {
+    private InstantMessage decryptData(byte[] key, Object sender, Object receiver)
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         // 1. decrypt 'key' to symmetric key
         Map<String, Object> password = delegate.decryptKey(key, sender, receiver, this);
         if (password == null) {
-            throw new NullPointerException("failed to decrypt symmetric key:" + this);
+            throw new NullPointerException("failed to decrypt symmetric key: " + this);
         }
 
         // 2. decrypt 'data' to 'content'
         //    (remember to save password for decrypted File/Image/Audio/Video data)
         Content content = delegate.decryptContent(data, password, this);
         if (content == null) {
-            throw new NullPointerException("failed to decrypt message data:" + this);
+            throw new NullPointerException("failed to decrypt message data: " + this);
         }
 
         // 3. pack message
@@ -319,7 +323,7 @@ public class SecureMessage extends Message {
         // 1. sign
         byte[] signature = delegate.signData(data, envelope.sender, this);
         if (signature == null) {
-            throw new NullPointerException("failed to sign message:" + this);
+            throw new NullPointerException("failed to sign message: " + this);
         }
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);

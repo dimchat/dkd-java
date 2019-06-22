@@ -34,7 +34,7 @@ public interface ReliableMessageDelegate {
      *  @param signature - signature for message data
      *  @param sender - sender ID/string
      *  @param rMsg - reliable message object
-     *  @return YES on signature match
+     *  @return YES on signature matched
      */
     boolean verifyData(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg);
 }

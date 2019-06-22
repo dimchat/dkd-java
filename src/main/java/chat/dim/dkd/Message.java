@@ -25,7 +25,7 @@
  */
 package chat.dim.dkd;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -40,26 +40,39 @@ import java.util.Map;
  *          ...
  *      }
  */
-public abstract class Message extends Dictionary {
+abstract class Message extends Dictionary {
 
     public final Envelope envelope;
 
-    public Message(Map<String, Object> dictionary) {
+    Message(Map<String, Object> dictionary) {
         super(dictionary);
         // build envelope
-        Map<String, Object> env = new HashMap<>();
-        env.put("sender", dictionary.get("sender"));
-        env.put("receiver", dictionary.get("receiver"));
-        env.put("time", dictionary.get("time"));
-        envelope = new Envelope(env);
+        Object sender = dictionary.get("sender");
+        Object receiver = dictionary.get("receiver");
+        Object time = dictionary.get("time");
+        if (time == null) {
+            envelope = new Envelope(sender, receiver, null);
+        } else {
+            envelope = new Envelope(sender, receiver, (long) time);
+        }
     }
 
-    public Message(Envelope head) {
+    Message(Envelope head) {
         super();
         envelope = head;
         // copy values from envelope
         dictionary.put("sender", head.get("sender"));
         dictionary.put("receiver", head.get("receiver"));
         dictionary.put("time", head.get("time"));
+    }
+
+    Message(Object from, Object to, Date when) {
+        super();
+        envelope = new Envelope(from, to, when);
+    }
+
+    Message(Object from, Object to, long timestamp) {
+        super();
+        envelope = new Envelope(from, to, timestamp);
     }
 }

@@ -58,7 +58,7 @@ public class ReliableMessage extends SecureMessage {
         // signature for encrypted data
         String base64 = (String) dictionary.get("signature");
         if (base64 == null) {
-            throw new NullPointerException("signature not found:" + dictionary);
+            throw new NullPointerException("signature not found: " + dictionary);
         }
         signature = Base64.decode(base64);
     }
@@ -82,7 +82,7 @@ public class ReliableMessage extends SecureMessage {
         } else if (object instanceof Map) {
             return new ReliableMessage((Map<String, Object>) object);
         } else  {
-            throw new IllegalArgumentException("unknown message:" + object);
+            throw new IllegalArgumentException("unknown message: " + object);
         }
     }
 
@@ -124,7 +124,7 @@ public class ReliableMessage extends SecureMessage {
         // 1. verify
         boolean OK = delegate.verifyData(data, signature, envelope.sender, this);
         if (!OK) {
-            throw new RuntimeException("message signature not match:" + this);
+            throw new RuntimeException("message signature not match: " + this);
         }
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);

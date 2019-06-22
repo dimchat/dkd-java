@@ -48,7 +48,11 @@ public final class Envelope extends Dictionary {
         sender   = dictionary.get("sender");
         receiver = dictionary.get("receiver");
         Object timestamp = dictionary.get("time");
-        time     = (timestamp == null) ? null : new Date((long) timestamp * 1000);
+        if (timestamp == null) {
+            time = null;
+        } else {
+            time = new Date((long) timestamp * 1000);
+        }
     }
 
     public Envelope(Object from, Object to, Date when) {
@@ -58,15 +62,19 @@ public final class Envelope extends Dictionary {
         time     = when;
         dictionary.put("sender", from);
         dictionary.put("receiver", to);
-        dictionary.put("time", when.getTime() / 1000);
+        if (when != null) {
+            dictionary.put("time", when.getTime() / 1000);
+        }
     }
 
     public Envelope(Object from, Object to, long timestamp) {
-        this(from, to, new Date(timestamp * 1000));
-    }
-
-    public Envelope(Object from, Object to) {
-        this(from, to, new Date());
+        super();
+        sender   = from;
+        receiver = to;
+        time     = new Date(timestamp * 1000);
+        dictionary.put("sender", from);
+        dictionary.put("receiver", to);
+        dictionary.put("time", timestamp);
     }
 
     @SuppressWarnings("unchecked")
@@ -78,7 +86,7 @@ public final class Envelope extends Dictionary {
         } else if (object instanceof Map) {
             return new Envelope((Map<String, Object>) object);
         } else {
-            throw new IllegalArgumentException("unknown meta:" + object);
+            throw new IllegalArgumentException("unknown envelope: " + object);
         }
     }
 }
