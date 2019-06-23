@@ -25,7 +25,6 @@
  */
 package chat.dim.dkd;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,8 +80,7 @@ public abstract class Message extends Dictionary {
     }
 
     @SuppressWarnings("unchecked")
-    public static Message getInstance(Object object)
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static Message getInstance(Object object) {
         if (object == null) {
             return null;
         } else if (object instanceof Message) {

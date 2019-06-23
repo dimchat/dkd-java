@@ -25,7 +25,6 @@
  */
 package chat.dim.dkd;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,8 +48,7 @@ public final class InstantMessage extends Message {
 
     public InstantMessageDelegate delegate;
 
-    public InstantMessage(Map<String, Object> dictionary)
-            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public InstantMessage(Map<String, Object> dictionary) {
         super(dictionary);
         content = Content.getInstance(dictionary.get("content"));
     }
@@ -78,8 +76,7 @@ public final class InstantMessage extends Message {
     }
 
     @SuppressWarnings("unchecked")
-    public static InstantMessage getInstance(Object object)
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static InstantMessage getInstance(Object object) {
         if (object == null) {
             return null;
         } else if (object instanceof InstantMessage) {

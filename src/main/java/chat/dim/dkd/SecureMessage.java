@@ -25,7 +25,6 @@
  */
 package chat.dim.dkd;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -227,8 +226,7 @@ public class SecureMessage extends Message {
      *
      * @return InstantMessage object
      */
-    public InstantMessage decrypt()
-            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public InstantMessage decrypt() {
         if (dictionary.containsKey("group")) {
             throw new RuntimeException("group message must be decrypted with member ID");
         }
@@ -243,8 +241,7 @@ public class SecureMessage extends Message {
      * @param member - receiver (as group member) ID
      * @return InstantMessage object
      */
-    public InstantMessage decrypt(Object member)
-            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public InstantMessage decrypt(Object member) {
         Object sender = envelope.sender;
         Object receiver = envelope.receiver;
         // check group
@@ -277,8 +274,7 @@ public class SecureMessage extends Message {
         return decryptData(key, sender, group);
     }
 
-    private InstantMessage decryptData(byte[] key, Object sender, Object receiver)
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private InstantMessage decryptData(byte[] key, Object sender, Object receiver) {
         // 1. decrypt 'key' to symmetric key
         Map<String, Object> password = delegate.decryptKey(key, sender, receiver, this);
         if (password == null) {

@@ -97,8 +97,7 @@ public class Content extends Dictionary {
     }
 
     @SuppressWarnings("unchecked")
-    private static Content createInstance(Map<String, Object> dictionary)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    private static Content createInstance(Map<String, Object> dictionary) {
         int type = (int) dictionary.get("type");
         Class clazz = contentClasses.get(type);
         if (clazz == null) {
@@ -114,13 +113,17 @@ public class Content extends Dictionary {
         } catch (Exception e) {
             //e.printStackTrace();
         }
-        Constructor constructor = clazz.getConstructor(Map.class);
-        return (Content) constructor.newInstance(dictionary);
+        try {
+            Constructor constructor = clazz.getConstructor(Map.class);
+            return (Content) constructor.newInstance(dictionary);
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @SuppressWarnings("unchecked")
-    public static Content getInstance(Object object)
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static Content getInstance(Object object) {
         if (object == null) {
             return null;
         } else if (object instanceof Content) {
