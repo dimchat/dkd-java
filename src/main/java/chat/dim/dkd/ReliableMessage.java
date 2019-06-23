@@ -46,7 +46,7 @@ import java.util.Map;
  *          signature: "..."   // base64_encode()
  *      }
  */
-public class ReliableMessage extends SecureMessage {
+public final class ReliableMessage extends SecureMessage {
 
     public final byte[] signature;
 

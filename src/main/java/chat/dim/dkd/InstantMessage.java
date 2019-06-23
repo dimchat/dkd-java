@@ -43,7 +43,7 @@ import java.util.Map;
  *          content  : {...}
  *      }
  */
-public class InstantMessage extends Message {
+public final class InstantMessage extends Message {
 
     public final Content content;
 

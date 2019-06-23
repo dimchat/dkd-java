@@ -43,7 +43,7 @@ public final class Envelope extends Dictionary {
     public final Object receiver;
     public final Date time;
 
-    public Envelope(Map<String, Object> dictionary) {
+    Envelope(Map<String, Object> dictionary) {
         super(dictionary);
         sender   = dictionary.get("sender");
         receiver = dictionary.get("receiver");
@@ -55,7 +55,7 @@ public final class Envelope extends Dictionary {
         }
     }
 
-    public Envelope(Object from, Object to, Date when) {
+    Envelope(Object from, Object to, Date when) {
         super();
         sender   = from;
         receiver = to;
@@ -67,7 +67,7 @@ public final class Envelope extends Dictionary {
         }
     }
 
-    public Envelope(Object from, Object to, long timestamp) {
+    Envelope(Object from, Object to, long timestamp) {
         super();
         sender   = from;
         receiver = to;

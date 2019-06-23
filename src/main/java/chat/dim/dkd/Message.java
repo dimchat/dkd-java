@@ -27,6 +27,7 @@ package chat.dim.dkd;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,40 +42,42 @@ import java.util.Map;
  *          ...
  *      }
  */
-abstract class Message extends Dictionary {
+public abstract class Message extends Dictionary {
 
     public final Envelope envelope;
 
     Message(Map<String, Object> dictionary) {
         super(dictionary);
         // build envelope
-        Object sender = dictionary.get("sender");
-        Object receiver = dictionary.get("receiver");
-        Object time = dictionary.get("time");
-        if (time == null) {
-            envelope = new Envelope(sender, receiver, null);
-        } else {
-            envelope = new Envelope(sender, receiver, (long) time);
-        }
+        Map<String, Object> env = new HashMap<>();
+        env.put("sender", dictionary.get("sender"));
+        env.put("receiver", dictionary.get("receiver"));
+        env.put("time", dictionary.get("time"));
+        envelope = new Envelope(env);
     }
 
     Message(Envelope head) {
         super();
         envelope = head;
-        // copy values from envelope
-        dictionary.put("sender", head.get("sender"));
-        dictionary.put("receiver", head.get("receiver"));
-        dictionary.put("time", head.get("time"));
+        copyEnvelope(head);
     }
 
     Message(Object from, Object to, Date when) {
         super();
         envelope = new Envelope(from, to, when);
+        copyEnvelope(envelope);
     }
 
     Message(Object from, Object to, long timestamp) {
         super();
         envelope = new Envelope(from, to, timestamp);
+        copyEnvelope(envelope);
+    }
+
+    private void copyEnvelope(Envelope env) {
+        dictionary.put("sender", env.sender);
+        dictionary.put("receiver", env.receiver);
+        dictionary.put("time", env.get("time"));
     }
 
     @SuppressWarnings("unchecked")

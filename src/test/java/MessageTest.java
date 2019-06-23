@@ -1,10 +1,11 @@
-import chat.dim.dkd.*;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import chat.dim.dkd.*;
 
 public class MessageTest {
 
@@ -22,7 +23,7 @@ public class MessageTest {
         Map<String, Object> dictionary = new HashMap<>();
         dictionary.put("sender", sender);
         dictionary.put("receiver", receiver);
-        Envelope env = new Envelope(dictionary);
+        Envelope env = Envelope.getInstance(dictionary);
 
         Log.info("envelope: " + env);
         Log.info("sender: " + env.sender);
@@ -99,7 +100,7 @@ public class MessageTest {
     }
 
     @Test
-    public void testReliableMessage() {
+    public void testReliableMessage() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         Map<String, Object> dictionary = new HashMap<>();
         dictionary.put("sender", sender);
@@ -109,8 +110,8 @@ public class MessageTest {
         dictionary.put("key", key);
         dictionary.put("signature", signature);
 
-        ReliableMessage rMsg = ReliableMessage.getInstance(dictionary);
-        Log.info("reliable message: " + rMsg);
+        Message msg = Message.getInstance(dictionary);
+        Log.info("reliable message: " + msg);
     }
 
     static {
