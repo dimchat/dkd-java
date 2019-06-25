@@ -97,14 +97,22 @@ public class Content extends Dictionary {
     }
 
     @SuppressWarnings("unchecked")
-    private static Content createInstance(Map<String, Object> dictionary) {
+    public static Content getInstance(Object object) {
+        if (object == null) {
+            return null;
+        } else if (object instanceof Content) {
+            return (Content) object;
+        }
+        assert object instanceof Map;
+        Map<String, Object> dictionary = (Map<String, Object>) object;
+        // get subclass by content type
         int type = (int) dictionary.get("type");
         Class clazz = contentClasses.get(type);
         if (clazz == null) {
             //throw new ClassNotFoundException("unknown content type: " + type);
             return new Content(dictionary);
         }
-        // try 'getInstance()'
+        // try 'getInstance()' of subclass
         try {
             Method method = clazz.getMethod("getInstance", Object.class);
             if (method.getDeclaringClass().equals(clazz)) {
@@ -113,25 +121,13 @@ public class Content extends Dictionary {
         } catch (Exception e) {
             //e.printStackTrace();
         }
+        // try 'new MyContent()'
         try {
             Constructor constructor = clazz.getConstructor(Map.class);
             return (Content) constructor.newInstance(dictionary);
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public static Content getInstance(Object object) {
-        if (object == null) {
-            return null;
-        } else if (object instanceof Content) {
-            return (Content) object;
-        } else if (object instanceof Map) {
-            return createInstance((Map<String, Object>) object);
-        } else {
-            throw new IllegalArgumentException("content error: " + object);
         }
     }
 }
