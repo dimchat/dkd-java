@@ -59,6 +59,12 @@ public final class InstantMessage extends Message {
         dictionary.put("content", body);
     }
 
+    public InstantMessage(Content body, Object from, Object to) {
+        super(from, to);
+        content = body;
+        dictionary.put("content", body);
+    }
+
     public InstantMessage(Content body, Object from, Object to, Date when) {
         super(from, to, when);
         content = body;
@@ -71,8 +77,12 @@ public final class InstantMessage extends Message {
         dictionary.put("content", body);
     }
 
-    public InstantMessage(Content body, Object from, Object to) {
-        this(body, from, to, new Date());
+    public Object getGroup() {
+        return content.getGroup();
+    }
+
+    public void setGroup(Object ID) {
+        content.setGroup(ID);
     }
 
     @SuppressWarnings("unchecked")
@@ -114,7 +124,7 @@ public final class InstantMessage extends Message {
         // 2. encrypt password to 'key'
         byte[] key = delegate.encryptKey(password, envelope.receiver, this);
         if (key != null) {
-            map.put("key", Base64.encode(key));
+            map.put("key", delegate.encodeKeyData(key, this));
         }
 
         // 3. pack message
@@ -134,17 +144,17 @@ public final class InstantMessage extends Message {
         Map<String, Object> map = encryptContent(password);
 
         // 2. encrypt password to 'keys'
-        Map<Object, String> keys = new HashMap<>();
+        Map<Object, Object> keys = new HashMap<>();
         byte[] key;
         for (Object member: members) {
             key = delegate.encryptKey(password, member, this);
             if (key != null) {
-                keys.put(member, Base64.encode(key));
+                keys.put(member, delegate.encodeKeyData(key, this));
             }
         }
         map.put("keys", keys);
         // group ID
-        Object group = content.getGroup();
+        Object group = getGroup();
         if (group == null) {
             throw new NoSuchFieldException("group message error: " + this);
         }
@@ -167,7 +177,7 @@ public final class InstantMessage extends Message {
         // 2. replace 'content' with encrypted 'data'
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");
-        map.put("data", Base64.encode(data));
+        map.put("data", delegate.encodeContentData(data, this));
         return map;
     }
 }

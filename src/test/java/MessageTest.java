@@ -1,7 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,20 +8,21 @@ import chat.dim.dkd.*;
 
 public class MessageTest {
 
-    static String sender = "gsp-s001@x5Zh9ixt8ECr59XLye1y5WWfaX4fcoaaSC";
-    static String receiver = "pony@4Zc1ax3bVBMm4AXky8rmj6pGn8Hmb8pn5C";
-    static long time = 1561195412L;
-    static String data = "4j92H0lmiRrHcf4uQK3hwLSarmD9s2wY6b8Kt/gbNiOA7K/qst9W7kYAjkXMRzlCZ/IqMAy97nhvPKzzIuorkudpWDLAOWIVeoRTkDop+JTzReiXVh51zRtcXgVTmmaGfpU/STGhMC1f9L+mzc9WjA==";
-    static String key = "h1964ruibFD4o9B2Oye//Ycer9xjC7T8oNSNriEP1k2AQJ6c2hvL7Lqvmb/NPqRJ9wdqC2RRUeIIYKamb6IwN6+k6iyy+qJ18Yawtz/kBLn0aHgIt/Ujo9W6jo9KpC6f/rWtnHyMW/wdfSlufvGhE1WZxApmNVPCoSvzoLeRidw=";
-    static String signature = "glwiQAP9HQ08iKK6DZM3aL1qnYUNYFl0nyZLuw77YLTXBVc3/mw/TnlDpEBtiTS9kvk85ucGoe2uMAg6CMfQ+256TPSmYitCmwZ+rTM2EYnjA1bS04Po3PPtnmlpIVKgKNNEseUe8uIRMqnhPsIgUu3SCM/FxnMD/hhfCKu9hu8=";
+    private static String sender = "gsp-s001@x5Zh9ixt8ECr59XLye1y5WWfaX4fcoaaSC";
+    private String receiver = "pony@4Zc1ax3bVBMm4AXky8rmj6pGn8Hmb8pn5C";
+    private long time = 1561195412L;
+    private String data = "4j92H0lmiRrHcf4uQK3hwLSarmD9s2wY6b8Kt/gbNiOA7K/qst9W7kYAjkXMRzlCZ/IqMAy97nhvPKzzIuorkudpWDLAOWIVeoRTkDop+JTzReiXVh51zRtcXgVTmmaGfpU/STGhMC1f9L+mzc9WjA==";
+    private String key = "h1964ruibFD4o9B2Oye//Ycer9xjC7T8oNSNriEP1k2AQJ6c2hvL7Lqvmb/NPqRJ9wdqC2RRUeIIYKamb6IwN6+k6iyy+qJ18Yawtz/kBLn0aHgIt/Ujo9W6jo9KpC6f/rWtnHyMW/wdfSlufvGhE1WZxApmNVPCoSvzoLeRidw=";
+    private String signature = "glwiQAP9HQ08iKK6DZM3aL1qnYUNYFl0nyZLuw77YLTXBVc3/mw/TnlDpEBtiTS9kvk85ucGoe2uMAg6CMfQ+256TPSmYitCmwZ+rTM2EYnjA1bS04Po3PPtnmlpIVKgKNNEseUe8uIRMqnhPsIgUu3SCM/FxnMD/hhfCKu9hu8=";
 
-    static Transceiver transceiver = new Transceiver();
+    private Transceiver transceiver = new Transceiver();
 
     @Test
     public void testEnvelope() {
         Map<String, Object> dictionary = new HashMap<>();
         dictionary.put("sender", sender);
         dictionary.put("receiver", receiver);
+        dictionary.put("time", time);
         Envelope env = Envelope.getInstance(dictionary);
 
         Log.info("envelope: " + env);
@@ -32,7 +32,7 @@ public class MessageTest {
     }
 
     @Test
-    public void testContent() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void testContent() {
 
         Map<String, Object> dictionary = new HashMap<>();
         dictionary.put("type", 9527);
@@ -56,7 +56,7 @@ public class MessageTest {
     }
 
     @Test
-    public void testInstantMessage() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void testInstantMessage() {
 
         Content content = new TextContent("Hello world!");
 
@@ -69,7 +69,7 @@ public class MessageTest {
         Log.info("message: " + message);
         Assert.assertSame(iMsg, message);
 
-        Map dictionary = (Map) message.get("content");
+//        Map dictionary = (Map) message.get("content");
         Content cnt = Content.getInstance(new HashMap<>(content));
         Assert.assertEquals(cnt.get("text"), ((TextContent) content).getText());
 
@@ -87,6 +87,7 @@ public class MessageTest {
         dictionary.put("sender", sender);
         dictionary.put("receiver", receiver);
         dictionary.put("data", data);
+        dictionary.put("key", key);
 
         SecureMessage sMsg = SecureMessage.getInstance(dictionary);
         Log.info("secure message: " + sMsg);
@@ -100,7 +101,7 @@ public class MessageTest {
     }
 
     @Test
-    public void testReliableMessage() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void testReliableMessage() {
 
         Map<String, Object> dictionary = new HashMap<>();
         dictionary.put("sender", sender);

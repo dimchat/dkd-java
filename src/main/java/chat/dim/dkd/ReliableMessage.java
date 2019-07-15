@@ -48,29 +48,18 @@ import java.util.Map;
  */
 public final class ReliableMessage extends SecureMessage {
 
-    public final byte[] signature;
-
-    public ReliableMessageDelegate delegate;
-
     @SuppressWarnings("unchecked")
     public ReliableMessage(Map<String, Object> dictionary) {
         super(dictionary);
-        // signature for encrypted data
-        String base64 = (String) dictionary.get("signature");
+    }
+
+    private byte[] getSignature() {
+        Object base64 = dictionary.get("signature");
         if (base64 == null) {
             throw new NullPointerException("signature not found: " + dictionary);
         }
-        signature = Base64.decode(base64);
-    }
-
-    public ReliableMessage(byte[] sig, byte[] data, byte[] key, Envelope head) {
-        super(data, key, head);
-        signature = sig;
-    }
-
-    public ReliableMessage(byte[] sig, byte[] data, Map<Object, String> keys, Envelope head) {
-        super(data, keys, head);
-        signature = sig;
+        ReliableMessageDelegate delegate = (ReliableMessageDelegate) this.delegate;
+        return delegate.decodeSignature(base64, this);
     }
 
     @SuppressWarnings("unchecked")
@@ -121,8 +110,9 @@ public final class ReliableMessage extends SecureMessage {
      * @return SecureMessage object
      */
     public SecureMessage verify() {
+        ReliableMessageDelegate delegate = (ReliableMessageDelegate) this.delegate;
         // 1. verify
-        boolean OK = delegate.verifyData(data, signature, envelope.sender, this);
+        boolean OK = delegate.verifyData(getData(), getSignature(), envelope.sender, this);
         if (!OK) {
             throw new RuntimeException("message signature not match: " + this);
         }

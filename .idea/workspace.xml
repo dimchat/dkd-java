@@ -9,9 +9,18 @@
     <list default="true" id="ab6dd2a9-82b4-480e-8183-817cf663523a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/BaseCoder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MessageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MessageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Transceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Transceiver.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -121,35 +130,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SecureMessage.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="InstantMessageDelegate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="659">
+              <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReliableMessageDelegate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="40" column="7" lean-forward="true" selection-start-line="40" selection-start-column="7" selection-end-line="40" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SecureMessage.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="769">
-              <caret line="326" column="40" lean-forward="true" selection-start-line="326" selection-start-column="40" selection-end-line="326" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReliableMessage.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="769">
-              <caret line="131" column="38" lean-forward="true" selection-start-line="131" selection-start-column="38" selection-end-line="131" selection-end-column="38" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="98" column="4" selection-start-line="98" selection-start-column="4" selection-end-line="98" selection-end-column="4" />
+            <state relative-caret-position="-417">
+              <caret line="175" column="23" selection-start-line="175" selection-start-column="18" selection-end-line="175" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -157,51 +160,17 @@
       <file leaf-file-name="Content.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Content.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="454">
-              <caret line="98" column="34" lean-forward="true" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2815#2816#0" expanded="true" />
-                <element signature="e#2843#2844#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="628">
+              <caret line="107" column="39" selection-start-line="107" selection-start-column="39" selection-end-line="107" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Dictionary.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Dictionary.java">
+      <file leaf-file-name="SecureMessageDelegate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-191">
-              <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#3420#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Envelope.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="79">
-              <caret line="41" column="31" lean-forward="true" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InstantMessage.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="112" column="38" lean-forward="true" selection-start-line="112" selection-start-column="38" selection-end-line="112" selection-end-column="38" />
-              <folding>
-                <element signature="e#0#6106#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="959">
+              <caret line="81" column="34" selection-start-line="81" selection-start-column="34" selection-end-line="81" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -209,20 +178,44 @@
       <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="682">
+              <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Base64.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java">
+      <file leaf-file-name="MessageTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+            <state relative-caret-position="600">
+              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Envelope.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReliableMessage.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="484">
+              <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InstantMessage.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="446">
+              <caret line="156" column="23" selection-start-line="156" selection-start-column="23" selection-end-line="156" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -239,19 +232,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>entries</find>
-      <find>error</find>
-      <find>catch</find>
-      <find>putAll</find>
-      <find>ArrayList</find>
-      <find>getType</find>
-      <find>HashMap&lt;</find>
-      <find>HashMap</find>
-      <find>List</find>
-      <find>for (</find>
-      <find>signature</find>
-      <find>decryptKey</find>
-      <find>getTimestamp</find>
       <find>dictionary</find>
       <find>getChars</find>
       <find>String</find>
@@ -269,6 +249,19 @@
       <find>getPublicKey</find>
       <find>plain</find>
       <find>cipher</find>
+      <find>ArrayList</find>
+      <find>Text</find>
+      <find>decode</find>
+      <find>Method</find>
+      <find>base64.encode</find>
+      <find>:&quot;</find>
+      <find>new Envelope</find>
+      <find>getInstance(</find>
+      <find>throws</find>
+      <find>encode(</find>
+      <find>time</find>
+      <find>getGroup</find>
+      <find>group</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -475,9 +468,9 @@
     <option name="modificationStamps">
       <map>
         <entry key="$USER_HOME$/.gradle/gradle.properties" value="2515849785" />
-        <entry key="$PROJECT_DIR$" value="7784754785000" />
+        <entry key="$PROJECT_DIR$" value="7788823204000" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="1254320089" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="1043527994" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="2083459160" />
         <entry key="$PROJECT_DIR$/settings.gradle" value="1298234506" />
       </map>
@@ -738,10 +731,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/TextContent.java" />
-        <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/HistoryContent.java" />
-        <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/Utils.java" />
-        <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/AudioContent.java" />
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/CommandContent.java" />
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/HistoryCommand.java" />
         <option value="$PROJECT_DIR$/src/test/java/chat/dim/dkd/content/PageContent.java" />
@@ -772,23 +761,27 @@
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/PageContent.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/content/Content.java" />
         <option value="$PROJECT_DIR$/src/test/java/ContentTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Utils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64Coder.java" />
+        <option value="$PROJECT_DIR$/src/test/java/Log.java" />
         <option value="$PROJECT_DIR$/src/test/java/TextContent.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Dictionary.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Utils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64Coder.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Content.java" />
+        <option value="$PROJECT_DIR$/src/test/java/BaseCoder.java" />
+        <option value="$PROJECT_DIR$/src/test/java/Base64.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/BaseCoder.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java" />
-        <option value="$PROJECT_DIR$/src/test/java/Log.java" />
-        <option value="$PROJECT_DIR$/src/test/java/MessageTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/Transceiver.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java" />
+        <option value="$PROJECT_DIR$/src/test/java/MessageTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java" />
-        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java" />
         <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java" />
       </list>
     </option>
   </component>
@@ -808,9 +801,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="417" />
+    <option name="x" value="1037" />
     <option name="y" value="23" />
-    <option name="width" value="1520" />
+    <option name="width" value="1490" />
     <option name="height" value="1377" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -821,6 +814,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -891,9 +887,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -978,7 +971,7 @@
         <option name="vmOptions" />
       </ExternalSystemSettings>
     </configuration>
-    <configuration name="dkd-java [javadocJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="dkd-java [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -989,7 +982,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="javadocJar" />
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -1052,17 +1045,17 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.MessageTest" />
-      <item itemvalue="Gradle.dkd-java [install]" />
       <item itemvalue="Gradle.dkd-java [bintrayUpload]" />
-      <item itemvalue="Gradle.dkd-java [javadocJar]" />
       <item itemvalue="Gradle.dkd-java [build]" />
+      <item itemvalue="Gradle.dkd-java [test]" />
+      <item itemvalue="Gradle.dkd-java [install]" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.dkd-java [build]" />
-        <item itemvalue="Gradle.dkd-java [javadocJar]" />
-        <item itemvalue="JUnit.MessageTest" />
         <item itemvalue="Gradle.dkd-java [install]" />
+        <item itemvalue="JUnit.MessageTest" />
+        <item itemvalue="Gradle.dkd-java [test]" />
+        <item itemvalue="Gradle.dkd-java [build]" />
         <item itemvalue="Gradle.dkd-java [bintrayUpload]" />
       </list>
     </recent_temporary>
@@ -1095,79 +1088,94 @@
       <workItem from="1558340067214" duration="598000" />
       <workItem from="1558429272672" duration="4104000" />
       <workItem from="1558946047211" duration="9678000" />
-      <workItem from="1559197174637" duration="3291000" />
+      <workItem from="1559197174637" duration="4826000" />
+      <workItem from="1559290923559" duration="3773000" />
+      <workItem from="1559551070414" duration="598000" />
+      <workItem from="1559631229639" duration="4704000" />
+      <workItem from="1560239797520" duration="1917000" />
+      <workItem from="1561023663939" duration="13303000" />
+      <workItem from="1561286141757" duration="8585000" />
+      <workItem from="1561360147930" duration="3389000" />
+      <workItem from="1561519495581" duration="2779000" />
+      <workItem from="1561570412034" duration="598000" />
+      <workItem from="1561604417824" duration="2459000" />
+      <workItem from="1561695637913" duration="2704000" />
+      <workItem from="1561901316507" duration="2193000" />
+      <workItem from="1561958031469" duration="2288000" />
+      <workItem from="1562045332496" duration="1218000" />
+      <workItem from="1563180273053" duration="8444000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="dkd-java_[test] - 2019.04.28 at 19h 02m 10s.xml">
+    <history-entry file="MessageTest - 2019.06.23 at 19h 02m 48s.xml">
+      <configuration name="MessageTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="dkd-java_[check] - 2019.06.23 at 21h 22m 10s.xml">
+      <configuration name="dkd-java [check]" configurationId="GradleRunConfiguration" />
+    </history-entry>
+    <history-entry file="dkd-java_[check] - 2019.06.23 at 22h 51m 11s.xml">
+      <configuration name="dkd-java [check]" configurationId="GradleRunConfiguration" />
+    </history-entry>
+    <history-entry file="dkd-java_[check] - 2019.06.23 at 23h 15m 00s.xml">
+      <configuration name="dkd-java [check]" configurationId="GradleRunConfiguration" />
+    </history-entry>
+    <history-entry file="dkd-java_[check] - 2019.07.01 at 23h 18m 21s.xml">
+      <configuration name="dkd-java [check]" configurationId="GradleRunConfiguration" />
+    </history-entry>
+    <history-entry file="dkd-java_[test] - 2019.07.15 at 23h 20m 39s.xml">
       <configuration name="dkd-java [test]" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="dkd-java_[test] - 2019.05.09 at 17h 54m 28s.xml">
+    <history-entry file="MessageTest - 2019.07.15 at 23h 20m 59s.xml">
+      <configuration name="MessageTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MessageTest - 2019.07.15 at 23h 22m 04s.xml">
+      <configuration name="MessageTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="dkd-java_[test] - 2019.07.15 at 23h 28m 55s.xml">
       <configuration name="dkd-java [test]" configurationId="GradleRunConfiguration" />
     </history-entry>
-    <history-entry file="MessageTest - 2019.05.09 at 17h 54m 43s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.05.09 at 19h 40m 00s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.05.25 at 03h 00m 46s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.05.25 at 03h 02m 42s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.05.25 at 03h 03m 08s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.05.25 at 03h 04m 50s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.05.25 at 03h 10m 27s.xml">
-      <configuration name="MessageTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="MessageTest - 2019.05.29 at 19h 08m 39s.xml">
+    <history-entry file="MessageTest - 2019.07.15 at 23h 34m 33s.xml">
       <configuration name="MessageTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122624000" />
+    <option name="totallyTimeSpent" value="183111000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="417" y="23" width="1520" height="1377" extended-state="0" />
+    <frame x="1037" y="23" width="1490" height="1377" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" weight="0.32949933" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25703126" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26928282" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.1859375" />
       <window_info anchor="right" id="Database" order="3" weight="0.32949933" />
-      <window_info anchor="right" id="Gradle" order="3" visible="true" weight="0.18673883" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.2496617" />
       <window_info id="UI Designer" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.2140625" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32890624" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2078125" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23549724" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Gradle" order="3" visible="true" weight="0.19060774" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39921874" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32911393" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.1859375" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1178,15 +1186,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java</url>
-          <line>53</line>
-          <properties />
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="14" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1194,69 +1194,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/IllegalArgumentException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="50" column="11" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/NullPointerException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="68" column="11" selection-start-line="68" selection-start-column="11" selection-end-line="68" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Base64.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2489">
-          <caret line="86" column="26" selection-start-line="86" selection-start-column="26" selection-end-line="86" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/AbstractCollection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="60" column="22" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/AbstractList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="70" column="54" selection-start-line="70" selection-start-column="54" selection-end-line="70" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="106" column="40" selection-start-line="106" selection-start-column="40" selection-end-line="106" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/io/Serializable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="830">
-          <caret line="168" column="17" selection-start-line="168" selection-start-column="17" selection-end-line="168" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/Cloneable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/reflect/InvocationHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="40" column="17" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/1.2.47/80217385515cb624ad9d1e7b47162b5ecff0c040/fastjson-1.2.47-sources.jar!/com/alibaba/fastjson/JSONObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -1342,13 +1279,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Date.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="163" column="11" selection-start-line="163" selection-start-column="11" selection-end-line="163" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/reflect/Constructor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
@@ -1356,52 +1286,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Random.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="603">
           <caret line="430" column="42" lean-forward="true" selection-start-line="430" selection-start-column="42" selection-end-line="430" selection-end-column="42" />
-          <folding>
-            <element signature="e#11985#11986#0" expanded="true" />
-            <element signature="e#12016#12017#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="57" column="43" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/BaseCoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#1463#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1412,119 +1300,192 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/NoSuchFieldException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/org/junit/runners/model/FrameworkMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/reflect/Method.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="183" column="20" selection-start-line="183" selection-start-column="20" selection-end-line="183" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/Class.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="1780" column="18" selection-start-line="1780" selection-start-column="18" selection-end-line="1780" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/util/Date.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="586">
+          <caret line="883" column="16" selection-start-line="883" selection-start-column="16" selection-end-line="883" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/TextContent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+        <state relative-caret-position="450">
+          <caret line="30" column="23" lean-forward="true" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/org/junit/runners/BlockJUnit4ClassRunner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="1185">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/org/junit/runner/JUnitCore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="98" column="4" selection-start-line="98" selection-start-column="4" selection-end-line="98" selection-end-column="4" />
+        <state relative-caret-position="231">
+          <caret line="123" column="50" lean-forward="true" selection-start-line="123" selection-start-column="50" selection-end-line="123" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/org/junit/runners/ParentRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="370" selection-start-line="370" selection-end-line="370" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/BaseCoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/Base64.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Base64.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+        <state relative-caret-position="375">
+          <caret line="25" column="4" lean-forward="true" selection-start-line="25" selection-start-column="4" selection-end-line="50" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Content.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/BaseCoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="98" column="34" lean-forward="true" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2815#2816#0" expanded="true" />
-            <element signature="e#2843#2844#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="375">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="32" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="30" lean-forward="true" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Dictionary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-191">
-          <caret line="32" column="22" selection-start-line="32" selection-start-column="22" selection-end-line="32" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#3420#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="959">
+          <caret line="86" column="35" selection-start-line="86" selection-start-column="35" selection-end-line="86" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/Transceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="960">
+          <caret line="64" column="38" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/MessageTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessageDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="659">
+          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessageDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="7" lean-forward="true" selection-start-line="40" selection-start-column="7" selection-end-line="40" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessageDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="959">
+          <caret line="81" column="34" selection-start-line="81" selection-start-column="34" selection-end-line="81" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Envelope.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="41" column="31" lean-forward="true" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="322">
+          <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Content.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="628">
+          <caret line="107" column="39" selection-start-line="107" selection-start-column="39" selection-end-line="107" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/src.zip!/java/lang/NoSuchFieldException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
-          <folding>
-            <element signature="e#742#743#0" expanded="true" />
-            <element signature="e#766#767#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="769">
-          <caret line="131" column="38" lean-forward="true" selection-start-line="131" selection-start-column="38" selection-end-line="131" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="112" column="38" lean-forward="true" selection-start-line="112" selection-start-column="38" selection-end-line="112" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#6106#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="682">
+          <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/SecureMessage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="769">
-          <caret line="326" column="40" lean-forward="true" selection-start-line="326" selection-start-column="40" selection-end-line="326" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-417">
+          <caret line="175" column="23" selection-start-line="175" selection-start-column="18" selection-end-line="175" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/ReliableMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/chat/dim/dkd/InstantMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="156" column="23" selection-start-line="156" selection-start-column="23" selection-end-line="156" selection-end-column="23" />
         </state>
       </provider>
     </entry>

@@ -30,9 +30,9 @@ import java.util.Map;
 public interface InstantMessageDelegate {
 
     /**
-     *  Encrypt the message.content to message.data with symmetric key
+     *  Encrypt 'message.content' to 'message.data' with symmetric key
      *
-     *  @param content - message.content
+     *  @param content - content object
      *  @param password - symmetric key
      *  @param iMsg - instant message object
      *  @return encrypted message content data
@@ -40,7 +40,16 @@ public interface InstantMessageDelegate {
     byte[] encryptContent(Content content, Map<String, Object> password, InstantMessage iMsg);
 
     /**
-     *  Encrypt the symmetric key with receiver's public key
+     *  Encode 'message.data' to String(Base64)
+     *
+     * @param data - encrypted content data
+     * @param iMsg - instant message object
+     * @return String object
+     */
+    Object encodeContentData(byte[] data, InstantMessage iMsg);
+
+    /**
+     *  Encrypt 'message.key' with receiver's public key
      *
      *  @param iMsg - instant message object
      *  @param password - symmetric key to be encrypted
@@ -48,4 +57,13 @@ public interface InstantMessageDelegate {
      *  @return encrypted key data
      */
     byte[] encryptKey(Map<String, Object> password, Object receiver, InstantMessage iMsg);
+
+    /**
+     *  Encode 'message.key' to String(Base64)
+     *
+     * @param key - encrypted key data
+     * @param iMsg - instant message object
+     * @return String object
+     */
+    Object encodeKeyData(byte[] key, InstantMessage iMsg);
 }

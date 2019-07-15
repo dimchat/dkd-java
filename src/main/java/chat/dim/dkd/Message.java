@@ -61,6 +61,12 @@ public abstract class Message extends Dictionary {
         copyEnvelope(head);
     }
 
+    Message(Object from, Object to) {
+        super();
+        envelope = new Envelope(from, to);
+        copyEnvelope(envelope);
+    }
+
     Message(Object from, Object to, Date when) {
         super();
         envelope = new Envelope(from, to, when);
@@ -79,6 +85,22 @@ public abstract class Message extends Dictionary {
         dictionary.put("time", env.get("time"));
     }
 
+    /**
+     *  Group ID
+     *      when a group message was splitted/trimmed to a single message
+     *      the 'receiver' will be changed to a member ID, and
+     *      the group ID will be saved as 'group'.
+     *
+     * @return group ID/string
+     */
+    public Object getGroup() {
+        return dictionary.get("group");
+    }
+
+    public void setGroup(Object ID) {
+        dictionary.put("group", ID);
+    }
+
     @SuppressWarnings("unchecked")
     public static Message getInstance(Object object) {
         if (object == null) {
@@ -86,23 +108,23 @@ public abstract class Message extends Dictionary {
         } else if (object instanceof Message) {
             // return Message object directly
             return (Message) object;
-        } else if (object instanceof Map) {
-            Map<String, Object> dictionary = (Map<String, Object>) object;
-            // instant message
-            Object content = dictionary.get("content");
-            if (content != null) {
-                return new InstantMessage(dictionary);
-            }
-            // reliable message
-            String signature = (String) dictionary.get("signature");
-            if (signature != null) {
-                return new ReliableMessage(dictionary);
-            }
-            // secure message
-            String data = (String) dictionary.get("data");
-            if (data != null) {
-                return new SecureMessage(dictionary);
-            }
+        }
+        assert object instanceof Map;
+        Map<String, Object> dictionary = (Map<String, Object>) object;
+        // instant message
+        Object content = dictionary.get("content");
+        if (content != null) {
+            return new InstantMessage(dictionary);
+        }
+        // reliable message
+        String signature = (String) dictionary.get("signature");
+        if (signature != null) {
+            return new ReliableMessage(dictionary);
+        }
+        // secure message
+        String data = (String) dictionary.get("data");
+        if (data != null) {
+            return new SecureMessage(dictionary);
         }
         throw new IllegalArgumentException("unknown message: " + object);
     }

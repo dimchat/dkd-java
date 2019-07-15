@@ -30,7 +30,7 @@ import java.util.Map;
 public interface SecureMessageDelegate {
 
     /**
-     *  Decrypt key data to a symmetric key with receiver's private key
+     *  Decrypt 'message.key' with receiver's private key
      *
      *  @param key - encrypted key data
      *  @param sender - sender ID/string
@@ -41,17 +41,35 @@ public interface SecureMessageDelegate {
     Map<String, Object> decryptKey(byte[] key, Object sender, Object receiver, SecureMessage sMsg);
 
     /**
-     *  Decrypt encrypted data to message.content with symmetric key
+     *  Decode 'message.key' from String(Base64)
+     *
+     * @param key - String object
+     * @param sMsg - secure message object
+     * @return encrypted key data
+     */
+    byte[] decodeKeyData(Object key, SecureMessage sMsg);
+
+    /**
+     *  Decrypt 'message.data' with symmetric key
      *
      *  @param data - encrypt content data
      *  @param password - symmetric key
      *  @param sMsg - secure message object
-     *  @return message content
+     *  @return content object
      */
     Content decryptContent(byte[] data, Map<String, Object> password, SecureMessage sMsg);
 
     /**
-     *  Sign the message data(encrypted) with sender's private key
+     *  Decode 'message.data' from String(Base64)
+     *
+     * @param data - String object
+     * @param sMsg - secure message object
+     * @return encrypted content data
+     */
+    byte[] decodeContentData(Object data, SecureMessage sMsg);
+
+    /**
+     *  Sign 'message.data' with sender's private key
      *
      *  @param data - encrypted message data
      *  @param sender - sender ID/string
@@ -59,4 +77,13 @@ public interface SecureMessageDelegate {
      *  @return signature
      */
     byte[] signData(byte[] data, Object sender, SecureMessage sMsg);
+
+    /**
+     *  Encode 'message.signature' to String(Base64)
+     *
+     * @param signature - signature of message.data
+     * @param sMsg - secure message object
+     * @return String object
+     */
+    Object encodeSignature(byte[] signature, SecureMessage sMsg);
 }

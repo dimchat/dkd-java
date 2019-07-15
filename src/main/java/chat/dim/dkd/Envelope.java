@@ -55,6 +55,10 @@ public final class Envelope extends Dictionary {
         }
     }
 
+    Envelope(Object from, Object to) {
+        this(from, to, new Date());
+    }
+
     Envelope(Object from, Object to, Date when) {
         super();
         sender   = from;

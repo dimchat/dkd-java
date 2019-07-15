@@ -49,70 +49,28 @@ import java.util.Map;
  */
 public class SecureMessage extends Message {
 
-    public final byte[] data;
-    public final byte[] key;
-    public final Map<Object, String> keys;
-
     public SecureMessageDelegate delegate;
 
-    @SuppressWarnings("unchecked")
     public SecureMessage(Map<String, Object> dictionary) {
         super(dictionary);
+    }
 
-        // encrypted data
-        String base64 = (String) dictionary.get("data");
+    protected byte[] getData() {
+        Object base64 = dictionary.get("data");
         if (base64 == null) {
             throw new NullPointerException("encrypted data not found: " + dictionary);
         }
-        data = Base64.decode(base64);
-
-        // decrypt key
-        base64 = (String) dictionary.get("key");
-        if (base64 == null) {
-            key = null;
-        } else {
-            key = Base64.decode(base64);
-        }
-
-        // keys for group message
-        Map<Object, String> map = (Map<Object, String>) dictionary.get("keys");
-        if (map == null) {
-            keys = null;
-        } else {
-            keys = map;
-        }
+        return delegate.decodeContentData(base64, this);
     }
 
-    public SecureMessage(byte[] encryptedData, byte[] keyData, Envelope head) {
-        super(head);
-
-        // encrypted data
-        data = encryptedData;
-        dictionary.put("data", Base64.encode(encryptedData));
-
-        // decrypt key
-        key = keyData;
-        if (key != null) {
-            dictionary.put("key", Base64.encode(keyData));
-        }
-
-        // keys for group message
-        keys = null;
+    private byte[] getKey() {
+        Object base64 = dictionary.get("key");
+        return base64 == null ? null : delegate.decodeKeyData(base64, this);
     }
 
-    public SecureMessage(byte[] encryptedData, Map<Object, String> keyMap, Envelope head) {
-        super(head);
-
-        // encrypted data
-        data = encryptedData;
-        dictionary.put("data", Base64.encode(encryptedData));
-
-        // decrypt key
-        key = null;
-
-        // keys for group message
-        keys = keyMap;
-        dictionary.put("keys", keyMap);
+    @SuppressWarnings("unchecked")
+    private Map<Object, Object> getKeys() {
+        return (Map<Object, Object>) dictionary.get("keys");
     }
 
     @SuppressWarnings("unchecked")
@@ -129,22 +87,6 @@ public class SecureMessage extends Message {
     }
 
     /**
-     *  Group ID
-     *      when a group message was splitted/trimmed to a single message
-     *      the 'receiver' will be changed to a member ID, and
-     *      the group ID will be saved as 'group'.
-     *
-     * @return group ID/string
-     */
-    public Object getGroup() {
-        return dictionary.get("group");
-    }
-
-    public void setGroup(Object ID) {
-        dictionary.put("group", ID);
-    }
-
-    /**
      *  Split the group message to single person messages
      *
      *  @param members - group members
@@ -158,7 +100,8 @@ public class SecureMessage extends Message {
         //         if don't want the others know you are the group members, modify it
         msg.put("group", envelope.receiver);
 
-        String base64;
+        Map<Object, Object> keys = getKeys();
+        Object base64;
         for (Object member : members) {
             // 1. change receiver to the group member
             msg.put("receiver", member);
@@ -193,8 +136,9 @@ public class SecureMessage extends Message {
     public SecureMessage trim(Object member) {
         Map<String, Object> msg = new HashMap<>(dictionary);
         // get key from keys
+        Map<Object, Object> keys = getKeys();
         if (keys != null) {
-            String base64 = keys.get(member);
+            Object base64 = keys.get(member);
             if (base64 != null) {
                 msg.put("key", base64);
             }
@@ -227,12 +171,10 @@ public class SecureMessage extends Message {
      * @return InstantMessage object
      */
     public InstantMessage decrypt() {
-        if (dictionary.containsKey("group")) {
-            throw new RuntimeException("group message must be decrypted with member ID");
-        }
         Object sender = envelope.sender;
         Object receiver = envelope.receiver;
-        return decryptData(key, sender, receiver);
+        assert getGroup() == null;
+        return decryptData(getKey(), sender, receiver);
     }
 
     /**
@@ -245,7 +187,7 @@ public class SecureMessage extends Message {
         Object sender = envelope.sender;
         Object receiver = envelope.receiver;
         // check group
-        Object group = dictionary.get("group");
+        Object group = getGroup();
         if (group == null) {
             // if 'group' not exists, the 'receiver' must be a group ID, and
             // it is not equal to the member of course
@@ -264,11 +206,12 @@ public class SecureMessage extends Message {
                 throw new IllegalArgumentException("member error: " + member);
             }
         }
-        byte[] key = null;
+        byte[] key = getKey();
+        Map<Object, Object> keys = getKeys();
         if (keys != null) {
-            String base64 = keys.get(member);
+            Object base64 = keys.get(member);
             if (base64 != null) {
-                key = Base64.decode(base64);
+                key = delegate.decodeKeyData(base64, this);
             }
         }
         return decryptData(key, sender, group);
@@ -277,13 +220,10 @@ public class SecureMessage extends Message {
     private InstantMessage decryptData(byte[] key, Object sender, Object receiver) {
         // 1. decrypt 'key' to symmetric key
         Map<String, Object> password = delegate.decryptKey(key, sender, receiver, this);
-        if (password == null) {
-            throw new NullPointerException("failed to decrypt symmetric key: " + this);
-        }
 
         // 2. decrypt 'data' to 'content'
         //    (remember to save password for decrypted File/Image/Audio/Video data)
-        Content content = delegate.decryptContent(data, password, this);
+        Content content = delegate.decryptContent(getData(), password, this);
         if (content == null) {
             throw new NullPointerException("failed to decrypt message data: " + this);
         }
@@ -317,13 +257,13 @@ public class SecureMessage extends Message {
      */
     public ReliableMessage sign() {
         // 1. sign
-        byte[] signature = delegate.signData(data, envelope.sender, this);
+        byte[] signature = delegate.signData(getData(), envelope.sender, this);
         if (signature == null) {
             throw new NullPointerException("failed to sign message: " + this);
         }
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
-        map.put("signature", Base64.encode(signature));
+        map.put("signature", delegate.encodeSignature(signature, this));
         return new ReliableMessage(map);
     }
 }
