@@ -87,7 +87,7 @@ public abstract class Message extends Dictionary {
 
     /**
      *  Group ID
-     *      when a group message was splitted/trimmed to a single message
+     *      when a group message was split/trimmed to a single message
      *      the 'receiver' will be changed to a member ID, and
      *      the group ID will be saved as 'group'.
      *

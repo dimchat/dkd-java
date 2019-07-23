@@ -123,8 +123,9 @@ public final class InstantMessage extends Message {
 
         // 2. encrypt password to 'key'
         byte[] key = delegate.encryptKey(password, envelope.receiver, this);
-        if (key != null) {
-            map.put("key", delegate.encodeKeyData(key, this));
+        Object base64 = delegate.encodeKeyData(key, this);
+        if (base64 != null) {
+            map.put("key", base64);
         }
 
         // 3. pack message
@@ -146,13 +147,17 @@ public final class InstantMessage extends Message {
         // 2. encrypt password to 'keys'
         Map<Object, Object> keys = new HashMap<>();
         byte[] key;
+        Object base64;
         for (Object member: members) {
             key = delegate.encryptKey(password, member, this);
-            if (key != null) {
-                keys.put(member, delegate.encodeKeyData(key, this));
+            base64 = delegate.encodeKeyData(key, this);
+            if (base64 != null) {
+                keys.put(member, base64);
             }
         }
-        map.put("keys", keys);
+        if (keys.size() > 0) {
+            map.put("keys", keys);
+        }
         // group ID
         Object group = getGroup();
         if (group == null) {
@@ -167,14 +172,16 @@ public final class InstantMessage extends Message {
     }
 
     private Map<String, Object> encryptContent(Map<String, Object> password) {
-        // 1. encrypt message content
-        //    (remember to check attachment for File/Image/Audio/Video message content first)
+        // 1. check attachment for File/Image/Audio/Video message content
+        //    (do it in 'core' module)
+
+        // 2. encrypt message content
         byte[] data = delegate.encryptContent(content, password, this);
         if (data == null) {
             throw new NullPointerException("failed to encrypt content with key: " + password);
         }
 
-        // 2. replace 'content' with encrypted 'data'
+        // 3. replace 'content' with encrypted 'data'
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");
         map.put("data", delegate.encodeContentData(data, this));

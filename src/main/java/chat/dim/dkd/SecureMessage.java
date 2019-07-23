@@ -65,7 +65,7 @@ public class SecureMessage extends Message {
 
     private byte[] getKey() {
         Object base64 = dictionary.get("key");
-        return base64 == null ? null : delegate.decodeKeyData(base64, this);
+        return delegate.decodeKeyData(base64, this);
     }
 
     @SuppressWarnings("unchecked")
@@ -206,6 +206,7 @@ public class SecureMessage extends Message {
                 throw new IllegalArgumentException("member error: " + member);
             }
         }
+        // check key(s)
         byte[] key = getKey();
         Map<Object, Object> keys = getKeys();
         if (keys != null) {
@@ -214,6 +215,7 @@ public class SecureMessage extends Message {
                 key = delegate.decodeKeyData(base64, this);
             }
         }
+        // decrypt
         return decryptData(key, sender, group);
     }
 
