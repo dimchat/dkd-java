@@ -46,43 +46,39 @@ public final class InstantMessage extends Message {
 
     public final Content content;
 
-    public InstantMessageDelegate delegate;
+    public InstantMessageDelegate delegate = null;
 
-    public InstantMessage(Map<String, Object> dictionary) {
+    InstantMessage(Map<String, Object> dictionary) {
         super(dictionary);
         content = Content.getInstance(dictionary.get("content"));
     }
 
     public InstantMessage(Content body, Envelope head) {
         super(head);
-        content = body;
         dictionary.put("content", body);
+        content = body;
     }
 
     public InstantMessage(Content body, Object from, Object to) {
-        super(from, to);
-        content = body;
-        dictionary.put("content", body);
+        this(body, new Envelope(from, to));
     }
 
     public InstantMessage(Content body, Object from, Object to, Date when) {
-        super(from, to, when);
-        content = body;
-        dictionary.put("content", body);
+        this(body, new Envelope(from, to, when));
     }
 
     public InstantMessage(Content body, Object from, Object to, long timestamp) {
-        super(from, to, timestamp);
-        content = body;
-        dictionary.put("content", body);
+        this(body, new Envelope(from, to, timestamp));
     }
 
+    @Override
     public Object getGroup() {
         return content.getGroup();
     }
 
-    public void setGroup(Object ID) {
-        content.setGroup(ID);
+    @Override
+    public void setGroup(Object identifier) {
+        content.setGroup(identifier);
     }
 
     @SuppressWarnings("unchecked")
@@ -164,7 +160,7 @@ public final class InstantMessage extends Message {
             throw new NoSuchFieldException("group message error: " + this);
         }
         // NOTICE: this help the receiver knows the group ID when the group message separated to multi-messages
-        //         if don't want the others know you are the group members, modify it
+        //         if don't want the others know you are the group members, remove it.
         map.put("group", group);
 
         // 3. pack message

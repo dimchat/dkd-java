@@ -26,7 +26,7 @@ public final class Transceiver implements InstantMessageDelegate, SecureMessageD
     }
 
     @Override
-    public boolean verifyData(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg) {
+    public boolean verifyDataSignature(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg) {
         return false;
     }
 

@@ -36,7 +36,7 @@ public interface ReliableMessageDelegate extends SecureMessageDelegate {
      *  @param rMsg - reliable message object
      *  @return YES on signature matched
      */
-    boolean verifyData(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg);
+    boolean verifyDataSignature(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg);
 
     /**
      *  Decode 'message.signature' from String(Base64)

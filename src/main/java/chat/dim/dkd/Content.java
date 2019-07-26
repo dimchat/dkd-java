@@ -40,21 +40,16 @@ public class Content extends Dictionary {
     // random number to identify message content
     public final long serialNumber;
 
-    // Group ID/string for group message
-    private Object group;
-
     protected Content(Map<String, Object> dictionary) {
         super(dictionary);
         type         = (int) dictionary.get("type");
         serialNumber = (long) dictionary.get("sn");
-        group        = dictionary.get("group");
     }
 
     protected Content(int msgType) {
         super();
         type         = msgType;
         serialNumber = randomPositiveInteger();
-        group        = null;
         dictionary.put("type", type);
         dictionary.put("sn", serialNumber);
     }
@@ -71,15 +66,17 @@ public class Content extends Dictionary {
         return 9527 + 9394; // randomPositiveInteger();
     }
 
-    //-------- setter/getter --------
-
-    public void setGroup(Object groupID) {
-        group = groupID;
-        dictionary.put("group", groupID);
-    }
-
+    // Group ID/string for group message
+    //    if field 'group' exists, it means this is a group message
     public Object getGroup() {
-        return group;
+        return dictionary.get("group");
+    }
+    public void setGroup(Object identifier) {
+        if (identifier == null) {
+            dictionary.remove("group");
+        } else {
+            dictionary.put("group", identifier);
+        }
     }
 
     //-------- Runtime --------
@@ -118,7 +115,7 @@ public class Content extends Dictionary {
             if (method.getDeclaringClass().equals(clazz)) {
                 return (Content) method.invoke(null, dictionary);
             }
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             //e.printStackTrace();
         }
         // try 'new MyContent()'

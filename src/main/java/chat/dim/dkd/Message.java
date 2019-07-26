@@ -25,7 +25,6 @@
  */
 package chat.dim.dkd;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,34 +54,13 @@ public abstract class Message extends Dictionary {
         envelope = new Envelope(env);
     }
 
-    Message(Envelope head) {
+    Message(Envelope env) {
         super();
-        envelope = head;
-        copyEnvelope(head);
-    }
-
-    Message(Object from, Object to) {
-        super();
-        envelope = new Envelope(from, to);
-        copyEnvelope(envelope);
-    }
-
-    Message(Object from, Object to, Date when) {
-        super();
-        envelope = new Envelope(from, to, when);
-        copyEnvelope(envelope);
-    }
-
-    Message(Object from, Object to, long timestamp) {
-        super();
-        envelope = new Envelope(from, to, timestamp);
-        copyEnvelope(envelope);
-    }
-
-    private void copyEnvelope(Envelope env) {
+        // copy envelope
         dictionary.put("sender", env.sender);
         dictionary.put("receiver", env.receiver);
-        dictionary.put("time", env.get("time"));
+        dictionary.put("time", env.get("time")); // copy timestamp
+        envelope = env;
     }
 
     /**
@@ -93,13 +71,9 @@ public abstract class Message extends Dictionary {
      *
      * @return group ID/string
      */
-    public Object getGroup() {
-        return dictionary.get("group");
-    }
+    public abstract Object getGroup();
 
-    public void setGroup(Object ID) {
-        dictionary.put("group", ID);
-    }
+    public abstract void setGroup(Object group);
 
     @SuppressWarnings("unchecked")
     public static Message getInstance(Object object) {

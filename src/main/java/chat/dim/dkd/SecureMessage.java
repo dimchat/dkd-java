@@ -49,28 +49,55 @@ import java.util.Map;
  */
 public class SecureMessage extends Message {
 
-    public SecureMessageDelegate delegate;
+    private byte[] data = null;
+    private byte[] key = null;
+    private Map<Object, Object> keys = null;
 
-    public SecureMessage(Map<String, Object> dictionary) {
+    public SecureMessageDelegate delegate = null;
+
+    SecureMessage(Map<String, Object> dictionary) {
         super(dictionary);
     }
 
-    protected byte[] getData() {
-        Object base64 = dictionary.get("data");
-        if (base64 == null) {
-            throw new NullPointerException("encrypted data not found: " + dictionary);
-        }
-        return delegate.decodeContentData(base64, this);
+    @Override
+    public Object getGroup() {
+        return dictionary.get("group");
     }
 
-    private byte[] getKey() {
-        Object base64 = dictionary.get("key");
-        return delegate.decodeKeyData(base64, this);
+    @Override
+    public void setGroup(Object ID) {
+        dictionary.put("group", ID);
+    }
+
+    public byte[] getData() {
+        if (data == null) {
+            Object base64 = dictionary.get("data");
+            data = delegate.decodeContentData(base64, this);
+        }
+        return data;
+    }
+
+    public byte[] getKey() {
+        if (key == null) {
+            Object base64 = dictionary.get("key");
+            if (base64 == null) {
+                // check 'keys'
+                Map<Object, Object> keys = getKeys();
+                if (keys != null) {
+                    base64 = keys.get(envelope.receiver);
+                }
+            }
+            key = delegate.decodeKeyData(base64, this);
+        }
+        return key;
     }
 
     @SuppressWarnings("unchecked")
-    private Map<Object, Object> getKeys() {
-        return (Map<Object, Object>) dictionary.get("keys");
+    public Map<Object, Object> getKeys() {
+        if (keys == null) {
+            keys = (Map<Object, Object>) dictionary.get("keys");
+        }
+        return keys;
     }
 
     @SuppressWarnings("unchecked")
@@ -83,72 +110,6 @@ public class SecureMessage extends Message {
             return new SecureMessage((Map<String, Object>) object);
         } else  {
             throw new IllegalArgumentException("unknown message: " + object);
-        }
-    }
-
-    /**
-     *  Split the group message to single person messages
-     *
-     *  @param members - group members
-     *  @return secure/reliable message(s)
-     */
-    public List<SecureMessage> split(List members) {
-        List<SecureMessage> messages = new ArrayList<>(members.size());
-
-        Map<String, Object> msg = new HashMap<>(dictionary);
-        // NOTICE: this help the receiver knows the group ID when the group message separated to multi-messages
-        //         if don't want the others know you are the group members, modify it
-        msg.put("group", envelope.receiver);
-
-        Map<Object, Object> keys = getKeys();
-        Object base64;
-        for (Object member : members) {
-            // 1. change receiver to the group member
-            msg.put("receiver", member);
-
-            if (keys != null) {
-                // 2. get encrypted key from map
-                base64 = keys.get(member);
-                if (base64 == null) {
-                    msg.remove("key");
-                } else {
-                    msg.put("key", base64);
-                }
-            }
-
-            // 3. repack message
-            if (msg.containsKey("signature")) {
-                messages.add(new ReliableMessage(msg));
-            } else {
-                messages.add(new SecureMessage(msg));
-            }
-        }
-
-        return messages;
-    }
-
-    /**
-     *  Trim the group message for a member
-     *
-     * @param member - group member ID/string
-     * @return SecureMessage
-     */
-    public SecureMessage trim(Object member) {
-        Map<String, Object> msg = new HashMap<>(dictionary);
-        // get key from keys
-        Map<Object, Object> keys = getKeys();
-        if (keys != null) {
-            Object base64 = keys.get(member);
-            if (base64 != null) {
-                msg.put("key", base64);
-            }
-            msg.remove("keys");
-        }
-        // repack
-        if (msg.containsKey("signature")) {
-            return new ReliableMessage(msg);
-        } else {
-            return new SecureMessage(msg);
         }
     }
 
@@ -173,63 +134,24 @@ public class SecureMessage extends Message {
     public InstantMessage decrypt() {
         Object sender = envelope.sender;
         Object receiver = envelope.receiver;
-        assert getGroup() == null;
-        return decryptData(getKey(), sender, receiver);
-    }
-
-    /**
-     *  Decrypt group message, replace encrypted 'data' with 'content' field
-     *
-     * @param member - receiver (as group member) ID
-     * @return InstantMessage object
-     */
-    public InstantMessage decrypt(Object member) {
-        Object sender = envelope.sender;
-        Object receiver = envelope.receiver;
-        // check group
         Object group = getGroup();
-        if (group == null) {
-            // if 'group' not exists, the 'receiver' must be a group ID, and
-            // it is not equal to the member of course
-            if (receiver.equals(member)) {
-                throw new IllegalArgumentException("receiver error: " + receiver);
-            }
-            group = receiver;
-        } else {
-            // if 'group' exists and the 'receiver' is a group ID too,
-            // they must be equal; or the 'receiver' must equal to member
-            if (!receiver.equals(group) && !receiver.equals(member)) {
-                throw new IllegalArgumentException("receiver error: " + receiver);
-            }
-            // and the 'group' must not equal to member of course
-            if (group.equals(member)) {
-                throw new IllegalArgumentException("member error: " + member);
-            }
-        }
-        // check key(s)
-        byte[] key = getKey();
-        Map<Object, Object> keys = getKeys();
-        if (keys != null) {
-            Object base64 = keys.get(member);
-            if (base64 != null) {
-                key = delegate.decodeKeyData(base64, this);
-            }
-        }
-        // decrypt
-        return decryptData(key, sender, group);
-    }
-
-    private InstantMessage decryptData(byte[] key, Object sender, Object receiver) {
         // 1. decrypt 'key' to symmetric key
-        Map<String, Object> password = delegate.decryptKey(key, sender, receiver, this);
-
+        byte[] key = getKey();
+        Map<String, Object> password;
+        if (group == null) {
+            // personal message
+            password = delegate.decryptKey(key, sender, receiver, this);
+        } else {
+            // group message
+            password = delegate.decryptKey(key, sender, group, this);
+        }
         // 2. decrypt 'data' to 'content'
         //    (remember to save password for decrypted File/Image/Audio/Video data)
         Content content = delegate.decryptContent(getData(), password, this);
         if (content == null) {
-            throw new NullPointerException("failed to decrypt message data: " + this);
+            //throw new NullPointerException("failed to decrypt message data: " + this);
+            return null;
         }
-
         // 3. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("key");
@@ -267,5 +189,89 @@ public class SecureMessage extends Message {
         Map<String, Object> map = new HashMap<>(dictionary);
         map.put("signature", delegate.encodeSignature(signature, this));
         return new ReliableMessage(map);
+    }
+
+    /**
+     *  Split the group message to single person messages
+     *
+     *  @param members - group members
+     *  @return secure/reliable message(s)
+     */
+    public List<SecureMessage> split(List members) {
+        List<SecureMessage> messages = new ArrayList<>(members.size());
+
+        Map<String, Object> msg = new HashMap<>(dictionary);
+        // check 'keys'
+        Map<Object, Object> keys = getKeys();
+        if (keys == null) {
+            keys = new HashMap<>();
+        } else {
+            msg.remove("keys");
+        }
+        // check 'signature'
+        boolean reliable = msg.containsKey("signature");
+
+        // 1. move the receiver(group ID) to 'group'
+        //    this will help the receiver knows the group ID
+        //    when the group message separated to multi-messages;
+        //    if don't want the others know your membership,
+        //    DON'T do this.
+        msg.put("group", envelope.receiver);
+
+        Object base64;
+        for (Object member : members) {
+            // 2. change 'receiver' to each group member
+            msg.put("receiver", member);
+            // 3. get encrypted key
+            base64 = keys.get(member);
+            if (base64 == null) {
+                msg.remove("key");
+            } else {
+                msg.put("key", base64);
+            }
+            // 4. repack message
+            if (reliable) {
+                messages.add(new ReliableMessage(msg));
+            } else {
+                messages.add(new SecureMessage(msg));
+            }
+        }
+
+        return messages;
+    }
+
+    /**
+     *  Trim the group message for a member
+     *
+     * @param member - group member ID/string
+     * @return SecureMessage
+     */
+    public SecureMessage trim(Object member) {
+        Map<String, Object> msg = new HashMap<>(dictionary);
+        // check 'keys'
+        Map<Object, Object> keys = getKeys();
+        if (keys != null) {
+            // move key data from 'keys' to 'key'
+            Object base64 = keys.get(member);
+            if (base64 != null) {
+                msg.put("key", base64);
+            }
+            msg.remove("keys");
+            // check 'group'
+            Object group = getGroup();
+            if (group == null) {
+                // if 'group' not exists, the 'receiver' must be a group ID here, and
+                // it will not be equal to the member of course,
+                // so move 'receiver' to 'group'
+                msg.put("group", envelope.receiver);
+            }
+            msg.put("receiver", member);
+        }
+        // repack
+        if (msg.containsKey("signature")) {
+            return new ReliableMessage(msg);
+        } else {
+            return new SecureMessage(msg);
+        }
     }
 }

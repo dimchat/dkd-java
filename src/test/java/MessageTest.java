@@ -92,12 +92,22 @@ public class MessageTest {
         SecureMessage sMsg = SecureMessage.getInstance(dictionary);
         Log.info("secure message: " + sMsg);
 
+        sMsg.delegate = transceiver;
+        byte[] key = sMsg.getKey();
+        Map keys = sMsg.getKeys();
+
         sMsg.setGroup("group12345");
         Log.info("group: " + sMsg.getGroup());
+
+//        InstantMessage iMsg = sMsg.decrypt();
+//        Log.info("instant msg: " + iMsg);
 
         dictionary.put("signature", signature);
         ReliableMessage rMsg = ReliableMessage.getInstance(dictionary);
         Log.info("reliable message: " + rMsg);
+
+        rMsg.delegate = transceiver;
+        byte[] signature = rMsg.getSignature();
     }
 
     @Test
