@@ -28,17 +28,41 @@ package chat.dim.dkd;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *  Common Message
+/*
+ *  Message Transforming
+ *  ~~~~~~~~~~~~~~~~~~~~
  *
- *      data format: {
- *          //-- envelope
- *          sender   : "moki@xxx",
- *          receiver : "hulk@yyy",
- *          time     : 123,
- *          //-- others
- *          ...
- *      }
+ *     Instant Message <-> Secure Message <-> Reliable Message
+ *     +-------------+     +------------+     +--------------+
+ *     |  sender     |     |  sender    |     |  sender      |
+ *     |  receiver   |     |  receiver  |     |  receiver    |
+ *     |  time       |     |  time      |     |  time        |
+ *     |             |     |            |     |              |
+ *     |  content    |     |  data      |     |  data        |
+ *     +-------------+     |  key/keys  |     |  key/keys    |
+ *                         +------------+     |  signature   |
+ *                                            +--------------+
+ *     Algorithm:
+ *         data      = password.encrypt(content)
+ *         key       = receiver.public_key.encrypt(password)
+ *         signature = sender.private_key.sign(data)
+ */
+
+/**
+ *  Message with Envelope
+ *  ~~~~~~~~~~~~~~~~~~~~~
+ *  Base classes for messages
+ *  This class is used to create a message
+ *  with the envelope fields, such as 'sender', 'receiver', and 'time'
+ *
+ *  data format: {
+ *      //-- envelope
+ *      sender   : "moki@xxx",
+ *      receiver : "hulk@yyy",
+ *      time     : 123,
+ *      //-- body
+ *      ...
+ *  }
  */
 public abstract class Message extends Dictionary {
 
@@ -65,9 +89,10 @@ public abstract class Message extends Dictionary {
 
     /**
      *  Group ID
-     *      when a group message was split/trimmed to a single message
-     *      the 'receiver' will be changed to a member ID, and
-     *      the group ID will be saved as 'group'.
+     *  ~~~~~~~~
+     *  when a group message was split/trimmed to a single message
+     *  the 'receiver' will be changed to a member ID, and
+     *  the group ID will be saved as 'group'.
      *
      * @return group ID/string
      */

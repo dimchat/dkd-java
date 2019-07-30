@@ -32,20 +32,21 @@ import java.util.Map;
 
 /**
  *  Secure Message
- *      Instant Message encrypted by a symmetric key
+ *  ~~~~~~~~~~~~~~
+ *  Instant Message encrypted by a symmetric key
  *
- *      data format: {
- *          //-- envelope
- *          sender   : "moki@xxx",
- *          receiver : "hulk@yyy",
- *          time     : 123,
- *          //-- content data and key/keys
- *          data     : "...",  // base64_encode(symmetric)
- *          key      : "...",  // base64_encode(asymmetric)
- *          keys     : {
- *              "ID1": "key1", // base64_encode(asymmetric)
- *          }
+ *  data format: {
+ *      //-- envelope
+ *      sender   : "moki@xxx",
+ *      receiver : "hulk@yyy",
+ *      time     : 123,
+ *      //-- content data and key/keys
+ *      data     : "...",  // base64_encode(symmetric)
+ *      key      : "...",  // base64_encode(asymmetric)
+ *      keys     : {
+ *          "ID1": "key1", // base64_encode(asymmetric)
  *      }
+ *  }
  */
 public class SecureMessage extends Message {
 
@@ -191,6 +192,12 @@ public class SecureMessage extends Message {
         return new ReliableMessage(map);
     }
 
+    /*
+     *  Split/Trim group message
+     *
+     *  for each members, get key from 'keys' and replace 'receiver' to member ID
+     */
+
     /**
      *  Split the group message to single person messages
      *
@@ -198,7 +205,6 @@ public class SecureMessage extends Message {
      *  @return secure/reliable message(s)
      */
     public List<SecureMessage> split(List members) {
-        List<SecureMessage> messages = new ArrayList<>(members.size());
 
         Map<String, Object> msg = new HashMap<>(dictionary);
         // check 'keys'
@@ -218,6 +224,7 @@ public class SecureMessage extends Message {
         //    DON'T do this.
         msg.put("group", envelope.receiver);
 
+        List<SecureMessage> messages = new ArrayList<>(members.size());
         Object base64;
         for (Object member : members) {
             // 2. change 'receiver' to each group member

@@ -32,15 +32,16 @@ import java.util.Map;
 
 /**
  *  Instant Message
+ *  ~~~~~~~~~~~~~~~
  *
- *      data format: {
- *          //-- envelope
- *          sender   : "moki@xxx",
- *          receiver : "hulk@yyy",
- *          time     : 123,
- *          //-- content
- *          content  : {...}
- *      }
+ *  data format: {
+ *      //-- envelope
+ *      sender   : "moki@xxx",
+ *      receiver : "hulk@yyy",
+ *      time     : 123,
+ *      //-- content
+ *      content  : {...}
+ *  }
  */
 public final class InstantMessage extends Message {
 

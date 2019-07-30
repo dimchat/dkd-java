@@ -32,12 +32,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ *  Message Content
+ *  ~~~~~~~~~~~~~~~
+ *  This class is for creating message content
+ *
+ *  data format: {
+ *      'type'    : 0x00,            // message type
+ *      'sn'      : 0,               // serial number
+ *
+ *      'group'   : 'Group ID',      // for group message
+ *
+ *      //-- message info
+ *      'text'    : 'text',          // for text message
+ *      'command' : 'Command Name',  // for system command
+ *      //...
+ *  }
+ */
 public class Content extends Dictionary {
 
     // message type: text, image, ...
     public final int type;
 
-    // random number to identify message content
+    // serial number: random number to identify message content
     public final long serialNumber;
 
     protected Content(Map<String, Object> dictionary) {

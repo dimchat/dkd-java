@@ -30,12 +30,15 @@ import java.util.Map;
 
 /**
  *  Envelope for message
+ *  ~~~~~~~~~~~~~~~~~~~~
+ *  This class is used to create a message envelope
+ *  which contains 'sender', 'receiver' and 'time'
  *
- *      data format: {
- *          sender   : "moki@xxx",
- *          receiver : "hulk@yyy",
- *          time     : 123
- *      }
+ *  data format: {
+ *      sender   : "moki@xxx",
+ *      receiver : "hulk@yyy",
+ *      time     : 123
+ *  }
  */
 public final class Envelope extends Dictionary {
 

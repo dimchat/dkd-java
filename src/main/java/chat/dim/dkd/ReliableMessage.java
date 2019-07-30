@@ -30,21 +30,24 @@ import java.util.Map;
 
 /**
  *  Instant Message signed by an asymmetric key
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  This class is used to sign the SecureMessage
+ *  It contains a 'signature' field which signed with sender's private key
  *
- *      data format: {
- *          //-- envelope
- *          sender   : "moki@xxx",
- *          receiver : "hulk@yyy",
- *          time     : 123,
- *          //-- content data and key/keys
- *          data     : "...",  // base64_encode(symmetric)
- *          key      : "...",  // base64_encode(asymmetric)
- *          keys     : {
- *              "ID1": "key1", // base64_encode(asymmetric)
- *          },
- *          //-- signature
- *          signature: "..."   // base64_encode()
- *      }
+ *  data format: {
+ *      //-- envelope
+ *      sender   : "moki@xxx",
+ *      receiver : "hulk@yyy",
+ *      time     : 123,
+ *      //-- content data and key/keys
+ *      data     : "...",  // base64_encode(symmetric)
+ *      key      : "...",  // base64_encode(asymmetric)
+ *      keys     : {
+ *          "ID1": "key1", // base64_encode(asymmetric)
+ *      },
+ *      //-- signature
+ *      signature: "..."   // base64_encode()
+ *  }
  */
 public final class ReliableMessage extends SecureMessage {
 
@@ -83,7 +86,8 @@ public final class ReliableMessage extends SecureMessage {
 
     /**
      *  Sender's Meta
-     *      Extends for the first message package of 'Handshake' protocol.
+     *  ~~~~~~~~~~~~~
+     *  Extends for the first message package of 'Handshake' protocol.
      *
      * @param meta - Meta object or dictionary
      */
@@ -116,15 +120,15 @@ public final class ReliableMessage extends SecureMessage {
      * @return SecureMessage object
      */
     public SecureMessage verify() {
-        // 1. verify
-        boolean OK = getDelegate().verifyDataSignature(getData(), getSignature(), envelope.sender, this);
-        if (!OK) {
+        // 1. verify data signature
+        if (getDelegate().verifyDataSignature(getData(), getSignature(), envelope.sender, this)) {
+            // 2. pack message
+            Map<String, Object> map = new HashMap<>(dictionary);
+            map.remove("signature");
+            return new SecureMessage(map);
+        } else {
             //throw new RuntimeException("message signature not match: " + this);
             return null;
         }
-        // 2. pack message
-        Map<String, Object> map = new HashMap<>(dictionary);
-        map.remove("signature");
-        return new SecureMessage(map);
     }
 }

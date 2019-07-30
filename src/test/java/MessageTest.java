@@ -1,8 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import chat.dim.dkd.*;
 
@@ -60,7 +59,15 @@ public class MessageTest {
 
         Content content = new TextContent("Hello world!");
 
-        InstantMessage iMsg = new InstantMessage(content, sender, receiver);
+        InstantMessage iMsg;
+        iMsg = new InstantMessage(content, null, null);
+        Log.info("instant message: " + iMsg);
+        iMsg = new InstantMessage(content, sender, receiver, null);
+        Log.info("instant message: " + iMsg);
+        iMsg = new InstantMessage(content, iMsg.envelope);
+        Log.info("instant message: " + iMsg);
+
+        iMsg = new InstantMessage(content, sender, receiver, 0);
         Log.info("instant message: " + iMsg);
         Log.info("envelope: " + iMsg.envelope);
         Log.info("content: " + iMsg.content);
@@ -108,6 +115,14 @@ public class MessageTest {
 
         rMsg.delegate = transceiver;
         byte[] signature = rMsg.getSignature();
+
+        Map<String, Object> meta = rMsg.getMeta();
+        Log.info("meta: " + meta);
+
+        SecureMessage sMsg2 = rMsg.verify();
+        Log.info("secure message: " + sMsg2);
+
+        rMsg.setMeta(meta);
     }
 
     @Test
@@ -121,8 +136,15 @@ public class MessageTest {
         dictionary.put("key", key);
         dictionary.put("signature", signature);
 
-        Message msg = Message.getInstance(dictionary);
+        ReliableMessage msg = (ReliableMessage) Message.getInstance(dictionary);
         Log.info("reliable message: " + msg);
+
+        List<Object> members = new ArrayList<>();
+        List<SecureMessage> messages = msg.split(members);
+        Log.info("split: " + messages);
+
+        SecureMessage sMsg = msg.trim(receiver);
+        Log.info("trim: " + sMsg);
     }
 
     static {
