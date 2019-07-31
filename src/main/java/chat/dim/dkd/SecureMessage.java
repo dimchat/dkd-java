@@ -181,7 +181,7 @@ public class SecureMessage extends Message {
      * @return ReliableMessage object
      */
     public ReliableMessage sign() {
-        // 1. sign
+        // 1. sign with sender's private key
         byte[] signature = delegate.signData(getData(), envelope.sender, this);
         if (signature == null) {
             throw new NullPointerException("failed to sign message: " + this);
@@ -264,16 +264,16 @@ public class SecureMessage extends Message {
                 msg.put("key", base64);
             }
             msg.remove("keys");
-            // check 'group'
-            Object group = getGroup();
-            if (group == null) {
-                // if 'group' not exists, the 'receiver' must be a group ID here, and
-                // it will not be equal to the member of course,
-                // so move 'receiver' to 'group'
-                msg.put("group", envelope.receiver);
-            }
-            msg.put("receiver", member);
         }
+        // check 'group'
+        Object group = getGroup();
+        if (group == null) {
+            // if 'group' not exists, the 'receiver' must be a group ID here, and
+            // it will not be equal to the member of course,
+            // so move 'receiver' to 'group'
+            msg.put("group", envelope.receiver);
+        }
+        msg.put("receiver", member);
         // repack
         if (msg.containsKey("signature")) {
             return new ReliableMessage(msg);

@@ -120,7 +120,7 @@ public final class ReliableMessage extends SecureMessage {
      * @return SecureMessage object
      */
     public SecureMessage verify() {
-        // 1. verify data signature
+        // 1. verify data signature with sender's public key
         if (getDelegate().verifyDataSignature(getData(), getSignature(), envelope.sender, this)) {
             // 2. pack message
             Map<String, Object> map = new HashMap<>(dictionary);

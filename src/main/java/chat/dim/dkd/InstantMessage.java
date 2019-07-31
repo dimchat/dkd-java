@@ -116,7 +116,7 @@ public final class InstantMessage extends Message {
      */
     public SecureMessage encrypt(Map<String, Object> password) {
         // 1. encrypt 'content' to 'data'
-        Map<String, Object> map = encryptContent(password);
+        Map<String, Object> map = prepareData(password);
 
         // 2. encrypt password to 'key'
         byte[] key = delegate.encryptKey(password, envelope.receiver, this);
@@ -139,7 +139,7 @@ public final class InstantMessage extends Message {
      */
     public SecureMessage encrypt(Map<String, Object> password, List members) throws NoSuchFieldException {
         // 1. encrypt 'content' to 'data'
-        Map<String, Object> map = encryptContent(password);
+        Map<String, Object> map = prepareData(password);
 
         // 2. encrypt password to 'keys'
         Map<Object, Object> keys = new HashMap<>();
@@ -160,28 +160,32 @@ public final class InstantMessage extends Message {
         if (group == null) {
             throw new NoSuchFieldException("group message error: " + this);
         }
-        // NOTICE: this help the receiver knows the group ID when the group message separated to multi-messages
-        //         if don't want the others know you are the group members, remove it.
+        // NOTICE: this help the receiver knows the group ID
+        //         when the group message separated to multi-messages,
+        //         if don't want the others know you are the group members,
+        //         remove it.
         map.put("group", group);
 
         // 3. pack message
         return new SecureMessage(map);
     }
 
-    private Map<String, Object> encryptContent(Map<String, Object> password) {
+    private Map<String, Object> prepareData(Map<String, Object> password) {
         // 1. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
 
         // 2. encrypt message content
         byte[] data = delegate.encryptContent(content, password, this);
-        if (data == null) {
-            throw new NullPointerException("failed to encrypt content with key: " + password);
-        }
+        assert data != null;
 
-        // 3. replace 'content' with encrypted 'data'
+        // 3. encode encrypted data
+        Object base64 = delegate.encodeContentData(data, this);
+        assert base64 != null;
+
+        // 4. replace 'content' with encrypted 'data'
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");
-        map.put("data", delegate.encodeContentData(data, this));
+        map.put("data", base64);
         return map;
     }
 }
