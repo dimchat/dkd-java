@@ -60,7 +60,7 @@ public class Content extends Dictionary {
     protected Content(Map<String, Object> dictionary) {
         super(dictionary);
         type         = (int) dictionary.get("type");
-        serialNumber = (long) dictionary.get("sn");
+        serialNumber = ((Number) dictionary.get("sn")).longValue();
     }
 
     protected Content(int msgType) {

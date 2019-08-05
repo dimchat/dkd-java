@@ -54,7 +54,7 @@ public final class Envelope extends Dictionary {
         if (timestamp == null) {
             time = null;
         } else {
-            time = new Date((long) timestamp * 1000);
+            time = new Date(((Number) timestamp).longValue() * 1000);
         }
     }
 
