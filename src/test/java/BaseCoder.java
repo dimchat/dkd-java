@@ -1,3 +1,4 @@
+
 public interface BaseCoder {
 
     String encode(byte[] data);

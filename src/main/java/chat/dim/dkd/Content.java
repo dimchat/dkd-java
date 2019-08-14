@@ -25,6 +25,9 @@
  */
 package chat.dim.dkd;
 
+import chat.dim.protocol.ContentType;
+import chat.dim.protocol.ForwardContent;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -143,5 +146,11 @@ public class Content extends Dictionary {
             e.printStackTrace();
             return null;
         }
+    }
+
+    static {
+
+        // Forward content for Top-Secret message
+        Content.register(ContentType.FORWARD.value, ForwardContent.class);
     }
 }

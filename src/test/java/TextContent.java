@@ -1,6 +1,8 @@
-import chat.dim.dkd.Content;
 
 import java.util.Map;
+
+import chat.dim.dkd.Content;
+import chat.dim.protocol.ContentType;
 
 /**
  *  Text message: {
@@ -12,8 +14,6 @@ import java.util.Map;
  */
 public class TextContent extends Content {
 
-    public static final int TEXT    = 0x01; // 0000 0001
-
     private String text;
 
     public TextContent(Map<String, Object> dictionary) {
@@ -21,7 +21,7 @@ public class TextContent extends Content {
     }
 
     public TextContent(String message) {
-        super(TEXT);
+        super(ContentType.TEXT.value);
         setText(message);
     }
 
@@ -37,6 +37,6 @@ public class TextContent extends Content {
     }
 
     static {
-        Content.register(TEXT, TextContent.class);
+        Content.register(ContentType.TEXT.value, TextContent.class);
     }
 }

@@ -1,7 +1,7 @@
 
-import chat.dim.dkd.*;
-
 import java.util.Map;
+
+import chat.dim.dkd.*;
 
 public final class Transceiver implements InstantMessageDelegate, SecureMessageDelegate, ReliableMessageDelegate {
 
