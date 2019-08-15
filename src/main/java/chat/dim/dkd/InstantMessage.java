@@ -179,7 +179,7 @@ public final class InstantMessage extends Message {
         assert data != null;
 
         // 3. encode encrypted data
-        Object base64 = delegate.encodeContentData(data, this);
+        Object base64 = delegate.encodeData(data, this);
         assert base64 != null;
 
         // 4. replace 'content' with encrypted 'data'

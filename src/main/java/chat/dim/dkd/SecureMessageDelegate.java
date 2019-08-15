@@ -66,7 +66,7 @@ public interface SecureMessageDelegate {
      * @param sMsg - secure message object
      * @return encrypted content data
      */
-    byte[] decodeContentData(Object data, SecureMessage sMsg);
+    byte[] decodeData(Object data, SecureMessage sMsg);
 
     /**
      *  Sign 'message.data' with sender's private key

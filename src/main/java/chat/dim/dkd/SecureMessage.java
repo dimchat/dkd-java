@@ -73,7 +73,7 @@ public class SecureMessage extends Message {
     public byte[] getData() {
         if (data == null) {
             Object base64 = dictionary.get("data");
-            data = delegate.decodeContentData(base64, this);
+            data = delegate.decodeData(base64, this);
         }
         return data;
     }

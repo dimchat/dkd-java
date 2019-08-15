@@ -46,7 +46,7 @@ public interface InstantMessageDelegate {
      * @param iMsg - instant message object
      * @return String object
      */
-    Object encodeContentData(byte[] data, InstantMessage iMsg);
+    Object encodeData(byte[] data, InstantMessage iMsg);
 
     /**
      *  Encrypt 'message.key' with receiver's public key
