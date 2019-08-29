@@ -88,7 +88,7 @@ public class SecureMessage extends Message {
                     base64 = keys.get(envelope.receiver);
                 }
             }
-            key = delegate.decodeKeyData(base64, this);
+            key = delegate.decodeKey(base64, this);
         }
         return key;
     }
@@ -136,9 +136,13 @@ public class SecureMessage extends Message {
         Object sender = envelope.sender;
         Object receiver = envelope.receiver;
         Object group = getGroup();
-        // 1. decrypt 'key' to symmetric key
+
+        // 1. decrypt 'message.key' to symmetric key
+        // 1.1. decode encrypted key data
         byte[] key = getKey();
         Map<String, Object> password;
+        // 1.2. decrypt key data
+        //      if key is empty, means it should be reused, get it from key cache
         if (group == null) {
             // personal message
             password = delegate.decryptKey(key, sender, receiver, this);
@@ -146,13 +150,23 @@ public class SecureMessage extends Message {
             // group message
             password = delegate.decryptKey(key, sender, group, this);
         }
-        // 2. decrypt 'data' to 'content'
-        //    (remember to save password for decrypted File/Image/Audio/Video data)
-        Content content = delegate.decryptContent(getData(), password, this);
+
+        // 2. decrypt 'message.data' to 'message.content'
+        // 2.1. decode encrypted content data
+        byte[] data = getData();
+        // 2.2. decrypt & deserialize content data
+        Content content = delegate.decryptContent(data, password, this);
+        // 2.3. check attachment for File/Image/Audio/Video message content
+        //      if file data not download yet,
+        //          decrypt file data with password;
+        //      else,
+        //          save password to 'message.content.password'.
+        //      (do it in 'core' module)
         if (content == null) {
             //throw new NullPointerException("failed to decrypt message data: " + this);
             return null;
         }
+
         // 3. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("key");

@@ -30,24 +30,33 @@ import java.util.Map;
 public interface SecureMessageDelegate {
 
     /**
+     *  Decode 'message.key' to encrypted symmetric key data
+     *
+     * @param key - base64 string object
+     * @param sMsg - secure message object
+     * @return encrypted symmetric key data
+     */
+    byte[] decodeKey(Object key, SecureMessage sMsg);
+
+    /**
      *  Decrypt 'message.key' with receiver's private key
      *
-     *  @param key - encrypted key data
-     *  @param sender - sender ID/string
-     *  @param receiver - receiver(group) ID/string
+     *  @param key - encrypted symmetric key data
+     *  @param sender - sender/member ID string
+     *  @param receiver - receiver/group ID string
      *  @param sMsg - secure message object
      *  @return symmetric key
      */
     Map<String, Object> decryptKey(byte[] key, Object sender, Object receiver, SecureMessage sMsg);
 
     /**
-     *  Decode 'message.key' from String(Base64)
+     *  Decode 'message.data' to encrypted content data
      *
-     * @param key - String object
+     * @param data - base64 string object
      * @param sMsg - secure message object
-     * @return encrypted key data
+     * @return encrypted content data
      */
-    byte[] decodeKeyData(Object key, SecureMessage sMsg);
+    byte[] decodeData(Object data, SecureMessage sMsg);
 
     /**
      *  Decrypt 'message.data' with symmetric key
@@ -60,19 +69,10 @@ public interface SecureMessageDelegate {
     Content decryptContent(byte[] data, Map<String, Object> password, SecureMessage sMsg);
 
     /**
-     *  Decode 'message.data' from String(Base64)
-     *
-     * @param data - String object
-     * @param sMsg - secure message object
-     * @return encrypted content data
-     */
-    byte[] decodeData(Object data, SecureMessage sMsg);
-
-    /**
      *  Sign 'message.data' with sender's private key
      *
      *  @param data - encrypted message data
-     *  @param sender - sender ID/string
+     *  @param sender - sender ID string
      *  @param sMsg - secure message object
      *  @return signature
      */

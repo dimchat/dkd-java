@@ -28,6 +28,15 @@ package chat.dim.dkd;
 public interface ReliableMessageDelegate extends SecureMessageDelegate {
 
     /**
+     *  Decode 'message.signature' from String(Base64)
+     *
+     * @param signature - String object
+     * @param rMsg - reliable message
+     * @return signature data
+     */
+    byte[] decodeSignature(Object signature, ReliableMessage rMsg);
+
+    /**
      *  Verify the message data and signature with sender's public key
      *
      *  @param data - message data
@@ -37,13 +46,4 @@ public interface ReliableMessageDelegate extends SecureMessageDelegate {
      *  @return YES on signature matched
      */
     boolean verifyDataSignature(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg);
-
-    /**
-     *  Decode 'message.signature' from String(Base64)
-     *
-     * @param signature - String object
-     * @param rMsg - reliable message
-     * @return signature data
-     */
-    byte[] decodeSignature(Object signature, ReliableMessage rMsg);
 }

@@ -21,7 +21,7 @@ public final class Transceiver implements InstantMessageDelegate, SecureMessageD
     }
 
     @Override
-    public Object encodeKeyData(byte[] key, InstantMessage iMsg) {
+    public Object encodeKey(byte[] key, InstantMessage iMsg) {
         return Base64.encode(key);
     }
 
@@ -41,7 +41,7 @@ public final class Transceiver implements InstantMessageDelegate, SecureMessageD
     }
 
     @Override
-    public byte[] decodeKeyData(Object key, SecureMessage sMsg) {
+    public byte[] decodeKey(Object key, SecureMessage sMsg) {
         return Base64.decode((String) key);
     }
 

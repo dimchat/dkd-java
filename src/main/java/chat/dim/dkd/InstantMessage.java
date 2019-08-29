@@ -115,14 +115,19 @@ public final class InstantMessage extends Message {
      * @return SecureMessage object
      */
     public SecureMessage encrypt(Map<String, Object> password) {
-        // 1. encrypt 'content' to 'data'
+        // 1. encrypt 'message.content' to 'message.data'
         Map<String, Object> map = prepareData(password);
 
-        // 2. encrypt password to 'key'
+        // 2. encrypt symmetric key(password) to 'message.key'
+        // 2.1. serialize & encrypt symmetric key
         byte[] key = delegate.encryptKey(password, envelope.receiver, this);
-        Object base64 = delegate.encodeKeyData(key, this);
-        if (base64 != null) {
-            map.put("key", base64);
+        if (key != null) {
+            // 2.2. encode encrypted key data
+            Object base64 = delegate.encodeKey(key, this);
+            if (base64 != null) {
+                // 2.3. insert as 'key'
+                map.put("key", base64);
+            }
         }
 
         // 3. pack message
@@ -138,18 +143,23 @@ public final class InstantMessage extends Message {
      * @throws NoSuchFieldException when 'group' field not found
      */
     public SecureMessage encrypt(Map<String, Object> password, List members) throws NoSuchFieldException {
-        // 1. encrypt 'content' to 'data'
+        // 1. encrypt 'message.content' to 'message.data'
         Map<String, Object> map = prepareData(password);
 
-        // 2. encrypt password to 'keys'
+        // 2. encrypt symmetric key(password) to 'message.keys'
         Map<Object, Object> keys = new HashMap<>();
         byte[] key;
         Object base64;
         for (Object member: members) {
+            // 2.1. serialize & encrypt symmetric key
             key = delegate.encryptKey(password, member, this);
-            base64 = delegate.encodeKeyData(key, this);
-            if (base64 != null) {
-                keys.put(member, base64);
+            if (key != null) {
+                // 2.2. encode encrypted key data
+                base64 = delegate.encodeKey(key, this);
+                if (base64 != null) {
+                    // 2.3. insert to 'message.keys' with member ID
+                    keys.put(member, base64);
+                }
             }
         }
         if (keys.size() > 0) {
