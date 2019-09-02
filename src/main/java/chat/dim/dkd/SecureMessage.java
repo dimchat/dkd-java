@@ -73,6 +73,7 @@ public class SecureMessage extends Message {
     public byte[] getData() {
         if (data == null) {
             Object base64 = dictionary.get("data");
+            assert base64 != null;
             data = delegate.decodeData(base64, this);
         }
         return data;
@@ -163,8 +164,7 @@ public class SecureMessage extends Message {
         //          save password to 'message.content.password'.
         //      (do it in 'core' module)
         if (content == null) {
-            //throw new NullPointerException("failed to decrypt message data: " + this);
-            return null;
+            throw new NullPointerException("failed to decrypt message data: " + this);
         }
 
         // 3. pack message
@@ -197,9 +197,8 @@ public class SecureMessage extends Message {
     public ReliableMessage sign() {
         // 1. sign with sender's private key
         byte[] signature = delegate.signData(getData(), envelope.sender, this);
-        if (signature == null) {
-            throw new NullPointerException("failed to sign message: " + this);
-        }
+        assert signature != null;
+
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
         map.put("signature", delegate.encodeSignature(signature, this));

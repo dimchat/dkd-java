@@ -74,7 +74,7 @@ public interface SecureMessageDelegate {
      *  @param data - encrypted message data
      *  @param sender - sender ID string
      *  @param sMsg - secure message object
-     *  @return signature
+     *  @return signature of encrypted message data
      */
     byte[] signData(byte[] data, Object sender, SecureMessage sMsg);
 

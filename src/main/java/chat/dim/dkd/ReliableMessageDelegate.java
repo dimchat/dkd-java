@@ -30,7 +30,7 @@ public interface ReliableMessageDelegate extends SecureMessageDelegate {
     /**
      *  Decode 'message.signature' from String(Base64)
      *
-     * @param signature - String object
+     * @param signature - base64 string object
      * @param rMsg - reliable message
      * @return signature data
      */
@@ -39,8 +39,8 @@ public interface ReliableMessageDelegate extends SecureMessageDelegate {
     /**
      *  Verify the message data and signature with sender's public key
      *
-     *  @param data - message data
-     *  @param signature - signature for message data
+     *  @param data - message content(encrypted) data
+     *  @param signature - signature for message content(encrypted) data
      *  @param sender - sender ID/string
      *  @param rMsg - reliable message object
      *  @return YES on signature matched

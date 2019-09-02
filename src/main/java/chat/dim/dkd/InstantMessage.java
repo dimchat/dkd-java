@@ -124,10 +124,9 @@ public final class InstantMessage extends Message {
         if (key != null) {
             // 2.2. encode encrypted key data
             Object base64 = delegate.encodeKey(key, this);
-            if (base64 != null) {
-                // 2.3. insert as 'key'
-                map.put("key", base64);
-            }
+            assert base64 != null;
+            // 2.3. insert as 'key'
+            map.put("key", base64);
         }
 
         // 3. pack message
@@ -142,7 +141,7 @@ public final class InstantMessage extends Message {
      * @return SecureMessage object
      * @throws NoSuchFieldException when 'group' field not found
      */
-    public SecureMessage encrypt(Map<String, Object> password, List members) throws NoSuchFieldException {
+    public SecureMessage encrypt(Map<String, Object> password, List members) {
         // 1. encrypt 'message.content' to 'message.data'
         Map<String, Object> map = prepareData(password);
 
@@ -156,10 +155,9 @@ public final class InstantMessage extends Message {
             if (key != null) {
                 // 2.2. encode encrypted key data
                 base64 = delegate.encodeKey(key, this);
-                if (base64 != null) {
-                    // 2.3. insert to 'message.keys' with member ID
-                    keys.put(member, base64);
-                }
+                assert base64 != null;
+                // 2.3. insert to 'message.keys' with member ID
+                keys.put(member, base64);
             }
         }
         if (keys.size() > 0) {
@@ -167,9 +165,7 @@ public final class InstantMessage extends Message {
         }
         // group ID
         Object group = getGroup();
-        if (group == null) {
-            throw new NoSuchFieldException("group message error: " + this);
-        }
+        assert group != null;
         // NOTICE: this help the receiver knows the group ID
         //         when the group message separated to multi-messages,
         //         if don't want the others know you are the group members,
