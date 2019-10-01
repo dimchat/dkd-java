@@ -254,9 +254,9 @@ public class SecureMessage extends Message {
             }
             // 4. repack message
             if (reliable) {
-                messages.add(new ReliableMessage(msg));
+                messages.add(new ReliableMessage(new HashMap<>(msg)));
             } else {
-                messages.add(new SecureMessage(msg));
+                messages.add(new SecureMessage(new HashMap<>(msg)));
             }
         }
 
