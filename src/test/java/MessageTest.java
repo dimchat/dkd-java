@@ -81,7 +81,7 @@ public class MessageTest {
         Content cnt = Content.getInstance(new HashMap<>(content));
         Assert.assertEquals(cnt.get("text"), ((TextContent) content).getText());
 
-        iMsg.delegate = transceiver;
+        iMsg.setDelegate(transceiver);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class MessageTest {
         SecureMessage sMsg = SecureMessage.getInstance(dictionary);
         Log.info("secure message: " + sMsg);
 
-        sMsg.delegate = transceiver;
+        sMsg.setDelegate(transceiver);
         byte[] key = sMsg.getKey();
         Map keys = sMsg.getKeys();
 
@@ -114,7 +114,7 @@ public class MessageTest {
         ReliableMessage rMsg = ReliableMessage.getInstance(dictionary);
         Log.info("reliable message: " + rMsg);
 
-        rMsg.delegate = transceiver;
+        rMsg.setDelegate(transceiver);
         byte[] signature = rMsg.getSignature();
 
         Map<String, Object> meta = rMsg.getMeta();

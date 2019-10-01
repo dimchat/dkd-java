@@ -25,6 +25,7 @@
  */
 package chat.dim.dkd;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +69,8 @@ public abstract class Message extends Dictionary {
 
     public final Envelope envelope;
 
+    private WeakReference<MessageDelegate> delegateRef = null;
+
     Message(Map<String, Object> dictionary) {
         super(dictionary);
         // build envelope
@@ -85,6 +88,17 @@ public abstract class Message extends Dictionary {
         dictionary.put("receiver", env.receiver);
         dictionary.put("time", env.get("time")); // copy timestamp
         envelope = env;
+    }
+
+    public MessageDelegate getDelegate() {
+        if (delegateRef == null) {
+            return null;
+        }
+        return delegateRef.get();
+    }
+
+    public void setDelegate(MessageDelegate delegate) {
+        delegateRef = new WeakReference<>(delegate);
     }
 
     /**

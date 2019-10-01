@@ -58,6 +58,11 @@ public final class ReliableMessage extends SecureMessage {
         super(dictionary);
     }
 
+    @Override
+    public ReliableMessageDelegate getDelegate() {
+        return (ReliableMessageDelegate) super.getDelegate();
+    }
+
     public byte[] getSignature() {
         if (signature == null) {
             Object base64 = dictionary.get("signature");
@@ -65,10 +70,6 @@ public final class ReliableMessage extends SecureMessage {
             signature = getDelegate().decodeSignature(base64, this);
         }
         return signature;
-    }
-
-    private ReliableMessageDelegate getDelegate() {
-        return (ReliableMessageDelegate) delegate;
     }
 
     @SuppressWarnings("unchecked")

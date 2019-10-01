@@ -27,7 +27,7 @@ package chat.dim.dkd;
 
 import java.util.Map;
 
-public interface SecureMessageDelegate {
+public interface SecureMessageDelegate extends MessageDelegate {
 
     /**
      *  Decode 'message.key' to encrypted symmetric key data

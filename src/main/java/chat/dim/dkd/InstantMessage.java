@@ -47,8 +47,6 @@ public final class InstantMessage extends Message {
 
     public final Content content;
 
-    public InstantMessageDelegate delegate = null;
-
     InstantMessage(Map<String, Object> dictionary) {
         super(dictionary);
         content = Content.getInstance(dictionary.get("content"));
@@ -70,6 +68,11 @@ public final class InstantMessage extends Message {
 
     public InstantMessage(Content body, Object from, Object to, long timestamp) {
         this(body, new Envelope(from, to, timestamp));
+    }
+
+    @Override
+    public InstantMessageDelegate getDelegate() {
+        return (InstantMessageDelegate) super.getDelegate();
     }
 
     @Override
@@ -120,10 +123,10 @@ public final class InstantMessage extends Message {
 
         // 2. encrypt symmetric key(password) to 'message.key'
         // 2.1. serialize & encrypt symmetric key
-        byte[] key = delegate.encryptKey(password, envelope.receiver, this);
+        byte[] key = getDelegate().encryptKey(password, envelope.receiver, this);
         if (key != null) {
             // 2.2. encode encrypted key data
-            Object base64 = delegate.encodeKey(key, this);
+            Object base64 = getDelegate().encodeKey(key, this);
             assert base64 != null;
             // 2.3. insert as 'key'
             map.put("key", base64);
@@ -139,7 +142,6 @@ public final class InstantMessage extends Message {
      * @param password - symmetric key
      * @param members - group members
      * @return SecureMessage object
-     * @throws NoSuchFieldException when 'group' field not found
      */
     public SecureMessage encrypt(Map<String, Object> password, List members) {
         // 1. encrypt 'message.content' to 'message.data'
@@ -151,10 +153,10 @@ public final class InstantMessage extends Message {
         Object base64;
         for (Object member: members) {
             // 2.1. serialize & encrypt symmetric key
-            key = delegate.encryptKey(password, member, this);
+            key = getDelegate().encryptKey(password, member, this);
             if (key != null) {
                 // 2.2. encode encrypted key data
-                base64 = delegate.encodeKey(key, this);
+                base64 = getDelegate().encodeKey(key, this);
                 assert base64 != null;
                 // 2.3. insert to 'message.keys' with member ID
                 keys.put(member, base64);
@@ -181,11 +183,11 @@ public final class InstantMessage extends Message {
         //    (do it in 'core' module)
 
         // 2. encrypt message content
-        byte[] data = delegate.encryptContent(content, password, this);
+        byte[] data = getDelegate().encryptContent(content, password, this);
         assert data != null;
 
         // 3. encode encrypted data
-        Object base64 = delegate.encodeData(data, this);
+        Object base64 = getDelegate().encodeData(data, this);
         assert base64 != null;
 
         // 4. replace 'content' with encrypted 'data'

@@ -54,10 +54,13 @@ public class SecureMessage extends Message {
     private byte[] key = null;
     private Map<Object, Object> keys = null;
 
-    public SecureMessageDelegate delegate = null;
-
     SecureMessage(Map<String, Object> dictionary) {
         super(dictionary);
+    }
+
+    @Override
+    public SecureMessageDelegate getDelegate() {
+        return (SecureMessageDelegate) super.getDelegate();
     }
 
     @Override
@@ -74,7 +77,7 @@ public class SecureMessage extends Message {
         if (data == null) {
             Object base64 = dictionary.get("data");
             assert base64 != null;
-            data = delegate.decodeData(base64, this);
+            data = getDelegate().decodeData(base64, this);
         }
         return data;
     }
@@ -89,7 +92,7 @@ public class SecureMessage extends Message {
                     base64 = keys.get(envelope.receiver);
                 }
             }
-            key = delegate.decodeKey(base64, this);
+            key = getDelegate().decodeKey(base64, this);
         }
         return key;
     }
@@ -146,17 +149,17 @@ public class SecureMessage extends Message {
         //      if key is empty, means it should be reused, get it from key cache
         if (group == null) {
             // personal message
-            password = delegate.decryptKey(key, sender, receiver, this);
+            password = getDelegate().decryptKey(key, sender, receiver, this);
         } else {
             // group message
-            password = delegate.decryptKey(key, sender, group, this);
+            password = getDelegate().decryptKey(key, sender, group, this);
         }
 
         // 2. decrypt 'message.data' to 'message.content'
         // 2.1. decode encrypted content data
         byte[] data = getData();
         // 2.2. decrypt & deserialize content data
-        Content content = delegate.decryptContent(data, password, this);
+        Content content = getDelegate().decryptContent(data, password, this);
         // 2.3. check attachment for File/Image/Audio/Video message content
         //      if file data not download yet,
         //          decrypt file data with password;
@@ -196,12 +199,12 @@ public class SecureMessage extends Message {
      */
     public ReliableMessage sign() {
         // 1. sign with sender's private key
-        byte[] signature = delegate.signData(getData(), envelope.sender, this);
+        byte[] signature = getDelegate().signData(getData(), envelope.sender, this);
         assert signature != null;
 
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
-        map.put("signature", delegate.encodeSignature(signature, this));
+        map.put("signature", getDelegate().encodeSignature(signature, this));
         return new ReliableMessage(map);
     }
 
