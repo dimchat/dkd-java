@@ -114,14 +114,7 @@ public class Content extends Dictionary {
     }
 
     @SuppressWarnings("unchecked")
-    public static Content getInstance(Object object) {
-        if (object == null) {
-            return null;
-        } else if (object instanceof Content) {
-            return (Content) object;
-        }
-        assert object instanceof Map;
-        Map<String, Object> dictionary = (Map<String, Object>) object;
+    private static Content createInstance(Map<String, Object> dictionary) {
         // get subclass by content type
         int type = (int) dictionary.get("type");
         Class clazz = contentClasses.get(type);
@@ -138,7 +131,7 @@ public class Content extends Dictionary {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             //e.printStackTrace();
         }
-        // try 'new MyContent()'
+        // try 'new MyContent(dict)'
         try {
             Constructor constructor = clazz.getConstructor(Map.class);
             return (Content) constructor.newInstance(dictionary);
@@ -148,9 +141,22 @@ public class Content extends Dictionary {
         }
     }
 
-    static {
+    @SuppressWarnings("unchecked")
+    public static Content getInstance(Object object) {
+        if (object == null) {
+            return null;
+        } else if (object instanceof Content) {
+            return (Content) object;
+        } else if (object instanceof Map) {
+            return createInstance((Map<String, Object>) object);
+        } else {
+            throw new IllegalArgumentException("content error: " + object);
+        }
+    }
 
+    static {
         // Forward content for Top-Secret message
         Content.register(ContentType.FORWARD.value, ForwardContent.class);
+        // ...
     }
 }
