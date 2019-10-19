@@ -25,6 +25,9 @@
  */
 package chat.dim.dkd;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +45,28 @@ abstract class Dictionary implements Map<String, Object> {
     Dictionary(Map<String, Object> map) {
         super();
         dictionary = map;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected static Object createInstance(Class clazz, Map<String, Object> dictionary) {
+        // try 'Clazz.getInstance(dict)'
+        try {
+            Method method = clazz.getMethod("getInstance", Object.class);
+            if (method.getDeclaringClass().equals(clazz)) {
+                // only invoke the method 'getInstance' declared in this class
+                return method.invoke(null, dictionary);
+            }
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            //e.printStackTrace();
+        }
+        // try 'new Clazz(dict)'
+        try {
+            Constructor constructor = clazz.getConstructor(Map.class);
+            return constructor.newInstance(dictionary);
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

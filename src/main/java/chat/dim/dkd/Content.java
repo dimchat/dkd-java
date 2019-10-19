@@ -28,9 +28,6 @@ package chat.dim.dkd;
 import chat.dim.protocol.ContentType;
 import chat.dim.protocol.ForwardContent;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -109,36 +106,14 @@ public class Content extends Dictionary {
         if (clazz.equals(Content.class)) {
             throw new IllegalArgumentException("should not add Content.class itself!");
         }
-        clazz = clazz.asSubclass(Content.class);
+        assert Content.class.isAssignableFrom(clazz); // asSubclass
         contentClasses.put(type, clazz);
     }
 
-    @SuppressWarnings("unchecked")
-    private static Content createInstance(Map<String, Object> dictionary) {
+    private static Class contentClass(Map<String, Object> dictionary) {
         // get subclass by content type
         int type = (int) dictionary.get("type");
-        Class clazz = contentClasses.get(type);
-        if (clazz == null) {
-            //throw new ClassNotFoundException("unknown content type: " + type);
-            return new Content(dictionary);
-        }
-        // try 'getInstance()' of subclass
-        try {
-            Method method = clazz.getMethod("getInstance", Object.class);
-            if (method.getDeclaringClass().equals(clazz)) {
-                return (Content) method.invoke(null, dictionary);
-            }
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            //e.printStackTrace();
-        }
-        // try 'new MyContent(dict)'
-        try {
-            Constructor constructor = clazz.getConstructor(Map.class);
-            return (Content) constructor.newInstance(dictionary);
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return contentClasses.get(type);
     }
 
     @SuppressWarnings("unchecked")
@@ -146,12 +121,18 @@ public class Content extends Dictionary {
         if (object == null) {
             return null;
         } else if (object instanceof Content) {
+            // return Content object directly
             return (Content) object;
-        } else if (object instanceof Map) {
-            return createInstance((Map<String, Object>) object);
-        } else {
-            throw new IllegalArgumentException("content error: " + object);
         }
+        assert object instanceof Map;
+        Map<String, Object> dictionary = (Map<String, Object>) object;
+        Class clazz = contentClass(dictionary);
+        if (clazz != null) {
+            // create instance by subclass (with content type)
+            return (Content) createInstance(clazz, dictionary);
+        }
+        // custom message content
+        return new Content(dictionary);
     }
 
     static {

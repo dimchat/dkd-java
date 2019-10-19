@@ -1,7 +1,7 @@
 # Dao Ke Dao (道可道) -- Message Module (Java)
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/dimchat/dkd-java/blob/master/LICENSE)
-[![Version](https://img.shields.io/badge/alpha-0.4.2-red.svg)](https://github.com/dimchat/dkd-java/wiki)
+[![Version](https://img.shields.io/badge/alpha-0.5.0-red.svg)](https://github.com/dimchat/dkd-java/wiki)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/dimchat/dkd-java/pulls)
 [![Platform](https://img.shields.io/badge/Platform-Java%208-brightgreen.svg)](https://github.com/dimchat/dkd-java/wiki)
 
