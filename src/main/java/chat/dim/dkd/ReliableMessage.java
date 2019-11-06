@@ -1,4 +1,9 @@
 /* license: https://mit-license.org
+ *
+ *  Dao-Ke-Dao: Universal Message Module
+ *
+ *                                Written in 2019 by Moky <albert.moky@gmail.com>
+ *
  * ==============================================================================
  * The MIT License (MIT)
  *

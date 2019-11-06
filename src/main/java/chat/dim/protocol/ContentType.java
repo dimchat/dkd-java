@@ -1,4 +1,9 @@
 /* license: https://mit-license.org
+ *
+ *  Dao-Ke-Dao: Universal Message Module
+ *
+ *                                Written in 2019 by Moky <albert.moky@gmail.com>
+ *
  * ==============================================================================
  * The MIT License (MIT)
  *
@@ -67,12 +72,14 @@ package chat.dim.protocol;
  *
  *      0001 0000 - this message's main part is in somewhere else.
  *      0010 0000 - this message contains the 3rd party content.
- *      0100 0000 - (RESERVED)
+ *      0100 0000 - this message contains digital assets
  *      1000 0000 - this is a message send by the system, not human.
  *
  *      (All above are just some advices to help choosing numbers :P)
  */
 public enum ContentType {
+
+    UNKNOWN (0x00),
 
     TEXT    (0x01), // 0000 0001
 
@@ -86,6 +93,10 @@ public enum ContentType {
 
     // quote a message before and reply it with text
     QUOTE   (0x37), // 0011 0111
+
+    MONEY   (0x40), // 0100 0000
+//    LUCKY   (0x41), // 0100 0001
+//    TRANSFER(0x42), // 0100 0010
 
     COMMAND (0x88), // 1000 1000
     HISTORY (0x89), // 1000 1001 (Entity history command)
