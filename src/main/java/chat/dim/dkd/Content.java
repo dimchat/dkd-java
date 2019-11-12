@@ -107,12 +107,14 @@ public class Content extends Dictionary {
 
     @SuppressWarnings("unchecked")
     public static void register(Integer type, Class clazz) {
-        // check whether clazz is subclass of Content
-        if (clazz.equals(Content.class)) {
-            throw new IllegalArgumentException("should not add Content.class itself!");
+        if (clazz == null) {
+            contentClasses.remove(type);
+        } else if (clazz.equals(Content.class)) {
+            throw new IllegalArgumentException("should not add Content itself!");
+        } else {
+            assert Content.class.isAssignableFrom(clazz); // asSubclass
+            contentClasses.put(type, clazz);
         }
-        assert Content.class.isAssignableFrom(clazz); // asSubclass
-        contentClasses.put(type, clazz);
     }
 
     private static Class contentClass(Map<String, Object> dictionary) {

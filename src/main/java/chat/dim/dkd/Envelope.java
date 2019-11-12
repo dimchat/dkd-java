@@ -102,4 +102,44 @@ public final class Envelope extends Dictionary {
             throw new IllegalArgumentException("unknown envelope: " + object);
         }
     }
+
+    /*
+     *  Group ID
+     *  ~~~~~~~~
+     *  when a group message was split/trimmed to a single message
+     *  the 'receiver' will be changed to a member ID, and
+     *  the group ID will be saved as 'group'.
+     */
+    public Object getGroup() {
+        return dictionary.get("group");
+    }
+
+    public void setGroup(Object group) {
+        if (group == null) {
+            dictionary.remove("group");
+        } else {
+            dictionary.put("group", group);
+        }
+    }
+
+    /*
+     *  Message Type
+     *  ~~~~~~~~~~~~
+     *  because the message content will be encrypted, so
+     *  the intermediate nodes(station) cannot recognize what kind of it.
+     *  we pick out the content type and set it in envelope
+     *  to let the station do its job.
+     */
+    public int getType() {
+        Object type = dictionary.get("type");
+        if (type == null) {
+            return 0;
+        } else {
+            return (int) type;
+        }
+    }
+
+    public void setType(int type) {
+        dictionary.put("type", type);
+    }
 }
