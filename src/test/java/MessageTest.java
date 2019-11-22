@@ -35,7 +35,7 @@ public class MessageTest {
     public void testContent() {
 
         Map<String, Object> dictionary = new HashMap<>();
-        dictionary.put("type", 9527);
+        dictionary.put("type", 1);
         dictionary.put("sn", 123412341234L);
         dictionary.put("text", "Hello world!");
 

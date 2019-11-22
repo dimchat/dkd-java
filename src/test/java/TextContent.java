@@ -21,7 +21,7 @@ public class TextContent extends Content {
     }
 
     public TextContent(String message) {
-        super(ContentType.TEXT.value);
+        super(ContentType.TEXT);
         setText(message);
     }
 
@@ -37,6 +37,6 @@ public class TextContent extends Content {
     }
 
     static {
-        Content.register(ContentType.TEXT.value, TextContent.class);
+        Content.register(ContentType.TEXT, TextContent.class);
     }
 }

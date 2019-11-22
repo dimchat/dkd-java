@@ -30,6 +30,8 @@
  */
 package chat.dim.protocol;
 
+import java.util.Locale;
+
 /*
  *  @enum DKDContentType
  *
@@ -108,5 +110,53 @@ public enum ContentType {
 
     ContentType(int value) {
         this.value = value;
+    }
+
+    public static ContentType fromInt(int i) {
+        if (UNKNOWN.value == i) {
+            return UNKNOWN;
+        }
+        if (TEXT.value == i) {
+            return TEXT;
+        }
+
+        if (FILE.value == i) {
+            return FILE;
+        }
+        if (IMAGE.value == i) {
+            return IMAGE;
+        }
+        if (AUDIO.value == i) {
+            return AUDIO;
+        }
+        if (VIDEO.value == i) {
+            return VIDEO;
+        }
+
+        if (PAGE.value == i) {
+            return PAGE;
+        }
+
+        if (QUOTE.value == i) {
+            return QUOTE;
+        }
+
+        if (MONEY.value == i) {
+            return MONEY;
+        }
+
+        if (COMMAND.value == i) {
+            return COMMAND;
+        }
+        if (HISTORY.value == i) {
+            return HISTORY;
+        }
+
+        if (FORWARD.value == i) {
+            return FORWARD;
+        }
+
+        String text = String.format(Locale.CHINA, "Content type not supported: %d", i);
+        throw new TypeNotPresentException(text, null);
     }
 }

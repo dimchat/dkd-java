@@ -57,22 +57,22 @@ import java.util.Random;
 public class Content extends Dictionary {
 
     // message type: text, image, ...
-    public final int type;
+    public final ContentType type;
 
     // serial number: random number to identify message content
     public final long serialNumber;
 
     protected Content(Map<String, Object> dictionary) {
         super(dictionary);
-        type         = (int) dictionary.get("type");
+        type         = ContentType.fromInt((int) dictionary.get("type"));
         serialNumber = ((Number) dictionary.get("sn")).longValue();
     }
 
-    protected Content(int msgType) {
+    protected Content(ContentType msgType) {
         super();
         type         = msgType;
         serialNumber = randomPositiveInteger();
-        dictionary.put("type", type);
+        dictionary.put("type", type.value);
         dictionary.put("sn", serialNumber);
     }
 
@@ -103,10 +103,10 @@ public class Content extends Dictionary {
 
     //-------- Runtime --------
 
-    private static Map<Integer, Class> contentClasses = new HashMap<>();
+    private static Map<ContentType, Class> contentClasses = new HashMap<>();
 
     @SuppressWarnings("unchecked")
-    public static void register(Integer type, Class clazz) {
+    public static void register(ContentType type, Class clazz) {
         if (clazz == null) {
             contentClasses.remove(type);
         } else if (clazz.equals(Content.class)) {
@@ -119,7 +119,7 @@ public class Content extends Dictionary {
 
     private static Class contentClass(Map<String, Object> dictionary) {
         // get subclass by content type
-        int type = (int) dictionary.get("type");
+        ContentType type = ContentType.fromInt((int) dictionary.get("type"));
         return contentClasses.get(type);
     }
 
@@ -144,7 +144,7 @@ public class Content extends Dictionary {
 
     static {
         // Forward content for Top-Secret message
-        Content.register(ContentType.FORWARD.value, ForwardContent.class);
+        Content.register(ContentType.FORWARD, ForwardContent.class);
         // ...
     }
 }

@@ -33,6 +33,8 @@ package chat.dim.dkd;
 import java.util.Date;
 import java.util.Map;
 
+import chat.dim.protocol.ContentType;
+
 /**
  *  Envelope for message
  *  ~~~~~~~~~~~~~~~~~~~~
@@ -130,16 +132,16 @@ public final class Envelope extends Dictionary {
      *  we pick out the content type and set it in envelope
      *  to let the station do its job.
      */
-    public int getType() {
+    public ContentType getType() {
         Object type = dictionary.get("type");
         if (type == null) {
-            return 0;
+            return null;
         } else {
-            return (int) type;
+            return ContentType.fromInt((int) type);
         }
     }
 
-    public void setType(int type) {
-        dictionary.put("type", type);
+    public void setType(ContentType type) {
+        dictionary.put("type", type.value);
     }
 }
