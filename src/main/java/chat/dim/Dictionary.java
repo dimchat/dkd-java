@@ -53,7 +53,7 @@ abstract class Dictionary implements Map<String, Object> {
     }
 
     @SuppressWarnings("unchecked")
-    static Object createInstance(Class clazz, Map<String, Object> dictionary) {
+    protected static Object createInstance(Class clazz, Map<String, Object> dictionary) {
         // try 'Clazz.getInstance(dict)'
         try {
             Method method = clazz.getMethod("getInstance", Object.class);
