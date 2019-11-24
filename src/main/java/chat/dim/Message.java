@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

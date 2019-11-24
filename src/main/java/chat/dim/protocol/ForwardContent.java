@@ -32,8 +32,8 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
-import chat.dim.dkd.Content;
-import chat.dim.dkd.ReliableMessage;
+import chat.dim.Content;
+import chat.dim.ReliableMessage;
 
 /**
  *  Top-Secret message: {

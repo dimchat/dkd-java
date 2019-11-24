@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim;
 
 import java.util.ArrayList;
 import java.util.HashMap;

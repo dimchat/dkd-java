@@ -30,8 +30,6 @@
  */
 package chat.dim.protocol;
 
-import java.util.Locale;
-
 /*
  *  @enum DKDContentType
  *
@@ -156,7 +154,7 @@ public enum ContentType {
             return FORWARD;
         }
 
-        String text = String.format(Locale.CHINA, "Content type not supported: %d", i);
+        String text = String.format("Content type not supported: %d", i);
         throw new TypeNotPresentException(text, null);
     }
 }

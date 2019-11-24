@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import chat.dim.dkd.*;
+import chat.dim.*;
 
 public class MessageTest {
 

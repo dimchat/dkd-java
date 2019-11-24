@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -53,7 +53,7 @@ abstract class Dictionary implements Map<String, Object> {
     }
 
     @SuppressWarnings("unchecked")
-    protected static Object createInstance(Class clazz, Map<String, Object> dictionary) {
+    static Object createInstance(Class clazz, Map<String, Object> dictionary) {
         // try 'Clazz.getInstance(dict)'
         try {
             Method method = clazz.getMethod("getInstance", Object.class);

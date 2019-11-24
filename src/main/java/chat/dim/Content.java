@@ -28,14 +28,14 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
-
-import chat.dim.protocol.ContentType;
-import chat.dim.protocol.ForwardContent;
+package chat.dim;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import chat.dim.protocol.ContentType;
+import chat.dim.protocol.ForwardContent;
 
 /**
  *  Message Content
