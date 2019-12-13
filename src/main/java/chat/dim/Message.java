@@ -123,11 +123,12 @@ public abstract class Message extends Dictionary {
     public static Message getInstance(Object object) {
         if (object == null) {
             return null;
-        } else if (object instanceof Message) {
+        }
+        assert object instanceof Map;
+        if (object instanceof Message) {
             // return Message object directly
             return (Message) object;
         }
-        assert object instanceof Map;
         Map<String, Object> dictionary = (Map<String, Object>) object;
         // instant message
         Object content = dictionary.get("content");

@@ -42,13 +42,14 @@ abstract class Dictionary implements Map<String, Object> {
 
     protected final Map<String, Object> dictionary;
 
-    Dictionary() {
+    protected Dictionary() {
         super();
         dictionary = new HashMap<>();
     }
 
-    Dictionary(Map<String, Object> map) {
+    protected Dictionary(Map<String, Object> map) {
         super();
+        assert map != null;
         dictionary = map;
     }
 

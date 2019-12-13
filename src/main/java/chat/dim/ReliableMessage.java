@@ -81,13 +81,13 @@ public final class ReliableMessage extends SecureMessage {
     public static ReliableMessage getInstance(Object object) {
         if (object == null) {
             return null;
-        } else if (object instanceof ReliableMessage) {
-            return (ReliableMessage) object;
-        } else if (object instanceof Map) {
-            return new ReliableMessage((Map<String, Object>) object);
-        } else  {
-            throw new IllegalArgumentException("unknown message: " + object);
         }
+        assert object instanceof Map;
+        if (object instanceof ReliableMessage) {
+            // return ReliableMessage object directly
+            return (ReliableMessage) object;
+        }
+        return new ReliableMessage((Map<String, Object>) object);
     }
 
     /**

@@ -114,13 +114,13 @@ public class SecureMessage extends Message {
     public static SecureMessage getInstance(Object object) {
         if (object == null) {
             return null;
-        } else if (object instanceof SecureMessage) {
-            return (SecureMessage) object;
-        } else if (object instanceof Map) {
-            return new SecureMessage((Map<String, Object>) object);
-        } else  {
-            throw new IllegalArgumentException("unknown message: " + object);
         }
+        assert object instanceof Map;
+        if (object instanceof SecureMessage) {
+            // return SecureMessage object directly
+            return (SecureMessage) object;
+        }
+        return new SecureMessage((Map<String, Object>) object);
     }
 
     /*

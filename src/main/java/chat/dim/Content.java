@@ -117,25 +117,21 @@ public class Content extends Dictionary {
         }
     }
 
-    private static Class contentClass(Map<String, Object> dictionary) {
-        // get subclass by content type
-        ContentType type = ContentType.fromInt((int) dictionary.get("type"));
-        return contentClasses.get(type);
-    }
-
     @SuppressWarnings("unchecked")
     public static Content getInstance(Object object) {
         if (object == null) {
             return null;
-        } else if (object instanceof Content) {
+        }
+        assert object instanceof Map;
+        if (object instanceof Content) {
             // return Content object directly
             return (Content) object;
         }
-        assert object instanceof Map;
         Map<String, Object> dictionary = (Map<String, Object>) object;
-        Class clazz = contentClass(dictionary);
+        // create instance by subclass (with content type)
+        ContentType type = ContentType.fromInt((int) dictionary.get("type"));
+        Class clazz = contentClasses.get(type);
         if (clazz != null) {
-            // create instance by subclass (with content type)
             return (Content) createInstance(clazz, dictionary);
         }
         // custom message content

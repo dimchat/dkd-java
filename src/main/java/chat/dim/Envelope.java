@@ -95,14 +95,13 @@ public final class Envelope extends Dictionary {
     public static Envelope getInstance(Object object) {
         if (object == null) {
             return null;
-        } else if (object instanceof Envelope) {
+        }
+        assert object instanceof Map;
+        if (object instanceof Envelope) {
             // return Envelope object directly
             return (Envelope) object;
-        } else if (object instanceof Map) {
-            return new Envelope((Map<String, Object>) object);
-        } else {
-            throw new IllegalArgumentException("unknown envelope: " + object);
         }
+        return new Envelope((Map<String, Object>) object);
     }
 
     /*

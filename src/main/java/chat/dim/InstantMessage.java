@@ -94,13 +94,13 @@ public final class InstantMessage extends Message {
     public static InstantMessage getInstance(Object object) {
         if (object == null) {
             return null;
-        } else if (object instanceof InstantMessage) {
-            return (InstantMessage) object;
-        } else if (object instanceof Map) {
-            return new InstantMessage((Map<String, Object>) object);
-        } else {
-            throw new IllegalArgumentException("unknown message: " + object);
         }
+        assert object instanceof Map;
+        if (object instanceof InstantMessage) {
+            // return InstantMessage object directly
+            return (InstantMessage) object;
+        }
+        return new InstantMessage((Map<String, Object>) object);
     }
 
     /*
