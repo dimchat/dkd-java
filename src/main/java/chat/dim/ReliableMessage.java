@@ -87,6 +87,7 @@ public final class ReliableMessage extends SecureMessage {
             // return ReliableMessage object directly
             return (ReliableMessage) object;
         }
+        // new ReliableMessage(msg)
         return new ReliableMessage((Map<String, Object>) object);
     }
 

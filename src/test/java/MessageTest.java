@@ -104,8 +104,8 @@ public class MessageTest {
         byte[] key = sMsg.getKey();
         Map keys = sMsg.getKeys();
 
-        sMsg.setGroup("group12345");
-        Log.info("group: " + sMsg.getGroup());
+        sMsg.envelope.setGroup("group12345");
+        Log.info("group: " + sMsg.envelope.getGroup());
 
 //        InstantMessage iMsg = sMsg.decrypt();
 //        Log.info("instant msg: " + iMsg);

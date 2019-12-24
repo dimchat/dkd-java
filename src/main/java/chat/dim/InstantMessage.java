@@ -80,16 +80,6 @@ public final class InstantMessage extends Message {
         return (InstantMessageDelegate) super.getDelegate();
     }
 
-    @Override
-    public Object getGroup() {
-        return content.getGroup();
-    }
-
-    @Override
-    public void setGroup(Object identifier) {
-        content.setGroup(identifier);
-    }
-
     @SuppressWarnings("unchecked")
     public static InstantMessage getInstance(Object object) {
         if (object == null) {
@@ -100,6 +90,7 @@ public final class InstantMessage extends Message {
             // return InstantMessage object directly
             return (InstantMessage) object;
         }
+        // new InstantMessage(msg)
         return new InstantMessage((Map<String, Object>) object);
     }
 
@@ -123,6 +114,9 @@ public final class InstantMessage extends Message {
      * @return SecureMessage object
      */
     public SecureMessage encrypt(Map<String, Object> password) {
+        // 0. check attachment for File/Image/Audio/Video message content
+        //    (do it in 'core' module)
+
         // 1. encrypt 'message.content' to 'message.data'
         Map<String, Object> map = prepareData(password);
 
@@ -149,6 +143,9 @@ public final class InstantMessage extends Message {
      * @return SecureMessage object
      */
     public SecureMessage encrypt(Map<String, Object> password, List members) {
+        // 0. check attachment for File/Image/Audio/Video message content
+        //    (do it in 'core' module)
+
         // 1. encrypt 'message.content' to 'message.data'
         Map<String, Object> map = prepareData(password);
 
@@ -171,7 +168,7 @@ public final class InstantMessage extends Message {
             map.put("keys", keys);
         }
         // group ID
-        Object group = getGroup();
+        Object group = content.getGroup();
         assert group != null;
         // NOTICE: this help the receiver knows the group ID
         //         when the group message separated to multi-messages,
@@ -184,18 +181,13 @@ public final class InstantMessage extends Message {
     }
 
     private Map<String, Object> prepareData(Map<String, Object> password) {
-        // 1. check attachment for File/Image/Audio/Video message content
-        //    (do it in 'core' module)
-
-        // 2. encrypt message content
+        // encrypt message content with password
         byte[] data = getDelegate().encryptContent(content, password, this);
         assert data != null;
-
-        // 3. encode encrypted data
+        // encode encrypted data
         Object base64 = getDelegate().encodeData(data, this);
         assert base64 != null;
-
-        // 4. replace 'content' with encrypted 'data'
+        // replace 'content' with encrypted 'data'
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");
         map.put("data", base64);

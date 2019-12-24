@@ -70,7 +70,7 @@ import java.util.Map;
  *      ...
  *  }
  */
-public abstract class Message extends Dictionary {
+public class Message extends Dictionary {
 
     public final Envelope envelope;
 
@@ -106,44 +106,28 @@ public abstract class Message extends Dictionary {
         delegateRef = new WeakReference<>(delegate);
     }
 
-    /**
-     *  Group ID
-     *  ~~~~~~~~
-     *  when a group message was split/trimmed to a single message
-     *  the 'receiver' will be changed to a member ID, and
-     *  the group ID will be saved as 'group'.
-     *
-     * @return group ID/string
-     */
-    public abstract Object getGroup();
-
-    public abstract void setGroup(Object group);
-
     @SuppressWarnings("unchecked")
     public static Message getInstance(Object object) {
         if (object == null) {
             return null;
         }
         assert object instanceof Map;
+        Map<String, Object> dictionary = (Map<String, Object>) object;
+        if (dictionary.containsKey("content")) {
+            // this should be an instant message
+            return InstantMessage.getInstance(dictionary);
+        }
+        if (dictionary.containsKey("signature")) {
+            // this should be a reliable message
+            return ReliableMessage.getInstance(dictionary);
+        }
+        if (dictionary.containsKey("data")) {
+            // this should be a secure message
+            return SecureMessage.getInstance(dictionary);
+        }
         if (object instanceof Message) {
             // return Message object directly
             return (Message) object;
-        }
-        Map<String, Object> dictionary = (Map<String, Object>) object;
-        // instant message
-        Object content = dictionary.get("content");
-        if (content != null) {
-            return new InstantMessage(dictionary);
-        }
-        // reliable message
-        String signature = (String) dictionary.get("signature");
-        if (signature != null) {
-            return new ReliableMessage(dictionary);
-        }
-        // secure message
-        String data = (String) dictionary.get("data");
-        if (data != null) {
-            return new SecureMessage(dictionary);
         }
         throw new IllegalArgumentException("unknown message: " + object);
     }

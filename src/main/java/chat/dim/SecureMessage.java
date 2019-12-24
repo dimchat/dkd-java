@@ -68,16 +68,6 @@ public class SecureMessage extends Message {
         return (SecureMessageDelegate) super.getDelegate();
     }
 
-    @Override
-    public Object getGroup() {
-        return dictionary.get("group");
-    }
-
-    @Override
-    public void setGroup(Object ID) {
-        dictionary.put("group", ID);
-    }
-
     public byte[] getData() {
         if (data == null) {
             Object base64 = dictionary.get("data");
@@ -97,7 +87,9 @@ public class SecureMessage extends Message {
                     base64 = keys.get(envelope.receiver);
                 }
             }
-            key = getDelegate().decodeKey(base64, this);
+            if (base64 != null) {
+                key = getDelegate().decodeKey(base64, this);
+            }
         }
         return key;
     }
@@ -105,7 +97,10 @@ public class SecureMessage extends Message {
     @SuppressWarnings("unchecked")
     public Map<Object, Object> getKeys() {
         if (keys == null) {
-            keys = (Map<Object, Object>) dictionary.get("keys");
+            Object map = dictionary.get("keys");
+            if (map instanceof Map) {
+                keys = (Map<Object, Object>) dictionary.get("keys");
+            }
         }
         return keys;
     }
@@ -116,10 +111,16 @@ public class SecureMessage extends Message {
             return null;
         }
         assert object instanceof Map;
+        Map<String, Object> dictionary = (Map<String, Object>) object;
+        if (dictionary.containsKey("signature")) {
+            // this should be a reliable message
+            return ReliableMessage.getInstance(dictionary);
+        }
         if (object instanceof SecureMessage) {
             // return SecureMessage object directly
             return (SecureMessage) object;
         }
+        // new SecureMessage(msg)
         return new SecureMessage((Map<String, Object>) object);
     }
 
@@ -144,7 +145,7 @@ public class SecureMessage extends Message {
     public InstantMessage decrypt() {
         Object sender = envelope.sender;
         Object receiver = envelope.receiver;
-        Object group = getGroup();
+        Object group = envelope.getGroup();
 
         // 1. decrypt 'message.key' to symmetric key
         // 1.1. decode encrypted key data
@@ -178,6 +179,7 @@ public class SecureMessage extends Message {
         // 3. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("key");
+        map.remove("keys");
         map.remove("data");
         map.put("content", content);
         return new InstantMessage(map);
@@ -226,7 +228,6 @@ public class SecureMessage extends Message {
      *  @return secure/reliable message(s)
      */
     public List<SecureMessage> split(List members) {
-
         Map<String, Object> msg = new HashMap<>(dictionary);
         // check 'keys'
         Map<Object, Object> keys = getKeys();
@@ -287,7 +288,7 @@ public class SecureMessage extends Message {
             msg.remove("keys");
         }
         // check 'group'
-        Object group = getGroup();
+        Object group = envelope.getGroup();
         if (group == null) {
             // if 'group' not exists, the 'receiver' must be a group ID here, and
             // it will not be equal to the member of course,
