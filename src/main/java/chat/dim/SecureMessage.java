@@ -71,7 +71,7 @@ public class SecureMessage extends Message {
     public byte[] getData() {
         if (data == null) {
             Object base64 = dictionary.get("data");
-            assert base64 != null;
+            assert base64 != null : "content data cannot be empty";
             data = getDelegate().decodeData(base64, this);
         }
         return data;
@@ -110,7 +110,7 @@ public class SecureMessage extends Message {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map;
+        assert object instanceof Map : "message info must be a map";
         Map<String, Object> dictionary = (Map<String, Object>) object;
         if (dictionary.containsKey("signature")) {
             // this should be a reliable message
@@ -207,7 +207,7 @@ public class SecureMessage extends Message {
     public ReliableMessage sign() {
         // 1. sign with sender's private key
         byte[] signature = getDelegate().signData(getData(), envelope.sender, this);
-        assert signature != null;
+        assert signature != null : "failed to sign message: " + this;
 
         // 2. pack message
         Map<String, Object> map = new HashMap<>(dictionary);

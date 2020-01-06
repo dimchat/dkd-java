@@ -111,7 +111,7 @@ public class Message extends Dictionary {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map;
+        assert object instanceof Map : "message info must be a map";
         Map<String, Object> dictionary = (Map<String, Object>) object;
         if (dictionary.containsKey("content")) {
             // this should be an instant message

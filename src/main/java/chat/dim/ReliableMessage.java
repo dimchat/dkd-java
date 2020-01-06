@@ -71,7 +71,7 @@ public final class ReliableMessage extends SecureMessage {
     public byte[] getSignature() {
         if (signature == null) {
             Object base64 = dictionary.get("signature");
-            assert base64 != null;
+            assert base64 != null : "signature cannot be empty";
             signature = getDelegate().decodeSignature(base64, this);
         }
         return signature;
@@ -82,7 +82,7 @@ public final class ReliableMessage extends SecureMessage {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map;
+        assert object instanceof Map : "message info must be a map";
         if (object instanceof ReliableMessage) {
             // return ReliableMessage object directly
             return (ReliableMessage) object;

@@ -30,10 +30,7 @@
  */
 package chat.dim;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *  Instant Message
@@ -85,7 +82,7 @@ public final class InstantMessage extends Message {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map;
+        assert object instanceof Map : "message info must be a map";
         if (object instanceof InstantMessage) {
             // return InstantMessage object directly
             return (InstantMessage) object;
@@ -126,7 +123,7 @@ public final class InstantMessage extends Message {
         if (key != null) {
             // 2.2. encode encrypted key data
             Object base64 = getDelegate().encodeKey(key, this);
-            assert base64 != null;
+            assert base64 != null : "failed to encode key data: " + Arrays.toString(key);
             // 2.3. insert as 'key'
             map.put("key", base64);
         }
@@ -159,7 +156,7 @@ public final class InstantMessage extends Message {
             if (key != null) {
                 // 2.2. encode encrypted key data
                 base64 = getDelegate().encodeKey(key, this);
-                assert base64 != null;
+                assert base64 != null : "failed to encode key data: " + Arrays.toString(key);
                 // 2.3. insert to 'message.keys' with member ID
                 keys.put(member, base64);
             }
@@ -169,7 +166,7 @@ public final class InstantMessage extends Message {
         }
         // group ID
         Object group = content.getGroup();
-        assert group != null;
+        assert group != null : "group message error: " + this;
         // NOTICE: this help the receiver knows the group ID
         //         when the group message separated to multi-messages,
         //         if don't want the others know you are the group members,
@@ -183,10 +180,10 @@ public final class InstantMessage extends Message {
     private Map<String, Object> prepareData(Map<String, Object> password) {
         // encrypt message content with password
         byte[] data = getDelegate().encryptContent(content, password, this);
-        assert data != null;
+        assert data != null : "failed to encrypt content with key: " + password;
         // encode encrypted data
         Object base64 = getDelegate().encodeData(data, this);
-        assert base64 != null;
+        assert base64 != null : "failed to encode data: " + Arrays.toString(data);
         // replace 'content' with encrypted 'data'
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");

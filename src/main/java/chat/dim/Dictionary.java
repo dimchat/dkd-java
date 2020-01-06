@@ -49,7 +49,7 @@ abstract class Dictionary implements Map<String, Object> {
 
     protected Dictionary(Map<String, Object> map) {
         super();
-        assert map != null;
+        assert map != null : "cannot initialize with an empty map!";
         dictionary = map;
     }
 

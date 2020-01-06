@@ -112,7 +112,7 @@ public class Content extends Dictionary {
         } else if (clazz.equals(Content.class)) {
             throw new IllegalArgumentException("should not add Content itself!");
         } else {
-            assert Content.class.isAssignableFrom(clazz); // asSubclass
+            assert Content.class.isAssignableFrom(clazz) : "error: " + clazz;
             contentClasses.put(type, clazz);
         }
     }
@@ -122,7 +122,7 @@ public class Content extends Dictionary {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map;
+        assert object instanceof Map : "message content info must be a map";
         if (object instanceof Content) {
             // return Content object directly
             return (Content) object;

@@ -96,7 +96,7 @@ public final class Envelope extends Dictionary {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map;
+        assert object instanceof Map : "message envelope info must be a map";
         if (object instanceof Envelope) {
             // return Envelope object directly
             return (Envelope) object;
