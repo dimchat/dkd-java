@@ -2,9 +2,18 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import chat.dim.*;
+import chat.dim.Content;
+import chat.dim.Envelope;
+import chat.dim.InstantMessage;
+import chat.dim.Message;
+import chat.dim.ReliableMessage;
+import chat.dim.SecureMessage;
+import chat.dim.format.Base64;
 
 public class MessageTest {
 
@@ -146,20 +155,5 @@ public class MessageTest {
 
         SecureMessage sMsg = msg.trim(receiver);
         Log.info("trim: " + sMsg);
-    }
-
-    static {
-        Base64.coder = new BaseCoder() {
-
-            @Override
-            public String encode(byte[] data) {
-                return java.util.Base64.getEncoder().encodeToString(data);
-            }
-
-            @Override
-            public byte[] decode(String string) {
-                return java.util.Base64.getDecoder().decode(string);
-            }
-        };
     }
 }
