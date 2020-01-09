@@ -36,6 +36,7 @@ import java.util.Random;
 
 import chat.dim.protocol.ContentType;
 import chat.dim.protocol.ForwardContent;
+import chat.dim.type.Dictionary;
 
 /**
  *  Message Content

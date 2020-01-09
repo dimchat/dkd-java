@@ -34,6 +34,8 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
+import chat.dim.type.Dictionary;
+
 /*
  *  Message Transforming
  *  ~~~~~~~~~~~~~~~~~~~~

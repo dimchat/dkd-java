@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.Map;
 
 import chat.dim.protocol.ContentType;
+import chat.dim.type.Dictionary;
 
 /**
  *  Envelope for message
