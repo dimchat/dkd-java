@@ -34,8 +34,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  Instant Message signed by an asymmetric key
- *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  Reliable Message signed by an asymmetric key
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  This class is used to sign the SecureMessage
  *  It contains a 'signature' field which signed with sender's private key
  *

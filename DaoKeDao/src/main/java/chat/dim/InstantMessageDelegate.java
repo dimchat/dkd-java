@@ -56,9 +56,9 @@ public interface InstantMessageDelegate extends MessageDelegate {
     /**
      *  Encrypt 'message.key' with receiver's public key
      *
-     *  @param iMsg - instant message object
      *  @param password - symmetric key to be encrypted
      *  @param receiver - receiver ID/string
+     *  @param iMsg - instant message object
      *  @return encrypted key data
      */
     byte[] encryptKey(Map<String, Object> password, Object receiver, InstantMessage iMsg);
