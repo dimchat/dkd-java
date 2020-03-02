@@ -58,22 +58,25 @@ import chat.dim.type.Dictionary;
 public class Content extends Dictionary {
 
     // message type: text, image, ...
-    public final ContentType type;
+    public final int type;
 
     // serial number: random number to identify message content
     public final long serialNumber;
 
     protected Content(Map<String, Object> dictionary) {
         super(dictionary);
-        type         = ContentType.fromInt((int) dictionary.get("type"));
+        type         = (int) dictionary.get("type");
         serialNumber = ((Number) dictionary.get("sn")).longValue();
     }
 
     protected Content(ContentType msgType) {
+        this(msgType.value);
+    }
+    protected Content(int msgType) {
         super();
         type         = msgType;
         serialNumber = randomPositiveInteger();
-        dictionary.put("type", type.value);
+        dictionary.put("type", type);
         dictionary.put("sn", serialNumber);
     }
 
@@ -104,10 +107,14 @@ public class Content extends Dictionary {
 
     //-------- Runtime --------
 
-    private static Map<ContentType, Class> contentClasses = new HashMap<>();
+    private static Map<Integer, Class> contentClasses = new HashMap<>();
+
+    public static void register(ContentType type, Class clazz) {
+        register(type.value, clazz);
+    }
 
     @SuppressWarnings("unchecked")
-    public static void register(ContentType type, Class clazz) {
+    public static void register(int type, Class clazz) {
         if (clazz == null) {
             contentClasses.remove(type);
         } else if (clazz.equals(Content.class)) {
@@ -130,7 +137,7 @@ public class Content extends Dictionary {
         }
         Map<String, Object> dictionary = (Map<String, Object>) object;
         // create instance by subclass (with content type)
-        ContentType type = ContentType.fromInt((int) dictionary.get("type"));
+        int type = (int) dictionary.get("type");
         Class clazz = contentClasses.get(type);
         if (clazz != null) {
             return (Content) createInstance(clazz, dictionary);

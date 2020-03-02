@@ -94,9 +94,11 @@ public enum ContentType {
     // quote a message before and reply it with text
     QUOTE   (0x37), // 0011 0111
 
-    MONEY   (0x40), // 0100 0000
-//    LUCKY   (0x41), // 0100 0001
-//    TRANSFER(0x42), // 0100 0010
+    MONEY         (0x40), // 0100 0000
+    TRANSFER      (0x41), // 0100 0001
+    LUCKY_MONEY   (0x42), // 0100 0010
+    CLAIM_PAYMENT (0x48), // 0100 1000 (Claim for payment)
+    SPLIT_BILL    (0x49), // 0100 1001 (Split the bill)
 
     COMMAND (0x88), // 1000 1000
     HISTORY (0x89), // 1000 1001 (Entity history command)

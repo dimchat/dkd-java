@@ -132,16 +132,19 @@ public final class Envelope extends Dictionary {
      *  we pick out the content type and set it in envelope
      *  to let the station do its job.
      */
-    public ContentType getType() {
+    public int getType() {
         Object type = dictionary.get("type");
         if (type == null) {
-            return null;
+            return 0;
         } else {
-            return ContentType.fromInt((int) type);
+            return (int) type;
         }
     }
 
     public void setType(ContentType type) {
-        dictionary.put("type", type.value);
+        setType(type.value);
+    }
+    public void setType(int type) {
+        dictionary.put("type", type);
     }
 }
