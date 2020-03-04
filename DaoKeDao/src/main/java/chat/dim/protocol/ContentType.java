@@ -111,4 +111,8 @@ public enum ContentType {
     ContentType(int value) {
         this.value = value;
     }
+
+    public boolean equals(int other) {
+        return this.value == other;
+    }
 }
