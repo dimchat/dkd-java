@@ -164,14 +164,6 @@ public final class InstantMessage extends Message {
         if (keys.size() > 0) {
             map.put("keys", keys);
         }
-        // group ID
-        Object group = content.getGroup();
-        assert group != null : "group message error: " + this;
-        // NOTICE: this help the receiver knows the group ID
-        //         when the group message separated to multi-messages,
-        //         if don't want the others know you are the group members,
-        //         remove it.
-        map.put("group", group);
 
         // 3. pack message
         return new SecureMessage(map);
