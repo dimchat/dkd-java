@@ -12,63 +12,99 @@ import chat.dim.format.Base64;
 
 public final class Transceiver implements InstantMessageDelegate, SecureMessageDelegate, ReliableMessageDelegate {
 
+    // 1.1.
     @Override
-    public byte[] encryptContent(Content content, Map<String, Object> password, InstantMessage iMsg) {
+    public byte[] serializeContent(Content content, Map<String, Object> password, InstantMessage iMsg) {
         return new byte[0];
     }
 
+    // 1.2.
+    @Override
+    public byte[] encryptContent(byte[] data, Map<String, Object> password, InstantMessage iMsg) {
+        return new byte[0];
+    }
+
+    // 1.3.
     @Override
     public Object encodeData(byte[] data, InstantMessage iMsg) {
         return Base64.encode(data);
     }
 
+    // 1.4.
     @Override
-    public byte[] encryptKey(Map<String, Object> password, Object receiver, InstantMessage iMsg) {
+    public byte[] serializeKey(Map<String, Object> password, InstantMessage iMsg) {
         return new byte[0];
     }
 
+    // 1.5.
+    @Override
+    public byte[] encryptKey(byte[] data, Object receiver, InstantMessage iMsg) {
+        return new byte[0];
+    }
+
+    // 1.6.
     @Override
     public Object encodeKey(byte[] key, InstantMessage iMsg) {
         return Base64.encode(key);
     }
 
-    @Override
-    public boolean verifyDataSignature(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg) {
-        return false;
-    }
-
-    @Override
-    public byte[] decodeSignature(Object signature, ReliableMessage rMsg) {
-        return Base64.decode((String) signature);
-    }
-
-    @Override
-    public Map<String, Object> decryptKey(byte[] key, Object sender, Object receiver, SecureMessage sMsg) {
-        return null;
-    }
-
-    @Override
-    public byte[] decodeKey(Object key, SecureMessage sMsg) {
-        return Base64.decode((String) key);
-    }
-
-    @Override
-    public Content decryptContent(byte[] data, Map<String, Object> password, SecureMessage sMsg) {
-        return null;
-    }
-
-    @Override
-    public byte[] decodeData(Object data, SecureMessage sMsg) {
-        return Base64.decode((String) data);
-    }
-
+    // 1.7.
     @Override
     public byte[] signData(byte[] data, Object sender, SecureMessage sMsg) {
         return new byte[0];
     }
 
+    // 1.8.
     @Override
     public Object encodeSignature(byte[] signature, SecureMessage sMsg) {
         return Base64.encode(signature);
+    }
+
+    // 2.1.
+    @Override
+    public byte[] decodeSignature(Object signature, ReliableMessage rMsg) {
+        return Base64.decode((String) signature);
+    }
+
+    // 2.2.
+    @Override
+    public boolean verifyDataSignature(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg) {
+        return false;
+    }
+
+    // 2.3.
+    @Override
+    public byte[] decodeKey(Object key, SecureMessage sMsg) {
+        return Base64.decode((String) key);
+    }
+
+    // 2.4.
+    @Override
+    public byte[] decryptKey(byte[] key, Object sender, Object receiver, SecureMessage sMsg) {
+        return null;
+    }
+
+    // 2.5.
+    @Override
+    public Map<String, Object> deserializeKey(byte[] key, Object sender, Object receiver, SecureMessage sMsg) {
+        return null;
+    }
+
+    // 2.6.
+    @Override
+    public byte[] decodeData(Object data, SecureMessage sMsg) {
+        return Base64.decode((String) data);
+    }
+
+    // 2.7.
+    @Override
+    public byte[] decryptContent(byte[] data, Map<String, Object> password, SecureMessage sMsg) {
+        return null;
+    }
+
+    // 2.8.
+    @Override
+    public Content deserializeContent(byte[] data, Map<String, Object> password, SecureMessage sMsg) {
+        return null;
     }
 }

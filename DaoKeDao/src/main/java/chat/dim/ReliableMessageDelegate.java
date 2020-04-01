@@ -33,7 +33,7 @@ package chat.dim;
 public interface ReliableMessageDelegate extends SecureMessageDelegate {
 
     /**
-     *  Decode 'message.signature' from String(Base64)
+     *  1. Decode 'message.signature' from String (Base64)
      *
      * @param signature - base64 string object
      * @param rMsg - reliable message
@@ -42,7 +42,7 @@ public interface ReliableMessageDelegate extends SecureMessageDelegate {
     byte[] decodeSignature(Object signature, ReliableMessage rMsg);
 
     /**
-     *  Verify the message data and signature with sender's public key
+     *  2. Verify the message data and signature with sender's public key
      *
      *  @param data - message content(encrypted) data
      *  @param signature - signature for message content(encrypted) data

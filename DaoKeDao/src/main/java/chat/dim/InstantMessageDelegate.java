@@ -34,41 +34,68 @@ import java.util.Map;
 
 public interface InstantMessageDelegate extends MessageDelegate {
 
-    /**
-     *  Encrypt 'message.content' to 'message.data' with symmetric key
-     *
-     *  @param content - content object
-     *  @param password - symmetric key
-     *  @param iMsg - instant message object
-     *  @return encrypted message content data
-     */
-    byte[] encryptContent(Content content, Map<String, Object> password, InstantMessage iMsg);
+    //
+    //  Encrypt Content
+    //
 
     /**
-     *  Encode 'message.data' to String(Base64)
+     *  1. Serialize 'message.content' to data (JsON / ProtoBuf / ...)
      *
-     * @param data - encrypted content data
      * @param iMsg - instant message object
+     * @param content - message.content
+     * @param password - symmetric key
+     * @return serialized content data
+     */
+    byte[] serializeContent(Content content, Map<String, Object> password, InstantMessage iMsg);
+
+    /**
+     *  2. Encrypt content data to 'message.data' with symmetric key
+     *
+     * @param iMsg - instant message object
+     * @param data - serialized data of message.content
+     * @param password - symmetric key
+     * @return encrypted message content data
+     */
+    byte[] encryptContent(byte[] data, Map<String, Object> password, InstantMessage iMsg);
+
+    /**
+     *  3. Encode 'message.data' to String (Base64)
+     *
+     * @param iMsg - instant message object
+     * @param data - encrypted content data
      * @return String object
      */
     Object encodeData(byte[] data, InstantMessage iMsg);
 
-    /**
-     *  Encrypt 'message.key' with receiver's public key
-     *
-     *  @param password - symmetric key to be encrypted
-     *  @param receiver - receiver ID/string
-     *  @param iMsg - instant message object
-     *  @return encrypted key data
-     */
-    byte[] encryptKey(Map<String, Object> password, Object receiver, InstantMessage iMsg);
+    //
+    //  Encrypt Key
+    //
 
     /**
-     *  Encode 'message.key' to String(Base64)
+     *  4. Serialize message key to data (JsON / ProtoBuf / ...)
      *
-     * @param key - encrypted key data
      * @param iMsg - instant message object
+     * @param password - symmetric key
+     * @return serialized key data
+     */
+    byte[] serializeKey(Map<String, Object> password, InstantMessage iMsg);
+
+    /**
+     *  5. Encrypt key data to 'message.key' with receiver's public key
+     *
+     * @param iMsg - instant message object
+     * @param data - serialized data of symmetric key
+     * @param receiver - receiver ID string
+     * @return encrypted symmetric key data
+     */
+    byte[] encryptKey(byte[] data, Object receiver, InstantMessage iMsg);
+
+    /**
+     *  6. Encode 'message.key' to String (Base64)
+     *
+     * @param iMsg - instant message object
+     * @param data - encrypted symmetric key data
      * @return String object
      */
-    Object encodeKey(byte[] key, InstantMessage iMsg);
+    Object encodeKey(byte[] data, InstantMessage iMsg);
 }

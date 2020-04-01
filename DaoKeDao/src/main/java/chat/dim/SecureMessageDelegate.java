@@ -34,8 +34,12 @@ import java.util.Map;
 
 public interface SecureMessageDelegate extends MessageDelegate {
 
+    //
+    //  Decrypt Key
+    //
+
     /**
-     *  Decode 'message.key' to encrypted symmetric key data
+     *  1. Decode 'message.key' to encrypted symmetric key data
      *
      * @param key - base64 string object
      * @param sMsg - secure message object
@@ -44,18 +48,33 @@ public interface SecureMessageDelegate extends MessageDelegate {
     byte[] decodeKey(Object key, SecureMessage sMsg);
 
     /**
-     *  Decrypt 'message.key' with receiver's private key
+     *  2. Decrypt 'message.key' with receiver's private key
      *
      *  @param key - encrypted symmetric key data
      *  @param sender - sender/member ID string
      *  @param receiver - receiver/group ID string
      *  @param sMsg - secure message object
-     *  @return symmetric key
+     *  @return serialized symmetric key
      */
-    Map<String, Object> decryptKey(byte[] key, Object sender, Object receiver, SecureMessage sMsg);
+    byte[] decryptKey(byte[] key, Object sender, Object receiver, SecureMessage sMsg);
 
     /**
-     *  Decode 'message.data' to encrypted content data
+     *  3. Deserialize message key from data (JsON / ProtoBuf / ...)
+     *
+     * @param key - serialized key data
+     * @param sender - sender/member ID string
+     * @param receiver - receiver/group ID string
+     * @param sMsg - secure message object
+     * @return symmetric key
+     */
+    Map<String, Object> deserializeKey(byte[] key, Object sender, Object receiver, SecureMessage sMsg);
+
+    //
+    //  Decrypt Content
+    //
+
+    /**
+     *  4. Decode 'message.data' to encrypted content data
      *
      * @param data - base64 string object
      * @param sMsg - secure message object
@@ -64,17 +83,31 @@ public interface SecureMessageDelegate extends MessageDelegate {
     byte[] decodeData(Object data, SecureMessage sMsg);
 
     /**
-     *  Decrypt 'message.data' with symmetric key
+     *  5. Decrypt 'message.data' with symmetric key
      *
      *  @param data - encrypt content data
      *  @param password - symmetric key
      *  @param sMsg - secure message object
-     *  @return content object
+     *  @return serialized message content
      */
-    Content decryptContent(byte[] data, Map<String, Object> password, SecureMessage sMsg);
+    byte[] decryptContent(byte[] data, Map<String, Object> password, SecureMessage sMsg);
 
     /**
-     *  Sign 'message.data' with sender's private key
+     *  6. Deserialize message content from data (JsON / ProtoBuf / ...)
+     *
+     * @param data - serialized content data
+     * @param password - symmetric key
+     * @param sMsg - secure message object
+     * @return message content
+     */
+    Content deserializeContent(byte[] data, Map<String, Object> password, SecureMessage sMsg);
+
+    //
+    //  Signature
+    //
+
+    /**
+     *  1. Sign 'message.data' with sender's private key
      *
      *  @param data - encrypted message data
      *  @param sender - sender ID string
@@ -84,7 +117,7 @@ public interface SecureMessageDelegate extends MessageDelegate {
     byte[] signData(byte[] data, Object sender, SecureMessage sMsg);
 
     /**
-     *  Encode 'message.signature' to String(Base64)
+     *  2. Encode 'message.signature' to String (Base64)
      *
      * @param signature - signature of message.data
      * @param sMsg - secure message object

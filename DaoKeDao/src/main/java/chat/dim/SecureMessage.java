@@ -148,6 +148,7 @@ public class SecureMessage extends Message {
         Object group = envelope.getGroup();
 
         // 1. decrypt 'message.key' to symmetric key
+        SecureMessageDelegate delegate = getDelegate();
         // 1.1. decode encrypted key data
         byte[] key = getKey();
         Map<String, Object> password;
@@ -155,17 +156,19 @@ public class SecureMessage extends Message {
         //      if key is empty, means it should be reused, get it from key cache
         if (group == null) {
             // personal message
-            password = getDelegate().decryptKey(key, sender, receiver, this);
+            key = delegate.decryptKey(key, sender, receiver, this);
+            password = delegate.deserializeKey(key, sender, receiver, this);
         } else {
             // group message
-            password = getDelegate().decryptKey(key, sender, group, this);
+            key = delegate.decryptKey(key, sender, group, this);
+            password = delegate.deserializeKey(key, sender, group, this);
         }
 
         // 2. decrypt 'message.data' to 'message.content'
-        // 2.1. decode encrypted content data
-        byte[] data = getData();
-        // 2.2. decrypt & deserialize content data
-        Content content = getDelegate().decryptContent(data, password, this);
+        // 2.1. decrypt content data
+        byte[] data = delegate.decryptContent(getData(), password, this);
+        // 2.2. deserialize content
+        Content content = delegate.deserializeContent(data, password, this);
         // 2.3. check attachment for File/Image/Audio/Video message content
         //      if file data not download yet,
         //          decrypt file data with password;
