@@ -127,8 +127,16 @@ public final class ReliableMessage extends SecureMessage {
      * @return SecureMessage object
      */
     public SecureMessage verify() {
+        byte[] data = getData();
+        if (data == null) {
+            throw new NullPointerException("failed to decode content data: " + this);
+        }
+        byte[] signature = getSignature();
+        if (signature == null) {
+            throw new NullPointerException("failed to decode message signature: " + this);
+        }
         // 1. verify data signature with sender's public key
-        if (getDelegate().verifyDataSignature(getData(), getSignature(), envelope.sender, this)) {
+        if (getDelegate().verifyDataSignature(data, signature, envelope.sender, this)) {
             // 2. pack message
             Map<String, Object> map = new HashMap<>(dictionary);
             map.remove("signature");

@@ -30,10 +30,7 @@
  */
 package chat.dim;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *  Secure Message
@@ -144,8 +141,16 @@ public class SecureMessage extends Message {
      */
     public InstantMessage decrypt() {
         Object sender = envelope.sender;
-        Object receiver = envelope.receiver;
+        Object receiver;
         Object group = envelope.getGroup();
+        if (group == null) {
+            // personal message
+            // not split group message
+            receiver = envelope.receiver;
+        } else {
+            // group message
+            receiver = group;
+        }
 
         // 1. decrypt 'message.key' to symmetric key
         SecureMessageDelegate delegate = getDelegate();
@@ -153,31 +158,42 @@ public class SecureMessage extends Message {
         byte[] key = getKey();
         Map<String, Object> password;
         // 1.2. decrypt key data
-        //      if key is empty, means it should be reused, get it from key cache
-        if (group == null) {
-            // personal message
+        if (key != null) {
             key = delegate.decryptKey(key, sender, receiver, this);
-            password = delegate.deserializeKey(key, sender, receiver, this);
-        } else {
-            // group message
-            key = delegate.decryptKey(key, sender, group, this);
-            password = delegate.deserializeKey(key, sender, group, this);
+            if (key == null) {
+                throw new NullPointerException("failed to decrypt key in msg: " + this);
+            }
+        }
+        // 1.3. deserialize key
+        //      if key is empty, means it should be reused, get it from key cache
+        password = delegate.deserializeKey(key, sender, receiver, this);
+        if (password == null) {
+            throw new NullPointerException("failed to get msg key: "
+                    + sender + " -> " + receiver + ", " + Arrays.toString(key));
         }
 
         // 2. decrypt 'message.data' to 'message.content'
-        // 2.1. decrypt content data
-        byte[] data = delegate.decryptContent(getData(), password, this);
-        // 2.2. deserialize content
+        // 2.1. decode encrypted content data
+        byte[] data = getData();
+        if (data == null) {
+            throw new NullPointerException("failed to decode content data: " + this);
+        }
+        // 2.2. decrypt content data
+        data = delegate.decryptContent(data, password, this);
+        if (data == null) {
+            throw new NullPointerException("failed to decrypt data with key: " + password);
+        }
+        // 2.3. deserialize content
         Content content = delegate.deserializeContent(data, password, this);
-        // 2.3. check attachment for File/Image/Audio/Video message content
+        if (content == null) {
+            throw new NullPointerException("failed to deserialize content: " + Arrays.toString(data));
+        }
+        // 2.4. check attachment for File/Image/Audio/Video message content
         //      if file data not download yet,
         //          decrypt file data with password;
         //      else,
         //          save password to 'message.content.password'.
         //      (do it in 'core' module)
-        if (content == null) {
-            throw new NullPointerException("failed to decrypt message data: " + this);
-        }
 
         // 3. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
@@ -211,10 +227,12 @@ public class SecureMessage extends Message {
         // 1. sign with sender's private key
         byte[] signature = getDelegate().signData(getData(), envelope.sender, this);
         assert signature != null : "failed to sign message: " + this;
-
-        // 2. pack message
+        // 2. encode signature
+        Object base64 = getDelegate().encodeSignature(signature, this);
+        assert base64 != null : "failed to encode signature: " + Arrays.toString(signature);
+        // 3. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
-        map.put("signature", getDelegate().encodeSignature(signature, this));
+        map.put("signature", base64);
         return new ReliableMessage(map);
     }
 

@@ -121,17 +121,24 @@ public final class InstantMessage extends Message {
         InstantMessageDelegate delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
-        if (key != null) {
-            // 2.2. encrypt symmetric key data
-            key = delegate.encryptKey(key, envelope.receiver, this);
-            if (key != null) {
-                // 2.3. encode encrypted key data
-                Object base64 = delegate.encodeKey(key, this);
-                assert base64 != null : "failed to encode key data: " + Arrays.toString(key);
-                // 2.4. insert as 'key'
-                map.put("key", base64);
-            }
+        if (key == null) {
+            // A) broadcast message has no key
+            // B) reused key
+            return new SecureMessage(map);
         }
+
+        // 2.2. encrypt symmetric key data
+        key = delegate.encryptKey(key, envelope.receiver, this);
+        if (key == null) {
+            // public key for encryption not found
+            // TODO: suspend this message for waiting receiver's meta
+            return null;
+        }
+        // 2.3. encode encrypted key data
+        Object base64 = delegate.encodeKey(key, this);
+        assert base64 != null : "failed to encode key data: " + Arrays.toString(key);
+        // 2.4. insert as 'key'
+        map.put("key", base64);
 
         // 3. pack message
         return new SecureMessage(map);
@@ -155,25 +162,34 @@ public final class InstantMessage extends Message {
         InstantMessageDelegate delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
-        if (key != null) {
-            // encrypt key data to 'message.keys'
-            Map<Object, Object> keys = new HashMap<>();
-            byte[] data;
-            Object base64;
-            for (Object member: members) {
-                // 2.2. encrypt symmetric key data
-                data = delegate.encryptKey(key, member, this);
-                if (data != null) {
-                    // 2.3. encode encrypted key data
-                    base64 = delegate.encodeKey(data, this);
-                    assert base64 != null : "failed to encode key data: " + Arrays.toString(data);
-                    // 2.4. insert to 'message.keys' with member ID
-                    keys.put(member, base64);
-                }
+        if (key == null) {
+            // A) broadcast message has no key
+            // B) reused key
+            return new SecureMessage(map);
+        }
+
+        // encrypt key data to 'message.keys'
+        Map<Object, Object> keys = new HashMap<>();
+        int count = 0;
+        byte[] data;
+        Object base64;
+        for (Object member: members) {
+            // 2.2. encrypt symmetric key data
+            data = delegate.encryptKey(key, member, this);
+            if (data == null) {
+                // public key for encryption not found
+                // TODO: suspend this message for waiting receiver's meta
+                continue;
             }
-            if (keys.size() > 0) {
-                map.put("keys", keys);
-            }
+            // 2.3. encode encrypted key data
+            base64 = delegate.encodeKey(data, this);
+            assert base64 != null : "failed to encode key data: " + Arrays.toString(data);
+            // 2.4. insert to 'message.keys' with member ID
+            keys.put(member, base64);
+            ++count;
+        }
+        if (count > 0) {
+            map.put("keys", keys);
         }
 
         // 3. pack message
@@ -184,12 +200,13 @@ public final class InstantMessage extends Message {
         InstantMessageDelegate delegate = getDelegate();
         // 1. serialize message content
         byte[] data = delegate.serializeContent(content, password, this);
+        assert data != null : "failed to serialize content: " + content;
         // 2. encrypt content data with password
         data = delegate.encryptContent(data, password, this);
         assert data != null : "failed to encrypt content with key: " + password;
         // 3. encode encrypted data
         Object base64 = delegate.encodeData(data, this);
-        assert base64 != null : "failed to encode data: " + Arrays.toString(data);
+        assert base64 != null : "failed to encode content data: " + Arrays.toString(data);
         // 4. replace 'content' with encrypted 'data'
         Map<String, Object> map = new HashMap<>(dictionary);
         map.remove("content");
