@@ -55,6 +55,6 @@ public class ForwardContent extends Content {
     public ForwardContent(ReliableMessage message) {
         super(ContentType.FORWARD);
         forwardMessage = message;
-        dictionary.put("forward", message);
+        put("forward", message);
     }
 }

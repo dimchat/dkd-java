@@ -29,7 +29,7 @@ public class TextContent extends Content {
 
     public void setText(String message) {
         text = message;
-        dictionary.put("text", message);
+        put("text", message);
     }
 
     public String getText() {

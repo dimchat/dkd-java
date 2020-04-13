@@ -91,9 +91,9 @@ public class Message extends Dictionary {
     Message(Envelope env) {
         super();
         // copy envelope
-        dictionary.put("sender", env.sender);
-        dictionary.put("receiver", env.receiver);
-        dictionary.put("time", env.get("time")); // copy timestamp
+        put("sender", env.sender);
+        put("receiver", env.receiver);
+        put("time", env.get("time")); // copy timestamp
         envelope = env;
     }
 

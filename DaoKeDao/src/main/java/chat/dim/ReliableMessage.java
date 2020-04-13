@@ -70,7 +70,7 @@ public final class ReliableMessage extends SecureMessage {
 
     public byte[] getSignature() {
         if (signature == null) {
-            Object base64 = dictionary.get("signature");
+            Object base64 = get("signature");
             assert base64 != null : "signature cannot be empty";
             signature = getDelegate().decodeSignature(base64, this);
         }
@@ -99,12 +99,12 @@ public final class ReliableMessage extends SecureMessage {
      * @param meta - Meta object or dictionary
      */
     public void setMeta(Map<String, Object> meta) {
-        dictionary.put("meta", meta);
+        put("meta", meta);
     }
 
     @SuppressWarnings("unchecked")
     public Map<String, Object> getMeta() {
-        return (Map<String, Object>) dictionary.get("meta");
+        return (Map<String, Object>) get("meta");
     }
 
     /*

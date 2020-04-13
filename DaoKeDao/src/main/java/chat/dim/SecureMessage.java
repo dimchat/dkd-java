@@ -67,7 +67,7 @@ public class SecureMessage extends Message {
 
     public byte[] getData() {
         if (data == null) {
-            Object base64 = dictionary.get("data");
+            Object base64 = get("data");
             assert base64 != null : "content data cannot be empty";
             data = getDelegate().decodeData(base64, this);
         }
@@ -76,7 +76,7 @@ public class SecureMessage extends Message {
 
     public byte[] getKey() {
         if (key == null) {
-            Object base64 = dictionary.get("key");
+            Object base64 = get("key");
             if (base64 == null) {
                 // check 'keys'
                 Map<Object, Object> keys = getKeys();
@@ -94,9 +94,9 @@ public class SecureMessage extends Message {
     @SuppressWarnings("unchecked")
     public Map<Object, Object> getKeys() {
         if (keys == null) {
-            Object map = dictionary.get("keys");
+            Object map = get("keys");
             if (map instanceof Map) {
-                keys = (Map<Object, Object>) dictionary.get("keys");
+                keys = (Map<Object, Object>) get("keys");
             }
         }
         return keys;
@@ -156,7 +156,6 @@ public class SecureMessage extends Message {
         SecureMessageDelegate delegate = getDelegate();
         // 1.1. decode encrypted key data
         byte[] key = getKey();
-        Map<String, Object> password;
         // 1.2. decrypt key data
         if (key != null) {
             key = delegate.decryptKey(key, sender, receiver, this);
@@ -166,7 +165,7 @@ public class SecureMessage extends Message {
         }
         // 1.3. deserialize key
         //      if key is empty, means it should be reused, get it from key cache
-        password = delegate.deserializeKey(key, sender, receiver, this);
+        Map<String, Object> password = delegate.deserializeKey(key, sender, receiver, this);
         if (password == null) {
             throw new NullPointerException("failed to get msg key: "
                     + sender + " -> " + receiver + ", " + Arrays.toString(key));

@@ -56,7 +56,7 @@ public final class InstantMessage extends Message {
 
     public InstantMessage(Content body, Envelope head) {
         super(head);
-        dictionary.put("content", body);
+        put("content", body);
         content = body;
     }
 

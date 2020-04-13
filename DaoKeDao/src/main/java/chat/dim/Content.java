@@ -76,8 +76,8 @@ public class Content extends Dictionary {
         super();
         type         = msgType;
         serialNumber = randomPositiveInteger();
-        dictionary.put("type", type);
-        dictionary.put("sn", serialNumber);
+        put("type", type);
+        put("sn", serialNumber);
     }
 
     private static long randomPositiveInteger() {
@@ -95,13 +95,13 @@ public class Content extends Dictionary {
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message
     public Object getGroup() {
-        return dictionary.get("group");
+        return get("group");
     }
     public void setGroup(Object identifier) {
         if (identifier == null) {
-            dictionary.remove("group");
+            remove("group");
         } else {
-            dictionary.put("group", identifier);
+            put("group", identifier);
         }
     }
 

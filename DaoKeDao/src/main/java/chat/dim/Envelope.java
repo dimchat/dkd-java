@@ -75,10 +75,10 @@ public final class Envelope extends Dictionary {
         sender   = from;
         receiver = to;
         time     = when;
-        dictionary.put("sender", from);
-        dictionary.put("receiver", to);
+        put("sender", from);
+        put("receiver", to);
         if (when != null) {
-            dictionary.put("time", when.getTime() / 1000);
+            put("time", when.getTime() / 1000);
         }
     }
 
@@ -87,9 +87,9 @@ public final class Envelope extends Dictionary {
         sender   = from;
         receiver = to;
         time     = new Date(timestamp * 1000);
-        dictionary.put("sender", from);
-        dictionary.put("receiver", to);
-        dictionary.put("time", timestamp);
+        put("sender", from);
+        put("receiver", to);
+        put("time", timestamp);
     }
 
     @SuppressWarnings("unchecked")
@@ -113,14 +113,14 @@ public final class Envelope extends Dictionary {
      *  the group ID will be saved as 'group'.
      */
     public Object getGroup() {
-        return dictionary.get("group");
+        return get("group");
     }
 
     public void setGroup(Object group) {
         if (group == null) {
-            dictionary.remove("group");
+            remove("group");
         } else {
-            dictionary.put("group", group);
+            put("group", group);
         }
     }
 
@@ -133,7 +133,7 @@ public final class Envelope extends Dictionary {
      *  to let the station do its job.
      */
     public int getType() {
-        Object type = dictionary.get("type");
+        Object type = get("type");
         if (type == null) {
             return 0;
         } else {
@@ -145,6 +145,6 @@ public final class Envelope extends Dictionary {
         setType(type.value);
     }
     public void setType(int type) {
-        dictionary.put("type", type);
+        put("type", type);
     }
 }
