@@ -18,7 +18,7 @@ plugins {
 
 group 'chat.dim'
 //version '1.0-SNAPSHOT'
-version '0.6.9'
+version '0.6.10'
 
 sourceCompatibility = 1.8
 
@@ -129,6 +129,19 @@ bintray {
     } else {
         user = System.getenv('bintray.user')
         key = System.getenv('bintray.apikey')
+        String pwd = System.getenv('bintray.gpg.password')
+        if (user == null) {
+            user = bintray_user
+        }
+        if (key == null) {
+            key = bintray_apikey
+        }
+        if (pwd == null) {
+            pwd = bintray_gpg_password
+        }
+        properties.setProperty('bintray.user', user)
+        properties.setProperty('bintray.apikey', key)
+        properties.setProperty('bintray.gpg.password', pwd)
     }
 
     configurations = ['archives']

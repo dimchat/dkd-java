@@ -147,4 +147,8 @@ public final class Envelope extends Dictionary {
     public void setType(int type) {
         put("type", type);
     }
+
+    Map<String, Object> getDictionary() {
+        return dictionary;
+    }
 }

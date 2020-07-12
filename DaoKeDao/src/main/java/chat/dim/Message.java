@@ -80,20 +80,11 @@ public class Message extends Dictionary {
 
     Message(Map<String, Object> dictionary) {
         super(dictionary);
-        // build envelope
-        Map<String, Object> env = new HashMap<>();
-        env.put("sender", dictionary.get("sender"));
-        env.put("receiver", dictionary.get("receiver"));
-        env.put("time", dictionary.get("time"));
-        envelope = new Envelope(env);
+        envelope = new Envelope(dictionary);
     }
 
     Message(Envelope env) {
-        super();
-        // copy envelope
-        put("sender", env.sender);
-        put("receiver", env.receiver);
-        put("time", env.get("time")); // copy timestamp
+        super(env.getDictionary());
         envelope = env;
     }
 
