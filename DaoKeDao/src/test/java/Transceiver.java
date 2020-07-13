@@ -9,6 +9,8 @@ import chat.dim.ReliableMessageDelegate;
 import chat.dim.SecureMessage;
 import chat.dim.SecureMessageDelegate;
 import chat.dim.format.Base64;
+import chat.dim.protocol.ContentType;
+import chat.dim.protocol.TextContent;
 
 public final class Transceiver implements InstantMessageDelegate, SecureMessageDelegate, ReliableMessageDelegate {
 
@@ -106,5 +108,9 @@ public final class Transceiver implements InstantMessageDelegate, SecureMessageD
     @Override
     public Content deserializeContent(byte[] data, Map<String, Object> password, SecureMessage sMsg) {
         return null;
+    }
+
+    static {
+        Content.register(ContentType.TEXT, TextContent.class);
     }
 }

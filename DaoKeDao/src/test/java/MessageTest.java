@@ -15,6 +15,8 @@ import chat.dim.ReliableMessage;
 import chat.dim.SecureMessage;
 import chat.dim.format.Base64;
 
+import chat.dim.protocol.TextContent;
+
 public class MessageTest {
 
     private static String sender = "gsp-s001@x5Zh9ixt8ECr59XLye1y5WWfaX4fcoaaSC";
@@ -67,7 +69,7 @@ public class MessageTest {
     @Test
     public void testInstantMessage() {
 
-        Content content = new TextContent("Hello world!");
+        TextContent content = new TextContent("Hello world!");
 
         InstantMessage iMsg;
         iMsg = new InstantMessage(content, null, null);
@@ -88,7 +90,7 @@ public class MessageTest {
 
 //        Map dictionary = (Map) message.get("content");
         Content cnt = Content.getInstance(new HashMap<>(content));
-        Assert.assertEquals(cnt.get("text"), ((TextContent) content).getText());
+        Assert.assertEquals(cnt.get("text"), content.getText());
 
         iMsg.setDelegate(transceiver);
     }
