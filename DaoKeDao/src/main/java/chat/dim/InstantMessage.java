@@ -30,7 +30,11 @@
  */
 package chat.dim;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *  Instant Message
@@ -45,39 +49,39 @@ import java.util.*;
  *      content  : {...}
  *  }
  */
-public final class InstantMessage extends Message {
+public final class InstantMessage<ID> extends Message<ID> {
 
-    public final Content content;
+    public final Content<ID> content;
 
     InstantMessage(Map<String, Object> dictionary) {
         super(dictionary);
+        //noinspection unchecked
         content = Content.getInstance(dictionary.get("content"));
     }
 
-    public InstantMessage(Content body, Envelope head) {
+    public InstantMessage(Content<ID> body, Envelope<ID> head) {
         super(head);
         put("content", body);
         content = body;
     }
 
-    public InstantMessage(Content body, Object from, Object to) {
-        this(body, new Envelope(from, to));
+    public InstantMessage(Content<ID> body, ID from, ID to) {
+        this(body, new Envelope<>(from, to));
     }
 
-    public InstantMessage(Content body, Object from, Object to, Date when) {
-        this(body, new Envelope(from, to, when));
+    public InstantMessage(Content<ID> body, ID from, ID to, Date when) {
+        this(body, new Envelope<>(from, to, when));
     }
 
-    public InstantMessage(Content body, Object from, Object to, long timestamp) {
-        this(body, new Envelope(from, to, timestamp));
+    public InstantMessage(Content<ID> body, ID from, ID to, long timestamp) {
+        this(body, new Envelope<>(from, to, timestamp));
     }
 
     @Override
-    public InstantMessageDelegate getDelegate() {
-        return (InstantMessageDelegate) super.getDelegate();
+    public InstantMessageDelegate<ID> getDelegate() {
+        return (InstantMessageDelegate<ID>) super.getDelegate();
     }
 
-    @SuppressWarnings("unchecked")
     public static InstantMessage getInstance(Object object) {
         if (object == null) {
             return null;
@@ -87,8 +91,8 @@ public final class InstantMessage extends Message {
             // return InstantMessage object directly
             return (InstantMessage) object;
         }
-        // new InstantMessage(msg)
-        return new InstantMessage((Map<String, Object>) object);
+        //noinspection unchecked
+        return new InstantMessage<>((Map<String, Object>) object);
     }
 
     /*
@@ -118,7 +122,7 @@ public final class InstantMessage extends Message {
         Map<String, Object> map = prepareData(password);
 
         // 2. encrypt symmetric key(password) to 'message.key'
-        InstantMessageDelegate delegate = getDelegate();
+        InstantMessageDelegate<ID> delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
@@ -151,7 +155,7 @@ public final class InstantMessage extends Message {
      * @param members - group members
      * @return SecureMessage object
      */
-    public SecureMessage encrypt(Map<String, Object> password, List members) {
+    public SecureMessage encrypt(Map<String, Object> password, List<ID> members) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
 
@@ -159,7 +163,7 @@ public final class InstantMessage extends Message {
         Map<String, Object> map = prepareData(password);
 
         // 2. serialize symmetric key
-        InstantMessageDelegate delegate = getDelegate();
+        InstantMessageDelegate<ID> delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
@@ -173,7 +177,7 @@ public final class InstantMessage extends Message {
         int count = 0;
         byte[] data;
         Object base64;
-        for (Object member: members) {
+        for (ID member: members) {
             // 2.2. encrypt symmetric key data
             data = delegate.encryptKey(key, member, this);
             if (data == null) {
@@ -197,7 +201,7 @@ public final class InstantMessage extends Message {
     }
 
     private Map<String, Object> prepareData(Map<String, Object> password) {
-        InstantMessageDelegate delegate = getDelegate();
+        InstantMessageDelegate<ID> delegate = getDelegate();
         // 1. serialize message content
         byte[] data = delegate.serializeContent(content, password, this);
         assert data != null : "failed to serialize content: " + content;

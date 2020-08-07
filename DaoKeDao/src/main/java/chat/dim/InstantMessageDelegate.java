@@ -32,7 +32,7 @@ package chat.dim;
 
 import java.util.Map;
 
-public interface InstantMessageDelegate extends MessageDelegate {
+public interface InstantMessageDelegate<ID> extends MessageDelegate<ID> {
 
     //
     //  Encrypt Content
@@ -46,7 +46,7 @@ public interface InstantMessageDelegate extends MessageDelegate {
      * @param password - symmetric key
      * @return serialized content data
      */
-    byte[] serializeContent(Content content, Map<String, Object> password, InstantMessage iMsg);
+    byte[] serializeContent(Content<ID> content, Map<String, Object> password, InstantMessage<ID> iMsg);
 
     /**
      *  2. Encrypt content data to 'message.data' with symmetric key
@@ -56,7 +56,7 @@ public interface InstantMessageDelegate extends MessageDelegate {
      * @param password - symmetric key
      * @return encrypted message content data
      */
-    byte[] encryptContent(byte[] data, Map<String, Object> password, InstantMessage iMsg);
+    byte[] encryptContent(byte[] data, Map<String, Object> password, InstantMessage<ID> iMsg);
 
     /**
      *  3. Encode 'message.data' to String (Base64)
@@ -65,7 +65,7 @@ public interface InstantMessageDelegate extends MessageDelegate {
      * @param data - encrypted content data
      * @return String object
      */
-    Object encodeData(byte[] data, InstantMessage iMsg);
+    Object encodeData(byte[] data, InstantMessage<ID> iMsg);
 
     //
     //  Encrypt Key
@@ -78,7 +78,7 @@ public interface InstantMessageDelegate extends MessageDelegate {
      * @param password - symmetric key
      * @return serialized key data
      */
-    byte[] serializeKey(Map<String, Object> password, InstantMessage iMsg);
+    byte[] serializeKey(Map<String, Object> password, InstantMessage<ID> iMsg);
 
     /**
      *  5. Encrypt key data to 'message.key' with receiver's public key
@@ -88,7 +88,7 @@ public interface InstantMessageDelegate extends MessageDelegate {
      * @param receiver - receiver ID string
      * @return encrypted symmetric key data
      */
-    byte[] encryptKey(byte[] data, Object receiver, InstantMessage iMsg);
+    byte[] encryptKey(byte[] data, ID receiver, InstantMessage<ID> iMsg);
 
     /**
      *  6. Encode 'message.key' to String (Base64)
@@ -97,5 +97,5 @@ public interface InstantMessageDelegate extends MessageDelegate {
      * @param data - encrypted symmetric key data
      * @return String object
      */
-    Object encodeKey(byte[] data, InstantMessage iMsg);
+    Object encodeKey(byte[] data, InstantMessage<ID> iMsg);
 }

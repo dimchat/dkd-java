@@ -48,16 +48,18 @@ import chat.dim.type.Dictionary;
  *      time     : 123
  *  }
  */
-public final class Envelope extends Dictionary {
+public final class Envelope<ID> extends Dictionary {
 
-    public final Object sender;
-    public final Object receiver;
+    public final ID sender;
+    public final ID receiver;
     public final Date time;
 
     Envelope(Map<String, Object> dictionary) {
         super(dictionary);
-        sender   = dictionary.get("sender");
-        receiver = dictionary.get("receiver");
+        //noinspection unchecked
+        sender   = (ID) parser.getID(dictionary.get("sender"));
+        //noinspection unchecked
+        receiver = (ID) parser.getID(dictionary.get("receiver"));
         Object timestamp = dictionary.get("time");
         if (timestamp == null) {
             time = null;
@@ -66,11 +68,11 @@ public final class Envelope extends Dictionary {
         }
     }
 
-    Envelope(Object from, Object to) {
+    Envelope(ID from, ID to) {
         this(from, to, new Date());
     }
 
-    Envelope(Object from, Object to, Date when) {
+    Envelope(ID from, ID to, Date when) {
         super();
         sender   = from;
         receiver = to;
@@ -82,7 +84,7 @@ public final class Envelope extends Dictionary {
         }
     }
 
-    Envelope(Object from, Object to, long timestamp) {
+    Envelope(ID from, ID to, long timestamp) {
         super();
         sender   = from;
         receiver = to;
@@ -92,7 +94,6 @@ public final class Envelope extends Dictionary {
         put("time", timestamp);
     }
 
-    @SuppressWarnings("unchecked")
     public static Envelope getInstance(Object object) {
         if (object == null) {
             return null;
@@ -102,6 +103,7 @@ public final class Envelope extends Dictionary {
             // return Envelope object directly
             return (Envelope) object;
         }
+        //noinspection unchecked
         return new Envelope((Map<String, Object>) object);
     }
 
@@ -112,11 +114,12 @@ public final class Envelope extends Dictionary {
      *  the 'receiver' will be changed to a member ID, and
      *  the group ID will be saved as 'group'.
      */
-    public Object getGroup() {
-        return get("group");
+    public ID getGroup() {
+        //noinspection unchecked
+        return (ID) parser.getID(get("group"));
     }
 
-    public void setGroup(Object group) {
+    public void setGroup(ID group) {
         if (group == null) {
             remove("group");
         } else {
@@ -151,4 +154,20 @@ public final class Envelope extends Dictionary {
     Map<String, Object> getDictionary() {
         return dictionary;
     }
+
+    //
+    //  ID parser
+    //
+
+    public interface Parser<ID> {
+
+        ID getID(Object identifier);
+    }
+
+    public static Parser parser = new Parser() {
+        @Override
+        public Object getID(Object identifier) {
+            return identifier;
+        }
+    };
 }

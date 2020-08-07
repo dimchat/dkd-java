@@ -26,7 +26,7 @@ public class MessageTest {
     private String key = "h1964ruibFD4o9B2Oye//Ycer9xjC7T8oNSNriEP1k2AQJ6c2hvL7Lqvmb/NPqRJ9wdqC2RRUeIIYKamb6IwN6+k6iyy+qJ18Yawtz/kBLn0aHgIt/Ujo9W6jo9KpC6f/rWtnHyMW/wdfSlufvGhE1WZxApmNVPCoSvzoLeRidw=";
     private String signature = "glwiQAP9HQ08iKK6DZM3aL1qnYUNYFl0nyZLuw77YLTXBVc3/mw/TnlDpEBtiTS9kvk85ucGoe2uMAg6CMfQ+256TPSmYitCmwZ+rTM2EYnjA1bS04Po3PPtnmlpIVKgKNNEseUe8uIRMqnhPsIgUu3SCM/FxnMD/hhfCKu9hu8=";
 
-    private Transceiver transceiver = new Transceiver();
+    private Transceiver<String> transceiver = new Transceiver<>();
 
     @Test
     public void testEnvelope() {
@@ -49,15 +49,17 @@ public class MessageTest {
         dictionary.put("type", 1);
         dictionary.put("sn", 123412341234L);
         dictionary.put("text", "Hello world!");
+        dictionary.put("group", "anyone@anywhere");
 
-        Content content = Content.getInstance(dictionary);
+        //noinspection unchecked
+        Content<String> content = Content.getInstance(dictionary);
 
         Log.info("content: "+ content);
         Log.info("type: " + content.type);
         Log.info("sn: " + content.serialNumber);
         Log.info("group: " + content.getGroup());
 
-        content = new TextContent("Hello world!");
+        content = new TextContent<>("Hello world!");
         content.setGroup("Group-12345@qq.com");
 
         Log.info("content: "+ content);
@@ -69,17 +71,17 @@ public class MessageTest {
     @Test
     public void testInstantMessage() {
 
-        TextContent content = new TextContent("Hello world!");
+        TextContent<String> content = new TextContent<>("Hello world!");
 
-        InstantMessage iMsg;
-        iMsg = new InstantMessage(content, null, null);
+        InstantMessage<String> iMsg;
+        iMsg = new InstantMessage<>(content, null, null);
         Log.info("instant message: " + iMsg);
-        iMsg = new InstantMessage(content, sender, receiver, null);
+        iMsg = new InstantMessage<>(content, sender, receiver, null);
         Log.info("instant message: " + iMsg);
-        iMsg = new InstantMessage(content, iMsg.envelope);
+        iMsg = new InstantMessage<>(content, iMsg.envelope);
         Log.info("instant message: " + iMsg);
 
-        iMsg = new InstantMessage(content, sender, receiver, 0);
+        iMsg = new InstantMessage<>(content, sender, receiver, 0);
         Log.info("instant message: " + iMsg);
         Log.info("envelope: " + iMsg.envelope);
         Log.info("content: " + iMsg.content);
@@ -108,7 +110,8 @@ public class MessageTest {
         dictionary.put("data", data);
         dictionary.put("key", key);
 
-        SecureMessage sMsg = SecureMessage.getInstance(dictionary);
+        //noinspection unchecked
+        SecureMessage<String> sMsg = SecureMessage.getInstance(dictionary);
         Log.info("secure message: " + sMsg);
 
         sMsg.setDelegate(transceiver);
@@ -122,7 +125,8 @@ public class MessageTest {
 //        Log.info("instant msg: " + iMsg);
 
         dictionary.put("signature", signature);
-        ReliableMessage rMsg = ReliableMessage.getInstance(dictionary);
+        //noinspection unchecked
+        ReliableMessage<String> rMsg = ReliableMessage.getInstance(dictionary);
         Log.info("reliable message: " + rMsg);
 
         rMsg.setDelegate(transceiver);
@@ -148,10 +152,11 @@ public class MessageTest {
         dictionary.put("key", key);
         dictionary.put("signature", signature);
 
-        ReliableMessage msg = (ReliableMessage) Message.getInstance(dictionary);
+        //noinspection unchecked
+        ReliableMessage<String> msg = (ReliableMessage<String>) Message.getInstance(dictionary);
         Log.info("reliable message: " + msg);
 
-        List<Object> members = new ArrayList<>();
+        List<String> members = new ArrayList<>();
         List<SecureMessage> messages = msg.split(members);
         Log.info("split: " + messages);
 

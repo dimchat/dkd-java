@@ -43,16 +43,17 @@ import chat.dim.ReliableMessage;
  *      forward : {...}  // reliable (secure + certified) message
  *  }
  */
-public class ForwardContent extends Content {
+public class ForwardContent<ID> extends Content<ID> {
 
-    public final ReliableMessage forwardMessage;
+    public final ReliableMessage<ID> forwardMessage;
 
     public ForwardContent(Map<String, Object> dictionary) {
         super(dictionary);
+        //noinspection unchecked
         forwardMessage = ReliableMessage.getInstance(dictionary.get("forward"));
     }
 
-    public ForwardContent(ReliableMessage message) {
+    public ForwardContent(ReliableMessage<ID> message) {
         super(ContentType.FORWARD);
         forwardMessage = message;
         put("forward", message);

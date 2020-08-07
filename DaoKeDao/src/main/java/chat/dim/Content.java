@@ -55,7 +55,7 @@ import chat.dim.type.Dictionary;
  *      //...
  *  }
  */
-public class Content extends Dictionary {
+public class Content<ID> extends Dictionary {
 
     // message type: text, image, ...
     public final int type;
@@ -94,10 +94,11 @@ public class Content extends Dictionary {
 
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message
-    public Object getGroup() {
-        return get("group");
+    public ID getGroup() {
+        //noinspection unchecked
+        return (ID) Envelope.parser.getID(get("group"));
     }
-    public void setGroup(Object identifier) {
+    public void setGroup(ID identifier) {
         if (identifier == null) {
             remove("group");
         } else {
@@ -113,7 +114,6 @@ public class Content extends Dictionary {
         register(type.value, clazz);
     }
 
-    @SuppressWarnings("unchecked")
     public static void register(int type, Class clazz) {
         if (clazz == null) {
             contentClasses.remove(type);
@@ -125,7 +125,6 @@ public class Content extends Dictionary {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static Content getInstance(Object object) {
         if (object == null) {
             return null;
@@ -135,6 +134,7 @@ public class Content extends Dictionary {
             // return Content object directly
             return (Content) object;
         }
+        //noinspection unchecked
         Map<String, Object> dictionary = (Map<String, Object>) object;
         // create instance by subclass (with content type)
         int type = (int) dictionary.get("type");
@@ -143,7 +143,7 @@ public class Content extends Dictionary {
             return (Content) createInstance(clazz, dictionary);
         }
         // custom message content
-        return new Content(dictionary);
+        return new Content<>(dictionary);
     }
 
     static {

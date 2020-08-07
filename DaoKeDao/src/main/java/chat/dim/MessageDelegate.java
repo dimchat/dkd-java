@@ -30,6 +30,7 @@
  */
 package chat.dim;
 
-interface MessageDelegate {
+@SuppressWarnings("unused")
+interface MessageDelegate<ID> {
 
 }

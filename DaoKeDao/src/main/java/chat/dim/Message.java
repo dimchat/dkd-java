@@ -31,7 +31,6 @@
 package chat.dim;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.Map;
 
 import chat.dim.type.Dictionary;
@@ -72,39 +71,39 @@ import chat.dim.type.Dictionary;
  *      ...
  *  }
  */
-public class Message extends Dictionary {
+public class Message<ID> extends Dictionary {
 
-    public final Envelope envelope;
+    public final Envelope<ID> envelope;
 
-    private WeakReference<MessageDelegate> delegateRef = null;
+    private WeakReference<MessageDelegate<ID>> delegateRef = null;
 
     Message(Map<String, Object> dictionary) {
         super(dictionary);
-        envelope = new Envelope(dictionary);
+        envelope = new Envelope<>(dictionary);
     }
 
-    Message(Envelope env) {
+    Message(Envelope<ID> env) {
         super(env.getDictionary());
         envelope = env;
     }
 
-    public MessageDelegate getDelegate() {
+    public MessageDelegate<ID> getDelegate() {
         if (delegateRef == null) {
             return null;
         }
         return delegateRef.get();
     }
 
-    public void setDelegate(MessageDelegate delegate) {
+    public void setDelegate(MessageDelegate<ID> delegate) {
         delegateRef = new WeakReference<>(delegate);
     }
 
-    @SuppressWarnings("unchecked")
     public static Message getInstance(Object object) {
         if (object == null) {
             return null;
         }
         assert object instanceof Map : "message info must be a map";
+        //noinspection unchecked
         Map<String, Object> dictionary = (Map<String, Object>) object;
         if (dictionary.containsKey("content")) {
             // this should be an instant message

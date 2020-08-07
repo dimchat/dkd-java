@@ -30,7 +30,7 @@
  */
 package chat.dim;
 
-public interface ReliableMessageDelegate extends SecureMessageDelegate {
+public interface ReliableMessageDelegate<ID> extends SecureMessageDelegate<ID> {
 
     /**
      *  1. Decode 'message.signature' from String (Base64)
@@ -39,7 +39,7 @@ public interface ReliableMessageDelegate extends SecureMessageDelegate {
      * @param rMsg - reliable message
      * @return signature data
      */
-    byte[] decodeSignature(Object signature, ReliableMessage rMsg);
+    byte[] decodeSignature(Object signature, ReliableMessage<ID> rMsg);
 
     /**
      *  2. Verify the message data and signature with sender's public key
@@ -50,5 +50,5 @@ public interface ReliableMessageDelegate extends SecureMessageDelegate {
      *  @param rMsg - reliable message object
      *  @return YES on signature matched
      */
-    boolean verifyDataSignature(byte[] data, byte[] signature, Object sender, ReliableMessage rMsg);
+    boolean verifyDataSignature(byte[] data, byte[] signature, ID sender, ReliableMessage<ID> rMsg);
 }

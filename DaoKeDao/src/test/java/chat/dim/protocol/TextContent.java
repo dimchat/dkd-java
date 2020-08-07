@@ -42,7 +42,7 @@ import chat.dim.Content;
  *      text : "..."
  *  }
  */
-public class TextContent extends Content {
+public class TextContent<ID> extends Content<ID> {
 
     public TextContent(Map<String, Object> dictionary) {
         super(dictionary);

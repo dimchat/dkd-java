@@ -54,18 +54,17 @@ import java.util.Map;
  *      signature: "..."   // base64_encode()
  *  }
  */
-public final class ReliableMessage extends SecureMessage {
+public final class ReliableMessage<ID> extends SecureMessage<ID> {
 
     private byte[] signature = null;
 
-    @SuppressWarnings("unchecked")
     ReliableMessage(Map<String, Object> dictionary) {
         super(dictionary);
     }
 
     @Override
-    public ReliableMessageDelegate getDelegate() {
-        return (ReliableMessageDelegate) super.getDelegate();
+    public ReliableMessageDelegate<ID> getDelegate() {
+        return (ReliableMessageDelegate<ID>) super.getDelegate();
     }
 
     public byte[] getSignature() {
@@ -77,7 +76,6 @@ public final class ReliableMessage extends SecureMessage {
         return signature;
     }
 
-    @SuppressWarnings("unchecked")
     public static ReliableMessage getInstance(Object object) {
         if (object == null) {
             return null;
@@ -87,8 +85,8 @@ public final class ReliableMessage extends SecureMessage {
             // return ReliableMessage object directly
             return (ReliableMessage) object;
         }
-        // new ReliableMessage(msg)
-        return new ReliableMessage((Map<String, Object>) object);
+        //noinspection unchecked
+        return new ReliableMessage<>((Map<String, Object>) object);
     }
 
     /**
@@ -102,8 +100,8 @@ public final class ReliableMessage extends SecureMessage {
         put("meta", meta);
     }
 
-    @SuppressWarnings("unchecked")
     public Map<String, Object> getMeta() {
+        //noinspection unchecked
         return (Map<String, Object>) get("meta");
     }
 
@@ -140,7 +138,7 @@ public final class ReliableMessage extends SecureMessage {
             // 2. pack message
             Map<String, Object> map = new HashMap<>(dictionary);
             map.remove("signature");
-            return new SecureMessage(map);
+            return new SecureMessage<>(map);
         } else {
             //throw new RuntimeException("message signature not match: " + this);
             return null;
