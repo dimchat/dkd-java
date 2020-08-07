@@ -30,7 +30,6 @@
  */
 package chat.dim;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 
 import chat.dim.type.Dictionary;
@@ -75,8 +74,6 @@ public class Message<ID> extends Dictionary<String, Object> {
 
     public final Envelope<ID> envelope;
 
-    private WeakReference<MessageDelegate<ID>> delegateRef = null;
-
     Message(Map<String, Object> dictionary) {
         super(dictionary);
         envelope = new Envelope<>(dictionary);
@@ -88,14 +85,11 @@ public class Message<ID> extends Dictionary<String, Object> {
     }
 
     public MessageDelegate<ID> getDelegate() {
-        if (delegateRef == null) {
-            return null;
-        }
-        return delegateRef.get();
+        return envelope.getDelegate();
     }
 
     public void setDelegate(MessageDelegate<ID> delegate) {
-        delegateRef = new WeakReference<>(delegate);
+        envelope.setDelegate(delegate);
     }
 
     public static Message getInstance(Object object) {

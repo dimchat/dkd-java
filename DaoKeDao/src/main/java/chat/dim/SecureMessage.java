@@ -85,7 +85,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
                 // check 'keys'
                 Map<Object, Object> keys = getKeys();
                 if (keys != null) {
-                    base64 = keys.get(envelope.receiver);
+                    base64 = keys.get(envelope.getReceiver());
                 }
             }
             if (base64 != null) {
@@ -142,13 +142,13 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
      * @return InstantMessage object
      */
     public InstantMessage<ID, KEY> decrypt() {
-        ID sender = envelope.sender;
+        ID sender = envelope.getSender();
         ID receiver;
         ID group = envelope.getGroup();
         if (group == null) {
             // personal message
             // not split group message
-            receiver = envelope.receiver;
+            receiver = envelope.getReceiver();
         } else {
             // group message
             receiver = group;
@@ -226,7 +226,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
      */
     public ReliableMessage<ID, KEY> sign() {
         // 1. sign with sender's private key
-        byte[] signature = getDelegate().signData(getData(), envelope.sender, this);
+        byte[] signature = getDelegate().signData(getData(), envelope.getSender(), this);
         assert signature != null : "failed to sign message: " + this;
         // 2. encode signature
         Object base64 = getDelegate().encodeSignature(signature, this);
@@ -266,7 +266,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         //    when the group message separated to multi-messages;
         //    if don't want the others know your membership,
         //    DON'T do this.
-        msg.put("group", envelope.receiver);
+        msg.put("group", envelope.getReceiver());
 
         List<SecureMessage<ID, KEY>> messages = new ArrayList<>(members.size());
         Object base64;
@@ -315,7 +315,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
             // if 'group' not exists, the 'receiver' must be a group ID here, and
             // it will not be equal to the member of course,
             // so move 'receiver' to 'group'
-            msg.put("group", envelope.receiver);
+            msg.put("group", envelope.getReceiver());
         }
         msg.put("receiver", member);
         // repack

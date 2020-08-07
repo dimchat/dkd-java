@@ -147,7 +147,7 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
             throw new NullPointerException("failed to decode message signature: " + this);
         }
         // 1. verify data signature with sender's public key
-        if (getDelegate().verifyDataSignature(data, signature, envelope.sender, this)) {
+        if (getDelegate().verifyDataSignature(data, signature, envelope.getSender(), this)) {
             // 2. pack message
             Map<String, Object> map = new HashMap<>(dictionary);
             map.remove("signature");

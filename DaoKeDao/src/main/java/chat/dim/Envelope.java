@@ -30,6 +30,7 @@
  */
 package chat.dim;
 
+import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.Map;
 
@@ -50,22 +51,21 @@ import chat.dim.type.Dictionary;
  */
 public final class Envelope<ID> extends Dictionary<String, Object> {
 
-    public final ID sender;
-    public final ID receiver;
-    public final Date time;
+    private ID sender;
+    private ID receiver;
+    private Date time;
+
+    private ID group;
+
+    private WeakReference<MessageDelegate<ID>> delegateRef = null;
 
     Envelope(Map<String, Object> dictionary) {
         super(dictionary);
-        //noinspection unchecked
-        sender   = (ID) parser.getID(dictionary.get("sender"));
-        //noinspection unchecked
-        receiver = (ID) parser.getID(dictionary.get("receiver"));
-        Object timestamp = dictionary.get("time");
-        if (timestamp == null) {
-            time = null;
-        } else {
-            time = new Date(((Number) timestamp).longValue() * 1000);
-        }
+        // lazy load
+        sender   = null;
+        receiver = null;
+        time     = null;
+        group    = null;
     }
 
     Envelope(ID from, ID to) {
@@ -77,6 +77,7 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         sender   = from;
         receiver = to;
         time     = when;
+        group    = null;
         put("sender", from);
         put("receiver", to);
         if (when != null) {
@@ -89,9 +90,51 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         sender   = from;
         receiver = to;
         time     = new Date(timestamp * 1000);
+        group    = null;
         put("sender", from);
         put("receiver", to);
         put("time", timestamp);
+    }
+
+    MessageDelegate<ID> getDelegate() {
+        if (delegateRef == null) {
+            return null;
+        }
+        return delegateRef.get();
+    }
+
+    void setDelegate(MessageDelegate<ID> delegate) {
+        delegateRef = new WeakReference<>(delegate);
+    }
+
+    public ID getSender() {
+        if (sender == null) {
+            MessageDelegate<ID> delegate = getDelegate();
+            assert delegate != null : "message delegate not set";
+            sender = delegate.getID(get("sender"));
+        }
+        return sender;
+    }
+
+    public ID getReceiver() {
+        if (receiver == null) {
+            MessageDelegate<ID> delegate = getDelegate();
+            assert delegate != null : "message delegate not set";
+            receiver = delegate.getID(get("receiver"));
+        }
+        return receiver;
+    }
+
+    public Date getTime() {
+        if (time == null) {
+            Object timestamp = dictionary.get("time");
+            if (timestamp == null) {
+                time = null;
+            } else {
+                time = new Date(((Number) timestamp).longValue() * 1000);
+            }
+        }
+        return time;
     }
 
     public static Envelope getInstance(Object object) {
@@ -114,8 +157,12 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
      *  the group ID will be saved as 'group'.
      */
     public ID getGroup() {
-        //noinspection unchecked
-        return (ID) parser.getID(get("group"));
+        if (group == null) {
+            MessageDelegate<ID> delegate = getDelegate();
+            assert delegate != null : "message delegate not set";
+            group = delegate.getID(get("group"));
+        }
+        return group;
     }
 
     public void setGroup(ID group) {
@@ -124,6 +171,7 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         } else {
             put("group", group);
         }
+        this.group = group;
     }
 
     /*
@@ -153,22 +201,4 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
     Map<String, Object> getDictionary() {
         return dictionary;
     }
-
-    //
-    //  ID parser
-    //
-
-    public interface Parser<ID> {
-
-        ID getID(Object identifier);
-    }
-
-    public static Parser parser = new Parser() {
-
-        @Override
-        public Object getID(Object identifier) {
-            // TODO: convert String to ID
-            return identifier;
-        }
-    };
 }

@@ -51,12 +51,12 @@ import java.util.Map;
  */
 public class InstantMessage<ID, KEY> extends Message<ID> {
 
-    public final Content<ID> content;
+    private Content<ID> content;
 
     InstantMessage(Map<String, Object> dictionary) {
         super(dictionary);
-        //noinspection unchecked
-        content = Content.getInstance(dictionary.get("content"));
+        // lazy
+        content = null;
     }
 
     public InstantMessage(Content<ID> body, Envelope<ID> head) {
@@ -80,6 +80,20 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
     @Override
     public InstantMessageDelegate<ID, KEY> getDelegate() {
         return (InstantMessageDelegate<ID, KEY>) super.getDelegate();
+    }
+
+    @Override
+    public void setDelegate(MessageDelegate<ID> delegate) {
+        super.setDelegate(delegate);
+        // set delegate for message content
+        getContent().setDelegate(delegate);
+    }
+
+    public Content<ID> getContent() {
+        if (content == null) {
+            content = getDelegate().getContent(get("content"));
+        }
+        return content;
     }
 
     public static InstantMessage getInstance(Object object) {
@@ -131,7 +145,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         }
 
         // 2.2. encrypt symmetric key data
-        key = delegate.encryptKey(key, envelope.receiver, this);
+        key = delegate.encryptKey(key, envelope.getReceiver(), this);
         if (key == null) {
             // public key for encryption not found
             // TODO: suspend this message for waiting receiver's meta
@@ -202,7 +216,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
     private Map<String, Object> prepareData(KEY password) {
         InstantMessageDelegate<ID, KEY> delegate = getDelegate();
         // 1. serialize message content
-        byte[] data = delegate.serializeContent(content, password, this);
+        byte[] data = delegate.serializeContent(getContent(), password, this);
         assert data != null : "failed to serialize content: " + content;
         // 2. encrypt content data with password
         data = delegate.encryptContent(data, password, this);

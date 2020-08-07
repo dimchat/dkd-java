@@ -1,4 +1,7 @@
 
+import chat.dim.*;
+import chat.dim.crypto.SymmetricKey;
+import chat.dim.protocol.Content;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -7,71 +10,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chat.dim.Content;
-import chat.dim.Envelope;
-import chat.dim.InstantMessage;
-import chat.dim.ReliableMessage;
-import chat.dim.SecureMessage;
 import chat.dim.format.Base64;
 
 import chat.dim.protocol.TextContent;
 
 public class MessageTest {
 
-    private static String sender = "gsp-s001@x5Zh9ixt8ECr59XLye1y5WWfaX4fcoaaSC";
-    private String receiver = "pony@4Zc1ax3bVBMm4AXky8rmj6pGn8Hmb8pn5C";
+    private static ID sender = null; //ID.getInstance("gsp-s001@x5Zh9ixt8ECr59XLye1y5WWfaX4fcoaaSC");
+    private ID receiver = null; //ID.getInstance("pony@4Zc1ax3bVBMm4AXky8rmj6pGn8Hmb8pn5C");
     private long time = 1561195412L;
     private String data = "4j92H0lmiRrHcf4uQK3hwLSarmD9s2wY6b8Kt/gbNiOA7K/qst9W7kYAjkXMRzlCZ/IqMAy97nhvPKzzIuorkudpWDLAOWIVeoRTkDop+JTzReiXVh51zRtcXgVTmmaGfpU/STGhMC1f9L+mzc9WjA==";
     private String key = "h1964ruibFD4o9B2Oye//Ycer9xjC7T8oNSNriEP1k2AQJ6c2hvL7Lqvmb/NPqRJ9wdqC2RRUeIIYKamb6IwN6+k6iyy+qJ18Yawtz/kBLn0aHgIt/Ujo9W6jo9KpC6f/rWtnHyMW/wdfSlufvGhE1WZxApmNVPCoSvzoLeRidw=";
     private String signature = "glwiQAP9HQ08iKK6DZM3aL1qnYUNYFl0nyZLuw77YLTXBVc3/mw/TnlDpEBtiTS9kvk85ucGoe2uMAg6CMfQ+256TPSmYitCmwZ+rTM2EYnjA1bS04Po3PPtnmlpIVKgKNNEseUe8uIRMqnhPsIgUu3SCM/FxnMD/hhfCKu9hu8=";
 
-    private Transceiver<String, Map> transceiver = new Transceiver<>();
-
-    @Test
-    public void testEnvelope() {
-        Map<String, Object> dictionary = new HashMap<>();
-        dictionary.put("sender", sender);
-        dictionary.put("receiver", receiver);
-        dictionary.put("time", time);
-        Envelope env = Envelope.getInstance(dictionary);
-
-        Log.info("envelope: " + env);
-        Log.info("sender: " + env.sender);
-        Log.info("receiver: " + env.receiver);
-        Log.info("time: " + env.time);
-    }
-
-    @Test
-    public void testContent() {
-
-        Map<String, Object> dictionary = new HashMap<>();
-        dictionary.put("type", 1);
-        dictionary.put("sn", 123412341234L);
-        dictionary.put("text", "Hello world!");
-        dictionary.put("group", "anyone@anywhere");
-
-        Content<String> content = Content.getInstance(dictionary);
-
-        Log.info("content: "+ content);
-        Log.info("type: " + content.type);
-        Log.info("sn: " + content.serialNumber);
-        Log.info("group: " + content.getGroup());
-
-        content = new TextContent<>("Hello world!");
-        content.setGroup("Group-12345@qq.com");
-
-        Log.info("content: "+ content);
-        Log.info("type: " + content.type);
-        Log.info("sn: " + content.serialNumber);
-        Log.info("group: " + content.getGroup());
-    }
+    private Transceiver transceiver = new Transceiver();
 
     @Test
     public void testInstantMessage() {
 
-        TextContent<String> content = new TextContent<>("Hello world!");
+        TextContent content = new TextContent("Hello world!");
 
-        InstantMessage<String, Map> iMsg;
+        InstantMessage<ID, SymmetricKey> iMsg;
         iMsg = new InstantMessage<>(content, null, null);
         Log.info("instant message: " + iMsg);
         iMsg = new InstantMessage<>(content, sender, receiver, null);
@@ -82,7 +41,7 @@ public class MessageTest {
         iMsg = new InstantMessage<>(content, sender, receiver, 0);
         Log.info("instant message: " + iMsg);
         Log.info("envelope: " + iMsg.envelope);
-        Log.info("content: " + iMsg.content);
+        Log.info("content: " + iMsg.getContent());
 
         InstantMessage message = InstantMessage.getInstance(iMsg);
         Log.info("message: " + message);
@@ -108,21 +67,21 @@ public class MessageTest {
         dictionary.put("data", data);
         dictionary.put("key", key);
 
-        SecureMessage<String, Map> sMsg = SecureMessage.getInstance(dictionary);
+        SecureMessage<ID, SymmetricKey> sMsg = SecureMessage.getInstance(dictionary);
         Log.info("secure message: " + sMsg);
 
         sMsg.setDelegate(transceiver);
 //        byte[] key = sMsg.getKey();
 //        Map keys = sMsg.getKeys();
 
-        sMsg.envelope.setGroup("group12345");
+        sMsg.envelope.setGroup(ID.getInstance("everyone@everywhere"));
         Log.info("group: " + sMsg.envelope.getGroup());
 
 //        InstantMessage iMsg = sMsg.decrypt();
 //        Log.info("instant msg: " + iMsg);
 
         dictionary.put("signature", signature);
-        ReliableMessage<String, Map> rMsg = ReliableMessage.getInstance(dictionary);
+        ReliableMessage<ID, SymmetricKey> rMsg = ReliableMessage.getInstance(dictionary);
         Log.info("reliable message: " + rMsg);
 
         rMsg.setDelegate(transceiver);
@@ -148,11 +107,13 @@ public class MessageTest {
         dictionary.put("key", key);
         dictionary.put("signature", signature);
 
-        ReliableMessage<String, Map> msg = ReliableMessage.getInstance(dictionary);
+        ReliableMessage<ID, SymmetricKey> msg = ReliableMessage.getInstance(dictionary);
         Log.info("reliable message: " + msg);
 
-        List<String> members = new ArrayList<>();
-        List<SecureMessage<String, Map>> messages = msg.split(members);
+        msg.setDelegate(transceiver);
+
+        List<ID> members = new ArrayList<>();
+        List<SecureMessage<ID, SymmetricKey>> messages = msg.split(members);
         Log.info("split: " + messages);
 
         SecureMessage sMsg = msg.trim(receiver);

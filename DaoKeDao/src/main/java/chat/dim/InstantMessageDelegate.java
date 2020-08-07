@@ -32,6 +32,14 @@ package chat.dim;
 
 public interface InstantMessageDelegate<ID, KEY> extends MessageDelegate<ID> {
 
+    /**
+     *  Convert Map object to Content object
+     *
+     * @param content - Map object
+     * @return Content object
+     */
+    Content<ID> getContent(Object content);
+
     //
     //  Encrypt Content
     //

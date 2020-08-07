@@ -30,7 +30,13 @@
  */
 package chat.dim;
 
-@SuppressWarnings("unused")
-interface MessageDelegate<ID> {
+public interface MessageDelegate<ID> {
 
+    /**
+     *  Convert String object to ID object
+     *
+     * @param identifier - String object
+     * @return ID object
+     */
+    ID getID(Object identifier);
 }

@@ -30,6 +30,7 @@
  */
 package chat.dim;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -62,10 +63,15 @@ public class Content<ID> extends Dictionary<String, Object> {
     // serial number: random number to identify message content
     public final long serialNumber;
 
+    private ID group;
+
+    private WeakReference<MessageDelegate<ID>> delegateRef = null;
+
     protected Content(Map<String, Object> dictionary) {
         super(dictionary);
         type         = (int) dictionary.get("type");
         serialNumber = ((Number) dictionary.get("sn")).longValue();
+        group        = null;
     }
 
     protected Content(ContentType msgType) {
@@ -75,6 +81,7 @@ public class Content<ID> extends Dictionary<String, Object> {
         super();
         type         = msgType;
         serialNumber = randomPositiveInteger();
+        group        = null;
         put("type", type);
         put("sn", serialNumber);
     }
@@ -91,56 +98,34 @@ public class Content<ID> extends Dictionary<String, Object> {
         return 9527 + 9394; // randomPositiveInteger();
     }
 
+    public MessageDelegate<ID> getDelegate() {
+        if (delegateRef == null) {
+            return null;
+        }
+        return delegateRef.get();
+    }
+
+    public void setDelegate(MessageDelegate<ID> delegate) {
+        delegateRef = new WeakReference<>(delegate);
+    }
+
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message
     public ID getGroup() {
-        //noinspection unchecked
-        return (ID) Envelope.parser.getID(get("group"));
+        if (group == null) {
+            MessageDelegate<ID> delegate = getDelegate();
+            assert delegate != null : "message delegate not set";
+            group = delegate.getID(get("group"));
+        }
+        return group;
     }
-    public void setGroup(ID identifier) {
-        if (identifier == null) {
+
+    public void setGroup(ID group) {
+        if (group == null) {
             remove("group");
         } else {
-            put("group", identifier);
+            put("group", group);
         }
-    }
-
-    //-------- Runtime --------
-
-    private static Map<Integer, Class> contentClasses = new HashMap<>();
-
-    public static void register(ContentType type, Class clazz) {
-        register(type.value, clazz);
-    }
-
-    public static void register(int type, Class clazz) {
-        if (clazz == null) {
-            contentClasses.remove(type);
-        } else if (clazz.equals(Content.class)) {
-            throw new IllegalArgumentException("should not add Content itself!");
-        } else {
-            assert Content.class.isAssignableFrom(clazz) : "error: " + clazz;
-            contentClasses.put(type, clazz);
-        }
-    }
-
-    public static Content getInstance(Object object) {
-        if (object == null) {
-            return null;
-        }
-        //noinspection unchecked
-        Map<String, Object> dictionary = (Map<String, Object>) object;
-        // create instance by subclass (with content type)
-        int type = (int) dictionary.get("type");
-        Class clazz = contentClasses.get(type);
-        //noinspection unchecked
-        if (clazz != null && !clazz.isAssignableFrom(object.getClass())) {
-            return (Content) createInstance(clazz, dictionary);
-        }
-        if (object instanceof Content) {
-            // return Content object directly
-            return (Content) object;
-        }
-        return new Content<>(dictionary);
+        this.group = group;
     }
 }

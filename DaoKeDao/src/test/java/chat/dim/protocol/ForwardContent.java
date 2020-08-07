@@ -32,8 +32,9 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
-import chat.dim.Content;
+import chat.dim.ID;
 import chat.dim.ReliableMessage;
+import chat.dim.crypto.SymmetricKey;
 
 /**
  *  Top-Secret message: {
@@ -43,9 +44,9 @@ import chat.dim.ReliableMessage;
  *      forward : {...}  // reliable (secure + certified) message
  *  }
  */
-public class ForwardContent<ID, KEY> extends Content<ID> {
+public class ForwardContent extends Content {
 
-    public final ReliableMessage<ID, KEY> forwardMessage;
+    public final ReliableMessage<ID, SymmetricKey> forwardMessage;
 
     public ForwardContent(Map<String, Object> dictionary) {
         super(dictionary);
@@ -53,7 +54,7 @@ public class ForwardContent<ID, KEY> extends Content<ID> {
         forwardMessage = ReliableMessage.getInstance(dictionary.get("forward"));
     }
 
-    public ForwardContent(ReliableMessage<ID, KEY> message) {
+    public ForwardContent(ReliableMessage<ID, SymmetricKey> message) {
         super(ContentType.FORWARD);
         forwardMessage = message;
         put("forward", message);
