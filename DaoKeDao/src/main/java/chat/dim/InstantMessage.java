@@ -49,7 +49,7 @@ import java.util.Map;
  *      content  : {...}
  *  }
  */
-public final class InstantMessage<ID> extends Message<ID> {
+public class InstantMessage<ID, KEY, M, P> extends Message<ID> {
 
     public final Content<ID> content;
 
@@ -78,15 +78,14 @@ public final class InstantMessage<ID> extends Message<ID> {
     }
 
     @Override
-    public InstantMessageDelegate<ID> getDelegate() {
-        return (InstantMessageDelegate<ID>) super.getDelegate();
+    public InstantMessageDelegate<ID, KEY, M, P> getDelegate() {
+        return (InstantMessageDelegate<ID, KEY, M, P>) super.getDelegate();
     }
 
     public static InstantMessage getInstance(Object object) {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map : "message info must be a map";
         if (object instanceof InstantMessage) {
             // return InstantMessage object directly
             return (InstantMessage) object;
@@ -114,7 +113,7 @@ public final class InstantMessage<ID> extends Message<ID> {
      * @param password - symmetric key
      * @return SecureMessage object
      */
-    public SecureMessage encrypt(Map<String, Object> password) {
+    public SecureMessage<ID, KEY, M, P> encrypt(KEY password) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
 
@@ -122,13 +121,13 @@ public final class InstantMessage<ID> extends Message<ID> {
         Map<String, Object> map = prepareData(password);
 
         // 2. encrypt symmetric key(password) to 'message.key'
-        InstantMessageDelegate<ID> delegate = getDelegate();
+        InstantMessageDelegate<ID, KEY, M, P> delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
             // A) broadcast message has no key
             // B) reused key
-            return new SecureMessage(map);
+            return new SecureMessage<>(map);
         }
 
         // 2.2. encrypt symmetric key data
@@ -145,7 +144,7 @@ public final class InstantMessage<ID> extends Message<ID> {
         map.put("key", base64);
 
         // 3. pack message
-        return new SecureMessage(map);
+        return new SecureMessage<>(map);
     }
 
     /**
@@ -155,7 +154,7 @@ public final class InstantMessage<ID> extends Message<ID> {
      * @param members - group members
      * @return SecureMessage object
      */
-    public SecureMessage encrypt(Map<String, Object> password, List<ID> members) {
+    public SecureMessage<ID, KEY, M, P> encrypt(KEY password, List<ID> members) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
 
@@ -163,13 +162,13 @@ public final class InstantMessage<ID> extends Message<ID> {
         Map<String, Object> map = prepareData(password);
 
         // 2. serialize symmetric key
-        InstantMessageDelegate<ID> delegate = getDelegate();
+        InstantMessageDelegate<ID, KEY, M, P> delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
             // A) broadcast message has no key
             // B) reused key
-            return new SecureMessage(map);
+            return new SecureMessage<>(map);
         }
 
         // encrypt key data to 'message.keys'
@@ -197,11 +196,11 @@ public final class InstantMessage<ID> extends Message<ID> {
         }
 
         // 3. pack message
-        return new SecureMessage(map);
+        return new SecureMessage<>(map);
     }
 
-    private Map<String, Object> prepareData(Map<String, Object> password) {
-        InstantMessageDelegate<ID> delegate = getDelegate();
+    private Map<String, Object> prepareData(KEY password) {
+        InstantMessageDelegate<ID, KEY, M, P> delegate = getDelegate();
         // 1. serialize message content
         byte[] data = delegate.serializeContent(content, password, this);
         assert data != null : "failed to serialize content: " + content;

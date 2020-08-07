@@ -10,7 +10,6 @@ import java.util.Map;
 import chat.dim.Content;
 import chat.dim.Envelope;
 import chat.dim.InstantMessage;
-import chat.dim.Message;
 import chat.dim.ReliableMessage;
 import chat.dim.SecureMessage;
 import chat.dim.format.Base64;
@@ -26,7 +25,7 @@ public class MessageTest {
     private String key = "h1964ruibFD4o9B2Oye//Ycer9xjC7T8oNSNriEP1k2AQJ6c2hvL7Lqvmb/NPqRJ9wdqC2RRUeIIYKamb6IwN6+k6iyy+qJ18Yawtz/kBLn0aHgIt/Ujo9W6jo9KpC6f/rWtnHyMW/wdfSlufvGhE1WZxApmNVPCoSvzoLeRidw=";
     private String signature = "glwiQAP9HQ08iKK6DZM3aL1qnYUNYFl0nyZLuw77YLTXBVc3/mw/TnlDpEBtiTS9kvk85ucGoe2uMAg6CMfQ+256TPSmYitCmwZ+rTM2EYnjA1bS04Po3PPtnmlpIVKgKNNEseUe8uIRMqnhPsIgUu3SCM/FxnMD/hhfCKu9hu8=";
 
-    private Transceiver<String> transceiver = new Transceiver<>();
+    private Transceiver<String, Map, Map, Map> transceiver = new Transceiver<>();
 
     @Test
     public void testEnvelope() {
@@ -51,7 +50,6 @@ public class MessageTest {
         dictionary.put("text", "Hello world!");
         dictionary.put("group", "anyone@anywhere");
 
-        //noinspection unchecked
         Content<String> content = Content.getInstance(dictionary);
 
         Log.info("content: "+ content);
@@ -73,7 +71,7 @@ public class MessageTest {
 
         TextContent<String> content = new TextContent<>("Hello world!");
 
-        InstantMessage<String> iMsg;
+        InstantMessage<String, Map, Map, Map> iMsg;
         iMsg = new InstantMessage<>(content, null, null);
         Log.info("instant message: " + iMsg);
         iMsg = new InstantMessage<>(content, sender, receiver, null);
@@ -110,13 +108,12 @@ public class MessageTest {
         dictionary.put("data", data);
         dictionary.put("key", key);
 
-        //noinspection unchecked
-        SecureMessage<String> sMsg = SecureMessage.getInstance(dictionary);
+        SecureMessage<String, Map, Map, Map> sMsg = SecureMessage.getInstance(dictionary);
         Log.info("secure message: " + sMsg);
 
         sMsg.setDelegate(transceiver);
-        byte[] key = sMsg.getKey();
-        Map keys = sMsg.getKeys();
+//        byte[] key = sMsg.getKey();
+//        Map keys = sMsg.getKeys();
 
         sMsg.envelope.setGroup("group12345");
         Log.info("group: " + sMsg.envelope.getGroup());
@@ -125,14 +122,13 @@ public class MessageTest {
 //        Log.info("instant msg: " + iMsg);
 
         dictionary.put("signature", signature);
-        //noinspection unchecked
-        ReliableMessage<String> rMsg = ReliableMessage.getInstance(dictionary);
+        ReliableMessage<String, Map, Map, Map> rMsg = ReliableMessage.getInstance(dictionary);
         Log.info("reliable message: " + rMsg);
 
         rMsg.setDelegate(transceiver);
-        byte[] signature = rMsg.getSignature();
+//        byte[] signature = rMsg.getSignature();
 
-        Map<String, Object> meta = rMsg.getMeta();
+        Map meta = rMsg.getMeta();
         Log.info("meta: " + meta);
 
         SecureMessage sMsg2 = rMsg.verify();
@@ -152,12 +148,11 @@ public class MessageTest {
         dictionary.put("key", key);
         dictionary.put("signature", signature);
 
-        //noinspection unchecked
-        ReliableMessage<String> msg = (ReliableMessage<String>) Message.getInstance(dictionary);
+        ReliableMessage<String, Map, Map, Map> msg = ReliableMessage.getInstance(dictionary);
         Log.info("reliable message: " + msg);
 
         List<String> members = new ArrayList<>();
-        List<SecureMessage> messages = msg.split(members);
+        List<SecureMessage<String, Map, Map, Map>> messages = msg.split(members);
         Log.info("split: " + messages);
 
         SecureMessage sMsg = msg.trim(receiver);

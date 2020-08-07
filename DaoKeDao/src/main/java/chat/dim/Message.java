@@ -71,7 +71,7 @@ import chat.dim.type.Dictionary;
  *      ...
  *  }
  */
-public class Message<ID> extends Dictionary {
+public class Message<ID> extends Dictionary<String, Object> {
 
     public final Envelope<ID> envelope;
 
@@ -102,7 +102,6 @@ public class Message<ID> extends Dictionary {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map : "message info must be a map";
         //noinspection unchecked
         Map<String, Object> dictionary = (Map<String, Object>) object;
         if (dictionary.containsKey("content")) {

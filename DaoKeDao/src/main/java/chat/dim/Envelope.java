@@ -48,7 +48,7 @@ import chat.dim.type.Dictionary;
  *      time     : 123
  *  }
  */
-public final class Envelope<ID> extends Dictionary {
+public final class Envelope<ID> extends Dictionary<String, Object> {
 
     public final ID sender;
     public final ID receiver;
@@ -98,7 +98,6 @@ public final class Envelope<ID> extends Dictionary {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map : "message envelope info must be a map";
         if (object instanceof Envelope) {
             // return Envelope object directly
             return (Envelope) object;
@@ -165,8 +164,10 @@ public final class Envelope<ID> extends Dictionary {
     }
 
     public static Parser parser = new Parser() {
+
         @Override
         public Object getID(Object identifier) {
+            // TODO: convert String to ID
             return identifier;
         }
     };

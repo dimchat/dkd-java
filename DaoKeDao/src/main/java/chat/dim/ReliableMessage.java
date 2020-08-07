@@ -54,17 +54,17 @@ import java.util.Map;
  *      signature: "..."   // base64_encode()
  *  }
  */
-public final class ReliableMessage<ID> extends SecureMessage<ID> {
+public class ReliableMessage<ID, KEY, M, P> extends SecureMessage<ID, KEY, M, P> {
 
     private byte[] signature = null;
 
-    ReliableMessage(Map<String, Object> dictionary) {
+    protected ReliableMessage(Map<String, Object> dictionary) {
         super(dictionary);
     }
 
     @Override
-    public ReliableMessageDelegate<ID> getDelegate() {
-        return (ReliableMessageDelegate<ID>) super.getDelegate();
+    public ReliableMessageDelegate<ID, KEY, M, P> getDelegate() {
+        return (ReliableMessageDelegate<ID, KEY, M, P>) super.getDelegate();
     }
 
     public byte[] getSignature() {
@@ -80,7 +80,6 @@ public final class ReliableMessage<ID> extends SecureMessage<ID> {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map : "message info must be a map";
         if (object instanceof ReliableMessage) {
             // return ReliableMessage object directly
             return (ReliableMessage) object;
@@ -96,13 +95,29 @@ public final class ReliableMessage<ID> extends SecureMessage<ID> {
      *
      * @param meta - Meta object or dictionary
      */
-    public void setMeta(Map<String, Object> meta) {
+    public void setMeta(M meta) {
         put("meta", meta);
     }
 
-    public Map<String, Object> getMeta() {
+    public M getMeta() {
         //noinspection unchecked
-        return (Map<String, Object>) get("meta");
+        return (M) parser.getMeta(get("meta"));
+    }
+
+    /**
+     *  Sender's Profile
+     *  ~~~~~~~~~~~~~~~~
+     *  Extends for the first message package of 'Handshake' protocol.
+     *
+     * @param profile - Profile object or dictionary
+     */
+    public void setProfile(P profile) {
+        put("profile", profile);
+    }
+
+    public P getProfile() {
+        //noinspection unchecked
+        return (P) parser.getProfile(get("profile"));
     }
 
     /*
@@ -124,7 +139,7 @@ public final class ReliableMessage<ID> extends SecureMessage<ID> {
      *
      * @return SecureMessage object
      */
-    public SecureMessage verify() {
+    public SecureMessage<ID, KEY, M, P> verify() {
         byte[] data = getData();
         if (data == null) {
             throw new NullPointerException("failed to decode content data: " + this);
@@ -144,4 +159,30 @@ public final class ReliableMessage<ID> extends SecureMessage<ID> {
             return null;
         }
     }
+
+    //
+    //  Extra info (Meta, Profile) parser
+    //
+
+    public interface Parser<M, P> {
+
+        M getMeta(Object meta);
+
+        P getProfile(Object profile);
+    }
+
+    public static Parser parser = new Parser() {
+
+        @Override
+        public Object getMeta(Object meta) {
+            // TODO: convert Map to Meta
+            return meta;
+        }
+
+        @Override
+        public Object getProfile(Object profile) {
+            // TODO: convert Map to Profile
+            return profile;
+        }
+    };
 }

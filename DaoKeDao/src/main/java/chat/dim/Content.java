@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.Random;
 
 import chat.dim.protocol.ContentType;
-import chat.dim.protocol.ForwardContent;
 import chat.dim.type.Dictionary;
 
 /**
@@ -55,7 +54,7 @@ import chat.dim.type.Dictionary;
  *      //...
  *  }
  */
-public class Content<ID> extends Dictionary {
+public class Content<ID> extends Dictionary<String, Object> {
 
     // message type: text, image, ...
     public final int type;
@@ -129,26 +128,19 @@ public class Content<ID> extends Dictionary {
         if (object == null) {
             return null;
         }
-        assert object instanceof Map : "message content info must be a map";
-        if (object instanceof Content) {
-            // return Content object directly
-            return (Content) object;
-        }
         //noinspection unchecked
         Map<String, Object> dictionary = (Map<String, Object>) object;
         // create instance by subclass (with content type)
         int type = (int) dictionary.get("type");
         Class clazz = contentClasses.get(type);
-        if (clazz != null) {
+        //noinspection unchecked
+        if (clazz != null && !clazz.isAssignableFrom(object.getClass())) {
             return (Content) createInstance(clazz, dictionary);
         }
-        // custom message content
+        if (object instanceof Content) {
+            // return Content object directly
+            return (Content) object;
+        }
         return new Content<>(dictionary);
-    }
-
-    static {
-        // Forward content for Top-Secret message
-        Content.register(ContentType.FORWARD, ForwardContent.class);
-        // ...
     }
 }
