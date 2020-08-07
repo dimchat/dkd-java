@@ -54,7 +54,7 @@ import java.util.Map;
  *      signature: "..."   // base64_encode()
  *  }
  */
-public class ReliableMessage<ID, KEY, M, P> extends SecureMessage<ID, KEY, M, P> {
+public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
 
     private byte[] signature = null;
 
@@ -63,8 +63,8 @@ public class ReliableMessage<ID, KEY, M, P> extends SecureMessage<ID, KEY, M, P>
     }
 
     @Override
-    public ReliableMessageDelegate<ID, KEY, M, P> getDelegate() {
-        return (ReliableMessageDelegate<ID, KEY, M, P>) super.getDelegate();
+    public ReliableMessageDelegate<ID, KEY> getDelegate() {
+        return (ReliableMessageDelegate<ID, KEY>) super.getDelegate();
     }
 
     public byte[] getSignature() {
@@ -95,13 +95,12 @@ public class ReliableMessage<ID, KEY, M, P> extends SecureMessage<ID, KEY, M, P>
      *
      * @param meta - Meta object or dictionary
      */
-    public void setMeta(M meta) {
+    public void setMeta(Object meta) {
         put("meta", meta);
     }
 
-    public M getMeta() {
-        //noinspection unchecked
-        return (M) parser.getMeta(get("meta"));
+    public Object getMeta() {
+        return get("meta");
     }
 
     /**
@@ -111,13 +110,12 @@ public class ReliableMessage<ID, KEY, M, P> extends SecureMessage<ID, KEY, M, P>
      *
      * @param profile - Profile object or dictionary
      */
-    public void setProfile(P profile) {
+    public void setProfile(Object profile) {
         put("profile", profile);
     }
 
-    public P getProfile() {
-        //noinspection unchecked
-        return (P) parser.getProfile(get("profile"));
+    public Object getProfile() {
+        return get("profile");
     }
 
     /*
@@ -139,7 +137,7 @@ public class ReliableMessage<ID, KEY, M, P> extends SecureMessage<ID, KEY, M, P>
      *
      * @return SecureMessage object
      */
-    public SecureMessage<ID, KEY, M, P> verify() {
+    public SecureMessage<ID, KEY> verify() {
         byte[] data = getData();
         if (data == null) {
             throw new NullPointerException("failed to decode content data: " + this);
@@ -159,30 +157,4 @@ public class ReliableMessage<ID, KEY, M, P> extends SecureMessage<ID, KEY, M, P>
             return null;
         }
     }
-
-    //
-    //  Extra info (Meta, Profile) parser
-    //
-
-    public interface Parser<M, P> {
-
-        M getMeta(Object meta);
-
-        P getProfile(Object profile);
-    }
-
-    public static Parser parser = new Parser() {
-
-        @Override
-        public Object getMeta(Object meta) {
-            // TODO: convert Map to Meta
-            return meta;
-        }
-
-        @Override
-        public Object getProfile(Object profile) {
-            // TODO: convert Map to Profile
-            return profile;
-        }
-    };
 }

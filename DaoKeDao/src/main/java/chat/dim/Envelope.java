@@ -103,7 +103,7 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
             return (Envelope) object;
         }
         //noinspection unchecked
-        return new Envelope((Map<String, Object>) object);
+        return new Envelope<>((Map<String, Object>) object);
     }
 
     /*

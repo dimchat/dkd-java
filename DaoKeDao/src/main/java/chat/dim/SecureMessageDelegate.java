@@ -30,7 +30,7 @@
  */
 package chat.dim;
 
-public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID> {
+public interface SecureMessageDelegate<ID, KEY> extends MessageDelegate<ID> {
 
     //
     //  Decrypt Key
@@ -43,7 +43,7 @@ public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID
      * @param sMsg - secure message object
      * @return encrypted symmetric key data
      */
-    byte[] decodeKey(Object key, SecureMessage<ID, KEY, M, P> sMsg);
+    byte[] decodeKey(Object key, SecureMessage<ID, KEY> sMsg);
 
     /**
      *  2. Decrypt 'message.key' with receiver's private key
@@ -54,7 +54,7 @@ public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID
      *  @param sMsg - secure message object
      *  @return serialized symmetric key
      */
-    byte[] decryptKey(byte[] key, ID sender, ID receiver, SecureMessage<ID, KEY, M, P> sMsg);
+    byte[] decryptKey(byte[] key, ID sender, ID receiver, SecureMessage<ID, KEY> sMsg);
 
     /**
      *  3. Deserialize message key from data (JsON / ProtoBuf / ...)
@@ -65,7 +65,7 @@ public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID
      * @param sMsg - secure message object
      * @return symmetric key
      */
-    KEY deserializeKey(byte[] key, ID sender, ID receiver, SecureMessage<ID, KEY, M, P> sMsg);
+    KEY deserializeKey(byte[] key, ID sender, ID receiver, SecureMessage<ID, KEY> sMsg);
 
     //
     //  Decrypt Content
@@ -78,7 +78,7 @@ public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID
      * @param sMsg - secure message object
      * @return encrypted content data
      */
-    byte[] decodeData(Object data, SecureMessage<ID, KEY, M, P> sMsg);
+    byte[] decodeData(Object data, SecureMessage<ID, KEY> sMsg);
 
     /**
      *  5. Decrypt 'message.data' with symmetric key
@@ -88,7 +88,7 @@ public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID
      *  @param sMsg - secure message object
      *  @return serialized message content
      */
-    byte[] decryptContent(byte[] data, KEY password, SecureMessage<ID, KEY, M, P> sMsg);
+    byte[] decryptContent(byte[] data, KEY password, SecureMessage<ID, KEY> sMsg);
 
     /**
      *  6. Deserialize message content from data (JsON / ProtoBuf / ...)
@@ -98,7 +98,7 @@ public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID
      * @param sMsg - secure message object
      * @return message content
      */
-    Content deserializeContent(byte[] data, KEY password, SecureMessage<ID, KEY, M, P> sMsg);
+    Content deserializeContent(byte[] data, KEY password, SecureMessage<ID, KEY> sMsg);
 
     //
     //  Signature
@@ -112,7 +112,7 @@ public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID
      *  @param sMsg - secure message object
      *  @return signature of encrypted message data
      */
-    byte[] signData(byte[] data, ID sender, SecureMessage<ID, KEY, M, P> sMsg);
+    byte[] signData(byte[] data, ID sender, SecureMessage<ID, KEY> sMsg);
 
     /**
      *  2. Encode 'message.signature' to String (Base64)
@@ -121,5 +121,5 @@ public interface SecureMessageDelegate<ID, KEY, M, P> extends MessageDelegate<ID
      * @param sMsg - secure message object
      * @return String object
      */
-    Object encodeSignature(byte[] signature, SecureMessage<ID, KEY, M, P> sMsg);
+    Object encodeSignature(byte[] signature, SecureMessage<ID, KEY> sMsg);
 }

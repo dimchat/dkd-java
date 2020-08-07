@@ -49,7 +49,7 @@ import java.util.Map;
  *      content  : {...}
  *  }
  */
-public class InstantMessage<ID, KEY, M, P> extends Message<ID> {
+public class InstantMessage<ID, KEY> extends Message<ID> {
 
     public final Content<ID> content;
 
@@ -78,8 +78,8 @@ public class InstantMessage<ID, KEY, M, P> extends Message<ID> {
     }
 
     @Override
-    public InstantMessageDelegate<ID, KEY, M, P> getDelegate() {
-        return (InstantMessageDelegate<ID, KEY, M, P>) super.getDelegate();
+    public InstantMessageDelegate<ID, KEY> getDelegate() {
+        return (InstantMessageDelegate<ID, KEY>) super.getDelegate();
     }
 
     public static InstantMessage getInstance(Object object) {
@@ -113,7 +113,7 @@ public class InstantMessage<ID, KEY, M, P> extends Message<ID> {
      * @param password - symmetric key
      * @return SecureMessage object
      */
-    public SecureMessage<ID, KEY, M, P> encrypt(KEY password) {
+    public SecureMessage<ID, KEY> encrypt(KEY password) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
 
@@ -121,7 +121,7 @@ public class InstantMessage<ID, KEY, M, P> extends Message<ID> {
         Map<String, Object> map = prepareData(password);
 
         // 2. encrypt symmetric key(password) to 'message.key'
-        InstantMessageDelegate<ID, KEY, M, P> delegate = getDelegate();
+        InstantMessageDelegate<ID, KEY> delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
@@ -154,7 +154,7 @@ public class InstantMessage<ID, KEY, M, P> extends Message<ID> {
      * @param members - group members
      * @return SecureMessage object
      */
-    public SecureMessage<ID, KEY, M, P> encrypt(KEY password, List<ID> members) {
+    public SecureMessage<ID, KEY> encrypt(KEY password, List<ID> members) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
 
@@ -162,7 +162,7 @@ public class InstantMessage<ID, KEY, M, P> extends Message<ID> {
         Map<String, Object> map = prepareData(password);
 
         // 2. serialize symmetric key
-        InstantMessageDelegate<ID, KEY, M, P> delegate = getDelegate();
+        InstantMessageDelegate<ID, KEY> delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
@@ -200,7 +200,7 @@ public class InstantMessage<ID, KEY, M, P> extends Message<ID> {
     }
 
     private Map<String, Object> prepareData(KEY password) {
-        InstantMessageDelegate<ID, KEY, M, P> delegate = getDelegate();
+        InstantMessageDelegate<ID, KEY> delegate = getDelegate();
         // 1. serialize message content
         byte[] data = delegate.serializeContent(content, password, this);
         assert data != null : "failed to serialize content: " + content;
