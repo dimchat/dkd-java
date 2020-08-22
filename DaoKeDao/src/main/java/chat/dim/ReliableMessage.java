@@ -76,16 +76,15 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
         return signature;
     }
 
-    public static ReliableMessage getInstance(Object object) {
-        if (object == null) {
+    public static ReliableMessage getInstance(Map<String, Object> dictionary) {
+        if (dictionary == null) {
             return null;
         }
-        if (object instanceof ReliableMessage) {
+        if (dictionary instanceof ReliableMessage) {
             // return ReliableMessage object directly
-            return (ReliableMessage) object;
+            return (ReliableMessage) dictionary;
         }
-        //noinspection unchecked
-        return new ReliableMessage<>((Map<String, Object>) object);
+        return new ReliableMessage<>(dictionary);
     }
 
     /**
@@ -95,12 +94,13 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
      *
      * @param meta - Meta object or dictionary
      */
-    public void setMeta(Object meta) {
+    public void setMeta(Map<String, Object> meta) {
         put("meta", meta);
     }
 
-    public Object getMeta() {
-        return get("meta");
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getMeta() {
+        return (Map<String, Object>) get("meta");
     }
 
     /**
@@ -110,12 +110,13 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
      *
      * @param profile - Profile object or dictionary
      */
-    public void setProfile(Object profile) {
+    public void setProfile(Map<String, Object> profile) {
         put("profile", profile);
     }
 
-    public Object getProfile() {
-        return get("profile");
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getProfile() {
+        return (Map<String, Object>) get("profile");
     }
 
     /*

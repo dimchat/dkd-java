@@ -1,7 +1,4 @@
 
-import chat.dim.*;
-import chat.dim.crypto.SymmetricKey;
-import chat.dim.protocol.Content;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,8 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import chat.dim.ID;
+import chat.dim.InstantMessage;
+import chat.dim.ReliableMessage;
+import chat.dim.SecureMessage;
 import chat.dim.format.Base64;
-
+import chat.dim.crypto.SymmetricKey;
+import chat.dim.protocol.Content;
 import chat.dim.protocol.TextContent;
 
 public class MessageTest {
@@ -93,7 +95,7 @@ public class MessageTest {
         SecureMessage sMsg2 = rMsg.verify();
         Log.info("secure message: " + sMsg2);
 
-        rMsg.setMeta(meta);
+        rMsg.setMeta((Map<String, Object>) meta);
     }
 
     @Test

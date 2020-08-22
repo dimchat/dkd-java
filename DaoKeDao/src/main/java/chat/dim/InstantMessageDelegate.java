@@ -30,15 +30,17 @@
  */
 package chat.dim;
 
+import java.util.Map;
+
 public interface InstantMessageDelegate<ID, KEY> extends MessageDelegate<ID> {
 
     /**
      *  Convert Map object to Content object
      *
-     * @param content - Map object
+     * @param content - message content info
      * @return Content object
      */
-    Content<ID> getContent(Object content);
+    Content<ID> getContent(Map<String, Object> content);
 
     //
     //  Encrypt Content

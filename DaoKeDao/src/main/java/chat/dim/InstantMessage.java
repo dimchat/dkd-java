@@ -89,23 +89,26 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         getContent().setDelegate(delegate);
     }
 
+    @SuppressWarnings("unchecked")
     public Content<ID> getContent() {
         if (content == null) {
-            content = getDelegate().getContent(get("content"));
+            Object info = get("content");
+            if (info instanceof Map) {
+                content = getDelegate().getContent((Map<String, Object>) info);
+            }
         }
         return content;
     }
 
-    public static InstantMessage getInstance(Object object) {
-        if (object == null) {
+    public static InstantMessage getInstance(Map<String, Object> dictionary) {
+        if (dictionary == null) {
             return null;
         }
-        if (object instanceof InstantMessage) {
+        if (dictionary instanceof InstantMessage) {
             // return InstantMessage object directly
-            return (InstantMessage) object;
+            return (InstantMessage) dictionary;
         }
-        //noinspection unchecked
-        return new InstantMessage<>((Map<String, Object>) object);
+        return new InstantMessage<>(dictionary);
     }
 
     /*

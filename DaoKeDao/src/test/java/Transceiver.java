@@ -9,6 +9,8 @@ import chat.dim.SecureMessage;
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.format.Base64;
 
+import java.util.Map;
+
 public final class Transceiver implements InstantMessageDelegate<ID, SymmetricKey>, ReliableMessageDelegate<ID, SymmetricKey> {
 
     @Override
@@ -17,7 +19,7 @@ public final class Transceiver implements InstantMessageDelegate<ID, SymmetricKe
     }
 
     @Override
-    public Content<ID> getContent(Object content) {
+    public Content<ID> getContent(Map<String, Object> content) {
         return chat.dim.protocol.Content.getInstance(content);
     }
 

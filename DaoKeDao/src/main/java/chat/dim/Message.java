@@ -92,12 +92,10 @@ public class Message<ID> extends Dictionary<String, Object> {
         envelope.setDelegate(delegate);
     }
 
-    public static Message getInstance(Object object) {
-        if (object == null) {
+    public static Message getInstance(Map<String, Object> dictionary) {
+        if (dictionary == null) {
             return null;
         }
-        //noinspection unchecked
-        Map<String, Object> dictionary = (Map<String, Object>) object;
         if (dictionary.containsKey("content")) {
             // this should be an instant message
             return InstantMessage.getInstance(dictionary);
@@ -110,10 +108,10 @@ public class Message<ID> extends Dictionary<String, Object> {
             // this should be a secure message
             return SecureMessage.getInstance(dictionary);
         }
-        if (object instanceof Message) {
+        if (dictionary instanceof Message) {
             // return Message object directly
-            return (Message) object;
+            return (Message) dictionary;
         }
-        throw new IllegalArgumentException("unknown message: " + object);
+        throw new IllegalArgumentException("unknown message: " + dictionary);
     }
 }

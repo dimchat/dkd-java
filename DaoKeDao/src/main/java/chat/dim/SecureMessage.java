@@ -95,30 +95,28 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         return key;
     }
 
+    @SuppressWarnings("unchecked")
     public Map<Object, Object> getKeys() {
         if (keys == null) {
             Object map = get("keys");
             if (map instanceof Map) {
-                //noinspection unchecked
                 keys = (Map<Object, Object>) get("keys");
             }
         }
         return keys;
     }
 
-    public static SecureMessage getInstance(Object object) {
-        if (object == null) {
+    public static SecureMessage getInstance(Map<String, Object> dictionary) {
+        if (dictionary == null) {
             return null;
         }
-        //noinspection unchecked
-        Map<String, Object> dictionary = (Map<String, Object>) object;
         if (dictionary.containsKey("signature")) {
             // this should be a reliable message
             return ReliableMessage.getInstance(dictionary);
         }
-        if (object instanceof SecureMessage) {
+        if (dictionary instanceof SecureMessage) {
             // return SecureMessage object directly
-            return (SecureMessage) object;
+            return (SecureMessage) dictionary;
         }
         return new SecureMessage<>(dictionary);
     }

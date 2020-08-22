@@ -96,14 +96,14 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         put("time", timestamp);
     }
 
-    MessageDelegate<ID> getDelegate() {
+    public MessageDelegate<ID> getDelegate() {
         if (delegateRef == null) {
             return null;
         }
         return delegateRef.get();
     }
 
-    void setDelegate(MessageDelegate<ID> delegate) {
+    public void setDelegate(MessageDelegate<ID> delegate) {
         delegateRef = new WeakReference<>(delegate);
     }
 
@@ -137,16 +137,15 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         return time;
     }
 
-    public static Envelope getInstance(Object object) {
-        if (object == null) {
+    public static Envelope getInstance(Map<String, Object> dictionary) {
+        if (dictionary == null) {
             return null;
         }
-        if (object instanceof Envelope) {
+        if (dictionary instanceof Envelope) {
             // return Envelope object directly
-            return (Envelope) object;
+            return (Envelope) dictionary;
         }
-        //noinspection unchecked
-        return new Envelope<>((Map<String, Object>) object);
+        return new Envelope<>(dictionary);
     }
 
     /*
