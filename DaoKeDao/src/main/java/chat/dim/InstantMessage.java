@@ -55,7 +55,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
 
     InstantMessage(Map<String, Object> dictionary) {
         super(dictionary);
-        // lazy
+        // lazy load
         content = null;
     }
 
@@ -87,6 +87,33 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         super.setDelegate(delegate);
         // set delegate for message content
         getContent().setDelegate(delegate);
+    }
+
+    @Override
+    public Date getTime() {
+        Date time = getContent().getTime();
+        if (time != null) {
+            return time;
+        }
+        return super.getTime();
+    }
+
+    @Override
+    public ID getGroup() {
+        ID group = getContent().getGroup();
+        if (group != null) {
+            return group;
+        }
+        return super.getGroup();
+    }
+
+    @Override
+    public int getType() {
+        int type = getContent().getType();
+        if (type != 0) {
+            return type;
+        }
+        return super.getType();
     }
 
     @SuppressWarnings("unchecked")
@@ -148,7 +175,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         }
 
         // 2.2. encrypt symmetric key data
-        key = delegate.encryptKey(key, envelope.getReceiver(), this);
+        key = delegate.encryptKey(key, getReceiver(), this);
         if (key == null) {
             // public key for encryption not found
             // TODO: suspend this message for waiting receiver's meta

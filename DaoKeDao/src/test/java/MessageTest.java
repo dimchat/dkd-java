@@ -37,12 +37,12 @@ public class MessageTest {
         Log.info("instant message: " + iMsg);
         iMsg = new InstantMessage<>(content, sender, receiver, null);
         Log.info("instant message: " + iMsg);
-        iMsg = new InstantMessage<>(content, iMsg.envelope);
+        iMsg = new InstantMessage<>(content, iMsg.getEnvelope());
         Log.info("instant message: " + iMsg);
 
         iMsg = new InstantMessage<>(content, sender, receiver, 0);
         Log.info("instant message: " + iMsg);
-        Log.info("envelope: " + iMsg.envelope);
+        Log.info("envelope: " + iMsg.getEnvelope());
         Log.info("content: " + iMsg.getContent());
 
         InstantMessage message = InstantMessage.getInstance(iMsg);
@@ -76,8 +76,8 @@ public class MessageTest {
 //        byte[] key = sMsg.getKey();
 //        Map keys = sMsg.getKeys();
 
-        sMsg.envelope.setGroup(ID.getInstance("everyone@everywhere"));
-        Log.info("group: " + sMsg.envelope.getGroup());
+        sMsg.getEnvelope().setGroup(ID.getInstance("everyone@everywhere"));
+        Log.info("group: " + sMsg.getGroup());
 
 //        InstantMessage iMsg = sMsg.decrypt();
 //        Log.info("instant msg: " + iMsg);

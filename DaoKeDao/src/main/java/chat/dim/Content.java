@@ -31,6 +31,7 @@
 package chat.dim;
 
 import java.lang.ref.WeakReference;
+import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
@@ -57,20 +58,24 @@ import chat.dim.type.Dictionary;
 public class Content<ID> extends Dictionary<String, Object> {
 
     // message type: text, image, ...
-    public final int type;
+    private int type;
 
     // serial number: random number to identify message content
-    public final long serialNumber;
+    private long sn;
 
-    private ID group;
+    // message time
+    private Date time;
+
+    private ID group = null;
 
     private WeakReference<MessageDelegate<ID>> delegateRef = null;
 
     protected Content(Map<String, Object> dictionary) {
         super(dictionary);
-        type         = (int) dictionary.get("type");
-        serialNumber = ((Number) dictionary.get("sn")).longValue();
-        group        = null;
+        // lazy load
+        type = 0;
+        sn = 0;
+        time = null;
     }
 
     protected Content(ContentType msgType) {
@@ -78,11 +83,12 @@ public class Content<ID> extends Dictionary<String, Object> {
     }
     protected Content(int msgType) {
         super();
-        type         = msgType;
-        serialNumber = randomPositiveInteger();
-        group        = null;
+        type = msgType;
+        sn = randomPositiveInteger();
+        time = new Date();
         put("type", type);
-        put("sn", serialNumber);
+        put("sn", sn);
+        put("tine", time.getTime() / 1000);
     }
 
     private static long randomPositiveInteger() {
@@ -106,6 +112,30 @@ public class Content<ID> extends Dictionary<String, Object> {
 
     public void setDelegate(MessageDelegate<ID> delegate) {
         delegateRef = new WeakReference<>(delegate);
+    }
+
+    public int getType() {
+        if (type == 0) {
+            type = ((Number) dictionary.get("type")).intValue();
+        }
+        return type;
+    }
+
+    public long getSerialNumber() {
+        if (sn == 0) {
+            sn = ((Number) dictionary.get("sn")).longValue();
+        }
+        return sn;
+    }
+
+    public Date getTime() {
+        if (time == null) {
+            Object timestamp = dictionary.get("time");
+            if (timestamp != null) {
+                time = new Date(((Number) timestamp).longValue() * 1000);
+            }
+        }
+        return time;
     }
 
     // Group ID/string for group message

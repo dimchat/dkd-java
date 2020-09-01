@@ -30,6 +30,7 @@
  */
 package chat.dim;
 
+import java.util.Date;
 import java.util.Map;
 
 import chat.dim.type.Dictionary;
@@ -72,24 +73,54 @@ import chat.dim.type.Dictionary;
  */
 public class Message<ID> extends Dictionary<String, Object> {
 
-    public final Envelope<ID> envelope;
+    private Envelope<ID> envelope;
 
-    Message(Map<String, Object> dictionary) {
+    protected Message(Map<String, Object> dictionary) {
         super(dictionary);
-        envelope = new Envelope<>(dictionary);
+        // lazy load
+        envelope = null;
     }
 
-    Message(Envelope<ID> env) {
+    protected Message(Envelope<ID> env) {
         super(env.getDictionary());
         envelope = env;
     }
 
+    public Envelope<ID> getEnvelope() {
+        if (envelope == null) {
+            envelope = new Envelope<>(dictionary);
+        }
+        return envelope;
+    }
+
     public MessageDelegate<ID> getDelegate() {
-        return envelope.getDelegate();
+        return getEnvelope().getDelegate();
     }
 
     public void setDelegate(MessageDelegate<ID> delegate) {
-        envelope.setDelegate(delegate);
+        getEnvelope().setDelegate(delegate);
+    }
+
+    //--------
+
+    public ID getSender() {
+        return getEnvelope().getSender();
+    }
+
+    public ID getReceiver() {
+        return getEnvelope().getReceiver();
+    }
+
+    public Date getTime() {
+        return getEnvelope().getTime();
+    }
+
+    public ID getGroup() {
+        return getEnvelope().getGroup();
+    }
+
+    public int getType() {
+        return getEnvelope().getType();
     }
 
     public static Message getInstance(Map<String, Object> dictionary) {

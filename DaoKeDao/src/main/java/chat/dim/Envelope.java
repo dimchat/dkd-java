@@ -55,7 +55,7 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
     private ID receiver;
     private Date time;
 
-    private ID group;
+    private ID group = null;
 
     private WeakReference<MessageDelegate<ID>> delegateRef = null;
 
@@ -65,7 +65,6 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         sender   = null;
         receiver = null;
         time     = null;
-        group    = null;
     }
 
     Envelope(ID from, ID to) {
@@ -77,7 +76,6 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         sender   = from;
         receiver = to;
         time     = when;
-        group    = null;
         put("sender", from);
         put("receiver", to);
         if (when != null) {
@@ -90,7 +88,6 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         sender   = from;
         receiver = to;
         time     = new Date(timestamp * 1000);
-        group    = null;
         put("sender", from);
         put("receiver", to);
         put("time", timestamp);
@@ -128,9 +125,7 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
     public Date getTime() {
         if (time == null) {
             Object timestamp = dictionary.get("time");
-            if (timestamp == null) {
-                time = null;
-            } else {
+            if (timestamp != null) {
                 time = new Date(((Number) timestamp).longValue() * 1000);
             }
         }

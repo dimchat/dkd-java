@@ -56,12 +56,16 @@ import java.util.Map;
  */
 public class SecureMessage<ID, KEY> extends Message<ID> {
 
-    private byte[] data = null;
-    private byte[] key = null;
-    private Map<Object, Object> keys = null;
+    private byte[] data;
+    private byte[] key;
+    private Map<Object, Object> keys;
 
     protected SecureMessage(Map<String, Object> dictionary) {
         super(dictionary);
+        // lazy load
+        data = null;
+        key = null;
+        keys = null;
     }
 
     @Override
@@ -85,7 +89,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
                 // check 'keys'
                 Map<Object, Object> keys = getKeys();
                 if (keys != null) {
-                    base64 = keys.get(envelope.getReceiver());
+                    base64 = keys.get(getReceiver());
                 }
             }
             if (base64 != null) {
@@ -140,13 +144,13 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
      * @return InstantMessage object
      */
     public InstantMessage<ID, KEY> decrypt() {
-        ID sender = envelope.getSender();
+        ID sender = getSender();
         ID receiver;
-        ID group = envelope.getGroup();
+        ID group = getGroup();
         if (group == null) {
             // personal message
             // not split group message
-            receiver = envelope.getReceiver();
+            receiver = getReceiver();
         } else {
             // group message
             receiver = group;
@@ -223,11 +227,12 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
      * @return ReliableMessage object
      */
     public ReliableMessage<ID, KEY> sign() {
+        SecureMessageDelegate<ID, KEY> delegate = getDelegate();
         // 1. sign with sender's private key
-        byte[] signature = getDelegate().signData(getData(), envelope.getSender(), this);
+        byte[] signature = delegate.signData(getData(), getSender(), this);
         assert signature != null : "failed to sign message: " + this;
         // 2. encode signature
-        Object base64 = getDelegate().encodeSignature(signature, this);
+        Object base64 = delegate.encodeSignature(signature, this);
         assert base64 != null : "failed to encode signature: " + Arrays.toString(signature);
         // 3. pack message
         Map<String, Object> map = new HashMap<>(dictionary);
@@ -264,7 +269,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         //    when the group message separated to multi-messages;
         //    if don't want the others know your membership,
         //    DON'T do this.
-        msg.put("group", envelope.getReceiver());
+        msg.put("group", getReceiver());
 
         List<SecureMessage<ID, KEY>> messages = new ArrayList<>(members.size());
         Object base64;
@@ -308,12 +313,12 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
             msg.remove("keys");
         }
         // check 'group'
-        ID group = envelope.getGroup();
+        ID group = getGroup();
         if (group == null) {
             // if 'group' not exists, the 'receiver' must be a group ID here, and
             // it will not be equal to the member of course,
             // so move 'receiver' to 'group'
-            msg.put("group", envelope.getReceiver());
+            msg.put("group", getReceiver());
         }
         msg.put("receiver", member);
         // repack
