@@ -100,20 +100,12 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
 
     @Override
     public ID getGroup() {
-        ID group = getContent().getGroup();
-        if (group != null) {
-            return group;
-        }
-        return super.getGroup();
+        return getContent().getGroup();
     }
 
     @Override
     public int getType() {
-        int type = getContent().getType();
-        if (type != 0) {
-            return type;
-        }
-        return super.getType();
+        return getContent().getType();
     }
 
     @SuppressWarnings("unchecked")
