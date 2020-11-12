@@ -28,13 +28,21 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim;
+package chat.dim.dkd;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import chat.dim.SecureMessageDelegate;
+import chat.dim.crypto.SymmetricKey;
+import chat.dim.protocol.Content;
+import chat.dim.protocol.ID;
+import chat.dim.protocol.InstantMessage;
+import chat.dim.protocol.ReliableMessage;
+import chat.dim.protocol.SecureMessage;
 
 /**
  *  Secure Message
@@ -54,23 +62,18 @@ import java.util.Map;
  *      }
  *  }
  */
-public class SecureMessage<ID, KEY> extends Message<ID> {
+public class EncryptedMessage extends BaseMessage implements SecureMessage {
 
     private byte[] data;
     private byte[] key;
     private Map<Object, Object> keys;
 
-    protected SecureMessage(Map<String, Object> dictionary) {
+    public EncryptedMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         data = null;
         key = null;
         keys = null;
-    }
-
-    @Override
-    public SecureMessageDelegate<ID, KEY> getDelegate() {
-        return (SecureMessageDelegate<ID, KEY>) super.getDelegate();
     }
 
     public byte[] getData() {
@@ -110,21 +113,6 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         return keys;
     }
 
-    public static SecureMessage getInstance(Map<String, Object> dictionary) {
-        if (dictionary == null) {
-            return null;
-        }
-        if (dictionary.containsKey("signature")) {
-            // this should be a reliable message
-            return ReliableMessage.getInstance(dictionary);
-        }
-        if (dictionary instanceof SecureMessage) {
-            // return SecureMessage object directly
-            return (SecureMessage) dictionary;
-        }
-        return new SecureMessage<>(dictionary);
-    }
-
     /*
      *  Decrypt the Secure Message to Instant Message
      *
@@ -143,7 +131,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
      *
      * @return InstantMessage object
      */
-    public InstantMessage<ID, KEY> decrypt() {
+    public InstantMessage decrypt() {
         ID sender = getSender();
         ID receiver;
         ID group = getGroup();
@@ -157,7 +145,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         }
 
         // 1. decrypt 'message.key' to symmetric key
-        SecureMessageDelegate<ID, KEY> delegate = getDelegate();
+        SecureMessageDelegate delegate = getDelegate();
         // 1.1. decode encrypted key data
         byte[] key = getKey();
         // 1.2. decrypt key data
@@ -169,7 +157,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         }
         // 1.3. deserialize key
         //      if key is empty, means it should be reused, get it from key cache
-        KEY password = delegate.deserializeKey(key, sender, receiver, this);
+        SymmetricKey password = delegate.deserializeKey(key, sender, receiver, this);
         if (password == null) {
             throw new NullPointerException("failed to get msg key: "
                     + sender + " -> " + receiver + ", " + Arrays.toString(key));
@@ -199,12 +187,12 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         //      (do it in 'core' module)
 
         // 3. pack message
-        Map<String, Object> map = new HashMap<>(dictionary);
+        Map<String, Object> map = new HashMap<>(getMap());
         map.remove("key");
         map.remove("keys");
         map.remove("data");
         map.put("content", content);
-        return new InstantMessage<>(map);
+        return new PlainMessage(map);
     }
 
     /*
@@ -226,8 +214,8 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
      *
      * @return ReliableMessage object
      */
-    public ReliableMessage<ID, KEY> sign() {
-        SecureMessageDelegate<ID, KEY> delegate = getDelegate();
+    public ReliableMessage sign() {
+        SecureMessageDelegate delegate = getDelegate();
         // 1. sign with sender's private key
         byte[] signature = delegate.signData(getData(), getSender(), this);
         assert signature != null : "failed to sign message: " + this;
@@ -235,9 +223,9 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         Object base64 = delegate.encodeSignature(signature, this);
         assert base64 != null : "failed to encode signature: " + Arrays.toString(signature);
         // 3. pack message
-        Map<String, Object> map = new HashMap<>(dictionary);
+        Map<String, Object> map = new HashMap<>(getMap());
         map.put("signature", base64);
-        return new ReliableMessage<>(map);
+        return new RelayMessage(map);
     }
 
     /*
@@ -252,8 +240,8 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
      *  @param members - group members
      *  @return secure/reliable message(s)
      */
-    public List<SecureMessage<ID, KEY>> split(List<ID> members) {
-        Map<String, Object> msg = new HashMap<>(dictionary);
+    public List<SecureMessage> split(List<ID> members) {
+        Map<String, Object> msg = new HashMap<>(getMap());
         // check 'keys'
         Map<Object, Object> keys = getKeys();
         if (keys == null) {
@@ -271,7 +259,7 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         //    DON'T do this.
         msg.put("group", getReceiver());
 
-        List<SecureMessage<ID, KEY>> messages = new ArrayList<>(members.size());
+        List<SecureMessage> messages = new ArrayList<>(members.size());
         Object base64;
         for (ID member : members) {
             // 2. change 'receiver' to each group member
@@ -285,9 +273,9 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
             }
             // 4. repack message
             if (reliable) {
-                messages.add(new ReliableMessage<>(new HashMap<>(msg)));
+                messages.add(new RelayMessage(new HashMap<>(msg)));
             } else {
-                messages.add(new SecureMessage<>(new HashMap<>(msg)));
+                messages.add(new EncryptedMessage(new HashMap<>(msg)));
             }
         }
 
@@ -300,8 +288,8 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
      * @param member - group member ID/string
      * @return SecureMessage
      */
-    public SecureMessage<ID, KEY> trim(ID member) {
-        Map<String, Object> msg = new HashMap<>(dictionary);
+    public SecureMessage trim(ID member) {
+        Map<String, Object> msg = new HashMap<>(getMap());
         // check 'keys'
         Map<Object, Object> keys = getKeys();
         if (keys != null) {
@@ -323,9 +311,9 @@ public class SecureMessage<ID, KEY> extends Message<ID> {
         msg.put("receiver", member);
         // repack
         if (msg.containsKey("signature")) {
-            return new ReliableMessage<>(msg);
+            return new RelayMessage(msg);
         } else {
-            return new SecureMessage<>(msg);
+            return new EncryptedMessage(msg);
         }
     }
 }

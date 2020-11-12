@@ -28,10 +28,16 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim;
+package chat.dim.dkd;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import chat.dim.Entity;
+import chat.dim.protocol.Meta;
+import chat.dim.protocol.Profile;
+import chat.dim.protocol.ReliableMessage;
+import chat.dim.protocol.SecureMessage;
 
 /**
  *  Reliable Message signed by an asymmetric key
@@ -54,19 +60,14 @@ import java.util.Map;
  *      signature: "..."   // base64_encode()
  *  }
  */
-public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
+public class RelayMessage extends EncryptedMessage implements ReliableMessage {
 
     private byte[] signature;
 
-    protected ReliableMessage(Map<String, Object> dictionary) {
+    public RelayMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         signature = null;
-    }
-
-    @Override
-    public ReliableMessageDelegate<ID, KEY> getDelegate() {
-        return (ReliableMessageDelegate<ID, KEY>) super.getDelegate();
     }
 
     public byte[] getSignature() {
@@ -78,17 +79,6 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
         return signature;
     }
 
-    public static ReliableMessage getInstance(Map<String, Object> dictionary) {
-        if (dictionary == null) {
-            return null;
-        }
-        if (dictionary instanceof ReliableMessage) {
-            // return ReliableMessage object directly
-            return (ReliableMessage) dictionary;
-        }
-        return new ReliableMessage<>(dictionary);
-    }
-
     /**
      *  Sender's Meta
      *  ~~~~~~~~~~~~~
@@ -96,13 +86,15 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
      *
      * @param meta - Meta object or dictionary
      */
-    public void setMeta(Map<String, Object> meta) {
+    @Override
+    public void setMeta(Meta meta) {
         put("meta", meta);
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, Object> getMeta() {
-        return (Map<String, Object>) get("meta");
+    @Override
+    public Meta getMeta() {
+        return Entity.parseMeta(get("meta"));
     }
 
     /**
@@ -112,13 +104,15 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
      *
      * @param profile - Profile object or dictionary
      */
-    public void setProfile(Map<String, Object> profile) {
+    @Override
+    public void setProfile(Profile profile) {
         put("profile", profile);
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, Object> getProfile() {
-        return (Map<String, Object>) get("profile");
+    @Override
+    public Profile getProfile() {
+        return Entity.parseProfile(get("profile"));
     }
 
     /*
@@ -140,7 +134,7 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
      *
      * @return SecureMessage object
      */
-    public SecureMessage<ID, KEY> verify() {
+    public SecureMessage verify() {
         byte[] data = getData();
         if (data == null) {
             throw new NullPointerException("failed to decode content data: " + this);
@@ -152,9 +146,9 @@ public class ReliableMessage<ID, KEY> extends SecureMessage<ID, KEY> {
         // 1. verify data signature with sender's public key
         if (getDelegate().verifyDataSignature(data, signature, getSender(), this)) {
             // 2. pack message
-            Map<String, Object> map = new HashMap<>(dictionary);
+            Map<String, Object> map = new HashMap<>(getMap());
             map.remove("signature");
-            return new SecureMessage<>(map);
+            return new EncryptedMessage(map);
         } else {
             //throw new RuntimeException("message signature not match: " + this);
             return null;

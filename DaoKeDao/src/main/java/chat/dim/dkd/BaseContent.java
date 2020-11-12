@@ -28,14 +28,16 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim;
+package chat.dim.dkd;
 
-import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
+import chat.dim.Entity;
+import chat.dim.protocol.Content;
 import chat.dim.protocol.ContentType;
+import chat.dim.protocol.ID;
 import chat.dim.type.Dictionary;
 
 /**
@@ -55,7 +57,7 @@ import chat.dim.type.Dictionary;
  *      //...
  *  }
  */
-public class Content<ID> extends Dictionary<String, Object> {
+public class BaseContent extends Dictionary<String, Object> implements Content {
 
     // message type: text, image, ...
     private int type;
@@ -68,9 +70,7 @@ public class Content<ID> extends Dictionary<String, Object> {
 
     private ID group = null;
 
-    private WeakReference<MessageDelegate<ID>> delegateRef = null;
-
-    protected Content(Map<String, Object> dictionary) {
+    public BaseContent(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         type = 0;
@@ -78,10 +78,11 @@ public class Content<ID> extends Dictionary<String, Object> {
         time = null;
     }
 
-    protected Content(ContentType msgType) {
+    public BaseContent(ContentType msgType) {
         this(msgType.value);
     }
-    protected Content(int msgType) {
+
+    public BaseContent(int msgType) {
         super();
         type = msgType;
         sn = randomPositiveInteger();
@@ -103,34 +104,26 @@ public class Content<ID> extends Dictionary<String, Object> {
         return 9527 + 9394; // randomPositiveInteger();
     }
 
-    public MessageDelegate<ID> getDelegate() {
-        if (delegateRef == null) {
-            return null;
-        }
-        return delegateRef.get();
-    }
-
-    public void setDelegate(MessageDelegate<ID> delegate) {
-        delegateRef = new WeakReference<>(delegate);
-    }
-
+    @Override
     public int getType() {
         if (type == 0) {
-            type = ((Number) dictionary.get("type")).intValue();
+            type = ((Number) get("type")).intValue();
         }
         return type;
     }
 
+    @Override
     public long getSerialNumber() {
         if (sn == 0) {
-            sn = ((Number) dictionary.get("sn")).longValue();
+            sn = ((Number) get("sn")).longValue();
         }
         return sn;
     }
 
+    @Override
     public Date getTime() {
         if (time == null) {
-            Object timestamp = dictionary.get("time");
+            Object timestamp = get("time");
             if (timestamp != null) {
                 time = new Date(((Number) timestamp).longValue() * 1000);
             }
@@ -140,11 +133,10 @@ public class Content<ID> extends Dictionary<String, Object> {
 
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message
+    @Override
     public ID getGroup() {
         if (group == null) {
-            MessageDelegate<ID> delegate = getDelegate();
-            assert delegate != null : "message delegate not set";
-            group = delegate.getID(get("group"));
+            group = Entity.parseID(get("group"));
         }
         return group;
     }

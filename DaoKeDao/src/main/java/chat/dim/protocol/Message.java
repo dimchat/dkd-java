@@ -28,12 +28,9 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim;
+package chat.dim.protocol;
 
 import java.util.Date;
-import java.util.Map;
-
-import chat.dim.type.Dictionary;
 
 /*
  *  Message Transforming
@@ -71,78 +68,16 @@ import chat.dim.type.Dictionary;
  *      ...
  *  }
  */
-public class Message<ID> extends Dictionary<String, Object> {
+public interface Message {
 
-    private Envelope<ID> envelope;
-
-    protected Message(Map<String, Object> dictionary) {
-        super(dictionary);
-        // lazy load
-        envelope = null;
-    }
-
-    protected Message(Envelope<ID> env) {
-        super(env.getDictionary());
-        envelope = env;
-    }
-
-    public Envelope<ID> getEnvelope() {
-        if (envelope == null) {
-            envelope = new Envelope<>(dictionary);
-        }
-        return envelope;
-    }
-
-    public MessageDelegate<ID> getDelegate() {
-        return getEnvelope().getDelegate();
-    }
-
-    public void setDelegate(MessageDelegate<ID> delegate) {
-        getEnvelope().setDelegate(delegate);
-    }
+    Envelope getEnvelope();
 
     //--------
 
-    public ID getSender() {
-        return getEnvelope().getSender();
-    }
+    ID getSender();
+    ID getReceiver();
+    Date getTime();
 
-    public ID getReceiver() {
-        return getEnvelope().getReceiver();
-    }
-
-    public Date getTime() {
-        return getEnvelope().getTime();
-    }
-
-    public ID getGroup() {
-        return getEnvelope().getGroup();
-    }
-
-    public int getType() {
-        return getEnvelope().getType();
-    }
-
-    public static Message getInstance(Map<String, Object> dictionary) {
-        if (dictionary == null) {
-            return null;
-        }
-        if (dictionary.containsKey("content")) {
-            // this should be an instant message
-            return InstantMessage.getInstance(dictionary);
-        }
-        if (dictionary.containsKey("signature")) {
-            // this should be a reliable message
-            return ReliableMessage.getInstance(dictionary);
-        }
-        if (dictionary.containsKey("data")) {
-            // this should be a secure message
-            return SecureMessage.getInstance(dictionary);
-        }
-        if (dictionary instanceof Message) {
-            // return Message object directly
-            return (Message) dictionary;
-        }
-        throw new IllegalArgumentException("unknown message: " + dictionary);
-    }
+    ID getGroup();
+    int getType();
 }

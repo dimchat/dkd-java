@@ -30,37 +30,54 @@
  */
 package chat.dim.protocol;
 
-import java.util.Map;
+import java.util.List;
 
-import chat.dim.dkd.BaseContent;
-import chat.dim.dkd.RelayMessage;
+import chat.dim.crypto.SymmetricKey;
 
 /**
- *  Top-Secret message: {
- *      type : 0xFF,
- *      sn   : 456,
+ *  Instant Message
+ *  ~~~~~~~~~~~~~~~
  *
- *      forward : {...}  // reliable (secure + certified) message
+ *  data format: {
+ *      //-- envelope
+ *      sender   : "moki@xxx",
+ *      receiver : "hulk@yyy",
+ *      time     : 123,
+ *      //-- content
+ *      content  : {...}
  *  }
  */
-public class ForwardContent extends BaseContent {
+public interface InstantMessage extends Message {
 
-    public final ReliableMessage forwardMessage;
+    Content getContent();
 
-    @SuppressWarnings("unchecked")
-    public ForwardContent(Map<String, Object> dictionary) {
-        super(dictionary);
-        Object info = dictionary.get("forward");
-        if (info instanceof Map) {
-            forwardMessage = new RelayMessage((Map<String, Object>) info);
-        } else {
-            throw new NullPointerException("forward message not found");
-        }
-    }
+    /*
+     *  Encrypt the Instant Message to Secure Message
+     *
+     *    +----------+      +----------+
+     *    | sender   |      | sender   |
+     *    | receiver |      | receiver |
+     *    | time     |  ->  | time     |
+     *    |          |      |          |
+     *    | content  |      | data     |  1. data = encrypt(content, PW)
+     *    +----------+      | key/keys |  2. key  = encrypt(PW, receiver.PK)
+     *                      +----------+
+     */
 
-    public ForwardContent(ReliableMessage message) {
-        super(ContentType.FORWARD);
-        forwardMessage = message;
-        put("forward", message);
-    }
+    /**
+     *  Encrypt message, replace 'content' field with encrypted 'data'
+     *
+     * @param password - symmetric key
+     * @return SecureMessage object
+     */
+    SecureMessage encrypt(SymmetricKey password);
+
+    /**
+     *  Encrypt group message, replace 'content' field with encrypted 'data'
+     *
+     * @param password - symmetric key
+     * @param members - group members
+     * @return SecureMessage object
+     */
+    SecureMessage encrypt(SymmetricKey password, List<ID> members);
 }

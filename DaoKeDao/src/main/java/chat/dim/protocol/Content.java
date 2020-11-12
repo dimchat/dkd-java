@@ -30,37 +30,34 @@
  */
 package chat.dim.protocol;
 
-import java.util.Map;
-
-import chat.dim.dkd.BaseContent;
-import chat.dim.dkd.RelayMessage;
+import java.util.Date;
 
 /**
- *  Top-Secret message: {
- *      type : 0xFF,
- *      sn   : 456,
+ *  Message Content
+ *  ~~~~~~~~~~~~~~~
+ *  This class is for creating message content
  *
- *      forward : {...}  // reliable (secure + certified) message
+ *  data format: {
+ *      'type'    : 0x00,            // message type
+ *      'sn'      : 0,               // serial number
+ *
+ *      'group'   : 'Group ID',      // for group message
+ *
+ *      //-- message info
+ *      'text'    : 'text',          // for text message
+ *      'command' : 'Command Name',  // for system command
+ *      //...
  *  }
  */
-public class ForwardContent extends BaseContent {
+public interface Content {
 
-    public final ReliableMessage forwardMessage;
+    int getType();
 
-    @SuppressWarnings("unchecked")
-    public ForwardContent(Map<String, Object> dictionary) {
-        super(dictionary);
-        Object info = dictionary.get("forward");
-        if (info instanceof Map) {
-            forwardMessage = new RelayMessage((Map<String, Object>) info);
-        } else {
-            throw new NullPointerException("forward message not found");
-        }
-    }
+    long getSerialNumber();
 
-    public ForwardContent(ReliableMessage message) {
-        super(ContentType.FORWARD);
-        forwardMessage = message;
-        put("forward", message);
-    }
+    Date getTime();
+
+    // Group ID/string for group message
+    //    if field 'group' exists, it means this is a group message
+    ID getGroup();
 }

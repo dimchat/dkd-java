@@ -30,13 +30,5 @@
  */
 package chat.dim;
 
-public interface MessageDelegate<ID> {
-
-    /**
-     *  Convert String object to ID object
-     *
-     * @param identifier - String object
-     * @return ID object
-     */
-    ID getID(Object identifier);
+public interface MessageDelegate extends InstantMessageDelegate, SecureMessageDelegate, ReliableMessageDelegate {
 }

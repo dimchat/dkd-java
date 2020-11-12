@@ -28,13 +28,14 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim;
+package chat.dim.dkd;
 
-import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.protocol.ContentType;
+import chat.dim.Entity;
+import chat.dim.protocol.Envelope;
+import chat.dim.protocol.ID;
 import chat.dim.type.Dictionary;
 
 /**
@@ -49,7 +50,7 @@ import chat.dim.type.Dictionary;
  *      time     : 123
  *  }
  */
-public final class Envelope<ID> extends Dictionary<String, Object> {
+public final class MessageEnvelope extends Dictionary<String, Object> implements Envelope {
 
     private ID sender;
     private ID receiver;
@@ -57,9 +58,7 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
 
     private ID group = null;
 
-    private WeakReference<MessageDelegate<ID>> delegateRef = null;
-
-    Envelope(Map<String, Object> dictionary) {
+    public MessageEnvelope(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         sender   = null;
@@ -67,11 +66,11 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         time     = null;
     }
 
-    Envelope(ID from, ID to) {
+    public MessageEnvelope(ID from, ID to) {
         this(from, to, new Date());
     }
 
-    Envelope(ID from, ID to, Date when) {
+    public MessageEnvelope(ID from, ID to, Date when) {
         super();
         sender   = from;
         receiver = to;
@@ -83,7 +82,7 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         }
     }
 
-    Envelope(ID from, ID to, long timestamp) {
+    public MessageEnvelope(ID from, ID to, long timestamp) {
         super();
         sender   = from;
         receiver = to;
@@ -93,54 +92,31 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         put("time", timestamp);
     }
 
-    public MessageDelegate<ID> getDelegate() {
-        if (delegateRef == null) {
-            return null;
-        }
-        return delegateRef.get();
-    }
-
-    public void setDelegate(MessageDelegate<ID> delegate) {
-        delegateRef = new WeakReference<>(delegate);
-    }
-
+    @Override
     public ID getSender() {
         if (sender == null) {
-            MessageDelegate<ID> delegate = getDelegate();
-            assert delegate != null : "message delegate not set";
-            sender = delegate.getID(get("sender"));
+            sender = Entity.parseID(get("sender"));
         }
         return sender;
     }
 
+    @Override
     public ID getReceiver() {
         if (receiver == null) {
-            MessageDelegate<ID> delegate = getDelegate();
-            assert delegate != null : "message delegate not set";
-            receiver = delegate.getID(get("receiver"));
+            receiver = Entity.parseID(get("receiver"));
         }
         return receiver;
     }
 
+    @Override
     public Date getTime() {
         if (time == null) {
-            Object timestamp = dictionary.get("time");
+            Object timestamp = get("time");
             if (timestamp != null) {
                 time = new Date(((Number) timestamp).longValue() * 1000);
             }
         }
         return time;
-    }
-
-    public static Envelope getInstance(Map<String, Object> dictionary) {
-        if (dictionary == null) {
-            return null;
-        }
-        if (dictionary instanceof Envelope) {
-            // return Envelope object directly
-            return (Envelope) dictionary;
-        }
-        return new Envelope<>(dictionary);
     }
 
     /*
@@ -150,15 +126,15 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
      *  the 'receiver' will be changed to a member ID, and
      *  the group ID will be saved as 'group'.
      */
+    @Override
     public ID getGroup() {
         if (group == null) {
-            MessageDelegate<ID> delegate = getDelegate();
-            assert delegate != null : "message delegate not set";
-            group = delegate.getID(get("group"));
+            group = Entity.parseID(get("group"));
         }
         return group;
     }
 
+    @Override
     public void setGroup(ID group) {
         if (group == null) {
             remove("group");
@@ -176,6 +152,7 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
      *  we pick out the content type and set it in envelope
      *  to let the station do its job.
      */
+    @Override
     public int getType() {
         Object type = get("type");
         if (type == null) {
@@ -185,14 +162,8 @@ public final class Envelope<ID> extends Dictionary<String, Object> {
         }
     }
 
-    public void setType(ContentType type) {
-        setType(type.value);
-    }
+    @Override
     public void setType(int type) {
         put("type", type);
-    }
-
-    Map<String, Object> getDictionary() {
-        return dictionary;
     }
 }

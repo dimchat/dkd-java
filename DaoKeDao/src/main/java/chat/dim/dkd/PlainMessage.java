@@ -28,13 +28,21 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim;
+package chat.dim.dkd;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import chat.dim.InstantMessageDelegate;
+import chat.dim.crypto.SymmetricKey;
+import chat.dim.protocol.Content;
+import chat.dim.protocol.Envelope;
+import chat.dim.protocol.ID;
+import chat.dim.protocol.InstantMessage;
+import chat.dim.protocol.SecureMessage;
 
 /**
  *  Instant Message
@@ -49,44 +57,32 @@ import java.util.Map;
  *      content  : {...}
  *  }
  */
-public class InstantMessage<ID, KEY> extends Message<ID> {
+public class PlainMessage extends BaseMessage implements InstantMessage {
 
-    private Content<ID> content;
+    private Content content;
 
-    InstantMessage(Map<String, Object> dictionary) {
+    public PlainMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         content = null;
     }
 
-    public InstantMessage(Content<ID> body, Envelope<ID> head) {
+    public PlainMessage(Content body, Envelope head) {
         super(head);
         put("content", body);
         content = body;
     }
 
-    public InstantMessage(Content<ID> body, ID from, ID to) {
-        this(body, new Envelope<>(from, to));
+    public PlainMessage(Content body, ID from, ID to) {
+        this(body, new MessageEnvelope(from, to));
     }
 
-    public InstantMessage(Content<ID> body, ID from, ID to, Date when) {
-        this(body, new Envelope<>(from, to, when));
+    public PlainMessage(Content body, ID from, ID to, Date when) {
+        this(body, new MessageEnvelope(from, to, when));
     }
 
-    public InstantMessage(Content<ID> body, ID from, ID to, long timestamp) {
-        this(body, new Envelope<>(from, to, timestamp));
-    }
-
-    @Override
-    public InstantMessageDelegate<ID, KEY> getDelegate() {
-        return (InstantMessageDelegate<ID, KEY>) super.getDelegate();
-    }
-
-    @Override
-    public void setDelegate(MessageDelegate<ID> delegate) {
-        super.setDelegate(delegate);
-        // set delegate for message content
-        getContent().setDelegate(delegate);
+    public PlainMessage(Content body, ID from, ID to, long timestamp) {
+        this(body, new MessageEnvelope(from, to, timestamp));
     }
 
     @Override
@@ -109,7 +105,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
     }
 
     @SuppressWarnings("unchecked")
-    public Content<ID> getContent() {
+    public Content getContent() {
         if (content == null) {
             Object info = get("content");
             if (info instanceof Map) {
@@ -117,17 +113,6 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
             }
         }
         return content;
-    }
-
-    public static InstantMessage getInstance(Map<String, Object> dictionary) {
-        if (dictionary == null) {
-            return null;
-        }
-        if (dictionary instanceof InstantMessage) {
-            // return InstantMessage object directly
-            return (InstantMessage) dictionary;
-        }
-        return new InstantMessage<>(dictionary);
     }
 
     /*
@@ -149,7 +134,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
      * @param password - symmetric key
      * @return SecureMessage object
      */
-    public SecureMessage<ID, KEY> encrypt(KEY password) {
+    public SecureMessage encrypt(SymmetricKey password) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
 
@@ -157,13 +142,13 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         Map<String, Object> map = prepareData(password);
 
         // 2. encrypt symmetric key(password) to 'message.key'
-        InstantMessageDelegate<ID, KEY> delegate = getDelegate();
+        InstantMessageDelegate delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
             // A) broadcast message has no key
             // B) reused key
-            return new SecureMessage<>(map);
+            return new EncryptedMessage(map);
         }
 
         // 2.2. encrypt symmetric key data
@@ -180,7 +165,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         map.put("key", base64);
 
         // 3. pack message
-        return new SecureMessage<>(map);
+        return new EncryptedMessage(map);
     }
 
     /**
@@ -190,7 +175,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
      * @param members - group members
      * @return SecureMessage object
      */
-    public SecureMessage<ID, KEY> encrypt(KEY password, List<ID> members) {
+    public SecureMessage encrypt(SymmetricKey password, List<ID> members) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
 
@@ -198,13 +183,13 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         Map<String, Object> map = prepareData(password);
 
         // 2. serialize symmetric key
-        InstantMessageDelegate<ID, KEY> delegate = getDelegate();
+        InstantMessageDelegate delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
             // A) broadcast message has no key
             // B) reused key
-            return new SecureMessage<>(map);
+            return new EncryptedMessage(map);
         }
 
         // encrypt key data to 'message.keys'
@@ -232,11 +217,11 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         }
 
         // 3. pack message
-        return new SecureMessage<>(map);
+        return new EncryptedMessage(map);
     }
 
-    private Map<String, Object> prepareData(KEY password) {
-        InstantMessageDelegate<ID, KEY> delegate = getDelegate();
+    private Map<String, Object> prepareData(SymmetricKey password) {
+        InstantMessageDelegate delegate = getDelegate();
         // 1. serialize message content
         byte[] data = delegate.serializeContent(getContent(), password, this);
         assert data != null : "failed to serialize content: " + content;
@@ -247,7 +232,7 @@ public class InstantMessage<ID, KEY> extends Message<ID> {
         Object base64 = delegate.encodeData(data, this);
         assert base64 != null : "failed to encode content data: " + Arrays.toString(data);
         // 4. replace 'content' with encrypted 'data'
-        Map<String, Object> map = new HashMap<>(dictionary);
+        Map<String, Object> map = new HashMap<>(getMap());
         map.remove("content");
         map.put("data", base64);
         return map;

@@ -30,37 +30,49 @@
  */
 package chat.dim.protocol;
 
+import java.util.Date;
 import java.util.Map;
 
-import chat.dim.dkd.BaseContent;
-import chat.dim.dkd.RelayMessage;
-
 /**
- *  Top-Secret message: {
- *      type : 0xFF,
- *      sn   : 456,
+ *  Envelope for message
+ *  ~~~~~~~~~~~~~~~~~~~~
+ *  This class is used to create a message envelope
+ *  which contains 'sender', 'receiver' and 'time'
  *
- *      forward : {...}  // reliable (secure + certified) message
+ *  data format: {
+ *      sender   : "moki@xxx",
+ *      receiver : "hulk@yyy",
+ *      time     : 123
  *  }
  */
-public class ForwardContent extends BaseContent {
+public interface Envelope {
 
-    public final ReliableMessage forwardMessage;
+    ID getSender();
 
-    @SuppressWarnings("unchecked")
-    public ForwardContent(Map<String, Object> dictionary) {
-        super(dictionary);
-        Object info = dictionary.get("forward");
-        if (info instanceof Map) {
-            forwardMessage = new RelayMessage((Map<String, Object>) info);
-        } else {
-            throw new NullPointerException("forward message not found");
-        }
-    }
+    ID getReceiver();
 
-    public ForwardContent(ReliableMessage message) {
-        super(ContentType.FORWARD);
-        forwardMessage = message;
-        put("forward", message);
-    }
+    Date getTime();
+
+    /*
+     *  Group ID
+     *  ~~~~~~~~
+     *  when a group message was split/trimmed to a single message
+     *  the 'receiver' will be changed to a member ID, and
+     *  the group ID will be saved as 'group'.
+     */
+    ID getGroup();
+    void setGroup(ID group);
+
+    /*
+     *  Message Type
+     *  ~~~~~~~~~~~~
+     *  because the message content will be encrypted, so
+     *  the intermediate nodes(station) cannot recognize what kind of it.
+     *  we pick out the content type and set it in envelope
+     *  to let the station do its job.
+     */
+    int getType();
+    void setType(int type);
+
+    Map<String, Object> getMap();
 }
