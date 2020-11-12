@@ -95,6 +95,7 @@ public class BaseMessage extends Dictionary<String, Object> implements Message {
         delegateRef = null;
     }
 
+    @Override
     public MessageDelegate getDelegate() {
         if (delegateRef == null) {
             return null;
@@ -102,6 +103,7 @@ public class BaseMessage extends Dictionary<String, Object> implements Message {
         return delegateRef.get();
     }
 
+    @Override
     public void setDelegate(MessageDelegate delegate) {
         delegateRef = new WeakReference<>(delegate);
     }

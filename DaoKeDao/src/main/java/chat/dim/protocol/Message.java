@@ -30,6 +30,8 @@
  */
 package chat.dim.protocol;
 
+import chat.dim.MessageDelegate;
+
 import java.util.Date;
 
 /*
@@ -69,6 +71,9 @@ import java.util.Date;
  *  }
  */
 public interface Message {
+
+    MessageDelegate getDelegate();
+    void setDelegate(MessageDelegate delegate);
 
     Envelope getEnvelope();
 
