@@ -77,7 +77,7 @@ import chat.dim.type.Dictionary;
  *      ...
  *  }
  */
-public class BaseMessage extends Dictionary<String, Object> implements Message {
+public class BaseMessage extends Dictionary implements Message {
 
     private Envelope envelope;
 

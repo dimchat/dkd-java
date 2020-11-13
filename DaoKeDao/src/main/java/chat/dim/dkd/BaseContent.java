@@ -57,7 +57,7 @@ import chat.dim.type.Dictionary;
  *      //...
  *  }
  */
-public class BaseContent extends Dictionary<String, Object> implements Content {
+public class BaseContent extends Dictionary implements Content {
 
     // message type: text, image, ...
     private int type;
