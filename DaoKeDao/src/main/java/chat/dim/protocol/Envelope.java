@@ -47,10 +47,16 @@ import java.util.Map;
  */
 public interface Envelope extends Map<String, Object> {
 
+    Map<String, Object> getMap();
+    Map<String, Object> copyMap();
+
+    // message from
     ID getSender();
 
+    // message to
     ID getReceiver();
 
+    // message time
     Date getTime();
 
     /*
@@ -73,8 +79,6 @@ public interface Envelope extends Map<String, Object> {
      */
     int getType();
     void setType(int type);
-
-    Map<String, Object> getMap();
 
     /**
      *  Envelope Parser

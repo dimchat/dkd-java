@@ -145,7 +145,7 @@ public class BaseContent extends Dictionary implements Content {
         if (group == null) {
             remove("group");
         } else {
-            put("group", group);
+            put("group", group.toString());
         }
         this.group = group;
     }

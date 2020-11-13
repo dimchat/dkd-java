@@ -52,10 +52,16 @@ import java.util.Map;
  */
 public interface Content extends Map<String, Object> {
 
+    Map<String, Object> getMap();
+    Map<String, Object> copyMap();
+
+    // content type
     int getType();
 
+    // serial number as message id
     long getSerialNumber();
 
+    // message time
     Date getTime();
 
     // Group ID/string for group message

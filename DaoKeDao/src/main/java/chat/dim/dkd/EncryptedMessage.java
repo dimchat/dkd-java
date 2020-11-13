@@ -192,7 +192,7 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         map.remove("key");
         map.remove("keys");
         map.remove("data");
-        map.put("content", content);
+        map.put("content", content.getMap());
         return MessageFactory.getInstantMessage(map);
     }
 
@@ -256,13 +256,13 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         //    when the group message separated to multi-messages;
         //    if don't want the others know your membership,
         //    DON'T do this.
-        msg.put("group", getReceiver());
+        msg.put("group", getReceiver().toString());
 
         List<SecureMessage> messages = new ArrayList<>(members.size());
         Object base64;
         for (ID member : members) {
             // 2. change 'receiver' to each group member
-            msg.put("receiver", member);
+            msg.put("receiver", member.toString());
             // 3. get encrypted key
             base64 = keys.get(member);
             if (base64 == null) {
@@ -301,9 +301,9 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
             // if 'group' not exists, the 'receiver' must be a group ID here, and
             // it will not be equal to the member of course,
             // so move 'receiver' to 'group'
-            msg.put("group", getReceiver());
+            msg.put("group", getReceiver().toString());
         }
-        msg.put("receiver", member);
+        msg.put("receiver", member.toString());
         // repack
         return MessageFactory.getSecureMessage(msg);
     }

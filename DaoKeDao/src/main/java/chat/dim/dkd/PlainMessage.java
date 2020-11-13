@@ -70,7 +70,7 @@ public final class PlainMessage extends BaseMessage implements InstantMessage {
 
     public PlainMessage(Envelope head, Content body) {
         super(head);
-        put("content", body);
+        put("content", body.getMap());
         content = body;
     }
 
@@ -198,7 +198,7 @@ public final class PlainMessage extends BaseMessage implements InstantMessage {
             base64 = delegate.encodeKey(data, this);
             assert base64 != null : "failed to encode key data: " + Arrays.toString(data);
             // 2.4. insert to 'message.keys' with member ID
-            keys.put(member, base64);
+            keys.put(member.toString(), base64);
             ++count;
         }
         if (count > 0) {

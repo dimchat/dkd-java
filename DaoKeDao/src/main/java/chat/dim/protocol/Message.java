@@ -73,6 +73,10 @@ import chat.dim.MessageDelegate;
  */
 public interface Message extends Map<String, Object> {
 
+    Map<String, Object> getMap();
+    Map<String, Object> copyMap();
+
+    // message delegate
     MessageDelegate getDelegate();
     void setDelegate(MessageDelegate delegate);
 

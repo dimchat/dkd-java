@@ -89,13 +89,17 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
      */
     @Override
     public void setMeta(Meta meta) {
-        put("meta", meta);
+        put("meta", meta.getMap());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Meta getMeta() {
-        return Entity.parseMeta(get("meta"));
+        Object meta = get("meta");
+        if (meta instanceof Map) {
+            return Entity.parseMeta((Map<String, Object>) meta);
+        }
+        return null;
     }
 
     /**
@@ -107,13 +111,17 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
      */
     @Override
     public void setProfile(Profile profile) {
-        put("profile", profile);
+        put("profile", profile.getMap());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Profile getProfile() {
-        return Entity.parseProfile(get("profile"));
+        Object profile = get("profile");
+        if (profile instanceof Map) {
+            return Entity.parseProfile((Map<String, Object>) profile);
+        }
+        return null;
     }
 
     /*

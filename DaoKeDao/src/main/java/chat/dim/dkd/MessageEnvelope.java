@@ -71,8 +71,8 @@ public final class MessageEnvelope extends Dictionary implements Envelope {
         sender   = from;
         receiver = to;
         time     = when;
-        put("sender", from);
-        put("receiver", to);
+        put("sender", from.toString());
+        put("receiver", to.toString());
         if (when != null) {
             put("time", when.getTime() / 1000);
         }
@@ -83,8 +83,8 @@ public final class MessageEnvelope extends Dictionary implements Envelope {
         sender   = from;
         receiver = to;
         time     = new Date(timestamp * 1000);
-        put("sender", from);
-        put("receiver", to);
+        put("sender", from.toString());
+        put("receiver", to.toString());
         put("time", timestamp);
     }
 
@@ -135,7 +135,7 @@ public final class MessageEnvelope extends Dictionary implements Envelope {
         if (group == null) {
             remove("group");
         } else {
-            put("group", group);
+            put("group", group.toString());
         }
         this.group = group;
     }
