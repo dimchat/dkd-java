@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.Map;
 
 import chat.dim.MessageDelegate;
+import chat.dim.MessageFactory;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.ID;
 import chat.dim.protocol.Message;
@@ -82,14 +83,14 @@ public class BaseMessage extends Dictionary<String, Object> implements Message {
 
     private WeakReference<MessageDelegate> delegateRef;
 
-    protected BaseMessage(Map<String, Object> dictionary) {
+    BaseMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         envelope = null;
         delegateRef = null;
     }
 
-    protected BaseMessage(Envelope env) {
+    BaseMessage(Envelope env) {
         super(env.getMap());
         envelope = env;
         delegateRef = null;
@@ -111,7 +112,7 @@ public class BaseMessage extends Dictionary<String, Object> implements Message {
     @Override
     public Envelope getEnvelope() {
         if (envelope == null) {
-            envelope = new MessageEnvelope(getMap());
+            envelope = MessageFactory.getEnvelope(getMap());
         }
         return envelope;
     }

@@ -30,9 +30,10 @@
  */
 package chat.dim.protocol;
 
-import chat.dim.MessageDelegate;
-
 import java.util.Date;
+import java.util.Map;
+
+import chat.dim.MessageDelegate;
 
 /*
  *  Message Transforming
@@ -70,7 +71,7 @@ import java.util.Date;
  *      ...
  *  }
  */
-public interface Message {
+public interface Message extends Map<String, Object> {
 
     MessageDelegate getDelegate();
     void setDelegate(MessageDelegate delegate);

@@ -121,4 +121,19 @@ public interface SecureMessage extends Message {
      * @return SecureMessage
      */
     SecureMessage trim(ID member);
+
+    /**
+     *  Message Parser
+     *  ~~~~~~~~~~~~~~
+     */
+    interface Parser {
+
+        /**
+         *  Parse map object to message
+         *
+         * @param msg - message info
+         * @return SecureMessage
+         */
+        SecureMessage parseSecureMessage(Map<String, Object> msg);
+    }
 }

@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chat.dim.Entity;
+import chat.dim.MessageFactory;
 import chat.dim.protocol.Meta;
 import chat.dim.protocol.Profile;
 import chat.dim.protocol.ReliableMessage;
@@ -60,11 +61,11 @@ import chat.dim.protocol.SecureMessage;
  *      signature: "..."   // base64_encode()
  *  }
  */
-public class RelayMessage extends EncryptedMessage implements ReliableMessage {
+public class NetworkMessage extends EncryptedMessage implements ReliableMessage {
 
     private byte[] signature;
 
-    public RelayMessage(Map<String, Object> dictionary) {
+    public NetworkMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         signature = null;
@@ -148,7 +149,7 @@ public class RelayMessage extends EncryptedMessage implements ReliableMessage {
             // 2. pack message
             Map<String, Object> map = new HashMap<>(getMap());
             map.remove("signature");
-            return new EncryptedMessage(map);
+            return MessageFactory.getSecureMessage(map);
         } else {
             //throw new RuntimeException("message signature not match: " + this);
             return null;

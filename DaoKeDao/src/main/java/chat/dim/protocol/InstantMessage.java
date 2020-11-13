@@ -31,6 +31,7 @@
 package chat.dim.protocol;
 
 import java.util.List;
+import java.util.Map;
 
 import chat.dim.crypto.SymmetricKey;
 
@@ -80,4 +81,19 @@ public interface InstantMessage extends Message {
      * @return SecureMessage object
      */
     SecureMessage encrypt(SymmetricKey password, List<ID> members);
+
+    /**
+     *  Message Parser
+     *  ~~~~~~~~~~~~~~
+     */
+    interface Parser {
+
+        /**
+         *  Parse map object to message
+         *
+         * @param msg - message info
+         * @return InstantMessage
+         */
+        InstantMessage parseInstantMessage(Map<String, Object> msg);
+    }
 }

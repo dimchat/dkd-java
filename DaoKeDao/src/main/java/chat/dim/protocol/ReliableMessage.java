@@ -30,6 +30,8 @@
  */
 package chat.dim.protocol;
 
+import java.util.Map;
+
 /**
  *  Reliable Message signed by an asymmetric key
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,4 +97,19 @@ public interface ReliableMessage extends SecureMessage {
      * @return SecureMessage object
      */
     SecureMessage verify();
+
+    /**
+     *  Message Parser
+     *  ~~~~~~~~~~~~~~
+     */
+    interface Parser {
+
+        /**
+         *  Parse map object to message
+         *
+         * @param msg - message info
+         * @return ReliableMessage
+         */
+        ReliableMessage parseReliableMessage(Map<String, Object> msg);
+    }
 }

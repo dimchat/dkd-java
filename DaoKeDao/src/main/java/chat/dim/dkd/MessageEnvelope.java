@@ -66,10 +66,6 @@ public final class MessageEnvelope extends Dictionary<String, Object> implements
         time     = null;
     }
 
-    public MessageEnvelope(ID from, ID to) {
-        this(from, to, new Date());
-    }
-
     public MessageEnvelope(ID from, ID to, Date when) {
         super();
         sender   = from;

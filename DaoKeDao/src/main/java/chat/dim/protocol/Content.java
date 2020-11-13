@@ -31,6 +31,7 @@
 package chat.dim.protocol;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  *  Message Content
@@ -49,7 +50,7 @@ import java.util.Date;
  *      //...
  *  }
  */
-public interface Content {
+public interface Content extends Map<String, Object> {
 
     int getType();
 
@@ -60,4 +61,20 @@ public interface Content {
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message
     ID getGroup();
+    void setGroup(ID group);
+
+    /**
+     *  Content Parser
+     *  ~~~~~~~~~~~~~~
+     */
+    interface Parser {
+
+        /**
+         *  Parse map object to content
+         *
+         * @param content - content info
+         * @return Content
+         */
+        Content parseContent(Map<String, Object> content);
+    }
 }

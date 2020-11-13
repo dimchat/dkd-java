@@ -45,7 +45,7 @@ import java.util.Map;
  *      time     : 123
  *  }
  */
-public interface Envelope {
+public interface Envelope extends Map<String, Object> {
 
     ID getSender();
 
@@ -75,4 +75,19 @@ public interface Envelope {
     void setType(int type);
 
     Map<String, Object> getMap();
+
+    /**
+     *  Envelope Parser
+     *  ~~~~~~~~~~~~~~~
+     */
+    interface Parser {
+
+        /**
+         *  Parse map object to envelope
+         *
+         * @param envelope - envelope info
+         * @return Envelope
+         */
+        Envelope parseEnvelope(Map<String, Object> envelope);
+    }
 }

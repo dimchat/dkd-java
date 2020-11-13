@@ -30,22 +30,12 @@
  */
 package chat.dim;
 
-import java.util.Map;
-
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ID;
 import chat.dim.protocol.InstantMessage;
 
 public interface InstantMessageDelegate {
-
-    /**
-     *  Convert Map object to Content object
-     *
-     * @param content - message content info
-     * @return Content object
-     */
-    Content getContent(Map<String, Object> content);
 
     //
     //  Encrypt Content

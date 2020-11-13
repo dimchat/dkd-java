@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import chat.dim.MessageFactory;
 import chat.dim.SecureMessageDelegate;
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.protocol.Content;
@@ -192,7 +193,7 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         map.remove("keys");
         map.remove("data");
         map.put("content", content);
-        return new PlainMessage(map);
+        return MessageFactory.getInstantMessage(map);
     }
 
     /*
@@ -225,7 +226,7 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         // 3. pack message
         Map<String, Object> map = new HashMap<>(getMap());
         map.put("signature", base64);
-        return new RelayMessage(map);
+        return MessageFactory.getReliableMessage(map);
     }
 
     /*
@@ -249,8 +250,6 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         } else {
             msg.remove("keys");
         }
-        // check 'signature'
-        boolean reliable = msg.containsKey("signature");
 
         // 1. move the receiver(group ID) to 'group'
         //    this will help the receiver knows the group ID
@@ -272,11 +271,7 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
                 msg.put("key", base64);
             }
             // 4. repack message
-            if (reliable) {
-                messages.add(new RelayMessage(new HashMap<>(msg)));
-            } else {
-                messages.add(new EncryptedMessage(new HashMap<>(msg)));
-            }
+            messages.add(MessageFactory.getSecureMessage(new HashMap<>(msg)));
         }
 
         return messages;
@@ -310,10 +305,6 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         }
         msg.put("receiver", member);
         // repack
-        if (msg.containsKey("signature")) {
-            return new RelayMessage(msg);
-        } else {
-            return new EncryptedMessage(msg);
-        }
+        return MessageFactory.getSecureMessage(msg);
     }
 }
