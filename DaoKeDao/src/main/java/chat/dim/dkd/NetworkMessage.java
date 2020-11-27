@@ -103,23 +103,26 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
     }
 
     /**
-     *  Sender's Profile
-     *  ~~~~~~~~~~~~~~~~
+     *  Sender's Visa
+     *  ~~~~~~~~~~~~~
      *  Extends for the first message package of 'Handshake' protocol.
      *
-     * @param profile - Profile
+     * @param doc - visa document
      */
     @Override
-    public void setVisa(Visa profile) {
-        put("profile", profile.getMap());
+    public void setVisa(Visa doc) {
+        put("profile", doc.getMap());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Visa getVisa() {
-        Object profile = get("profile");
-        if (profile instanceof Map) {
-            return (Visa) Entity.parseProfile((Map<String, Object>) profile);
+        Object doc = get("profile");
+        if (doc == null) {
+            doc = get("visa");
+        }
+        if (doc instanceof Map) {
+            return (Visa) Entity.parseDocument((Map<String, Object>) doc);
         }
         return null;
     }

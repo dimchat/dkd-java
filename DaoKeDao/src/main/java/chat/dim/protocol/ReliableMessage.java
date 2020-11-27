@@ -68,13 +68,13 @@ public interface ReliableMessage extends SecureMessage {
     Meta getMeta();
 
     /**
-     *  Sender's Profile
-     *  ~~~~~~~~~~~~~~~~
+     *  Sender's Visa
+     *  ~~~~~~~~~~~~~
      *  Extends for the first message package of 'Handshake' protocol.
      *
-     * @param profile - Visa
+     * @param doc - Visa
      */
-    void setVisa(Visa profile);
+    void setVisa(Visa doc);
     Visa getVisa();
 
     /*
