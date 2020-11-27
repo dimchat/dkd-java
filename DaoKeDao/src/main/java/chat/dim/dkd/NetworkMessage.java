@@ -36,9 +36,9 @@ import java.util.Map;
 import chat.dim.Entity;
 import chat.dim.MessageFactory;
 import chat.dim.protocol.Meta;
-import chat.dim.protocol.Profile;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
+import chat.dim.protocol.Visa;
 
 /**
  *  Reliable Message signed by an asymmetric key
@@ -107,19 +107,19 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
      *  ~~~~~~~~~~~~~~~~
      *  Extends for the first message package of 'Handshake' protocol.
      *
-     * @param profile - Profile object or dictionary
+     * @param profile - Profile
      */
     @Override
-    public void setProfile(Profile profile) {
+    public void setVisa(Visa profile) {
         put("profile", profile.getMap());
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Profile getProfile() {
+    public Visa getVisa() {
         Object profile = get("profile");
         if (profile instanceof Map) {
-            return Entity.parseProfile((Map<String, Object>) profile);
+            return (Visa) Entity.parseProfile((Map<String, Object>) profile);
         }
         return null;
     }

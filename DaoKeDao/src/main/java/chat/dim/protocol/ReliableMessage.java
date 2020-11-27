@@ -62,7 +62,7 @@ public interface ReliableMessage extends SecureMessage {
      *  ~~~~~~~~~~~~~
      *  Extends for the first message package of 'Handshake' protocol.
      *
-     * @param meta - Meta object or dictionary
+     * @param meta - Meta
      */
     void setMeta(Meta meta);
     Meta getMeta();
@@ -72,10 +72,10 @@ public interface ReliableMessage extends SecureMessage {
      *  ~~~~~~~~~~~~~~~~
      *  Extends for the first message package of 'Handshake' protocol.
      *
-     * @param profile - Profile object or dictionary
+     * @param profile - Visa
      */
-    void setProfile(Profile profile);
-    Profile getProfile();
+    void setVisa(Visa profile);
+    Visa getVisa();
 
     /*
      *  Verify the Reliable Message to Secure Message
