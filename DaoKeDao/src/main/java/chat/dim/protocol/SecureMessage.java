@@ -33,6 +33,8 @@ package chat.dim.protocol;
 import java.util.List;
 import java.util.Map;
 
+import chat.dim.dkd.Factories;
+
 /**
  *  Secure Message
  *  ~~~~~~~~~~~~~~
@@ -122,11 +124,23 @@ public interface SecureMessage extends Message {
      */
     SecureMessage trim(ID member);
 
+    //
+    //  Factory method
+    //
+    static SecureMessage parse(Map<String, Object> msg) {
+        if (msg == null) {
+            return null;
+        } else if (msg instanceof SecureMessage) {
+            return (SecureMessage) msg;
+        }
+        return Factories.secureMessageFactory.parseSecureMessage(msg);
+    }
+
     /**
-     *  Message Parser
-     *  ~~~~~~~~~~~~~~
+     *  Message Factory
+     *  ~~~~~~~~~~~~~~~
      */
-    interface Parser {
+    interface Factory {
 
         /**
          *  Parse map object to message

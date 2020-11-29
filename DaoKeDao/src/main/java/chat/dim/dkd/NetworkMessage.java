@@ -33,8 +33,7 @@ package chat.dim.dkd;
 import java.util.HashMap;
 import java.util.Map;
 
-import chat.dim.Entity;
-import chat.dim.MessageFactory;
+import chat.dim.protocol.Document;
 import chat.dim.protocol.Meta;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
@@ -97,7 +96,7 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
     public Meta getMeta() {
         Object meta = get("meta");
         if (meta instanceof Map) {
-            return Entity.parseMeta((Map<String, Object>) meta);
+            return Meta.parse((Map<String, Object>) meta);
         }
         return null;
     }
@@ -122,7 +121,7 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
             doc = get("visa");
         }
         if (doc instanceof Map) {
-            return (Visa) Entity.parseDocument((Map<String, Object>) doc);
+            return (Visa) Document.parse((Map<String, Object>) doc);
         }
         return null;
     }
@@ -160,7 +159,7 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
             // 2. pack message
             Map<String, Object> map = new HashMap<>(getMap());
             map.remove("signature");
-            return MessageFactory.getSecureMessage(map);
+            return SecureMessage.parse(map);
         } else {
             //throw new RuntimeException("message signature not match: " + this);
             return null;

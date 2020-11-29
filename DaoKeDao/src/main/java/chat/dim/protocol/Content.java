@@ -33,6 +33,8 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
+import chat.dim.dkd.Factories;
+
 /**
  *  Message Content
  *  ~~~~~~~~~~~~~~~
@@ -69,11 +71,23 @@ public interface Content extends Map<String, Object> {
     ID getGroup();
     void setGroup(ID group);
 
+    //
+    //  Factory method
+    //
+    static Content parse(Map<String, Object> content) {
+        if (content == null) {
+            return null;
+        } else if (content instanceof Content) {
+            return (Content) content;
+        }
+        return Factories.contentFactory.parseContent(content);
+    }
+
     /**
-     *  Content Parser
-     *  ~~~~~~~~~~~~~~
+     *  Content Factory
+     *  ~~~~~~~~~~~~~~~
      */
-    interface Parser {
+    interface Factory {
 
         /**
          *  Parse map object to content

@@ -33,6 +33,8 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
+import chat.dim.dkd.Factories;
+
 /**
  *  Envelope for message
  *  ~~~~~~~~~~~~~~~~~~~~
@@ -80,18 +82,47 @@ public interface Envelope extends Map<String, Object> {
     int getType();
     void setType(int type);
 
+    //
+    //  Factory methods
+    //
+    static Envelope create(ID from, ID to, Date when) {
+        return Factories.envelopeFactory.createEnvelope(from, to, when);
+    }
+    static Envelope create(ID from, ID to, long timestamp) {
+        return Factories.envelopeFactory.createEnvelope(from, to, timestamp);
+    }
+    static Envelope parse(Map<String, Object> env) {
+        if (env == null) {
+            return null;
+        } else if (env instanceof Envelope) {
+            return (Envelope) env;
+        }
+        return Factories.envelopeFactory.parseEnvelope(env);
+    }
+
     /**
-     *  Envelope Parser
-     *  ~~~~~~~~~~~~~~~
+     *  Envelope Factory
+     *  ~~~~~~~~~~~~~~~~
      */
-    interface Parser {
+    interface Factory {
+
+        /**
+         *  Create envelope
+         *
+         * @param from - sender ID
+         * @param to   - receiver ID
+         * @param when - message time
+         * @return Envelope
+         */
+        Envelope createEnvelope(ID from, ID to, Date when);
+        Envelope createEnvelope(ID from, ID to, long timestamp);
 
         /**
          *  Parse map object to envelope
          *
-         * @param envelope - envelope info
+         * @param env - envelope info
          * @return Envelope
          */
-        Envelope parseEnvelope(Map<String, Object> envelope);
+        Envelope parseEnvelope(Map<String, Object> env);
     }
 }

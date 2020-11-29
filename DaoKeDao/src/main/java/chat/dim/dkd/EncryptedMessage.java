@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chat.dim.MessageFactory;
 import chat.dim.SecureMessageDelegate;
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.protocol.Content;
@@ -193,7 +192,7 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         map.remove("keys");
         map.remove("data");
         map.put("content", content.getMap());
-        return MessageFactory.getInstantMessage(map);
+        return InstantMessage.parse(map);
     }
 
     /*
@@ -226,7 +225,7 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         // 3. pack message
         Map<String, Object> map = new HashMap<>(getMap());
         map.put("signature", base64);
-        return MessageFactory.getReliableMessage(map);
+        return ReliableMessage.parse(map);
     }
 
     /*
@@ -271,7 +270,7 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
                 msg.put("key", base64);
             }
             // 4. repack message
-            messages.add(MessageFactory.getSecureMessage(new HashMap<>(msg)));
+            messages.add(SecureMessage.parse(new HashMap<>(msg)));
         }
 
         return messages;
@@ -305,6 +304,6 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
         }
         msg.put("receiver", member.toString());
         // repack
-        return MessageFactory.getSecureMessage(msg);
+        return SecureMessage.parse(msg);
     }
 }

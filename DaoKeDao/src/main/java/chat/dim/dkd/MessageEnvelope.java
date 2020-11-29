@@ -33,7 +33,6 @@ package chat.dim.dkd;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.Entity;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.ID;
 import chat.dim.type.Dictionary;
@@ -91,7 +90,7 @@ public final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public ID getSender() {
         if (sender == null) {
-            sender = Entity.parseID(get("sender"));
+            sender = ID.parse(get("sender"));
         }
         return sender;
     }
@@ -99,7 +98,7 @@ public final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public ID getReceiver() {
         if (receiver == null) {
-            receiver = Entity.parseID(get("receiver"));
+            receiver = ID.parse(get("receiver"));
         }
         return receiver;
     }
@@ -125,7 +124,7 @@ public final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public ID getGroup() {
         if (group == null) {
-            group = Entity.parseID(get("group"));
+            group = ID.parse(get("group"));
         }
         return group;
     }

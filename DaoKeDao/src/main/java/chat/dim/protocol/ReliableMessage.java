@@ -32,6 +32,8 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
+import chat.dim.dkd.Factories;
+
 /**
  *  Reliable Message signed by an asymmetric key
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -98,11 +100,23 @@ public interface ReliableMessage extends SecureMessage {
      */
     SecureMessage verify();
 
+    //
+    //  Factory method
+    //
+    static ReliableMessage parse(Map<String, Object> msg) {
+        if (msg == null) {
+            return null;
+        } else if (msg instanceof ReliableMessage) {
+            return (ReliableMessage) msg;
+        }
+        return Factories.reliableMessageFactory.parseReliableMessage(msg);
+    }
+
     /**
-     *  Message Parser
-     *  ~~~~~~~~~~~~~~
+     *  Message Factory
+     *  ~~~~~~~~~~~~~~~
      */
-    interface Parser {
+    interface Factory {
 
         /**
          *  Parse map object to message

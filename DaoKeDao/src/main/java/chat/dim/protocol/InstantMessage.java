@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import chat.dim.crypto.SymmetricKey;
+import chat.dim.dkd.Factories;
 
 /**
  *  Instant Message
@@ -82,11 +83,35 @@ public interface InstantMessage extends Message {
      */
     SecureMessage encrypt(SymmetricKey password, List<ID> members);
 
+    //
+    //  Factory methods
+    //
+    static InstantMessage create(Envelope head, Content body) {
+        return Factories.instantMessageFactory.createInstantMessage(head, body);
+    }
+    static InstantMessage parse(Map<String, Object> msg) {
+        if (msg == null) {
+            return null;
+        } else if (msg instanceof InstantMessage) {
+            return (InstantMessage) msg;
+        }
+        return Factories.instantMessageFactory.parseInstantMessage(msg);
+    }
+
     /**
-     *  Message Parser
-     *  ~~~~~~~~~~~~~~
+     *  Message Factory
+     *  ~~~~~~~~~~~~~~~
      */
-    interface Parser {
+    interface Factory {
+
+        /**
+         *  Create instant message with envelope & content
+         *
+         * @param head - message envelope
+         * @param body - message content
+         * @return InstantMessage
+         */
+        InstantMessage createInstantMessage(Envelope head, Content body);
 
         /**
          *  Parse map object to message

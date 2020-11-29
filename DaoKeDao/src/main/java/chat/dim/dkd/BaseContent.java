@@ -34,7 +34,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
-import chat.dim.Entity;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ContentType;
 import chat.dim.protocol.ID;
@@ -136,7 +135,7 @@ public class BaseContent extends Dictionary implements Content {
     @Override
     public ID getGroup() {
         if (group == null) {
-            group = Entity.parseID(get("group"));
+            group = ID.parse(get("group"));
         }
         return group;
     }

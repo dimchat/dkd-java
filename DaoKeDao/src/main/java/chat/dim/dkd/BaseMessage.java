@@ -35,7 +35,6 @@ import java.util.Date;
 import java.util.Map;
 
 import chat.dim.MessageDelegate;
-import chat.dim.MessageFactory;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.ID;
 import chat.dim.protocol.Message;
@@ -112,7 +111,7 @@ public class BaseMessage extends Dictionary implements Message {
     @Override
     public Envelope getEnvelope() {
         if (envelope == null) {
-            envelope = MessageFactory.getEnvelope(getMap());
+            envelope = Envelope.parse(getMap());
         }
         return envelope;
     }

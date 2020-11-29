@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 
 import chat.dim.InstantMessageDelegate;
-import chat.dim.MessageFactory;
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.Envelope;
@@ -98,7 +97,7 @@ public final class PlainMessage extends BaseMessage implements InstantMessage {
         if (content == null) {
             Object info = get("content");
             if (info instanceof Map) {
-                content = MessageFactory.getContent((Map<String, Object>) info);
+                content = Content.parse((Map<String, Object>) info);
             }
         }
         return content;
@@ -137,7 +136,7 @@ public final class PlainMessage extends BaseMessage implements InstantMessage {
         if (key == null) {
             // A) broadcast message has no key
             // B) reused key
-            return MessageFactory.getSecureMessage(map);
+            return SecureMessage.parse(map);
         }
 
         // 2.2. encrypt symmetric key data
@@ -154,7 +153,7 @@ public final class PlainMessage extends BaseMessage implements InstantMessage {
         map.put("key", base64);
 
         // 3. pack message
-        return MessageFactory.getSecureMessage(map);
+        return SecureMessage.parse(map);
     }
 
     /**
@@ -178,7 +177,7 @@ public final class PlainMessage extends BaseMessage implements InstantMessage {
         if (key == null) {
             // A) broadcast message has no key
             // B) reused key
-            return MessageFactory.getSecureMessage(map);
+            return SecureMessage.parse(map);
         }
 
         // encrypt key data to 'message.keys'
@@ -206,7 +205,7 @@ public final class PlainMessage extends BaseMessage implements InstantMessage {
         }
 
         // 3. pack message
-        return MessageFactory.getSecureMessage(map);
+        return SecureMessage.parse(map);
     }
 
     private Map<String, Object> prepareData(SymmetricKey password) {
