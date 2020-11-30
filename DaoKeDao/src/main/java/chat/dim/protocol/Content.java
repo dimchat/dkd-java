@@ -97,4 +97,19 @@ public interface Content extends Map<String, Object> {
          */
         Content parseContent(Map<String, Object> content);
     }
+
+    /**
+     *  Content Parser
+     *  ~~~~~~~~~~~~~~
+     */
+    interface Parser<C extends Content> {
+
+        /**
+         *  Parse map object to content
+         *
+         * @param content - content info
+         * @return Content
+         */
+        C parse(Map<String, Object> content);
+    }
 }

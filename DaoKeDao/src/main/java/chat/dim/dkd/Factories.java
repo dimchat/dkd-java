@@ -66,13 +66,7 @@ public final class Factories {
         }
     };
 
-    public static Content.Factory contentFactory = new Content.Factory() {
-
-        @Override
-        public Content parseContent(Map<String, Object> content) {
-            return new BaseContent(content);
-        }
-    };
+    public static Content.Factory contentFactory = new ContentFactory();
 
     public static InstantMessage.Factory instantMessageFactory = new InstantMessage.Factory() {
 
