@@ -49,7 +49,7 @@ import chat.dim.type.Dictionary;
  *      time     : 123
  *  }
  */
-public final class MessageEnvelope extends Dictionary implements Envelope {
+final class MessageEnvelope extends Dictionary implements Envelope {
 
     private ID sender;
     private ID receiver;

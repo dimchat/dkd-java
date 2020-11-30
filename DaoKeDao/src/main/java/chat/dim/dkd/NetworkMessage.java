@@ -60,7 +60,7 @@ import chat.dim.protocol.Visa;
  *      signature: "..."   // base64_encode()
  *  }
  */
-public class NetworkMessage extends EncryptedMessage implements ReliableMessage {
+final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
 
     private byte[] signature;
 

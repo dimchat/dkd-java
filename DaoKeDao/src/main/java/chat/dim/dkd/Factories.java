@@ -40,7 +40,7 @@ import chat.dim.protocol.InstantMessage;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
 
-public class Factories {
+public final class Factories {
 
     public static Envelope.Factory envelopeFactory = new Envelope.Factory() {
 

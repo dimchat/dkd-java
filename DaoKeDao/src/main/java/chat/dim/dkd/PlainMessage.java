@@ -57,7 +57,7 @@ import chat.dim.protocol.SecureMessage;
  *      content  : {...}
  *  }
  */
-public final class PlainMessage extends BaseMessage implements InstantMessage {
+final class PlainMessage extends BaseMessage implements InstantMessage {
 
     private Content content;
 

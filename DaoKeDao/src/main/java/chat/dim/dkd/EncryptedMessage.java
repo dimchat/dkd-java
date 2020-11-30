@@ -62,7 +62,7 @@ import chat.dim.protocol.SecureMessage;
  *      }
  *  }
  */
-public class EncryptedMessage extends BaseMessage implements SecureMessage {
+class EncryptedMessage extends BaseMessage implements SecureMessage {
 
     private byte[] data;
     private byte[] key;
