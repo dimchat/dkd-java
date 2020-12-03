@@ -57,7 +57,7 @@ final class MessageEnvelope extends Dictionary implements Envelope {
 
     private ID group = null;
 
-    public MessageEnvelope(Map<String, Object> dictionary) {
+    MessageEnvelope(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         sender   = null;
@@ -65,19 +65,17 @@ final class MessageEnvelope extends Dictionary implements Envelope {
         time     = null;
     }
 
-    public MessageEnvelope(ID from, ID to, Date when) {
+    MessageEnvelope(ID from, ID to, Date when) {
         super();
         sender   = from;
         receiver = to;
         time     = when;
         put("sender", from.toString());
         put("receiver", to.toString());
-        if (when != null) {
-            put("time", when.getTime() / 1000);
-        }
+        put("time", when.getTime() / 1000);
     }
 
-    public MessageEnvelope(ID from, ID to, long timestamp) {
+    MessageEnvelope(ID from, ID to, long timestamp) {
         super();
         sender   = from;
         receiver = to;

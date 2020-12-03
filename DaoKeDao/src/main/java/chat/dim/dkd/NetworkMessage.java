@@ -64,12 +64,13 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
 
     private byte[] signature;
 
-    public NetworkMessage(Map<String, Object> dictionary) {
+    NetworkMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         signature = null;
     }
 
+    @Override
     public byte[] getSignature() {
         if (signature == null) {
             Object base64 = get("signature");
@@ -145,6 +146,7 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
      *
      * @return SecureMessage object
      */
+    @Override
     public SecureMessage verify() {
         byte[] data = getData();
         if (data == null) {

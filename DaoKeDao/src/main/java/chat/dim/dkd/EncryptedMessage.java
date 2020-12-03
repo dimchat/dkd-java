@@ -66,9 +66,9 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
 
     private byte[] data;
     private byte[] key;
-    private Map<Object, Object> keys;
+    private Map<String, Object> keys;
 
-    public EncryptedMessage(Map<String, Object> dictionary) {
+    EncryptedMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         data = null;
@@ -76,6 +76,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
         keys = null;
     }
 
+    @Override
     public byte[] getData() {
         if (data == null) {
             Object base64 = get("data");
@@ -85,14 +86,15 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
         return data;
     }
 
-    public byte[] getKey() {
+    @Override
+    public byte[] getEncryptedKey() {
         if (key == null) {
             Object base64 = get("key");
             if (base64 == null) {
                 // check 'keys'
-                Map<Object, Object> keys = getKeys();
+                Map<String, Object> keys = getEncryptedKeys();
                 if (keys != null) {
-                    base64 = keys.get(getReceiver());
+                    base64 = keys.get(getReceiver().toString());
                 }
             }
             if (base64 != null) {
@@ -103,11 +105,12 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
     }
 
     @SuppressWarnings("unchecked")
-    public Map<Object, Object> getKeys() {
+    @Override
+    public Map<String, Object> getEncryptedKeys() {
         if (keys == null) {
             Object map = get("keys");
             if (map instanceof Map) {
-                keys = (Map<Object, Object>) get("keys");
+                keys = (Map<String, Object>) get("keys");
             }
         }
         return keys;
@@ -131,6 +134,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
      *
      * @return InstantMessage object
      */
+    @Override
     public InstantMessage decrypt() {
         ID sender = getSender();
         ID receiver;
@@ -147,7 +151,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
         // 1. decrypt 'message.key' to symmetric key
         SecureMessageDelegate delegate = getDelegate();
         // 1.1. decode encrypted key data
-        byte[] key = getKey();
+        byte[] key = getEncryptedKey();
         // 1.2. decrypt key data
         if (key != null) {
             key = delegate.decryptKey(key, sender, receiver, this);
@@ -214,6 +218,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
      *
      * @return ReliableMessage object
      */
+    @Override
     public ReliableMessage sign() {
         SecureMessageDelegate delegate = getDelegate();
         // 1. sign with sender's private key
@@ -240,10 +245,11 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
      *  @param members - group members
      *  @return secure/reliable message(s)
      */
+    @Override
     public List<SecureMessage> split(List<ID> members) {
         Map<String, Object> msg = new HashMap<>(getMap());
         // check 'keys'
-        Map<Object, Object> keys = getKeys();
+        Map<String, Object> keys = getEncryptedKeys();
         if (keys == null) {
             keys = new HashMap<>();
         } else {
@@ -263,7 +269,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
             // 2. change 'receiver' to each group member
             msg.put("receiver", member.toString());
             // 3. get encrypted key
-            base64 = keys.get(member);
+            base64 = keys.get(member.toString());
             if (base64 == null) {
                 msg.remove("key");
             } else {
@@ -282,13 +288,14 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
      * @param member - group member ID/string
      * @return SecureMessage
      */
+    @Override
     public SecureMessage trim(ID member) {
         Map<String, Object> msg = new HashMap<>(getMap());
         // check 'keys'
-        Map<Object, Object> keys = getKeys();
+        Map<String, Object> keys = getEncryptedKeys();
         if (keys != null) {
             // move key data from 'keys' to 'key'
-            Object base64 = keys.get(member);
+            Object base64 = keys.get(member.toString());
             if (base64 != null) {
                 msg.put("key", base64);
             }

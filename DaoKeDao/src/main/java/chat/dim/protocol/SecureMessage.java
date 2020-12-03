@@ -57,9 +57,9 @@ public interface SecureMessage extends Message {
 
     byte[] getData();
 
-    byte[] getKey();
+    byte[] getEncryptedKey();
 
-    Map<Object, Object> getKeys();
+    Map<String, Object> getEncryptedKeys();
 
     /*
      *  Decrypt the Secure Message to Instant Message

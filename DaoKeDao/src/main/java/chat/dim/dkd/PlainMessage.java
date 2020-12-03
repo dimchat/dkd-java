@@ -61,13 +61,13 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
 
     private Content content;
 
-    public PlainMessage(Map<String, Object> dictionary) {
+    PlainMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         content = null;
     }
 
-    public PlainMessage(Envelope head, Content body) {
+    PlainMessage(Envelope head, Content body) {
         super(head);
         put("content", body.getMap());
         content = body;
@@ -93,6 +93,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public Content getContent() {
         if (content == null) {
             Object info = get("content");
@@ -122,6 +123,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
      * @param password - symmetric key
      * @return SecureMessage object
      */
+    @Override
     public SecureMessage encrypt(SymmetricKey password) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)
@@ -163,6 +165,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
      * @param members - group members
      * @return SecureMessage object
      */
+    @Override
     public SecureMessage encrypt(SymmetricKey password, List<ID> members) {
         // 0. check attachment for File/Image/Audio/Video message content
         //    (do it in 'core' module)

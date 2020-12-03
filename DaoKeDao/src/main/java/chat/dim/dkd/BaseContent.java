@@ -140,6 +140,7 @@ public class BaseContent extends Dictionary implements Content {
         return group;
     }
 
+    @Override
     public void setGroup(ID group) {
         if (group == null) {
             remove("group");
