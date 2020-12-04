@@ -36,21 +36,21 @@ import java.util.Map;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ContentType;
 
-public class ContentFactory implements Content.Factory {
+public final class ContentFactory implements Content.Factory {
 
-    private static final Map<Integer, Content.Parser> parsers = new HashMap<>();
+    private static final Map<Integer, Content.Parser> contentParsers = new HashMap<>();
 
     public static void register(int type, Content.Parser parser) {
-        parsers.put(type, parser);
+        contentParsers.put(type, parser);
     }
     public static void register(ContentType type, Content.Parser parser) {
-        parsers.put(type.value, parser);
+        contentParsers.put(type.value, parser);
     }
 
     @Override
     public Content parseContent(Map<String, Object> content) {
         int type = ((Number) content.get("type")).intValue();
-        Content.Parser parser = parsers.get(type);
+        Content.Parser parser = contentParsers.get(type);
         if (parser == null) {
             return new BaseContent(content);
         }

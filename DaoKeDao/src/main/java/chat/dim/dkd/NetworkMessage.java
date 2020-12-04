@@ -117,9 +117,9 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
     @SuppressWarnings("unchecked")
     @Override
     public Visa getVisa() {
-        Object doc = get("profile");
+        Object doc = get("visa");
         if (doc == null) {
-            doc = get("visa");
+            doc = get("profile");
         }
         if (doc instanceof Map) {
             return (Visa) Document.parse((Map<String, Object>) doc);
