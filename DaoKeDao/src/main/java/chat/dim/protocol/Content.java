@@ -112,4 +112,21 @@ public interface Content extends Map<String, Object> {
          */
         C parse(Map<String, Object> content);
     }
+
+    /**
+     *  Content Processor
+     *  ~~~~~~~~~~~~~~~~~
+     */
+    interface Processor<C extends Content> {
+
+        /**
+         *  Process message content
+         *
+         * @param content - message content
+         * @param sender  - message sender
+         * @param rMsg    - message from network
+         * @return content to respond
+         */
+        Content process(C content, ID sender, ReliableMessage rMsg);
+    }
 }

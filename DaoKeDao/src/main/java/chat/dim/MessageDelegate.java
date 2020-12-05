@@ -30,5 +30,16 @@
  */
 package chat.dim;
 
+import chat.dim.protocol.Content;
+import chat.dim.protocol.ID;
+
 public interface MessageDelegate extends InstantMessageDelegate, SecureMessageDelegate, ReliableMessageDelegate {
+
+    /**
+     *  Get group ID which should be exposed to public network
+     *
+     * @param content - message content
+     * @return exposed group ID
+     */
+    ID getOvertGroup(Content content);
 }
