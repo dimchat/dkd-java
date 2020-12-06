@@ -123,10 +123,9 @@ public interface Content extends Map<String, Object> {
          *  Process message content
          *
          * @param content - message content
-         * @param sender  - message sender
-         * @param rMsg    - message from network
+         * @param rMsg    - message with envelope
          * @return content to respond
          */
-        Content process(C content, ID sender, ReliableMessage rMsg);
+        Content process(C content, ReliableMessage rMsg);
     }
 }
