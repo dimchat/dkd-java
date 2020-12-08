@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.Map;
 
 import chat.dim.dkd.Factories;
+import chat.dim.type.SOMap;
 
 /**
  *  Message Content
@@ -52,10 +53,7 @@ import chat.dim.dkd.Factories;
  *      //...
  *  }
  */
-public interface Content extends Map<String, Object> {
-
-    Map<String, Object> getMap();
-    Map<String, Object> copyMap();
+public interface Content extends SOMap {
 
     // content type
     int getType();
@@ -79,6 +77,8 @@ public interface Content extends Map<String, Object> {
             return null;
         } else if (content instanceof Content) {
             return (Content) content;
+        } else if (content instanceof SOMap) {
+            content = ((SOMap) content).getMap();
         }
         return Factories.contentFactory.parseContent(content);
     }

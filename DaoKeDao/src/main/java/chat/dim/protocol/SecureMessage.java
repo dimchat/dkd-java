@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import chat.dim.dkd.Factories;
+import chat.dim.type.SOMap;
 
 /**
  *  Secure Message
@@ -132,6 +133,8 @@ public interface SecureMessage extends Message {
             return null;
         } else if (msg instanceof SecureMessage) {
             return (SecureMessage) msg;
+        } else if (msg instanceof SOMap) {
+            msg = ((SOMap) msg).getMap();
         }
         return Factories.secureMessageFactory.parseSecureMessage(msg);
     }

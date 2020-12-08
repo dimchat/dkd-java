@@ -35,6 +35,7 @@ import java.util.Map;
 
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.dkd.Factories;
+import chat.dim.type.SOMap;
 
 /**
  *  Instant Message
@@ -94,6 +95,8 @@ public interface InstantMessage extends Message {
             return null;
         } else if (msg instanceof InstantMessage) {
             return (InstantMessage) msg;
+        } else if (msg instanceof SOMap) {
+            msg = ((SOMap) msg).getMap();
         }
         return Factories.instantMessageFactory.parseInstantMessage(msg);
     }

@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.Map;
 
 import chat.dim.dkd.Factories;
+import chat.dim.type.SOMap;
 
 /**
  *  Envelope for message
@@ -47,10 +48,7 @@ import chat.dim.dkd.Factories;
  *      time     : 123
  *  }
  */
-public interface Envelope extends Map<String, Object> {
-
-    Map<String, Object> getMap();
-    Map<String, Object> copyMap();
+public interface Envelope extends SOMap {
 
     // message from
     ID getSender();
@@ -96,6 +94,8 @@ public interface Envelope extends Map<String, Object> {
             return null;
         } else if (env instanceof Envelope) {
             return (Envelope) env;
+        } else if (env instanceof SOMap) {
+            env = ((SOMap) env).getMap();
         }
         return Factories.envelopeFactory.parseEnvelope(env);
     }
