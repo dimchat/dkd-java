@@ -33,6 +33,7 @@ package chat.dim.protocol;
 import java.util.List;
 import java.util.Map;
 
+import chat.dim.crypto.SymmetricKey;
 import chat.dim.dkd.Factories;
 import chat.dim.type.SOMap;
 
@@ -124,6 +125,104 @@ public interface SecureMessage extends Message {
      * @return SecureMessage
      */
     SecureMessage trim(ID member);
+
+    /**
+     *  Secure Message Delegate
+     *  ~~~~~~~~~~~~~~~~~~~~~~~
+     */
+    interface Delegate extends Message.Delegate {
+
+        //
+        //  Decrypt Key
+        //
+
+        /**
+         *  1. Decode 'message.key' to encrypted symmetric key data
+         *
+         * @param key - base64 string object
+         * @param sMsg - secure message object
+         * @return encrypted symmetric key data
+         */
+        byte[] decodeKey(Object key, SecureMessage sMsg);
+
+        /**
+         *  2. Decrypt 'message.key' with receiver's private key
+         *
+         *  @param key - encrypted symmetric key data
+         *  @param sender - sender/member ID string
+         *  @param receiver - receiver/group ID string
+         *  @param sMsg - secure message object
+         *  @return serialized symmetric key
+         */
+        byte[] decryptKey(byte[] key, ID sender, ID receiver, SecureMessage sMsg);
+
+        /**
+         *  3. Deserialize message key from data (JsON / ProtoBuf / ...)
+         *
+         * @param key - serialized key data
+         * @param sender - sender/member ID string
+         * @param receiver - receiver/group ID string
+         * @param sMsg - secure message object
+         * @return symmetric key
+         */
+        SymmetricKey deserializeKey(byte[] key, ID sender, ID receiver, SecureMessage sMsg);
+
+        //
+        //  Decrypt Content
+        //
+
+        /**
+         *  4. Decode 'message.data' to encrypted content data
+         *
+         * @param data - base64 string object
+         * @param sMsg - secure message object
+         * @return encrypted content data
+         */
+        byte[] decodeData(Object data, SecureMessage sMsg);
+
+        /**
+         *  5. Decrypt 'message.data' with symmetric key
+         *
+         *  @param data - encrypt content data
+         *  @param password - symmetric key
+         *  @param sMsg - secure message object
+         *  @return serialized message content
+         */
+        byte[] decryptContent(byte[] data, SymmetricKey password, SecureMessage sMsg);
+
+        /**
+         *  6. Deserialize message content from data (JsON / ProtoBuf / ...)
+         *
+         * @param data - serialized content data
+         * @param password - symmetric key
+         * @param sMsg - secure message object
+         * @return message content
+         */
+        Content deserializeContent(byte[] data, SymmetricKey password, SecureMessage sMsg);
+
+        //
+        //  Signature
+        //
+
+        /**
+         *  1. Sign 'message.data' with sender's private key
+         *
+         *  @param data - encrypted message data
+         *  @param sender - sender ID string
+         *  @param sMsg - secure message object
+         *  @return signature of encrypted message data
+         */
+        byte[] signData(byte[] data, ID sender, SecureMessage sMsg);
+
+        /**
+         *  2. Encode 'message.signature' to String (Base64)
+         *
+         * @param signature - signature of message.data
+         * @param sMsg - secure message object
+         * @return String object
+         */
+        Object encodeSignature(byte[] signature, SecureMessage sMsg);
+    }
 
     //
     //  Factory method

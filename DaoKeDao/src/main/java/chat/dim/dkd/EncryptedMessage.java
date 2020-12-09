@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chat.dim.SecureMessageDelegate;
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ID;
@@ -74,6 +73,11 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
         data = null;
         key = null;
         keys = null;
+    }
+
+    @Override
+    public SecureMessage.Delegate getDelegate() {
+        return (SecureMessage.Delegate) super.getDelegate();
     }
 
     @Override
@@ -149,7 +153,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
         }
 
         // 1. decrypt 'message.key' to symmetric key
-        SecureMessageDelegate delegate = getDelegate();
+        SecureMessage.Delegate delegate = getDelegate();
         // 1.1. decode encrypted key data
         byte[] key = getEncryptedKey();
         // 1.2. decrypt key data
@@ -220,7 +224,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
      */
     @Override
     public ReliableMessage sign() {
-        SecureMessageDelegate delegate = getDelegate();
+        SecureMessage.Delegate delegate = getDelegate();
         // 1. sign with sender's private key
         byte[] signature = delegate.signData(getData(), getSender(), this);
         assert signature != null : "failed to sign message: " + this;

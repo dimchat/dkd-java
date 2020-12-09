@@ -34,7 +34,6 @@ import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.MessageDelegate;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.ID;
 import chat.dim.protocol.Message;
@@ -80,7 +79,7 @@ abstract class BaseMessage extends Dictionary implements Message {
 
     private Envelope envelope;
 
-    private WeakReference<MessageDelegate> delegateRef;
+    private WeakReference<Delegate> delegateRef;
 
     BaseMessage(Map<String, Object> dictionary) {
         super(dictionary);
@@ -96,7 +95,7 @@ abstract class BaseMessage extends Dictionary implements Message {
     }
 
     @Override
-    public MessageDelegate getDelegate() {
+    public Delegate getDelegate() {
         if (delegateRef == null) {
             return null;
         }
@@ -104,7 +103,7 @@ abstract class BaseMessage extends Dictionary implements Message {
     }
 
     @Override
-    public void setDelegate(MessageDelegate delegate) {
+    public void setDelegate(Delegate delegate) {
         delegateRef = new WeakReference<>(delegate);
     }
 

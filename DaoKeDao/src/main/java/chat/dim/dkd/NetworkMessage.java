@@ -70,6 +70,11 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
     }
 
     @Override
+    public ReliableMessage.Delegate getDelegate() {
+        return (ReliableMessage.Delegate) super.getDelegate();
+    }
+
+    @Override
     public byte[] getSignature() {
         if (signature == null) {
             Object base64 = get("signature");

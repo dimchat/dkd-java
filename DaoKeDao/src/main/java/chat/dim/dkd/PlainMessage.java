@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chat.dim.InstantMessageDelegate;
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.Envelope;
@@ -71,6 +70,11 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
         super(head);
         put("content", body.getMap());
         content = body;
+    }
+
+    @Override
+    public InstantMessage.Delegate getDelegate() {
+        return (InstantMessage.Delegate) super.getDelegate();
     }
 
     @Override
@@ -132,7 +136,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
         Map<String, Object> map = prepareData(password);
 
         // 2. encrypt symmetric key(password) to 'message.key'
-        InstantMessageDelegate delegate = getDelegate();
+        InstantMessage.Delegate delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
@@ -174,7 +178,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
         Map<String, Object> map = prepareData(password);
 
         // 2. serialize symmetric key
-        InstantMessageDelegate delegate = getDelegate();
+        InstantMessage.Delegate delegate = getDelegate();
         // 2.1. serialize symmetric key
         byte[] key = delegate.serializeKey(password, this);
         if (key == null) {
@@ -212,7 +216,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
     }
 
     private Map<String, Object> prepareData(SymmetricKey password) {
-        InstantMessageDelegate delegate = getDelegate();
+        InstantMessage.Delegate delegate = getDelegate();
         // 1. serialize message content
         byte[] data = delegate.serializeContent(getContent(), password, this);
         assert data != null : "failed to serialize content: " + content;

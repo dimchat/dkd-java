@@ -101,6 +101,33 @@ public interface ReliableMessage extends SecureMessage {
      */
     SecureMessage verify();
 
+    /**
+     *  Reliable Message Delegate
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~
+     */
+    interface Delegate extends SecureMessage.Delegate {
+
+        /**
+         *  1. Decode 'message.signature' from String (Base64)
+         *
+         * @param signature - base64 string object
+         * @param rMsg - reliable message
+         * @return signature data
+         */
+        byte[] decodeSignature(Object signature, ReliableMessage rMsg);
+
+        /**
+         *  2. Verify the message data and signature with sender's public key
+         *
+         *  @param data - message content(encrypted) data
+         *  @param signature - signature for message content(encrypted) data
+         *  @param sender - sender ID/string
+         *  @param rMsg - reliable message object
+         *  @return YES on signature matched
+         */
+        boolean verifyDataSignature(byte[] data, byte[] signature, ID sender, ReliableMessage rMsg);
+    }
+
     //
     //  Factory method
     //

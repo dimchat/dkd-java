@@ -32,7 +32,6 @@ package chat.dim.protocol;
 
 import java.util.Date;
 
-import chat.dim.MessageDelegate;
 import chat.dim.type.SOMap;
 
 /*
@@ -74,8 +73,8 @@ import chat.dim.type.SOMap;
 public interface Message extends SOMap {
 
     // message delegate
-    MessageDelegate getDelegate();
-    void setDelegate(MessageDelegate delegate);
+    Delegate getDelegate();
+    void setDelegate(Delegate delegate);
 
     Envelope getEnvelope();
 
@@ -87,4 +86,19 @@ public interface Message extends SOMap {
 
     ID getGroup();
     int getType();
+
+    /**
+     *  Message Delegate
+     *  ~~~~~~~~~~~~~~~~
+     */
+    interface Delegate {
+
+        /**
+         *  Get group ID which should be exposed to public network
+         *
+         * @param content - message content
+         * @return exposed group ID
+         */
+        ID getOvertGroup(Content content);
+    }
 }
