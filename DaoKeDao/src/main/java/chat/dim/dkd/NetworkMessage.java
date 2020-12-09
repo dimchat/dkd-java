@@ -30,7 +30,6 @@
  */
 package chat.dim.dkd;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import chat.dim.protocol.Document;
@@ -159,7 +158,7 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
         // 1. verify data signature with sender's public key
         if (getDelegate().verifyDataSignature(data, signature, getSender(), this)) {
             // 2. pack message
-            Map<String, Object> map = new HashMap<>(getMap());
+            Map<String, Object> map = copyMap(false);
             map.remove("signature");
             return SecureMessage.parse(map);
         } else {

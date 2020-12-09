@@ -191,7 +191,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
         //      (do it in 'core' module)
 
         // 3. pack message
-        Map<String, Object> map = new HashMap<>(getMap());
+        Map<String, Object> map = copyMap(false);
         map.remove("key");
         map.remove("keys");
         map.remove("data");
@@ -228,7 +228,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
         Object base64 = delegate.encodeSignature(signature, this);
         assert base64 != null : "failed to encode signature: " + Arrays.toString(signature);
         // 3. pack message
-        Map<String, Object> map = new HashMap<>(getMap());
+        Map<String, Object> map = copyMap(false);
         map.put("signature", base64);
         return ReliableMessage.parse(map);
     }
@@ -247,7 +247,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
      */
     @Override
     public List<SecureMessage> split(List<ID> members) {
-        Map<String, Object> msg = new HashMap<>(getMap());
+        Map<String, Object> msg = copyMap(false);
         // check 'keys'
         Map<String, Object> keys = getEncryptedKeys();
         if (keys == null) {
@@ -276,7 +276,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
                 msg.put("key", base64);
             }
             // 4. repack message
-            messages.add(SecureMessage.parse(new HashMap<>(msg)));
+            messages.add(SecureMessage.parse(copyMap(msg, false)));
         }
 
         return messages;
@@ -290,7 +290,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
      */
     @Override
     public SecureMessage trim(ID member) {
-        Map<String, Object> msg = new HashMap<>(getMap());
+        Map<String, Object> msg = copyMap(false);
         // check 'keys'
         Map<String, Object> keys = getEncryptedKeys();
         if (keys != null) {

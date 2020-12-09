@@ -223,7 +223,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
         Object base64 = delegate.encodeData(data, this);
         assert base64 != null : "failed to encode content data: " + Arrays.toString(data);
         // 4. replace 'content' with encrypted 'data'
-        Map<String, Object> map = new HashMap<>(getMap());
+        Map<String, Object> map = copyMap(false);
         map.remove("content");
         map.put("data", base64);
         return map;
