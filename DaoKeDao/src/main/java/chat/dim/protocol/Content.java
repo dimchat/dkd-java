@@ -112,20 +112,4 @@ public interface Content extends SOMap {
          */
         C parse(Map<String, Object> content);
     }
-
-    /**
-     *  Content Processor
-     *  ~~~~~~~~~~~~~~~~~
-     */
-    interface Processor<C extends Content> {
-
-        /**
-         *  Process message content
-         *
-         * @param content - message content
-         * @param rMsg    - message with envelope
-         * @return content to respond
-         */
-        Content process(C content, ReliableMessage rMsg);
-    }
 }
