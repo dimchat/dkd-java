@@ -67,8 +67,6 @@ public class BaseContent extends Dictionary implements Content {
     // message time
     private Date time;
 
-    private ID group = null;
-
     public BaseContent(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
@@ -106,7 +104,7 @@ public class BaseContent extends Dictionary implements Content {
     @Override
     public int getType() {
         if (type == 0) {
-            type = ((Number) get("type")).intValue();
+            type = Content.getType(getMap());
         }
         return type;
     }
@@ -114,7 +112,7 @@ public class BaseContent extends Dictionary implements Content {
     @Override
     public long getSerialNumber() {
         if (sn == 0) {
-            sn = ((Number) get("sn")).longValue();
+            sn = Content.getSerialNumber(getMap());
         }
         return sn;
     }
@@ -122,10 +120,7 @@ public class BaseContent extends Dictionary implements Content {
     @Override
     public Date getTime() {
         if (time == null) {
-            Object timestamp = get("time");
-            if (timestamp != null) {
-                time = new Date(((Number) timestamp).longValue() * 1000);
-            }
+            time = Content.getTime(getMap());
         }
         return time;
     }
@@ -134,19 +129,11 @@ public class BaseContent extends Dictionary implements Content {
     //    if field 'group' exists, it means this is a group message
     @Override
     public ID getGroup() {
-        if (group == null) {
-            group = ID.parse(get("group"));
-        }
-        return group;
+        return Content.getGroup(getMap());
     }
 
     @Override
     public void setGroup(ID group) {
-        if (group == null) {
-            remove("group");
-        } else {
-            put("group", group.toString());
-        }
-        this.group = group;
+        Content.setGroup(group, getMap());
     }
 }

@@ -100,10 +100,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
     @Override
     public Content getContent() {
         if (content == null) {
-            Object info = get("content");
-            if (info instanceof Map) {
-                content = Content.parse((Map<String, Object>) info);
-            }
+            content = InstantMessage.getContent(getMap());
         }
         return content;
     }

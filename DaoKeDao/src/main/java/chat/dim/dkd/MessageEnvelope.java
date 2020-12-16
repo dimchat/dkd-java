@@ -55,8 +55,6 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     private ID receiver;
     private Date time;
 
-    private ID group = null;
-
     MessageEnvelope(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
@@ -88,7 +86,7 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public ID getSender() {
         if (sender == null) {
-            sender = ID.parse(get("sender"));
+            sender = Envelope.getSender(getMap());
         }
         return sender;
     }
@@ -96,7 +94,7 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public ID getReceiver() {
         if (receiver == null) {
-            receiver = ID.parse(get("receiver"));
+            receiver = Envelope.getReceiver(getMap());
         }
         return receiver;
     }
@@ -104,10 +102,7 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public Date getTime() {
         if (time == null) {
-            Object timestamp = get("time");
-            if (timestamp != null) {
-                time = new Date(((Number) timestamp).longValue() * 1000);
-            }
+            time = Envelope.getTime(getMap());
         }
         return time;
     }
@@ -121,20 +116,12 @@ final class MessageEnvelope extends Dictionary implements Envelope {
      */
     @Override
     public ID getGroup() {
-        if (group == null) {
-            group = ID.parse(get("group"));
-        }
-        return group;
+        return Envelope.getGroup(getMap());
     }
 
     @Override
     public void setGroup(ID group) {
-        if (group == null) {
-            remove("group");
-        } else {
-            put("group", group.toString());
-        }
-        this.group = group;
+        Envelope.setGroup(group, getMap());
     }
 
     /*
@@ -147,16 +134,11 @@ final class MessageEnvelope extends Dictionary implements Envelope {
      */
     @Override
     public int getType() {
-        Object type = get("type");
-        if (type == null) {
-            return 0;
-        } else {
-            return (int) type;
-        }
+        return Envelope.getType(getMap());
     }
 
     @Override
     public void setType(int type) {
-        put("type", type);
+        Envelope.setType(type, getMap());
     }
 }

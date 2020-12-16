@@ -53,11 +53,27 @@ public interface Envelope extends SOMap {
     // message from
     ID getSender();
 
+    static ID getSender(Map<String, Object> env) {
+        return ID.parse(env.get("sender"));
+    }
+
     // message to
     ID getReceiver();
 
+    static ID getReceiver(Map<String, Object> env) {
+        return ID.parse(env.get("receiver"));
+    }
+
     // message time
     Date getTime();
+
+    static Date getTime(Map<String, Object> env) {
+        Object timestamp = env.get("time");
+        if (timestamp == null) {
+            return null;
+        }
+        return new Date(((Number) timestamp).longValue() * 1000);
+    }
 
     /*
      *  Group ID
@@ -69,6 +85,17 @@ public interface Envelope extends SOMap {
     ID getGroup();
     void setGroup(ID group);
 
+    static ID getGroup(Map<String, Object> env) {
+        return ID.parse(env.get("group"));
+    }
+    static void setGroup(ID group, Map<String, Object> env) {
+        if (group == null) {
+            env.remove("group");
+        } else {
+            env.put("group", group.toString());
+        }
+    }
+
     /*
      *  Message Type
      *  ~~~~~~~~~~~~
@@ -79,6 +106,18 @@ public interface Envelope extends SOMap {
      */
     int getType();
     void setType(int type);
+
+    static int getType(Map<String, Object> env) {
+        Object type = env.get("type");
+        if (type == null) {
+            return 0;
+        } else {
+            return (int) type;
+        }
+    }
+    static void setType(int type, Map<String, Object> env) {
+        env.put("type", type);
+    }
 
     //
     //  Factory methods

@@ -31,6 +31,7 @@
 package chat.dim.protocol;
 
 import java.util.Date;
+import java.util.Map;
 
 import chat.dim.type.SOMap;
 
@@ -76,7 +77,12 @@ public interface Message extends SOMap {
     Delegate getDelegate();
     void setDelegate(Delegate delegate);
 
+    // message envelope
     Envelope getEnvelope();
+
+    static Envelope getEnvelope(Map<String, Object> msg) {
+        return Envelope.parse(msg);
+    }
 
     //--------
 

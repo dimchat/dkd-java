@@ -52,7 +52,17 @@ import chat.dim.type.SOMap;
  */
 public interface InstantMessage extends Message {
 
+    // message content
     Content getContent();
+
+    @SuppressWarnings("unchecked")
+    static Content getContent(Map<String, Object> msg) {
+        Object content = msg.get("content");
+        if (content == null) {
+            throw new NullPointerException("message content not found: " + msg);
+        }
+        return Content.parse((Map<String, Object>) content);
+    }
 
     /*
      *  Encrypt the Instant Message to Secure Message

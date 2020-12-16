@@ -31,6 +31,7 @@
 package chat.dim.dkd;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import chat.dim.protocol.Content;
@@ -66,7 +67,7 @@ public final class Factories {
         }
     };
 
-    public static Content.Factory contentFactory = new ContentFactory();
+    public static final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
 
     public static InstantMessage.Factory instantMessageFactory = new InstantMessage.Factory() {
 

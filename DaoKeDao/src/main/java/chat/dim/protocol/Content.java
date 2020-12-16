@@ -33,6 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
+import chat.dim.dkd.BaseContent;
 import chat.dim.dkd.Factories;
 import chat.dim.type.SOMap;
 
@@ -58,16 +59,51 @@ public interface Content extends SOMap {
     // content type
     int getType();
 
+    static int getType(Map<String, Object> content) {
+        Object version = content.get("type");
+        if (version == null) {
+            throw new NullPointerException("content type not found: " + content);
+        }
+        return ((Number) version).intValue();
+    }
+
     // serial number as message id
     long getSerialNumber();
 
+    static long getSerialNumber(Map<String, Object> content) {
+        Object sn = content.get("sn");
+        if (sn == null) {
+            throw new NullPointerException("serial number not found: " + content);
+        }
+        return ((Number) sn).longValue();
+    }
+
     // message time
     Date getTime();
+
+    static Date getTime(Map<String, Object> content) {
+        Object timestamp = content.get("time");
+        if (timestamp == null) {
+            return null;
+        }
+        return new Date(((Number) timestamp).longValue() * 1000);
+    }
 
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message
     ID getGroup();
     void setGroup(ID group);
+
+    static ID getGroup(Map<String, Object> content) {
+        return ID.parse(content.get("group"));
+    }
+    static void setGroup(ID group, Map<String, Object> content) {
+        if (group == null) {
+            content.remove("group");
+        } else {
+            content.put("group", group.toString());
+        }
+    }
 
     //
     //  Factory method
@@ -80,7 +116,30 @@ public interface Content extends SOMap {
         } else if (content instanceof SOMap) {
             content = ((SOMap) content).getMap();
         }
-        return Factories.contentFactory.parseContent(content);
+        // get factory by content type
+        int type = getType(content);
+        Factory factory = getFactory(type);
+        if (factory == null) {
+            factory = getFactory(0);  // unknown
+            if (factory == null) {
+                //throw new NullPointerException("cannot parse content: " + content);
+                return new BaseContent(content);
+            }
+        }
+        return factory.parseContent(content);
+    }
+
+    static Factory getFactory(int type) {
+        return Factories.contentFactories.get(type);
+    }
+    static Factory getFactory(ContentType type) {
+        return Factories.contentFactories.get(type.value);
+    }
+    static void register(int type, Factory factory) {
+        Factories.contentFactories.put(type, factory);
+    }
+    static void register(ContentType type, Factory factory) {
+        Factories.contentFactories.put(type.value, factory);
     }
 
     /**
@@ -96,20 +155,5 @@ public interface Content extends SOMap {
          * @return Content
          */
         Content parseContent(Map<String, Object> content);
-    }
-
-    /**
-     *  Content Parser
-     *  ~~~~~~~~~~~~~~
-     */
-    interface Parser<C extends Content> {
-
-        /**
-         *  Parse map object to content
-         *
-         * @param content - content info
-         * @return Content
-         */
-        C parse(Map<String, Object> content);
     }
 }

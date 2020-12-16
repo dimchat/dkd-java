@@ -79,8 +79,6 @@ package chat.dim.protocol;
  */
 public enum ContentType {
 
-    UNKNOWN (0x00),
-
     TEXT    (0x01), // 0000 0001
 
     FILE    (0x10), // 0001 0000
