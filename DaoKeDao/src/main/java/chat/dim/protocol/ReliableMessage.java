@@ -100,15 +100,20 @@ public interface ReliableMessage extends SecureMessage {
     static Visa getVisa(Map<String, Object> msg) {
         Object visa = msg.get("visa");
         if (visa == null) {
-            return null;
+            // compatible with v1.0
+            visa = msg.get("profile");
+            if (visa == null) {
+                return null;
+            }
         }
         return (Visa) Document.parse((Map<String, Object>) visa);
     }
     static void setVisa(Visa visa, Map<String, Object> msg) {
         if (visa == null) {
             msg.remove("visa");
+            msg.remove("profile");
         } else {
-            msg.put("visa", visa.getMap());
+            msg.put("profile", visa.getMap());
         }
     }
 

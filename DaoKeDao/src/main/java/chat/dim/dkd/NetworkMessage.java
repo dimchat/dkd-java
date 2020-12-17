@@ -32,7 +32,6 @@ package chat.dim.dkd;
 
 import java.util.Map;
 
-import chat.dim.protocol.Document;
 import chat.dim.protocol.Meta;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
@@ -63,6 +62,9 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
 
     private byte[] signature;
 
+    private Meta meta = null;
+    private Visa visa = null;
+
     NetworkMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
@@ -89,17 +91,21 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
      *  ~~~~~~~~~~~~~
      *  Extends for the first message package of 'Handshake' protocol.
      *
-     * @param meta - Meta object or dictionary
+     * @param info - Meta object or dictionary
      */
     @Override
-    public void setMeta(Meta meta) {
-        ReliableMessage.setMeta(meta, getMap());
+    public void setMeta(Meta info) {
+        ReliableMessage.setMeta(info, getMap());
+        meta = info;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Meta getMeta() {
-        return ReliableMessage.getMeta(getMap());
+        if (meta == null) {
+            meta = ReliableMessage.getMeta(getMap());
+        }
+        return meta;
     }
 
     /**
@@ -111,23 +117,17 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
      */
     @Override
     public void setVisa(Visa doc) {
-        // compatible with v1.0
-        put("profile", doc.getMap());
+        ReliableMessage.setVisa(doc, getMap());
+        visa = doc;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Visa getVisa() {
-        Visa visa = ReliableMessage.getVisa(getMap());
-        if (visa != null) {
-            return visa;
+        if (visa == null) {
+            visa = ReliableMessage.getVisa(getMap());
         }
-        // compatible with v1.0
-        Object doc = get("profile");
-        if (doc == null) {
-            return null;
-        }
-        return (Visa) Document.parse((Map<String, Object>) doc);
+        return visa;
     }
 
     /*
