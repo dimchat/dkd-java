@@ -109,8 +109,8 @@ public interface ReliableMessage extends SecureMessage {
         return (Visa) Document.parse((Map<String, Object>) visa);
     }
     static void setVisa(Visa visa, Map<String, Object> msg) {
+        msg.remove("visa");
         if (visa == null) {
-            msg.remove("visa");
             msg.remove("profile");
         } else {
             msg.put("profile", visa.getMap());
