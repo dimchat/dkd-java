@@ -112,7 +112,7 @@ public interface InstantMessage extends Message {
          * @param password - symmetric key
          * @return serialized content data
          */
-        byte[] serializeContent(Content content, SymmetricKey password, chat.dim.protocol.InstantMessage iMsg);
+        byte[] serializeContent(Content content, SymmetricKey password, InstantMessage iMsg);
 
         /**
          *  2. Encrypt content data to 'message.data' with symmetric key
