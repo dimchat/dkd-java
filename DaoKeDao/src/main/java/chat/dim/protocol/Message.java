@@ -98,13 +98,5 @@ public interface Message extends SOMap {
      *  ~~~~~~~~~~~~~~~~
      */
     interface Delegate {
-
-        /**
-         *  Get group ID which should be exposed to public network
-         *
-         * @param content - message content
-         * @return exposed group ID
-         */
-        ID getOvertGroup(Content content);
     }
 }
