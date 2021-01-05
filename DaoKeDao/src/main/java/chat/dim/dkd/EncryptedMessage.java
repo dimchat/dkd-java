@@ -280,7 +280,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
                 msg.put("key", base64);
             }
             // 4. repack message
-            messages.add(SecureMessage.parse(copyMap(msg, false)));
+            messages.add(SecureMessage.parse(chat.dim.type.Map.copyMap(msg, false)));
         }
 
         return messages;

@@ -33,9 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.dkd.BaseContent;
 import chat.dim.dkd.Factories;
-import chat.dim.type.SOMap;
 
 /**
  *  Message Content
@@ -54,7 +52,7 @@ import chat.dim.type.SOMap;
  *      //...
  *  }
  */
-public interface Content extends SOMap {
+public interface Content extends chat.dim.type.Map {
 
     // content type
     int getType();
@@ -113,18 +111,15 @@ public interface Content extends SOMap {
             return null;
         } else if (content instanceof Content) {
             return (Content) content;
-        } else if (content instanceof SOMap) {
-            content = ((SOMap) content).getMap();
+        } else if (content instanceof chat.dim.type.Map) {
+            content = ((chat.dim.type.Map) content).getMap();
         }
         // get factory by content type
         int type = getType(content);
         Factory factory = getFactory(type);
         if (factory == null) {
             factory = getFactory(0);  // unknown
-            if (factory == null) {
-                //throw new NullPointerException("cannot parse content: " + content);
-                return new BaseContent(content);
-            }
+            assert factory != null : "cannot parse content: " + content;
         }
         return factory.parseContent(content);
     }

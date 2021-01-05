@@ -33,7 +33,6 @@ package chat.dim.protocol;
 import java.util.Map;
 
 import chat.dim.dkd.Factories;
-import chat.dim.type.SOMap;
 
 /**
  *  Reliable Message signed by an asymmetric key
@@ -173,10 +172,19 @@ public interface ReliableMessage extends SecureMessage {
             return null;
         } else if (msg instanceof ReliableMessage) {
             return (ReliableMessage) msg;
-        } else if (msg instanceof SOMap) {
-            msg = ((SOMap) msg).getMap();
+        } else if (msg instanceof chat.dim.type.Map) {
+            msg = ((chat.dim.type.Map) msg).getMap();
         }
-        return Factories.reliableMessageFactory.parseReliableMessage(msg);
+        Factory factory = getFactory();
+        assert factory != null : "reliable message factory not ready";
+        return factory.parseReliableMessage(msg);
+    }
+
+    static Factory getFactory() {
+        return Factories.reliableMessageFactory;
+    }
+    static void setFactory(Factory factory) {
+        Factories.reliableMessageFactory = factory;
     }
 
     /**

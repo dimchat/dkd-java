@@ -34,7 +34,6 @@ import java.util.Date;
 import java.util.Map;
 
 import chat.dim.dkd.Factories;
-import chat.dim.type.SOMap;
 
 /**
  *  Envelope for message
@@ -48,7 +47,7 @@ import chat.dim.type.SOMap;
  *      time     : 123
  *  }
  */
-public interface Envelope extends SOMap {
+public interface Envelope extends chat.dim.type.Map {
 
     // message from
     ID getSender();
@@ -123,20 +122,33 @@ public interface Envelope extends SOMap {
     //  Factory methods
     //
     static Envelope create(ID from, ID to, Date when) {
-        return Factories.envelopeFactory.createEnvelope(from, to, when);
+        Factory factory = getFactory();
+        assert factory != null : "envelope factory not ready";
+        return factory.createEnvelope(from, to, when);
     }
     static Envelope create(ID from, ID to, long timestamp) {
-        return Factories.envelopeFactory.createEnvelope(from, to, timestamp);
+        Factory factory = getFactory();
+        assert factory != null : "envelope factory not ready";
+        return factory.createEnvelope(from, to, timestamp);
     }
     static Envelope parse(Map<String, Object> env) {
         if (env == null) {
             return null;
         } else if (env instanceof Envelope) {
             return (Envelope) env;
-        } else if (env instanceof SOMap) {
-            env = ((SOMap) env).getMap();
+        } else if (env instanceof chat.dim.type.Map) {
+            env = ((chat.dim.type.Map) env).getMap();
         }
-        return Factories.envelopeFactory.parseEnvelope(env);
+        Factory factory = getFactory();
+        assert factory != null : "envelope factory not ready";
+        return factory.parseEnvelope(env);
+    }
+
+    static Factory getFactory() {
+        return Factories.envelopeFactory;
+    }
+    static void setFactory(Factory factory) {
+        Factories.envelopeFactory = factory;
     }
 
     /**

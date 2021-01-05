@@ -43,61 +43,73 @@ import chat.dim.protocol.SecureMessage;
 
 public final class Factories {
 
-    public static Envelope.Factory envelopeFactory = new Envelope.Factory() {
-
-        @Override
-        public Envelope createEnvelope(ID from, ID to, Date when) {
-            if (when == null) {
-                when = new Date();
-            }
-            return new MessageEnvelope(from, to, when);
-        }
-
-        @Override
-        public Envelope createEnvelope(ID from, ID to, long timestamp) {
-            if (timestamp == 0) {
-                timestamp = (new Date()).getTime() / 1000;
-            }
-            return new MessageEnvelope(from, to, timestamp);
-        }
-
-        @Override
-        public Envelope parseEnvelope(Map<String, Object> env) {
-            return new MessageEnvelope(env);
-        }
-    };
-
     public static final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
 
-    public static InstantMessage.Factory instantMessageFactory = new InstantMessage.Factory() {
+    public static Envelope.Factory envelopeFactory = null;
 
-        @Override
-        public InstantMessage createInstantMessage(Envelope head, Content body) {
-            return new PlainMessage(head, body);
-        }
+    public static InstantMessage.Factory instantMessageFactory = null;
+    public static SecureMessage.Factory secureMessageFactory = null;
+    public static ReliableMessage.Factory reliableMessageFactory = null;
 
-        @Override
-        public InstantMessage parseInstantMessage(Map<String, Object> msg) {
-            return new PlainMessage(msg);
-        }
-    };
+    static {
+        // Envelope factory
+        Envelope.setFactory(new Envelope.Factory() {
 
-    public static SecureMessage.Factory secureMessageFactory = new SecureMessage.Factory() {
+            @Override
+            public Envelope createEnvelope(ID from, ID to, Date when) {
+                if (when == null) {
+                    when = new Date();
+                }
+                return new MessageEnvelope(from, to, when);
+            }
 
-        @Override
-        public SecureMessage parseSecureMessage(Map<String, Object> msg) {
-            if (msg.containsKey("signature")) {
+            @Override
+            public Envelope createEnvelope(ID from, ID to, long timestamp) {
+                if (timestamp == 0) {
+                    timestamp = (new Date()).getTime() / 1000;
+                }
+                return new MessageEnvelope(from, to, timestamp);
+            }
+
+            @Override
+            public Envelope parseEnvelope(Map<String, Object> env) {
+                return new MessageEnvelope(env);
+            }
+        });
+
+        // Instant message factory
+        InstantMessage.setFactory(new InstantMessage.Factory() {
+
+            @Override
+            public InstantMessage createInstantMessage(Envelope head, Content body) {
+                return new PlainMessage(head, body);
+            }
+
+            @Override
+            public InstantMessage parseInstantMessage(Map<String, Object> msg) {
+                return new PlainMessage(msg);
+            }
+        });
+
+        // Secure message factory
+        SecureMessage.setFactory(new SecureMessage.Factory() {
+
+            @Override
+            public SecureMessage parseSecureMessage(Map<String, Object> msg) {
+                if (msg.containsKey("signature")) {
+                    return new NetworkMessage(msg);
+                }
+                return new EncryptedMessage(msg);
+            }
+        });
+
+        // Reliable message factory
+        ReliableMessage.setFactory(new ReliableMessage.Factory() {
+
+            @Override
+            public ReliableMessage parseReliableMessage(Map<String, Object> msg) {
                 return new NetworkMessage(msg);
             }
-            return new EncryptedMessage(msg);
-        }
-    };
-
-    public static ReliableMessage.Factory reliableMessageFactory = new ReliableMessage.Factory() {
-
-        @Override
-        public ReliableMessage parseReliableMessage(Map<String, Object> msg) {
-            return new NetworkMessage(msg);
-        }
-    };
+        });
+    }
 }

@@ -35,7 +35,6 @@ import java.util.Map;
 
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.dkd.Factories;
-import chat.dim.type.SOMap;
 
 /**
  *  Secure Message
@@ -232,10 +231,19 @@ public interface SecureMessage extends Message {
             return null;
         } else if (msg instanceof SecureMessage) {
             return (SecureMessage) msg;
-        } else if (msg instanceof SOMap) {
-            msg = ((SOMap) msg).getMap();
+        } else if (msg instanceof chat.dim.type.Map) {
+            msg = ((chat.dim.type.Map) msg).getMap();
         }
-        return Factories.secureMessageFactory.parseSecureMessage(msg);
+        Factory factory = getFactory();
+        assert factory != null : "secure message factory not ready";
+        return factory.parseSecureMessage(msg);
+    }
+
+    static Factory getFactory() {
+        return Factories.secureMessageFactory;
+    }
+    static void setFactory(Factory factory) {
+        Factories.secureMessageFactory = factory;
     }
 
     /**
