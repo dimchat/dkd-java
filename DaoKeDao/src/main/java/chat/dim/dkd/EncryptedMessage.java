@@ -269,6 +269,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
 
         List<SecureMessage> messages = new ArrayList<>(members.size());
         Object base64;
+        SecureMessage item;
         for (ID member : members) {
             // 2. change 'receiver' to each group member
             msg.put("receiver", member.toString());
@@ -280,7 +281,10 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
                 msg.put("key", base64);
             }
             // 4. repack message
-            messages.add(SecureMessage.parse(chat.dim.type.Map.copyMap(msg, false)));
+            item = SecureMessage.parse(chat.dim.type.Map.copyMap(msg, false));
+            if (item != null) {
+                messages.add(item);
+            }
         }
 
         return messages;
