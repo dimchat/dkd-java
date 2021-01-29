@@ -86,7 +86,7 @@ public class BaseContent extends Dictionary implements Content {
         time = new Date();
         put("type", type);
         put("sn", sn);
-        put("tine", time.getTime() / 1000);
+        put("time", time.getTime() / 1000);
     }
 
     private static long randomPositiveInteger() {
