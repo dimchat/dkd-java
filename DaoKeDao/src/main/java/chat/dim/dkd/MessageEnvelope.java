@@ -95,6 +95,9 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     public ID getReceiver() {
         if (receiver == null) {
             receiver = Envelope.getReceiver(getMap());
+            if (receiver == null) {
+                receiver = ID.ANYONE;
+            }
         }
         return receiver;
     }

@@ -73,7 +73,12 @@ public final class Factories {
 
             @Override
             public Envelope parseEnvelope(Map<String, Object> env) {
-                return new MessageEnvelope(env);
+                if (env.get("sender") == null) {
+                    // env.sender should not empty
+                    return null;
+                } else {
+                    return new MessageEnvelope(env);
+                }
             }
         });
 
@@ -108,7 +113,14 @@ public final class Factories {
 
             @Override
             public ReliableMessage parseReliableMessage(Map<String, Object> msg) {
-                return new NetworkMessage(msg);
+                if (msg.get("sender") == null || msg.get("data") == null || msg.get("signature") == null) {
+                    // msg.sender should not empty
+                    // msg.data should not empty
+                    // msg.signature should not empty
+                    return null;
+                } else {
+                    return new NetworkMessage(msg);
+                }
             }
         });
     }
