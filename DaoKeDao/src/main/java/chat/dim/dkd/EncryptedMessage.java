@@ -114,7 +114,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
         if (keys == null) {
             Object map = get("keys");
             if (map instanceof Map) {
-                keys = (Map<String, Object>) get("keys");
+                keys = (Map<String, Object>) map;
             }
         }
         return keys;
