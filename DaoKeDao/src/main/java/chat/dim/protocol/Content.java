@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.Map;
 
 import chat.dim.dkd.Factories;
+import chat.dim.type.MapWrapper;
 
 /**
  *  Message Content
@@ -52,7 +53,7 @@ import chat.dim.dkd.Factories;
  *      //...
  *  }
  */
-public interface Content extends chat.dim.type.Map {
+public interface Content extends MapWrapper {
 
     // content type
     int getType();
@@ -111,8 +112,8 @@ public interface Content extends chat.dim.type.Map {
             return null;
         } else if (content instanceof Content) {
             return (Content) content;
-        } else if (content instanceof chat.dim.type.Map) {
-            content = ((chat.dim.type.Map) content).getMap();
+        } else if (content instanceof MapWrapper) {
+            content = ((MapWrapper) content).getMap();
         }
         // get factory by content type
         int type = getType(content);

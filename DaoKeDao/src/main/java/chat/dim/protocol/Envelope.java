@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.Map;
 
 import chat.dim.dkd.Factories;
+import chat.dim.type.MapWrapper;
 
 /**
  *  Envelope for message
@@ -47,7 +48,7 @@ import chat.dim.dkd.Factories;
  *      time     : 123
  *  }
  */
-public interface Envelope extends chat.dim.type.Map {
+public interface Envelope extends MapWrapper {
 
     // message from
     ID getSender();
@@ -136,8 +137,8 @@ public interface Envelope extends chat.dim.type.Map {
             return null;
         } else if (env instanceof Envelope) {
             return (Envelope) env;
-        } else if (env instanceof chat.dim.type.Map) {
-            env = ((chat.dim.type.Map) env).getMap();
+        } else if (env instanceof MapWrapper) {
+            env = ((MapWrapper) env).getMap();
         }
         Factory factory = getFactory();
         assert factory != null : "envelope factory not ready";
