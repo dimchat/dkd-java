@@ -96,7 +96,6 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
         return getContent().getType();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Content getContent() {
         if (content == null) {

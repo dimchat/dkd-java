@@ -99,7 +99,6 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
         meta = info;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Meta getMeta() {
         if (meta == null) {
@@ -121,7 +120,6 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
         visa = doc;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Visa getVisa() {
         if (visa == null) {
