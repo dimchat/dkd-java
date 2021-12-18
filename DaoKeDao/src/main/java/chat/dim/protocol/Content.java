@@ -69,40 +69,13 @@ public interface Content extends MapWrapper {
     // serial number as message id
     long getSerialNumber();
 
-    static long getSerialNumber(Map<String, Object> content) {
-        Object sn = content.get("sn");
-        if (sn == null) {
-            throw new NullPointerException("serial number not found: " + content);
-        }
-        return ((Number) sn).longValue();
-    }
-
     // message time
     Date getTime();
-
-    static Date getTime(Map<String, Object> content) {
-        Object timestamp = content.get("time");
-        if (timestamp == null) {
-            return null;
-        }
-        return new Date(((Number) timestamp).longValue() * 1000);
-    }
 
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message
     ID getGroup();
     void setGroup(ID group);
-
-    static ID getGroup(Map<String, Object> content) {
-        return ID.parse(content.get("group"));
-    }
-    static void setGroup(ID group, Map<String, Object> content) {
-        if (group == null) {
-            content.remove("group");
-        } else {
-            content.put("group", group.toString());
-        }
-    }
 
     //
     //  Factory method

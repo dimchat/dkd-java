@@ -70,22 +70,6 @@ public interface ReliableMessage extends SecureMessage {
     void setMeta(Meta meta);
     Meta getMeta();
 
-    @SuppressWarnings("unchecked")
-    static Meta getMeta(Map<String, Object> msg) {
-        Object meta = msg.get("meta");
-        if (meta == null) {
-            return null;
-        }
-        return Meta.parse((Map<String, Object>) meta);
-    }
-    static void setMeta(Meta meta, Map<String, Object> msg) {
-        if (meta == null) {
-            msg.remove("meta");
-        } else {
-            msg.put("meta", meta.getMap());
-        }
-    }
-
     /**
      *  Sender's Visa
      *  ~~~~~~~~~~~~~
@@ -95,27 +79,6 @@ public interface ReliableMessage extends SecureMessage {
      */
     void setVisa(Visa doc);
     Visa getVisa();
-
-    @SuppressWarnings("unchecked")
-    static Visa getVisa(Map<String, Object> msg) {
-        Object visa = msg.get("visa");
-        if (visa == null) {
-            // compatible with v1.0
-            visa = msg.get("profile");
-            if (visa == null) {
-                return null;
-            }
-        }
-        return (Visa) Document.parse((Map<String, Object>) visa);
-    }
-    static void setVisa(Visa visa, Map<String, Object> msg) {
-        msg.remove("visa");
-        if (visa == null) {
-            msg.remove("profile");
-        } else {
-            msg.put("profile", visa.getMap());
-        }
-    }
 
     /*
      *  Verify the Reliable Message to Secure Message

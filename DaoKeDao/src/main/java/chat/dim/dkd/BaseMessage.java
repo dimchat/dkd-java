@@ -110,7 +110,7 @@ abstract class BaseMessage extends Dictionary implements Message {
     @Override
     public Envelope getEnvelope() {
         if (envelope == null) {
-            envelope = Message.getEnvelope(getMap());
+            envelope = Envelope.parse(getMap());
         }
         return envelope;
     }

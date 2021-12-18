@@ -86,7 +86,7 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public ID getSender() {
         if (sender == null) {
-            sender = Envelope.getSender(getMap());
+            sender = ID.parse(get("sender"));
         }
         return sender;
     }
@@ -94,7 +94,7 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public ID getReceiver() {
         if (receiver == null) {
-            receiver = Envelope.getReceiver(getMap());
+            receiver = ID.parse(get("receiver"));
             if (receiver == null) {
                 receiver = ID.ANYONE;
             }
@@ -105,7 +105,10 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public Date getTime() {
         if (time == null) {
-            time = Envelope.getTime(getMap());
+            Object timestamp = get("time");
+            if (timestamp != null) {
+                time = new Date(((Number) timestamp).longValue() * 1000);
+            }
         }
         return time;
     }
@@ -119,12 +122,16 @@ final class MessageEnvelope extends Dictionary implements Envelope {
      */
     @Override
     public ID getGroup() {
-        return Envelope.getGroup(getMap());
+        return ID.parse(get("group"));
     }
 
     @Override
     public void setGroup(ID group) {
-        Envelope.setGroup(group, getMap());
+        if (group == null) {
+            remove("group");
+        } else {
+            put("group", group.toString());
+        }
     }
 
     /*
@@ -137,11 +144,16 @@ final class MessageEnvelope extends Dictionary implements Envelope {
      */
     @Override
     public int getType() {
-        return Envelope.getType(getMap());
+        Object type = get("type");
+        if (type == null) {
+            return 0;
+        } else {
+            return (int) type;
+        }
     }
 
     @Override
     public void setType(int type) {
-        Envelope.setType(type, getMap());
+        put("type", type);
     }
 }

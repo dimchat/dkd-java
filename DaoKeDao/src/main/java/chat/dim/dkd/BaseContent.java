@@ -112,7 +112,9 @@ public class BaseContent extends Dictionary implements Content {
     @Override
     public long getSerialNumber() {
         if (sn == 0) {
-            sn = Content.getSerialNumber(getMap());
+            Object value = get("sn");
+            assert value != null : "serial number not found: " + getMap();
+            sn = ((Number) value).longValue();
         }
         return sn;
     }
@@ -120,7 +122,9 @@ public class BaseContent extends Dictionary implements Content {
     @Override
     public Date getTime() {
         if (time == null) {
-            time = Content.getTime(getMap());
+            Object timestamp = get("time");
+            assert timestamp != null : "message time not found: " + getMap();
+            time = new Date(((Number) timestamp).longValue() * 1000);
         }
         return time;
     }
@@ -129,11 +133,15 @@ public class BaseContent extends Dictionary implements Content {
     //    if field 'group' exists, it means this is a group message
     @Override
     public ID getGroup() {
-        return Content.getGroup(getMap());
+        return ID.parse(get("group"));
     }
 
     @Override
     public void setGroup(ID group) {
-        Content.setGroup(group, getMap());
+        if (group == null) {
+            remove("group");
+        } else {
+            put("group", group.toString());
+        }
     }
 }

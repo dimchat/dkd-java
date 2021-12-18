@@ -32,6 +32,7 @@ package chat.dim.dkd;
 
 import java.util.Map;
 
+import chat.dim.protocol.Document;
 import chat.dim.protocol.Meta;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
@@ -95,14 +96,22 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
      */
     @Override
     public void setMeta(Meta info) {
-        ReliableMessage.setMeta(info, getMap());
+        if (info == null) {
+            remove("meta");
+        } else {
+            put("meta", info.getMap());
+        }
         meta = info;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Meta getMeta() {
         if (meta == null) {
-            meta = ReliableMessage.getMeta(getMap());
+            Object info = get("meta");
+            if (info instanceof Map) {
+                meta = Meta.parse((Map<String, Object>) info);
+            }
         }
         return meta;
     }
@@ -116,14 +125,27 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
      */
     @Override
     public void setVisa(Visa doc) {
-        ReliableMessage.setVisa(doc, getMap());
+        if (doc == null) {
+            remove("profile");
+            remove("visa");
+        } else {
+            put("visa", doc.getMap());
+        }
         visa = doc;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Visa getVisa() {
         if (visa == null) {
-            visa = ReliableMessage.getVisa(getMap());
+            Object info = get("visa");
+            if (info == null) {
+                // compatible with v1.0
+                info = get("profile");
+            }
+            if (info instanceof Map) {
+                visa = (Visa) Document.parse((Map<String, Object>) info);
+            }
         }
         return visa;
     }

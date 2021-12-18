@@ -31,7 +31,6 @@
 package chat.dim.protocol;
 
 import java.util.Date;
-import java.util.Map;
 
 import chat.dim.type.MapWrapper;
 
@@ -79,10 +78,6 @@ public interface Message extends MapWrapper {
 
     // message envelope
     Envelope getEnvelope();
-
-    static Envelope getEnvelope(Map<String, Object> msg) {
-        return Envelope.parse(msg);
-    }
 
     //--------
 
