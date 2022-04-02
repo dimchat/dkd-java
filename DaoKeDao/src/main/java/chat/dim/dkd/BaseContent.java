@@ -32,11 +32,11 @@ package chat.dim.dkd;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ContentType;
 import chat.dim.protocol.ID;
+import chat.dim.protocol.InstantMessage;
 import chat.dim.type.Dictionary;
 
 /**
@@ -81,24 +81,13 @@ public class BaseContent extends Dictionary implements Content {
 
     public BaseContent(int msgType) {
         super();
+        Date now = new Date();
         type = msgType;
-        sn = randomPositiveInteger();
-        time = new Date();
+        sn = InstantMessage.generateSerialNumber(msgType, now);
+        time = now;
         put("type", type);
         put("sn", sn);
         put("time", time.getTime() / 1000);
-    }
-
-    private static long randomPositiveInteger() {
-        Random random = new Random();
-        long sn = random.nextLong();
-        if (sn > 0) {
-            return sn;
-        } else if (sn < 0) {
-            return -sn;
-        }
-        // ZERO? do it again!
-        return 9527 + 9394; // randomPositiveInteger();
     }
 
     @Override

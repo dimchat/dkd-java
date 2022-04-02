@@ -30,6 +30,7 @@
  */
 package chat.dim.protocol;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -185,11 +186,26 @@ public interface InstantMessage extends Message {
         Factories.instantMessageFactory = factory;
     }
 
+    static long generateSerialNumber(int msgType, Date now) {
+        Factory factory = getFactory();
+        assert factory != null : "instant message factory not ready";
+        return factory.generateSerialNumber(msgType, now);
+    }
+
     /**
      *  Message Factory
      *  ~~~~~~~~~~~~~~~
      */
     interface Factory {
+
+        /**
+         *  Generate SN for message content
+         *
+         * @param msgType - content type
+         * @param now     - message time
+         * @return SN (serial number as msg id)
+         */
+        long generateSerialNumber(int msgType, Date now);
 
         /**
          *  Create instant message with envelope & content

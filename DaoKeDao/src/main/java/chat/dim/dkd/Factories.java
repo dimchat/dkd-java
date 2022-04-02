@@ -33,6 +33,7 @@ package chat.dim.dkd;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import chat.dim.protocol.Content;
 import chat.dim.protocol.Envelope;
@@ -84,6 +85,19 @@ public final class Factories {
 
         // Instant message factory
         InstantMessage.setFactory(new InstantMessage.Factory() {
+
+            @Override
+            public long generateSerialNumber(int msgType, Date time) {
+                Random random = new Random();
+                long sn = random.nextLong();
+                if (sn > 0) {
+                    return sn;
+                } else if (sn < 0) {
+                    return -sn;
+                }
+                // ZERO? do it again!
+                return 9527 + 9394; // generateSerialNumber(msgType, time);
+            }
 
             @Override
             public InstantMessage createInstantMessage(Envelope head, Content body) {
