@@ -88,11 +88,6 @@ public interface Envelope extends MapWrapper {
         assert factory != null : "envelope factory not ready";
         return factory.createEnvelope(from, to, when);
     }
-    static Envelope create(ID from, ID to, long timestamp) {
-        Factory factory = getFactory();
-        assert factory != null : "envelope factory not ready";
-        return factory.createEnvelope(from, to, timestamp);
-    }
     static Envelope parse(Map<String, Object> env) {
         if (env == null) {
             return null;
@@ -128,7 +123,6 @@ public interface Envelope extends MapWrapper {
          * @return Envelope
          */
         Envelope createEnvelope(ID from, ID to, Date when);
-        Envelope createEnvelope(ID from, ID to, long timestamp);
 
         /**
          *  Parse map object to envelope

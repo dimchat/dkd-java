@@ -70,17 +70,7 @@ final class MessageEnvelope extends Dictionary implements Envelope {
         time     = when;
         put("sender", from.toString());
         put("receiver", to.toString());
-        put("time", when.getTime() / 1000);
-    }
-
-    MessageEnvelope(ID from, ID to, long timestamp) {
-        super();
-        sender   = from;
-        receiver = to;
-        time     = new Date(timestamp * 1000);
-        put("sender", from.toString());
-        put("receiver", to.toString());
-        put("time", timestamp);
+        put("time", when.getTime() / 1000.0);
     }
 
     @Override
@@ -105,9 +95,10 @@ final class MessageEnvelope extends Dictionary implements Envelope {
     @Override
     public Date getTime() {
         if (time == null) {
-            Object timestamp = get("time");
-            if (timestamp != null) {
-                time = new Date(((Number) timestamp).longValue() * 1000);
+            Object seconds = get("time");
+            if (seconds != null) {
+                double millis = ((Number) seconds).doubleValue() * 1000.0;
+                time = new Date((long) millis);
             }
         }
         return time;

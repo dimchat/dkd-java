@@ -65,14 +65,6 @@ public final class Factories {
             }
 
             @Override
-            public Envelope createEnvelope(ID from, ID to, long timestamp) {
-                if (timestamp == 0) {
-                    timestamp = (new Date()).getTime() / 1000;
-                }
-                return new MessageEnvelope(from, to, timestamp);
-            }
-
-            @Override
             public Envelope parseEnvelope(Map<String, Object> env) {
                 if (env.get("sender") == null) {
                     // env.sender should not empty

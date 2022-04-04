@@ -87,7 +87,7 @@ public class BaseContent extends Dictionary implements Content {
         time = now;
         put("type", type);
         put("sn", sn);
-        put("time", time.getTime() / 1000);
+        put("time", time.getTime() / 1000.0);
     }
 
     @Override
@@ -111,9 +111,11 @@ public class BaseContent extends Dictionary implements Content {
     @Override
     public Date getTime() {
         if (time == null) {
-            Object timestamp = get("time");
-            assert timestamp != null : "message time not found: " + getMap();
-            time = new Date(((Number) timestamp).longValue() * 1000);
+            Object seconds = get("time");
+            if (seconds != null) {
+                double millis = ((Number) seconds).doubleValue() * 1000.0;
+                time = new Date((long) millis);
+            }
         }
         return time;
     }
