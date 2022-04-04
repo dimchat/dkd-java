@@ -104,10 +104,10 @@ public interface Content extends MapWrapper {
     static Factory getFactory(ContentType type) {
         return Factories.contentFactories.get(type.value);
     }
-    static void register(int type, Factory factory) {
+    static void setFactory(int type, Factory factory) {
         Factories.contentFactories.put(type, factory);
     }
-    static void register(ContentType type, Factory factory) {
+    static void setFactory(ContentType type, Factory factory) {
         Factories.contentFactories.put(type.value, factory);
     }
 
