@@ -80,22 +80,22 @@ public interface Content extends MapWrapper {
     //
     //  Factory method
     //
-    static Content parse(Map<String, Object> content) {
+    static Content parse(Object content) {
         if (content == null) {
             return null;
         } else if (content instanceof Content) {
             return (Content) content;
-        } else if (content instanceof MapWrapper) {
-            content = ((MapWrapper) content).getMap();
         }
+        Map<String, Object> info = MapWrapper.getMap(content);
+        assert info != null : "content error: " + content;
         // get factory by content type
-        int type = getType(content);
+        int type = getType(info);
         Factory factory = getFactory(type);
         if (factory == null) {
             factory = getFactory(0);  // unknown
             assert factory != null : "cannot parse content: " + content;
         }
-        return factory.parseContent(content);
+        return factory.parseContent(info);
     }
 
     static Factory getFactory(int type) {

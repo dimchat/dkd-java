@@ -96,13 +96,12 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
         return getContent().getType();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Content getContent() {
         if (content == null) {
             Object info = get("content");
             assert info != null : "message content not found: " + getMap();
-            content = Content.parse((Map<String, Object>) info);
+            content = Content.parse(info);
         }
         return content;
     }

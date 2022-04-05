@@ -227,17 +227,17 @@ public interface SecureMessage extends Message {
     //
     //  Factory method
     //
-    static SecureMessage parse(Map<String, Object> msg) {
+    static SecureMessage parse(Object msg) {
         if (msg == null) {
             return null;
         } else if (msg instanceof SecureMessage) {
             return (SecureMessage) msg;
-        } else if (msg instanceof MapWrapper) {
-            msg = ((MapWrapper) msg).getMap();
         }
+        Map<String, Object> info = MapWrapper.getMap(msg);
+        assert info != null : "secure message error: " + msg;
         Factory factory = getFactory();
         assert factory != null : "secure message factory not ready";
-        return factory.parseSecureMessage(msg);
+        return factory.parseSecureMessage(info);
     }
 
     static Factory getFactory() {

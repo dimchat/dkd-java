@@ -166,17 +166,17 @@ public interface InstantMessage extends Message {
         assert factory != null : "instant message factory not ready";
         return factory.createInstantMessage(head, body);
     }
-    static InstantMessage parse(Map<String, Object> msg) {
+    static InstantMessage parse(Object msg) {
         if (msg == null) {
             return null;
         } else if (msg instanceof InstantMessage) {
             return (InstantMessage) msg;
-        } else if (msg instanceof MapWrapper) {
-            msg = ((MapWrapper) msg).getMap();
         }
+        Map<String, Object> info = MapWrapper.getMap(msg);
+        assert info != null : "instant message error: " + msg;
         Factory factory = getFactory();
         assert factory != null : "instant message factory not ready";
-        return factory.parseInstantMessage(msg);
+        return factory.parseInstantMessage(info);
     }
 
     static Factory getFactory() {

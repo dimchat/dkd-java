@@ -88,17 +88,17 @@ public interface Envelope extends MapWrapper {
         assert factory != null : "envelope factory not ready";
         return factory.createEnvelope(from, to, when);
     }
-    static Envelope parse(Map<String, Object> env) {
+    static Envelope parse(Object env) {
         if (env == null) {
             return null;
         } else if (env instanceof Envelope) {
             return (Envelope) env;
-        } else if (env instanceof MapWrapper) {
-            env = ((MapWrapper) env).getMap();
         }
+        Map<String, Object> info = MapWrapper.getMap(env);
+        assert info != null : "envelope error: " + env;
         Factory factory = getFactory();
         assert factory != null : "envelope factory not ready";
-        return factory.parseEnvelope(env);
+        return factory.parseEnvelope(info);
     }
 
     static Factory getFactory() {

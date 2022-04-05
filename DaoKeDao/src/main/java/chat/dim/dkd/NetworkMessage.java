@@ -104,14 +104,11 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
         meta = info;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Meta getMeta() {
         if (meta == null) {
             Object info = get("meta");
-            if (info instanceof Map) {
-                meta = Meta.parse((Map<String, Object>) info);
-            }
+            meta = Meta.parse(info);
         }
         return meta;
     }
@@ -126,7 +123,6 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
     @Override
     public void setVisa(Visa doc) {
         if (doc == null) {
-            remove("profile");
             remove("visa");
         } else {
             put("visa", doc.getMap());
@@ -134,17 +130,13 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
         visa = doc;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Visa getVisa() {
         if (visa == null) {
             Object info = get("visa");
-            if (info == null) {
-                // compatible with v1.0
-                info = get("profile");
-            }
-            if (info instanceof Map) {
-                visa = (Visa) Document.parse((Map<String, Object>) info);
+            Document doc = Document.parse(info);
+            if (doc instanceof Visa) {
+                visa = (Visa) doc;
             }
         }
         return visa;

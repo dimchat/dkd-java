@@ -131,17 +131,17 @@ public interface ReliableMessage extends SecureMessage {
     //
     //  Factory method
     //
-    static ReliableMessage parse(Map<String, Object> msg) {
+    static ReliableMessage parse(Object msg) {
         if (msg == null) {
             return null;
         } else if (msg instanceof ReliableMessage) {
             return (ReliableMessage) msg;
-        } else if (msg instanceof MapWrapper) {
-            msg = ((MapWrapper) msg).getMap();
         }
+        Map<String, Object> info = MapWrapper.getMap(msg);
+        assert info != null : "reliable message error: " + msg;
         Factory factory = getFactory();
         assert factory != null : "reliable message factory not ready";
-        return factory.parseReliableMessage(msg);
+        return factory.parseReliableMessage(info);
     }
 
     static Factory getFactory() {
