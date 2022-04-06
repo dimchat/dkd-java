@@ -80,8 +80,11 @@ public final class Factories {
 
             @Override
             public long generateSerialNumber(int msgType, Date time) {
+                // because we must make sure all messages in a same chat box won't have
+                // same serial numbers, so we can't use time-related numbers, therefore
+                // the best choice is a totally random number, maybe.
                 Random random = new Random();
-                long sn = random.nextLong();
+                int sn = random.nextInt();
                 if (sn > 0) {
                     return sn;
                 } else if (sn < 0) {
