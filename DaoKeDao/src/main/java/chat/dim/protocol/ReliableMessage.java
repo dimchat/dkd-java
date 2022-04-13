@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Map;
 
 import chat.dim.dkd.Factories;
-import chat.dim.type.MapWrapper;
+import chat.dim.type.Mapper;
 
 /**
  *  Reliable Message signed by an asymmetric key
@@ -137,7 +137,7 @@ public interface ReliableMessage extends SecureMessage {
         } else if (msg instanceof ReliableMessage) {
             return (ReliableMessage) msg;
         }
-        Map<String, Object> info = MapWrapper.getMap(msg);
+        Map<String, Object> info = Mapper.getMap(msg);
         assert info != null : "reliable message error: " + msg;
         Factory factory = getFactory();
         assert factory != null : "reliable message factory not ready";

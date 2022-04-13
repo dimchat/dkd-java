@@ -35,7 +35,7 @@ import java.util.Map;
 
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.dkd.Factories;
-import chat.dim.type.MapWrapper;
+import chat.dim.type.Mapper;
 
 /**
  *  Secure Message
@@ -233,7 +233,7 @@ public interface SecureMessage extends Message {
         } else if (msg instanceof SecureMessage) {
             return (SecureMessage) msg;
         }
-        Map<String, Object> info = MapWrapper.getMap(msg);
+        Map<String, Object> info = Mapper.getMap(msg);
         assert info != null : "secure message error: " + msg;
         Factory factory = getFactory();
         assert factory != null : "secure message factory not ready";

@@ -68,7 +68,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
 
     PlainMessage(Envelope head, Content body) {
         super(head);
-        put("content", body.getMap());
+        put("content", body.toMap());
         content = body;
     }
 
@@ -100,7 +100,7 @@ final class PlainMessage extends BaseMessage implements InstantMessage {
     public Content getContent() {
         if (content == null) {
             Object info = get("content");
-            assert info != null : "message content not found: " + getMap();
+            assert info != null : "message content not found: " + toMap();
             content = Content.parse(info);
         }
         return content;

@@ -36,7 +36,7 @@ import java.util.Map;
 
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.dkd.Factories;
-import chat.dim.type.MapWrapper;
+import chat.dim.type.Mapper;
 
 /**
  *  Instant Message
@@ -172,7 +172,7 @@ public interface InstantMessage extends Message {
         } else if (msg instanceof InstantMessage) {
             return (InstantMessage) msg;
         }
-        Map<String, Object> info = MapWrapper.getMap(msg);
+        Map<String, Object> info = Mapper.getMap(msg);
         assert info != null : "instant message error: " + msg;
         Factory factory = getFactory();
         assert factory != null : "instant message factory not ready";

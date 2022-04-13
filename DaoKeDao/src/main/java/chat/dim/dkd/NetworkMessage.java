@@ -99,7 +99,7 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
         if (info == null) {
             remove("meta");
         } else {
-            put("meta", info.getMap());
+            put("meta", info.toMap());
         }
         meta = info;
     }
@@ -125,7 +125,7 @@ final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
         if (doc == null) {
             remove("visa");
         } else {
-            put("visa", doc.getMap());
+            put("visa", doc.toMap());
         }
         visa = doc;
     }

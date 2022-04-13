@@ -93,7 +93,7 @@ public class BaseContent extends Dictionary implements Content {
     @Override
     public int getType() {
         if (type == 0) {
-            type = Content.getType(getMap());
+            type = Content.getType(toMap());
         }
         return type;
     }
@@ -102,7 +102,7 @@ public class BaseContent extends Dictionary implements Content {
     public long getSerialNumber() {
         if (sn == 0) {
             Object value = get("sn");
-            assert value != null : "serial number not found: " + getMap();
+            assert value != null : "serial number not found: " + toMap();
             sn = ((Number) value).longValue();
         }
         return sn;

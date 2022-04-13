@@ -32,7 +32,7 @@ package chat.dim.protocol;
 
 import java.util.Date;
 
-import chat.dim.type.MapWrapper;
+import chat.dim.type.Mapper;
 
 /*
  *  Message Transforming
@@ -70,7 +70,7 @@ import chat.dim.type.MapWrapper;
  *      ...
  *  }
  */
-public interface Message extends MapWrapper {
+public interface Message extends Mapper {
 
     // message delegate
     Delegate getDelegate();
