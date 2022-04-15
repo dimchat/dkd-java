@@ -69,9 +69,8 @@ public final class Factories {
                 if (env.get("sender") == null) {
                     // env.sender should not empty
                     return null;
-                } else {
-                    return new MessageEnvelope(env);
                 }
+                return new MessageEnvelope(env);
             }
         });
 
@@ -101,6 +100,10 @@ public final class Factories {
 
             @Override
             public InstantMessage parseInstantMessage(Map<String, Object> msg) {
+                if (msg.get("content") == null) {
+                    // msg.content should not empty
+                    return null;
+                }
                 return new PlainMessage(msg);
             }
         });
@@ -127,9 +130,8 @@ public final class Factories {
                     // msg.data should not empty
                     // msg.signature should not empty
                     return null;
-                } else {
-                    return new NetworkMessage(msg);
                 }
+                return new NetworkMessage(msg);
             }
         });
     }

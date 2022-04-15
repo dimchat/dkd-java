@@ -35,6 +35,7 @@ import java.util.Map;
 
 import chat.dim.dkd.Factories;
 import chat.dim.type.Mapper;
+import chat.dim.type.Wrapper;
 
 /**
  *  Message Content
@@ -86,7 +87,7 @@ public interface Content extends Mapper {
         } else if (content instanceof Content) {
             return (Content) content;
         }
-        Map<String, Object> info = Mapper.getMap(content);
+        Map<String, Object> info = Wrapper.getMap(content);
         assert info != null : "content error: " + content;
         // get factory by content type
         int type = getType(info);

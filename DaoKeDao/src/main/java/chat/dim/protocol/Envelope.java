@@ -35,6 +35,7 @@ import java.util.Map;
 
 import chat.dim.dkd.Factories;
 import chat.dim.type.Mapper;
+import chat.dim.type.Wrapper;
 
 /**
  *  Envelope for message
@@ -94,7 +95,7 @@ public interface Envelope extends Mapper {
         } else if (env instanceof Envelope) {
             return (Envelope) env;
         }
-        Map<String, Object> info = Mapper.getMap(env);
+        Map<String, Object> info = Wrapper.getMap(env);
         assert info != null : "envelope error: " + env;
         Factory factory = getFactory();
         assert factory != null : "envelope factory not ready";
