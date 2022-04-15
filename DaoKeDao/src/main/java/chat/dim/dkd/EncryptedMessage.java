@@ -42,7 +42,7 @@ import chat.dim.protocol.ID;
 import chat.dim.protocol.InstantMessage;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
-import chat.dim.type.Mapper;
+import chat.dim.type.Copier;
 
 /**
  *  Secure Message
@@ -282,7 +282,7 @@ class EncryptedMessage extends BaseMessage implements SecureMessage {
                 msg.put("key", base64);
             }
             // 4. repack message
-            item = SecureMessage.parse(Mapper.copyMap(msg, false));
+            item = SecureMessage.parse(Copier.copyMap(msg));
             if (item != null) {
                 messages.add(item);
             }
