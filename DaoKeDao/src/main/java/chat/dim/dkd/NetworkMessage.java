@@ -59,14 +59,14 @@ import chat.dim.protocol.Visa;
  *      signature: "..."   // base64_encode()
  *  }
  */
-final class NetworkMessage extends EncryptedMessage implements ReliableMessage {
+public class NetworkMessage extends EncryptedMessage implements ReliableMessage {
 
     private byte[] signature;
 
     private Meta meta = null;
     private Visa visa = null;
 
-    NetworkMessage(Map<String, Object> dictionary) {
+    public NetworkMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         signature = null;

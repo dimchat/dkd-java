@@ -33,8 +33,8 @@ package chat.dim.protocol;
 import java.util.List;
 import java.util.Map;
 
+import chat.dim.core.MessageFactories;
 import chat.dim.crypto.SymmetricKey;
-import chat.dim.dkd.Factories;
 import chat.dim.type.Wrapper;
 
 /**
@@ -241,10 +241,10 @@ public interface SecureMessage extends Message {
     }
 
     static Factory getFactory() {
-        return Factories.secureMessageFactory;
+        return MessageFactories.secureMessageFactory;
     }
     static void setFactory(Factory factory) {
-        Factories.secureMessageFactory = factory;
+        MessageFactories.secureMessageFactory = factory;
     }
 
     /**

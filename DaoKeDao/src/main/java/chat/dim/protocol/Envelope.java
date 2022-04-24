@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.dkd.Factories;
+import chat.dim.core.MessageFactories;
 import chat.dim.type.Mapper;
 import chat.dim.type.Wrapper;
 
@@ -103,10 +103,10 @@ public interface Envelope extends Mapper {
     }
 
     static Factory getFactory() {
-        return Factories.envelopeFactory;
+        return MessageFactories.envelopeFactory;
     }
     static void setFactory(Factory factory) {
-        Factories.envelopeFactory = factory;
+        MessageFactories.envelopeFactory = factory;
     }
 
     /**

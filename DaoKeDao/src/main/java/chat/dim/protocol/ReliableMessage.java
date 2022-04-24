@@ -32,7 +32,7 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
-import chat.dim.dkd.Factories;
+import chat.dim.core.MessageFactories;
 import chat.dim.type.Wrapper;
 
 /**
@@ -145,10 +145,10 @@ public interface ReliableMessage extends SecureMessage {
     }
 
     static Factory getFactory() {
-        return Factories.reliableMessageFactory;
+        return MessageFactories.reliableMessageFactory;
     }
     static void setFactory(Factory factory) {
-        Factories.reliableMessageFactory = factory;
+        MessageFactories.reliableMessageFactory = factory;
     }
 
     /**

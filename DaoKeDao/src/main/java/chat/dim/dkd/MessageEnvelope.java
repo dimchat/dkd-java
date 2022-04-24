@@ -49,13 +49,13 @@ import chat.dim.type.Dictionary;
  *      time     : 123
  *  }
  */
-final class MessageEnvelope extends Dictionary implements Envelope {
+public class MessageEnvelope extends Dictionary implements Envelope {
 
     private ID sender;
     private ID receiver;
     private Date time;
 
-    MessageEnvelope(Map<String, Object> dictionary) {
+    public MessageEnvelope(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         sender   = null;
@@ -63,7 +63,7 @@ final class MessageEnvelope extends Dictionary implements Envelope {
         time     = null;
     }
 
-    MessageEnvelope(ID from, ID to, Date when) {
+    public MessageEnvelope(ID from, ID to, Date when) {
         super();
         sender   = from;
         receiver = to;

@@ -28,13 +28,17 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim.core;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import chat.dim.dkd.EncryptedMessage;
+import chat.dim.dkd.MessageEnvelope;
+import chat.dim.dkd.NetworkMessage;
+import chat.dim.dkd.PlainMessage;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.ID;
@@ -42,7 +46,7 @@ import chat.dim.protocol.InstantMessage;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
 
-public final class Factories {
+public final class MessageFactories {
 
     public static final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
 

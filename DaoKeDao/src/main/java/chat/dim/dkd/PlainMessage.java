@@ -56,17 +56,17 @@ import chat.dim.protocol.SecureMessage;
  *      content  : {...}
  *  }
  */
-final class PlainMessage extends BaseMessage implements InstantMessage {
+public class PlainMessage extends BaseMessage implements InstantMessage {
 
     private Content content;
 
-    PlainMessage(Map<String, Object> dictionary) {
+    public PlainMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         content = null;
     }
 
-    PlainMessage(Envelope head, Content body) {
+    public PlainMessage(Envelope head, Content body) {
         super(head);
         put("content", body.toMap());
         content = body;

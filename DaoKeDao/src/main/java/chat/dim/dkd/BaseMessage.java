@@ -75,20 +75,20 @@ import chat.dim.type.Dictionary;
  *      ...
  *  }
  */
-abstract class BaseMessage extends Dictionary implements Message {
+public abstract class BaseMessage extends Dictionary implements Message {
 
     private Envelope envelope;
 
     private WeakReference<Delegate> delegateRef;
 
-    BaseMessage(Map<String, Object> dictionary) {
+    protected BaseMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         envelope = null;
         delegateRef = null;
     }
 
-    BaseMessage(Envelope env) {
+    protected BaseMessage(Envelope env) {
         super(env.toMap());
         envelope = env;
         delegateRef = null;

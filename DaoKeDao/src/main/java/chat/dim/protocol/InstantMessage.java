@@ -34,8 +34,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import chat.dim.core.MessageFactories;
 import chat.dim.crypto.SymmetricKey;
-import chat.dim.dkd.Factories;
 import chat.dim.type.Wrapper;
 
 /**
@@ -180,10 +180,10 @@ public interface InstantMessage extends Message {
     }
 
     static Factory getFactory() {
-        return Factories.instantMessageFactory;
+        return MessageFactories.instantMessageFactory;
     }
     static void setFactory(Factory factory) {
-        Factories.instantMessageFactory = factory;
+        MessageFactories.instantMessageFactory = factory;
     }
 
     static long generateSerialNumber(int msgType, Date now) {

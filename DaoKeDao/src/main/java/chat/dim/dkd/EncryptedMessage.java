@@ -62,13 +62,13 @@ import chat.dim.type.Copier;
  *      }
  *  }
  */
-class EncryptedMessage extends BaseMessage implements SecureMessage {
+public class EncryptedMessage extends BaseMessage implements SecureMessage {
 
     private byte[] data;
     private byte[] key;
     private Map<String, Object> keys;
 
-    EncryptedMessage(Map<String, Object> dictionary) {
+    public EncryptedMessage(Map<String, Object> dictionary) {
         super(dictionary);
         // lazy load
         data = null;
