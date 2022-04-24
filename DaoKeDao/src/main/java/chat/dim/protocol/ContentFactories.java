@@ -28,14 +28,12 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.core;
+package chat.dim.protocol;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import chat.dim.protocol.Content;
+final class ContentFactories {
 
-public final class ContentFactories {
-
-    public static final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
+    static final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
 }

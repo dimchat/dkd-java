@@ -33,7 +33,6 @@ package chat.dim.protocol;
 import java.util.List;
 import java.util.Map;
 
-import chat.dim.core.MessageFactories;
 import chat.dim.crypto.SymmetricKey;
 import chat.dim.type.Wrapper;
 

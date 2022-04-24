@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.core;
+package chat.dim.protocol;
 
 import java.util.Date;
 import java.util.Map;
@@ -38,20 +38,14 @@ import chat.dim.dkd.EncryptedMessage;
 import chat.dim.dkd.MessageEnvelope;
 import chat.dim.dkd.NetworkMessage;
 import chat.dim.dkd.PlainMessage;
-import chat.dim.protocol.Content;
-import chat.dim.protocol.Envelope;
-import chat.dim.protocol.ID;
-import chat.dim.protocol.InstantMessage;
-import chat.dim.protocol.ReliableMessage;
-import chat.dim.protocol.SecureMessage;
 
-public final class MessageFactories {
+final class MessageFactories {
 
-    public static Envelope.Factory envelopeFactory = null;
+    static Envelope.Factory envelopeFactory = null;
 
-    public static InstantMessage.Factory instantMessageFactory = null;
-    public static SecureMessage.Factory secureMessageFactory = null;
-    public static ReliableMessage.Factory reliableMessageFactory = null;
+    static InstantMessage.Factory instantMessageFactory = null;
+    static SecureMessage.Factory secureMessageFactory = null;
+    static ReliableMessage.Factory reliableMessageFactory = null;
 
     static {
         // Envelope factory

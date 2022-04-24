@@ -33,7 +33,6 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.core.MessageFactories;
 import chat.dim.type.Mapper;
 import chat.dim.type.Wrapper;
 
