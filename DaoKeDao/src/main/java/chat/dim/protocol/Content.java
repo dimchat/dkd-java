@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.core.MessageFactories;
+import chat.dim.core.ContentFactories;
 import chat.dim.type.Mapper;
 import chat.dim.type.Wrapper;
 
@@ -100,16 +100,16 @@ public interface Content extends Mapper {
     }
 
     static Factory getFactory(int type) {
-        return MessageFactories.contentFactories.get(type);
+        return ContentFactories.contentFactories.get(type);
     }
     static Factory getFactory(ContentType type) {
-        return MessageFactories.contentFactories.get(type.value);
+        return ContentFactories.contentFactories.get(type.value);
     }
     static void setFactory(int type, Factory factory) {
-        MessageFactories.contentFactories.put(type, factory);
+        ContentFactories.contentFactories.put(type, factory);
     }
     static void setFactory(ContentType type, Factory factory) {
-        MessageFactories.contentFactories.put(type.value, factory);
+        ContentFactories.contentFactories.put(type.value, factory);
     }
 
     /**

@@ -31,7 +31,6 @@
 package chat.dim.core;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -47,8 +46,6 @@ import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
 
 public final class MessageFactories {
-
-    public static final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
 
     public static Envelope.Factory envelopeFactory = null;
 
