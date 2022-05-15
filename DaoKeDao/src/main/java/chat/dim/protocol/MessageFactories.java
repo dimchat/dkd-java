@@ -48,6 +48,13 @@ final class MessageFactories {
     static ReliableMessage.Factory reliableMessageFactory = null;
 
     static {
+        registerFactories();
+    }
+
+    /**
+     *  Register core factories
+     */
+    private static void registerFactories() {
         // Envelope factory
         Envelope.setFactory(new Envelope.Factory() {
 
