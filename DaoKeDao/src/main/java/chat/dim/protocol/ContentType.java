@@ -101,7 +101,13 @@ public enum ContentType {
     COMMAND (0x88), // 1000 1000
     HISTORY (0x89), // 1000 1001 (Entity history command)
 
-    // top-secret message forward by proxy (Service Provider)
+    // application customized
+    APPLICATION   (0xA0), // 1010 0000 (Application 0nly, reserved)
+    //APPLICATION   (0xAC), // 1010 1100 (Application Customized, reserved)
+    //CUSTOMIZED    (0xC0), // 1100 0000 (Customized Content, reserved)
+    CUSTOMIZED    (0xCC), // 1100 1100 (Customized Content)
+
+    // top-secret message forward by proxy (MTA)
     FORWARD (0xFF); // 1111 1111
 
     public final int value;
