@@ -68,8 +68,8 @@ public class EncryptedMessage extends BaseMessage implements SecureMessage {
     private byte[] key;
     private Map<String, Object> keys;
 
-    public EncryptedMessage(Map<String, Object> dictionary) {
-        super(dictionary);
+    public EncryptedMessage(Map<String, Object> msg) {
+        super(msg);
         // lazy load
         data = null;
         key = null;

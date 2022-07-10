@@ -49,7 +49,7 @@ import chat.dim.type.Wrapper;
  *
  *      //-- message info
  *      'text'    : 'text',          // for text message
- *      'command' : 'Command Name',  // for system command
+ *      'cmd'     : 'Command Name',  // for system command
  *      //...
  *  }
  */

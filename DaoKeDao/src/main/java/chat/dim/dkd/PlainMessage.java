@@ -60,8 +60,8 @@ public class PlainMessage extends BaseMessage implements InstantMessage {
 
     private Content content;
 
-    public PlainMessage(Map<String, Object> dictionary) {
-        super(dictionary);
+    public PlainMessage(Map<String, Object> msg) {
+        super(msg);
         // lazy load
         content = null;
     }

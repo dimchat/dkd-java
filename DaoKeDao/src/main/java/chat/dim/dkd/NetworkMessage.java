@@ -66,8 +66,8 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
     private Meta meta = null;
     private Visa visa = null;
 
-    public NetworkMessage(Map<String, Object> dictionary) {
-        super(dictionary);
+    public NetworkMessage(Map<String, Object> msg) {
+        super(msg);
         // lazy load
         signature = null;
     }

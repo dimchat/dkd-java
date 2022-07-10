@@ -52,7 +52,7 @@ import chat.dim.type.Dictionary;
  *
  *      //-- message info
  *      'text'    : 'text',          // for text message
- *      'command' : 'Command Name',  // for system command
+ *      'cmd'     : 'Command Name',  // for system command
  *      //...
  *  }
  */
@@ -67,8 +67,8 @@ public class BaseContent extends Dictionary implements Content {
     // message time
     private Date time;
 
-    public BaseContent(Map<String, Object> dictionary) {
-        super(dictionary);
+    public BaseContent(Map<String, Object> content) {
+        super(content);
         // lazy load
         type = 0;
         sn = 0;

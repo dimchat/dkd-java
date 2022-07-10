@@ -55,8 +55,8 @@ public class MessageEnvelope extends Dictionary implements Envelope {
     private ID receiver;
     private Date time;
 
-    public MessageEnvelope(Map<String, Object> dictionary) {
-        super(dictionary);
+    public MessageEnvelope(Map<String, Object> env) {
+        super(env);
         // lazy load
         sender   = null;
         receiver = null;

@@ -81,8 +81,8 @@ public abstract class BaseMessage extends Dictionary implements Message {
 
     private WeakReference<Delegate> delegateRef;
 
-    protected BaseMessage(Map<String, Object> dictionary) {
-        super(dictionary);
+    protected BaseMessage(Map<String, Object> msg) {
+        super(msg);
         // lazy load
         envelope = null;
         delegateRef = null;
