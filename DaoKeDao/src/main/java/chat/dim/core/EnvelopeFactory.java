@@ -2,12 +2,12 @@
  *
  *  Dao-Ke-Dao: Universal Message Module
  *
- *                                Written in 2020 by Moky <albert.moky@gmail.com>
+ *                                Written in 2022 by Moky <albert.moky@gmail.com>
  *
  * ==============================================================================
  * The MIT License (MIT)
  *
- * Copyright (c) 2020 Albert Moky
+ * Copyright (c) 2022 Albert Moky
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,12 +28,34 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.protocol;
+package chat.dim.core;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Map;
 
-final class ContentFactories {
+import chat.dim.dkd.MessageEnvelope;
+import chat.dim.protocol.Envelope;
+import chat.dim.protocol.ID;
 
-    static final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
+public class EnvelopeFactory implements Envelope.Factory {
+
+    //
+    //  Envelope.Factory
+    //
+    @Override
+    public Envelope createEnvelope(ID from, ID to, Date when) {
+        if (when == null) {
+            when = new Date();
+        }
+        return new MessageEnvelope(from, to, when);
+    }
+
+    @Override
+    public Envelope parseEnvelope(Map<String, Object> env) {
+        if (env.get("sender") == null) {
+            // env.sender should not empty
+            return null;
+        }
+        return new MessageEnvelope(env);
+    }
 }

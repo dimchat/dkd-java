@@ -99,16 +99,16 @@ public interface Content extends Mapper {
     }
 
     static Factory getFactory(int type) {
-        return ContentFactories.contentFactories.get(type);
+        return MessageFactories.contentFactories.get(type);
     }
     static Factory getFactory(ContentType type) {
-        return ContentFactories.contentFactories.get(type.value);
+        return MessageFactories.contentFactories.get(type.value);
     }
     static void setFactory(int type, Factory factory) {
-        ContentFactories.contentFactories.put(type, factory);
+        MessageFactories.contentFactories.put(type, factory);
     }
     static void setFactory(ContentType type, Factory factory) {
-        ContentFactories.contentFactories.put(type.value, factory);
+        MessageFactories.contentFactories.put(type.value, factory);
     }
 
     /**
