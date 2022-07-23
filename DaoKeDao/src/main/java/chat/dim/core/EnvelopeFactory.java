@@ -52,7 +52,9 @@ public class EnvelopeFactory implements Envelope.Factory {
 
     @Override
     public Envelope parseEnvelope(Map<String, Object> env) {
-        if (env.get("sender") == null) {
+        // check 'sender'
+        Object sender = env.get("sender");
+        if (sender == null) {
             // env.sender should not empty
             return null;
         }

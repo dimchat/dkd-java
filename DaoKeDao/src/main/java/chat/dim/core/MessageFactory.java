@@ -71,8 +71,12 @@ public class MessageFactory implements InstantMessage.Factory, SecureMessage.Fac
 
     @Override
     public InstantMessage parseInstantMessage(Map<String, Object> msg) {
-        if (msg.get("content") == null) {
-            // msg.content should not empty
+        // check 'sender', 'content'
+        Object sender = msg.get("sender");
+        Object content = msg.get("content");
+        if (sender == null || content == null) {
+            // msg.sender should not be empty
+            // msg.content should not be empty
             return null;
         }
         return new PlainMessage(msg);
@@ -83,8 +87,18 @@ public class MessageFactory implements InstantMessage.Factory, SecureMessage.Fac
     //
     @Override
     public SecureMessage parseSecureMessage(Map<String, Object> msg) {
-        if (msg.containsKey("signature")) {
+        // check 'signature'
+        Object signature = msg.get("signature");
+        if (signature != null) {
             return new NetworkMessage(msg);
+        }
+        // check 'sender', 'data'
+        Object sender = msg.get("sender");
+        Object data = msg.get("data");
+        if (sender == null || data == null) {
+            // msg.sender should not be empty
+            // msg.data should not be empty
+            return null;
         }
         return new EncryptedMessage(msg);
     }
@@ -94,10 +108,14 @@ public class MessageFactory implements InstantMessage.Factory, SecureMessage.Fac
     //
     @Override
     public ReliableMessage parseReliableMessage(Map<String, Object> msg) {
-        if (msg.get("sender") == null || msg.get("data") == null || msg.get("signature") == null) {
-            // msg.sender should not empty
-            // msg.data should not empty
-            // msg.signature should not empty
+        // check 'sender', 'data', 'signature'
+        Object sender = msg.get("sender");
+        Object data = msg.get("data");
+        Object signature = msg.get("signature");
+        if (sender == null || data == null || signature == null) {
+            // msg.sender should not be empty
+            // msg.data should not be empty
+            // msg.signature should not be empty
             return null;
         }
         return new NetworkMessage(msg);

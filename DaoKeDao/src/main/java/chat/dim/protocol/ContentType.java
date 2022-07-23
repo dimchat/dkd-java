@@ -116,7 +116,7 @@ public enum ContentType {
                                // 1100 ???? (Reserved)
     //CUSTOMIZED_15    (0xCF), // 1100 1111 (Reserved)
 
-    // top-secret message forward by proxy (MTA)
+    // Top-Secret message forward by proxy (MTA)
     FORWARD (0xFF); // 1111 1111
 
     public final int value;
