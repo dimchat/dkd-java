@@ -87,11 +87,6 @@ public class MessageFactory implements InstantMessage.Factory, SecureMessage.Fac
     //
     @Override
     public SecureMessage parseSecureMessage(Map<String, Object> msg) {
-        // check 'signature'
-        Object signature = msg.get("signature");
-        if (signature != null) {
-            return new NetworkMessage(msg);
-        }
         // check 'sender', 'data'
         Object sender = msg.get("sender");
         Object data = msg.get("data");
@@ -99,6 +94,11 @@ public class MessageFactory implements InstantMessage.Factory, SecureMessage.Fac
             // msg.sender should not be empty
             // msg.data should not be empty
             return null;
+        }
+        // check 'signature'
+        Object signature = msg.get("signature");
+        if (signature != null) {
+            return new NetworkMessage(msg);
         }
         return new EncryptedMessage(msg);
     }
