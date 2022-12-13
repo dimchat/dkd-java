@@ -44,9 +44,6 @@ public class EnvelopeFactory implements Envelope.Factory {
     //
     @Override
     public Envelope createEnvelope(ID from, ID to, Date when) {
-        if (when == null) {
-            when = new Date();
-        }
         return new MessageEnvelope(from, to, when);
     }
 

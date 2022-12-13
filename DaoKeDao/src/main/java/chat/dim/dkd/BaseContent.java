@@ -87,7 +87,7 @@ public class BaseContent extends Dictionary implements Content {
         time = now;
         put("type", type);
         put("sn", sn);
-        put("time", time.getTime() / 1000.0);
+        put("time", now.getTime() / 1000.0);
     }
 
     @Override

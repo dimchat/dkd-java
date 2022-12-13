@@ -65,6 +65,12 @@ public class MessageEnvelope extends Dictionary implements Envelope {
 
     public MessageEnvelope(ID from, ID to, Date when) {
         super();
+        if (to == null) {
+            to = ID.ANYONE;
+        }
+        if (when == null) {
+            when = new Date();
+        }
         sender   = from;
         receiver = to;
         time     = when;

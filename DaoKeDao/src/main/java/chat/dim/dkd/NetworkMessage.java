@@ -63,13 +63,15 @@ public class NetworkMessage extends EncryptedMessage implements ReliableMessage 
 
     private byte[] signature;
 
-    private Meta meta = null;
-    private Visa visa = null;
+    private Meta meta;
+    private Visa visa;
 
     public NetworkMessage(Map<String, Object> msg) {
         super(msg);
         // lazy load
         signature = null;
+        meta = null;
+        visa = null;
     }
 
     @Override

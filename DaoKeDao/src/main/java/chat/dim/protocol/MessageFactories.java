@@ -36,7 +36,7 @@ import java.util.Map;
 import chat.dim.core.EnvelopeFactory;
 import chat.dim.core.MessageFactory;
 
-final class MessageFactories {
+public final class MessageFactories {
 
     static final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
 
@@ -46,14 +46,10 @@ final class MessageFactories {
     static SecureMessage.Factory secureMessageFactory = null;
     static ReliableMessage.Factory reliableMessageFactory = null;
 
-    static {
-        registerFactories();
-    }
-
     /**
      *  Register core factories
      */
-    private static void registerFactories() {
+    public static void registerFactories() {
         // Envelope factory
         EnvelopeFactory env = new EnvelopeFactory();
         Envelope.setFactory(env);

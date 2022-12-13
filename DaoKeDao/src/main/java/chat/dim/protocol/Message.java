@@ -81,12 +81,12 @@ public interface Message extends Mapper {
 
     //--------
 
-    ID getSender();
-    ID getReceiver();
-    Date getTime();
+    ID getSender();    // envelope.sender
+    ID getReceiver();  // envelope.receiver
+    Date getTime();    // content.time or envelope.time
 
-    ID getGroup();
-    int getType();
+    ID getGroup();     // content.group or envelope.group
+    int getType();     // content.type or envelope.type
 
     /**
      *  Message Delegate
