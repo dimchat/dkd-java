@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import chat.dim.crypto.SymmetricKey;
-import chat.dim.type.Wrapper;
+import chat.dim.dkd.FactoryManager;
 
 /**
  *  Secure Message
@@ -227,23 +227,12 @@ public interface SecureMessage extends Message {
     //  Factory method
     //
     static SecureMessage parse(Object msg) {
-        if (msg == null) {
-            return null;
-        } else if (msg instanceof SecureMessage) {
-            return (SecureMessage) msg;
-        }
-        Map<String, Object> info = Wrapper.getMap(msg);
-        assert info != null : "secure message error: " + msg;
-        Factory factory = getFactory();
-        assert factory != null : "secure message factory not ready";
-        return factory.parseSecureMessage(info);
-    }
-
-    static Factory getFactory() {
-        return MessageFactories.secureMessageFactory;
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.parseSecureMessage(msg);
     }
     static void setFactory(Factory factory) {
-        MessageFactories.secureMessageFactory = factory;
+        FactoryManager man = FactoryManager.getInstance();
+        man.generalFactory.secureMessageFactory = factory;
     }
 
     /**

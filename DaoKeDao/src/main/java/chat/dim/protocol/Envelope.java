@@ -33,8 +33,8 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
+import chat.dim.dkd.FactoryManager;
 import chat.dim.type.Mapper;
-import chat.dim.type.Wrapper;
 
 /**
  *  Envelope for message
@@ -84,28 +84,16 @@ public interface Envelope extends Mapper {
     //  Factory methods
     //
     static Envelope create(ID from, ID to, Date when) {
-        Factory factory = getFactory();
-        assert factory != null : "envelope factory not ready";
-        return factory.createEnvelope(from, to, when);
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.createEnvelope(from, to, when);
     }
     static Envelope parse(Object env) {
-        if (env == null) {
-            return null;
-        } else if (env instanceof Envelope) {
-            return (Envelope) env;
-        }
-        Map<String, Object> info = Wrapper.getMap(env);
-        assert info != null : "envelope error: " + env;
-        Factory factory = getFactory();
-        assert factory != null : "envelope factory not ready";
-        return factory.parseEnvelope(info);
-    }
-
-    static Factory getFactory() {
-        return MessageFactories.envelopeFactory;
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.parseEnvelope(env);
     }
     static void setFactory(Factory factory) {
-        MessageFactories.envelopeFactory = factory;
+        FactoryManager man = FactoryManager.getInstance();
+        man.generalFactory.envelopeFactory = factory;
     }
 
     /**

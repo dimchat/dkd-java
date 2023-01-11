@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import chat.dim.crypto.SymmetricKey;
-import chat.dim.type.Wrapper;
+import chat.dim.dkd.FactoryManager;
 
 /**
  *  Instant Message
@@ -161,34 +161,21 @@ public interface InstantMessage extends Message {
     //  Factory methods
     //
     static InstantMessage create(Envelope head, Content body) {
-        Factory factory = getFactory();
-        assert factory != null : "instant message factory not ready";
-        return factory.createInstantMessage(head, body);
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.createInstantMessage(head, body);
     }
     static InstantMessage parse(Object msg) {
-        if (msg == null) {
-            return null;
-        } else if (msg instanceof InstantMessage) {
-            return (InstantMessage) msg;
-        }
-        Map<String, Object> info = Wrapper.getMap(msg);
-        assert info != null : "instant message error: " + msg;
-        Factory factory = getFactory();
-        assert factory != null : "instant message factory not ready";
-        return factory.parseInstantMessage(info);
-    }
-
-    static Factory getFactory() {
-        return MessageFactories.instantMessageFactory;
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.parseInstantMessage(msg);
     }
     static void setFactory(Factory factory) {
-        MessageFactories.instantMessageFactory = factory;
+        FactoryManager man = FactoryManager.getInstance();
+        man.generalFactory.instantMessageFactory = factory;
     }
 
     static long generateSerialNumber(int msgType, Date now) {
-        Factory factory = getFactory();
-        assert factory != null : "instant message factory not ready";
-        return factory.generateSerialNumber(msgType, now);
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.generateSerialNumber(msgType, now);
     }
 
     /**

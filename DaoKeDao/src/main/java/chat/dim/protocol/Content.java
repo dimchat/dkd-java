@@ -33,8 +33,8 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
+import chat.dim.dkd.FactoryManager;
 import chat.dim.type.Mapper;
-import chat.dim.type.Wrapper;
 
 /**
  *  Message Content
@@ -58,14 +58,6 @@ public interface Content extends Mapper {
     // content type
     int getType();
 
-    static int getType(Map<String, Object> content) {
-        Object version = content.get("type");
-        if (version == null) {
-            throw new NullPointerException("content type not found: " + content);
-        }
-        return ((Number) version).intValue();
-    }
-
     // serial number as message id
     long getSerialNumber();
 
@@ -81,34 +73,16 @@ public interface Content extends Mapper {
     //  Factory method
     //
     static Content parse(Object content) {
-        if (content == null) {
-            return null;
-        } else if (content instanceof Content) {
-            return (Content) content;
-        }
-        Map<String, Object> info = Wrapper.getMap(content);
-        assert info != null : "content error: " + content;
-        // get factory by content type
-        int type = getType(info);
-        Factory factory = getFactory(type);
-        if (factory == null) {
-            factory = getFactory(0);  // unknown
-            assert factory != null : "cannot parse content: " + content;
-        }
-        return factory.parseContent(info);
-    }
-
-    static Factory getFactory(int type) {
-        return MessageFactories.contentFactories.get(type);
-    }
-    static Factory getFactory(ContentType type) {
-        return MessageFactories.contentFactories.get(type.value);
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.parseContent(content);
     }
     static void setFactory(int type, Factory factory) {
-        MessageFactories.contentFactories.put(type, factory);
+        FactoryManager man = FactoryManager.getInstance();
+        man.generalFactory.contentFactories.put(type, factory);
     }
     static void setFactory(ContentType type, Factory factory) {
-        MessageFactories.contentFactories.put(type.value, factory);
+        FactoryManager man = FactoryManager.getInstance();
+        man.generalFactory.contentFactories.put(type.value, factory);
     }
 
     /**
