@@ -67,9 +67,8 @@ public enum FactoryManager {
         //
 
         public int getContentType(Map<String, Object> content) {
-            Object version = content.get("type");
-            assert version != null : "content type not found: " + content;
-            return ((Number) version).intValue();
+            Object type = content.get("type");
+            return type == null ? 0 : ((Number) type).intValue();
         }
 
         public Content parseContent(Object content) {
