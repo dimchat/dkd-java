@@ -76,13 +76,22 @@ public interface Content extends Mapper {
         FactoryManager man = FactoryManager.getInstance();
         return man.generalFactory.parseContent(content);
     }
+
+    static Factory getFactory(int type) {
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.getContentFactory(type);
+    }
+    static Factory getFactory(ContentType type) {
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.getContentFactory(type.value);
+    }
     static void setFactory(int type, Factory factory) {
         FactoryManager man = FactoryManager.getInstance();
-        man.generalFactory.contentFactories.put(type, factory);
+        man.generalFactory.setContentFactory(type, factory);
     }
     static void setFactory(ContentType type, Factory factory) {
         FactoryManager man = FactoryManager.getInstance();
-        man.generalFactory.contentFactories.put(type.value, factory);
+        man.generalFactory.setContentFactory(type.value, factory);
     }
 
     /**

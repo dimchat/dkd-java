@@ -91,9 +91,14 @@ public interface Envelope extends Mapper {
         FactoryManager man = FactoryManager.getInstance();
         return man.generalFactory.parseEnvelope(env);
     }
+
+    static Factory getFactory() {
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.getEnvelopeFactory();
+    }
     static void setFactory(Factory factory) {
         FactoryManager man = FactoryManager.getInstance();
-        man.generalFactory.envelopeFactory = factory;
+        man.generalFactory.setEnvelopeFactory(factory);
     }
 
     /**

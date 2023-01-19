@@ -230,9 +230,14 @@ public interface SecureMessage extends Message {
         FactoryManager man = FactoryManager.getInstance();
         return man.generalFactory.parseSecureMessage(msg);
     }
+
+    static Factory getFactory() {
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.getSecureMessageFactory();
+    }
     static void setFactory(Factory factory) {
         FactoryManager man = FactoryManager.getInstance();
-        man.generalFactory.secureMessageFactory = factory;
+        man.generalFactory.setSecureMessageFactory(factory);
     }
 
     /**

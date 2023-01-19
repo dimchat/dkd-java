@@ -134,9 +134,14 @@ public interface ReliableMessage extends SecureMessage {
         FactoryManager man = FactoryManager.getInstance();
         return man.generalFactory.parseReliableMessage(msg);
     }
+
+    static Factory getFactory() {
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.getReliableMessageFactory();
+    }
     static void setFactory(Factory factory) {
         FactoryManager man = FactoryManager.getInstance();
-        man.generalFactory.reliableMessageFactory = factory;
+        man.generalFactory.setReliableMessageFactory(factory);
     }
 
     /**

@@ -54,17 +54,25 @@ public enum FactoryManager {
 
     public static class GeneralFactory {
 
-        public final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
+        private final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
 
-        public Envelope.Factory envelopeFactory = null;
+        private Envelope.Factory envelopeFactory = null;
 
-        public InstantMessage.Factory instantMessageFactory = null;
-        public SecureMessage.Factory secureMessageFactory = null;
-        public ReliableMessage.Factory reliableMessageFactory = null;
+        private InstantMessage.Factory instantMessageFactory = null;
+        private SecureMessage.Factory secureMessageFactory = null;
+        private ReliableMessage.Factory reliableMessageFactory = null;
 
         //
         //  Content
         //
+
+        public void setContentFactory(int type, Content.Factory factory) {
+            contentFactories.put(type, factory);
+        }
+
+        public Content.Factory getContentFactory(int type) {
+            return contentFactories.get(type);
+        }
 
         public int getContentType(Map<String, Object> content) {
             Object type = content.get("type");
@@ -81,9 +89,9 @@ public enum FactoryManager {
             assert info != null : "content error: " + content;
             // get factory by content type
             int type = getContentType(info);
-            Content.Factory factory = contentFactories.get(type);
+            Content.Factory factory = getContentFactory(type);
             if (factory == null) {
-                factory = contentFactories.get(0);  // unknown
+                factory = getContentFactory(0);  // unknown
                 assert factory != null : "cannot parse content: " + content;
             }
             return factory.parseContent(info);
@@ -93,8 +101,16 @@ public enum FactoryManager {
         //  Envelope
         //
 
+        public void setEnvelopeFactory(Envelope.Factory factory) {
+            envelopeFactory = factory;
+        }
+
+        public Envelope.Factory getEnvelopeFactory() {
+            return envelopeFactory;
+        }
+
         public Envelope createEnvelope(ID from, ID to, Date when) {
-            Envelope.Factory factory = envelopeFactory;
+            Envelope.Factory factory = getEnvelopeFactory();
             assert factory != null : "envelope factory not ready";
             return factory.createEnvelope(from, to, when);
         }
@@ -107,7 +123,7 @@ public enum FactoryManager {
             }
             Map<String, Object> info = Wrapper.getMap(env);
             assert info != null : "envelope error: " + env;
-            Envelope.Factory factory = envelopeFactory;
+            Envelope.Factory factory = getEnvelopeFactory();
             assert factory != null : "envelope factory not ready";
             return factory.parseEnvelope(info);
         }
@@ -116,8 +132,16 @@ public enum FactoryManager {
         //  InstantMessage
         //
 
+        public void setInstantMessageFactory(InstantMessage.Factory factory) {
+            instantMessageFactory = factory;
+        }
+
+        public InstantMessage.Factory getInstantMessageFactory() {
+            return instantMessageFactory;
+        }
+
         public InstantMessage createInstantMessage(Envelope head, Content body) {
-            InstantMessage.Factory factory = instantMessageFactory;
+            InstantMessage.Factory factory = getInstantMessageFactory();
             assert factory != null : "instant message factory not ready";
             return factory.createInstantMessage(head, body);
         }
@@ -130,13 +154,13 @@ public enum FactoryManager {
             }
             Map<String, Object> info = Wrapper.getMap(msg);
             assert info != null : "instant message error: " + msg;
-            InstantMessage.Factory factory = instantMessageFactory;
+            InstantMessage.Factory factory = getInstantMessageFactory();
             assert factory != null : "instant message factory not ready";
             return factory.parseInstantMessage(info);
         }
 
         public long generateSerialNumber(int msgType, Date now) {
-            InstantMessage.Factory factory = instantMessageFactory;
+            InstantMessage.Factory factory = getInstantMessageFactory();
             assert factory != null : "instant message factory not ready";
             return factory.generateSerialNumber(msgType, now);
         }
@@ -144,6 +168,14 @@ public enum FactoryManager {
         //
         //  SecureMessage
         //
+
+        public void setSecureMessageFactory(SecureMessage.Factory factory) {
+            secureMessageFactory = factory;
+        }
+
+        public SecureMessage.Factory getSecureMessageFactory() {
+            return secureMessageFactory;
+        }
 
         public SecureMessage parseSecureMessage(Object msg) {
             if (msg == null) {
@@ -153,7 +185,7 @@ public enum FactoryManager {
             }
             Map<String, Object> info = Wrapper.getMap(msg);
             assert info != null : "secure message error: " + msg;
-            SecureMessage.Factory factory = secureMessageFactory;
+            SecureMessage.Factory factory = getSecureMessageFactory();
             assert factory != null : "secure message factory not ready";
             return factory.parseSecureMessage(info);
         }
@@ -161,6 +193,14 @@ public enum FactoryManager {
         //
         //  ReliableMessage
         //
+
+        public void setReliableMessageFactory(ReliableMessage.Factory factory) {
+            reliableMessageFactory = factory;
+        }
+
+        public ReliableMessage.Factory getReliableMessageFactory() {
+            return reliableMessageFactory;
+        }
 
         public ReliableMessage parseReliableMessage(Object msg) {
             if (msg == null) {
@@ -170,7 +210,7 @@ public enum FactoryManager {
             }
             Map<String, Object> info = Wrapper.getMap(msg);
             assert info != null : "reliable message error: " + msg;
-            ReliableMessage.Factory factory = reliableMessageFactory;
+            ReliableMessage.Factory factory = getReliableMessageFactory();
             assert factory != null : "reliable message factory not ready";
             return factory.parseReliableMessage(info);
         }

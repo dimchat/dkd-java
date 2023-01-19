@@ -168,14 +168,19 @@ public interface InstantMessage extends Message {
         FactoryManager man = FactoryManager.getInstance();
         return man.generalFactory.parseInstantMessage(msg);
     }
-    static void setFactory(Factory factory) {
-        FactoryManager man = FactoryManager.getInstance();
-        man.generalFactory.instantMessageFactory = factory;
-    }
 
     static long generateSerialNumber(int msgType, Date now) {
         FactoryManager man = FactoryManager.getInstance();
         return man.generalFactory.generateSerialNumber(msgType, now);
+    }
+
+    static Factory getFactory() {
+        FactoryManager man = FactoryManager.getInstance();
+        return man.generalFactory.getInstantMessageFactory();
+    }
+    static void setFactory(Factory factory) {
+        FactoryManager man = FactoryManager.getInstance();
+        man.generalFactory.setInstantMessageFactory(factory);
     }
 
     /**
