@@ -57,7 +57,7 @@ public interface Envelope extends Mapper {
     ID getReceiver();
 
     // message time
-    Date getTime();
+    Date getDateTime();
 
     /*
      *  Group ID

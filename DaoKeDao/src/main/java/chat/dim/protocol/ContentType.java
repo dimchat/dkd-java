@@ -89,8 +89,11 @@ public enum ContentType {
     // Web Page
     PAGE    (0x20), // 0010 0000
 
+    // Name Card
+    NAME_CARD (0x33), // 0011 0011
+
     // Quote a message before and reply it with text
-    QUOTE   (0x37), // 0011 0111
+    QUOTE     (0x37), // 0011 0111
 
     MONEY         (0x40), // 0100 0000
     TRANSFER      (0x41), // 0100 0001

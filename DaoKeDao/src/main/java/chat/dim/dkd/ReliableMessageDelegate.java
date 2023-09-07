@@ -2,12 +2,12 @@
  *
  *  Dao-Ke-Dao: Universal Message Module
  *
- *                                Written in 2022 by Moky <albert.moky@gmail.com>
+ *                                Written in 2019 by Moky <albert.moky@gmail.com>
  *
  * ==============================================================================
  * The MIT License (MIT)
  *
- * Copyright (c) 2022 Albert Moky
+ * Copyright (c) 2019 Albert Moky
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,17 +30,42 @@
  */
 package chat.dim.dkd;
 
+import chat.dim.protocol.ID;
+import chat.dim.protocol.ReliableMessage;
+
+
 /**
- *  Message FactoryManager
- *  ~~~~~~~~~~~~~~~~~~~~~~
+ *  Reliable Message Delegate
+ *  ~~~~~~~~~~~~~~~~~~~~~~~~~
  */
-public enum FactoryManager {
+public interface ReliableMessageDelegate {
 
-    INSTANCE;
+    /*
+     *  Verify the Reliable Message to Secure Message
+     *
+     *    +----------+      +----------+
+     *    | sender   |      | sender   |
+     *    | receiver |      | receiver |
+     *    | time     |  ->  | time     |
+     *    |          |      |          |
+     *    | data     |      | data     |  1. verify(data, signature, sender.PK)
+     *    | key/keys |      | key/keys |
+     *    | signature|      +----------+
+     *    +----------+
+     */
 
-    public static FactoryManager getInstance() {
-        return INSTANCE;
-    }
+    /*
+     *  1. Decode 'message.signature' from String (Base64)
+     */
 
-    public GeneralFactory generalFactory = new GeneralFactory();
+    /**
+     *  2. Verify the message data and signature with sender's public key
+     *
+     *  @param data - message content(encrypted) data
+     *  @param signature - signature for message content(encrypted) data
+     *  @param sender - sender ID/string
+     *  @param rMsg - reliable message object
+     *  @return YES on signature matched
+     */
+    boolean verifyDataSignature(byte[] data, byte[] signature, ID sender, ReliableMessage rMsg);
 }

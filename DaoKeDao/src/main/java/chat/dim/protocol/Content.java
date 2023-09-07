@@ -49,7 +49,7 @@ import chat.dim.type.Mapper;
  *
  *      //-- message info
  *      'text'    : 'text',          // for text message
- *      'cmd'     : 'Command Name',  // for system command
+ *      'command' : 'Command Name',  // for system command
  *      //...
  *  }
  */
@@ -62,7 +62,7 @@ public interface Content extends Mapper {
     long getSerialNumber();
 
     // message time
-    Date getTime();
+    Date getDateTime();
 
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message

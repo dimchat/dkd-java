@@ -31,10 +31,8 @@
 package chat.dim.protocol;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
-import chat.dim.crypto.SymmetricKey;
 import chat.dim.dkd.FactoryManager;
 
 /**
@@ -54,108 +52,8 @@ public interface InstantMessage extends Message {
 
     // message content
     Content getContent();
-
-    /*
-     *  Encrypt the Instant Message to Secure Message
-     *
-     *    +----------+      +----------+
-     *    | sender   |      | sender   |
-     *    | receiver |      | receiver |
-     *    | time     |  ->  | time     |
-     *    |          |      |          |
-     *    | content  |      | data     |  1. data = encrypt(content, PW)
-     *    +----------+      | key/keys |  2. key  = encrypt(PW, receiver.PK)
-     *                      +----------+
-     */
-
-    /**
-     *  Encrypt message, replace 'content' field with encrypted 'data'
-     *
-     * @param password - symmetric key
-     * @return SecureMessage object
-     */
-    SecureMessage encrypt(SymmetricKey password);
-
-    /**
-     *  Encrypt group message, replace 'content' field with encrypted 'data'
-     *
-     * @param password - symmetric key
-     * @param members - group members
-     * @return SecureMessage object
-     */
-    SecureMessage encrypt(SymmetricKey password, List<ID> members);
-
-    /**
-     *  Instant Message Delegate
-     *  ~~~~~~~~~~~~~~~~~~~~~~~~
-     */
-    interface Delegate extends Message.Delegate {
-
-        //
-        //  Encrypt Content
-        //
-
-        /**
-         *  1. Serialize 'message.content' to data (JsON / ProtoBuf / ...)
-         *
-         * @param iMsg - instant message object
-         * @param content - message.content
-         * @param password - symmetric key
-         * @return serialized content data
-         */
-        byte[] serializeContent(Content content, SymmetricKey password, InstantMessage iMsg);
-
-        /**
-         *  2. Encrypt content data to 'message.data' with symmetric key
-         *
-         * @param iMsg - instant message object
-         * @param data - serialized data of message.content
-         * @param password - symmetric key
-         * @return encrypted message content data
-         */
-        byte[] encryptContent(byte[] data, SymmetricKey password, InstantMessage iMsg);
-
-        /**
-         *  3. Encode 'message.data' to String (Base64)
-         *
-         * @param iMsg - instant message object
-         * @param data - encrypted content data
-         * @return String object
-         */
-        Object encodeData(byte[] data, InstantMessage iMsg);
-
-        //
-        //  Encrypt Key
-        //
-
-        /**
-         *  4. Serialize message key to data (JsON / ProtoBuf / ...)
-         *
-         * @param iMsg - instant message object
-         * @param password - symmetric key
-         * @return serialized key data
-         */
-        byte[] serializeKey(SymmetricKey password, InstantMessage iMsg);
-
-        /**
-         *  5. Encrypt key data to 'message.key' with receiver's public key
-         *
-         * @param iMsg - instant message object
-         * @param data - serialized data of symmetric key
-         * @param receiver - receiver ID string
-         * @return encrypted symmetric key data
-         */
-        byte[] encryptKey(byte[] data, ID receiver, InstantMessage iMsg);
-
-        /**
-         *  6. Encode 'message.key' to String (Base64)
-         *
-         * @param iMsg - instant message object
-         * @param data - encrypted symmetric key data
-         * @return String object
-         */
-        Object encodeKey(byte[] data, InstantMessage iMsg);
-    }
+    // only for rebuild content
+    void setContent(Content body);
 
     //
     //  Factory methods
