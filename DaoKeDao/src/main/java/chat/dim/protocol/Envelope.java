@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.dkd.FactoryManager;
+import chat.dim.msg.FactoryManager;
 import chat.dim.type.Mapper;
 
 /**
@@ -57,7 +57,7 @@ public interface Envelope extends Mapper {
     ID getReceiver();
 
     // message time
-    Date getDateTime();
+    Date getTime();
 
     /*
      *  Group ID

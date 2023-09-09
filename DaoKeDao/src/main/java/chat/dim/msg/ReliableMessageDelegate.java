@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim.msg;
 
 import chat.dim.protocol.ID;
 import chat.dim.protocol.ReliableMessage;

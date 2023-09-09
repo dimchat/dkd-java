@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim.msg;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -40,6 +40,7 @@ import chat.dim.protocol.ID;
 import chat.dim.protocol.InstantMessage;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
+import chat.dim.type.Converter;
 import chat.dim.type.Wrapper;
 
 /**
@@ -68,9 +69,8 @@ public class GeneralFactory {
         return contentFactories.get(type);
     }
 
-    public int getContentType(Map<String, Object> content) {
-        Object type = content.get("type");
-        return type == null ? 0 : ((Number) type).intValue();
+    public int getContentType(Map<?, ?> content) {
+        return Converter.getInt(content.get("type"), 0);
     }
 
     public Content parseContent(Object content) {
@@ -80,14 +80,17 @@ public class GeneralFactory {
             return (Content) content;
         }
         Map<String, Object> info = Wrapper.getMap(content);
-        assert info != null : "content error: " + content;
+        if (info == null) {
+            assert false : "content error: " + content;
+            return null;
+        }
         // get factory by content type
         int type = getContentType(info);
         Content.Factory factory = getContentFactory(type);
-        if (factory == null) {
+        if (factory == null && type != 0) {
             factory = getContentFactory(0);  // unknown
-            assert factory != null : "cannot parse content: " + content;
         }
+        assert factory != null : "cannot parse content: " + content;
         return factory.parseContent(info);
     }
 
@@ -116,7 +119,10 @@ public class GeneralFactory {
             return (Envelope) env;
         }
         Map<String, Object> info = Wrapper.getMap(env);
-        assert info != null : "envelope error: " + env;
+        if (info == null) {
+            assert false : "envelope error: " + env;
+            return null;
+        }
         Envelope.Factory factory = getEnvelopeFactory();
         assert factory != null : "envelope factory not ready";
         return factory.parseEnvelope(info);
@@ -147,7 +153,10 @@ public class GeneralFactory {
             return (InstantMessage) msg;
         }
         Map<String, Object> info = Wrapper.getMap(msg);
-        assert info != null : "instant message error: " + msg;
+        if (info == null) {
+            assert false : "instant message error: " + msg;
+            return null;
+        }
         InstantMessage.Factory factory = getInstantMessageFactory();
         assert factory != null : "instant message factory not ready";
         return factory.parseInstantMessage(info);
@@ -178,7 +187,10 @@ public class GeneralFactory {
             return (SecureMessage) msg;
         }
         Map<String, Object> info = Wrapper.getMap(msg);
-        assert info != null : "secure message error: " + msg;
+        if (info == null) {
+            assert false : "secure message error: " + msg;
+            return null;
+        }
         SecureMessage.Factory factory = getSecureMessageFactory();
         assert factory != null : "secure message factory not ready";
         return factory.parseSecureMessage(info);
@@ -203,7 +215,10 @@ public class GeneralFactory {
             return (ReliableMessage) msg;
         }
         Map<String, Object> info = Wrapper.getMap(msg);
-        assert info != null : "reliable message error: " + msg;
+        if (info == null) {
+            assert false : "reliable message error: " + msg;
+            return null;
+        }
         ReliableMessage.Factory factory = getReliableMessageFactory();
         assert factory != null : "reliable message factory not ready";
         return factory.parseReliableMessage(info);

@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.dkd.FactoryManager;
+import chat.dim.msg.FactoryManager;
 import chat.dim.type.Mapper;
 
 /**
@@ -62,7 +62,7 @@ public interface Content extends Mapper {
     long getSerialNumber();
 
     // message time
-    Date getDateTime();
+    Date getTime();
 
     // Group ID/string for group message
     //    if field 'group' exists, it means this is a group message

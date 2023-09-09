@@ -32,7 +32,7 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
-import chat.dim.dkd.FactoryManager;
+import chat.dim.msg.FactoryManager;
 
 /**
  *  Reliable Message signed by an asymmetric key

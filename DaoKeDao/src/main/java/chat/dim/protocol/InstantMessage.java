@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.dkd.FactoryManager;
+import chat.dim.msg.FactoryManager;
 
 /**
  *  Instant Message
