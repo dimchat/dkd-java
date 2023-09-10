@@ -30,7 +30,6 @@
  */
 package chat.dim.msg;
 
-import chat.dim.protocol.ID;
 import chat.dim.protocol.ReliableMessage;
 
 
@@ -38,7 +37,7 @@ import chat.dim.protocol.ReliableMessage;
  *  Reliable Message Delegate
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~
  */
-public interface ReliableMessageDelegate {
+public interface ReliableMessageDelegate/* extends SecureMessageDelegate*/ {
 
     /*
      *  Verify the Reliable Message to Secure Message
@@ -61,11 +60,10 @@ public interface ReliableMessageDelegate {
     /**
      *  2. Verify the message data and signature with sender's public key
      *
-     *  @param data - message content(encrypted) data
+     *  @param data      - message content(encrypted) data
      *  @param signature - signature for message content(encrypted) data
-     *  @param sender - sender ID/string
-     *  @param rMsg - reliable message object
+     *  @param rMsg      - reliable message object
      *  @return YES on signature matched
      */
-    boolean verifyDataSignature(byte[] data, byte[] signature, ID sender, ReliableMessage rMsg);
+    boolean verifyDataSignature(byte[] data, byte[] signature, ReliableMessage rMsg);
 }

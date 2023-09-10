@@ -62,24 +62,22 @@ public interface SecureMessageDelegate {
     /**
      *  2. Decrypt 'message.key' with receiver's private key
      *
-     *  @param key - encrypted symmetric key data
-     *  @param sender - sender/member ID string
+     *  @param key      - encrypted symmetric key data
      *  @param receiver - receiver/group ID string
-     *  @param sMsg - secure message object
+     *  @param sMsg     - secure message object
      *  @return serialized symmetric key
      */
-    byte[] decryptKey(byte[] key, ID sender, ID receiver, SecureMessage sMsg);
+    byte[] decryptKey(byte[] key, ID receiver, SecureMessage sMsg);
 
     /**
      *  3. Deserialize message key from data (JsON / ProtoBuf / ...)
      *
-     * @param key - serialized key data
-     * @param sender - sender/member ID string
+     * @param key      - serialized key data
      * @param receiver - receiver/group ID string
-     * @param sMsg - secure message object
+     * @param sMsg     - secure message object
      * @return symmetric key
      */
-    SymmetricKey deserializeKey(byte[] key, ID sender, ID receiver, SecureMessage sMsg);
+    SymmetricKey deserializeKey(byte[] key, ID receiver, SecureMessage sMsg);
 
     /*
      *  4. Decode 'message.data' to encrypted content data
@@ -88,9 +86,9 @@ public interface SecureMessageDelegate {
     /**
      *  5. Decrypt 'message.data' with symmetric key
      *
-     *  @param data - encrypt content data
+     *  @param data     - encrypt content data
      *  @param password - symmetric key
-     *  @param sMsg - secure message object
+     *  @param sMsg     - secure message object
      *  @return serialized message content
      */
     byte[] decryptContent(byte[] data, SymmetricKey password, SecureMessage sMsg);
@@ -98,9 +96,9 @@ public interface SecureMessageDelegate {
     /**
      *  6. Deserialize message content from data (JsON / ProtoBuf / ...)
      *
-     * @param data - serialized content data
+     * @param data     - serialized content data
      * @param password - symmetric key
-     * @param sMsg - secure message object
+     * @param sMsg     - secure message object
      * @return message content
      */
     Content deserializeContent(byte[] data, SymmetricKey password, SecureMessage sMsg);
@@ -123,11 +121,10 @@ public interface SecureMessageDelegate {
      *  1. Sign 'message.data' with sender's private key
      *
      *  @param data - encrypted message data
-     *  @param sender - sender ID string
      *  @param sMsg - secure message object
      *  @return signature of encrypted message data
      */
-    byte[] signData(byte[] data, ID sender, SecureMessage sMsg);
+    byte[] signData(byte[] data, SecureMessage sMsg);
 
     /*
      *  2. Encode 'message.signature' to String (Base64)

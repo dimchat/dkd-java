@@ -69,8 +69,8 @@ public class GeneralFactory {
         return contentFactories.get(type);
     }
 
-    public int getContentType(Map<?, ?> content) {
-        return Converter.getInt(content.get("type"), 0);
+    public int getContentType(Map<?, ?> content, int defaultValue) {
+        return Converter.getInt(content.get("type"), defaultValue);
     }
 
     public Content parseContent(Object content) {
@@ -85,7 +85,7 @@ public class GeneralFactory {
             return null;
         }
         // get factory by content type
-        int type = getContentType(info);
+        int type = getContentType(info, 0);
         Content.Factory factory = getContentFactory(type);
         if (factory == null && type != 0) {
             factory = getContentFactory(0);  // unknown

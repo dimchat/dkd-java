@@ -57,8 +57,8 @@ public interface InstantMessageDelegate {
     /**
      *  1. Serialize 'message.content' to data (JsON / ProtoBuf / ...)
      *
-     * @param iMsg - instant message object
-     * @param content - message.content
+     * @param iMsg     - instant message object
+     * @param content  - message.content
      * @param password - symmetric key
      * @return serialized content data
      */
@@ -67,8 +67,8 @@ public interface InstantMessageDelegate {
     /**
      *  2. Encrypt content data to 'message.data' with symmetric key
      *
-     * @param iMsg - instant message object
-     * @param data - serialized data of message.content
+     * @param iMsg     - instant message object
+     * @param data     - serialized data of message.content
      * @param password - symmetric key
      * @return encrypted message content data
      */
@@ -81,7 +81,7 @@ public interface InstantMessageDelegate {
     /**
      *  4. Serialize message key to data (JsON / ProtoBuf / ...)
      *
-     * @param iMsg - instant message object
+     * @param iMsg     - instant message object
      * @param password - symmetric key
      * @return serialized key data
      */
@@ -90,8 +90,8 @@ public interface InstantMessageDelegate {
     /**
      *  5. Encrypt key data to 'message.key' with receiver's public key
      *
-     * @param iMsg - instant message object
-     * @param data - serialized data of symmetric key
+     * @param iMsg     - instant message object
+     * @param data     - serialized data of symmetric key
      * @param receiver - receiver ID string
      * @return encrypted symmetric key data
      */
