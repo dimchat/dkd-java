@@ -71,13 +71,13 @@ public interface SecureMessageDelegate {
 
     /**
      *  3. Deserialize message key from data (JsON / ProtoBuf / ...)
+     *     (if key is empty, means it should be reused, get it from key cache)
      *
      * @param key      - serialized key data
-     * @param receiver - receiver/group ID string
      * @param sMsg     - secure message object
      * @return symmetric key
      */
-    SymmetricKey deserializeKey(byte[] key, ID receiver, SecureMessage sMsg);
+    SymmetricKey deserializeKey(byte[] key, SecureMessage sMsg);
 
     /*
      *  4. Decode 'message.data' to encrypted content data

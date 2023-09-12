@@ -88,7 +88,7 @@ public interface InstantMessageDelegate {
     byte[] serializeKey(SymmetricKey password, InstantMessage iMsg);
 
     /**
-     *  5. Encrypt key data to 'message.key' with receiver's public key
+     *  5. Encrypt key data to 'message.key/keys' with receiver's public key
      *
      * @param iMsg     - instant message object
      * @param data     - serialized data of symmetric key
@@ -98,6 +98,6 @@ public interface InstantMessageDelegate {
     byte[] encryptKey(byte[] data, ID receiver, InstantMessage iMsg);
 
     /*
-     *  6. Encode 'message.key' to String (Base64)
+     *  6. Encode message key to String (Base64)
      */
 }
