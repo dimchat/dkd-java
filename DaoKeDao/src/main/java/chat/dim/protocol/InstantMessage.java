@@ -50,7 +50,9 @@ import chat.dim.msg.FactoryManager;
  */
 public interface InstantMessage extends Message {
 
-    // message content
+    /**
+     *  Message content
+     */
     Content getContent();
     // only for rebuild content
     void setContent(Content body);

@@ -63,7 +63,7 @@ public interface SecureMessageDelegate {
      *  2. Decrypt 'message.key' with receiver's private key
      *
      *  @param key      - encrypted symmetric key data
-     *  @param receiver - receiver/group ID string
+     *  @param receiver - actual receiver (user, or group member)
      *  @param sMsg     - secure message object
      *  @return serialized symmetric key
      */
@@ -71,9 +71,9 @@ public interface SecureMessageDelegate {
 
     /**
      *  3. Deserialize message key from data (JsON / ProtoBuf / ...)
-     *     (if key is empty, means it should be reused, get it from key cache)
+     *     (if key data is empty, means it should be reused, get it from key cache)
      *
-     * @param key      - serialized key data
+     * @param key      - serialized key data, null for reused key
      * @param sMsg     - secure message object
      * @return symmetric key
      */
@@ -97,7 +97,7 @@ public interface SecureMessageDelegate {
      *  6. Deserialize message content from data (JsON / ProtoBuf / ...)
      *
      * @param data     - serialized content data
-     * @param password - symmetric key
+     * @param password - symmetric key (includes data compression algorithm)
      * @param sMsg     - secure message object
      * @return message content
      */

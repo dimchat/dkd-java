@@ -57,9 +57,9 @@ public interface InstantMessageDelegate {
     /**
      *  1. Serialize 'message.content' to data (JsON / ProtoBuf / ...)
      *
-     * @param iMsg     - instant message object
      * @param content  - message.content
-     * @param password - symmetric key
+     * @param password - symmetric key (includes data compression algorithm)
+     * @param iMsg     - instant message object
      * @return serialized content data
      */
     byte[] serializeContent(Content content, SymmetricKey password, InstantMessage iMsg);
@@ -67,9 +67,9 @@ public interface InstantMessageDelegate {
     /**
      *  2. Encrypt content data to 'message.data' with symmetric key
      *
-     * @param iMsg     - instant message object
      * @param data     - serialized data of message.content
      * @param password - symmetric key
+     * @param iMsg     - instant message object
      * @return encrypted message content data
      */
     byte[] encryptContent(byte[] data, SymmetricKey password, InstantMessage iMsg);
@@ -81,19 +81,19 @@ public interface InstantMessageDelegate {
     /**
      *  4. Serialize message key to data (JsON / ProtoBuf / ...)
      *
-     * @param iMsg     - instant message object
      * @param password - symmetric key
-     * @return serialized key data
+     * @param iMsg     - instant message object
+     * @return serialized key data, null for reused (or broadcast message)
      */
     byte[] serializeKey(SymmetricKey password, InstantMessage iMsg);
 
     /**
      *  5. Encrypt key data to 'message.key/keys' with receiver's public key
      *
-     * @param iMsg     - instant message object
      * @param data     - serialized data of symmetric key
-     * @param receiver - receiver ID string
-     * @return encrypted symmetric key data
+     * @param receiver - actual receiver (user, or group member)
+     * @param iMsg     - instant message object
+     * @return encrypted symmetric key data, null on visa not found
      */
     byte[] encryptKey(byte[] data, ID receiver, InstantMessage iMsg);
 
