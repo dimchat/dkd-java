@@ -54,6 +54,10 @@ public interface InstantMessageDelegate {
      *                      +----------+
      */
 
+    //
+    //  Encrypt Content
+    //
+
     /**
      *  1. Serialize 'message.content' to data (JsON / ProtoBuf / ...)
      *
@@ -76,7 +80,16 @@ public interface InstantMessageDelegate {
 
     /*
      *  3. Encode 'message.data' to String (Base64)
+     *
+     * @param iMsg - instant message object
+     * @param data - encrypted content data
+     * @return String object
      */
+    //Object encodeData(byte[] data, InstantMessage iMsg);
+
+    //
+    //  Encrypt Key
+    //
 
     /**
      *  4. Serialize message key to data (JsON / ProtoBuf / ...)
@@ -98,6 +111,11 @@ public interface InstantMessageDelegate {
     byte[] encryptKey(byte[] data, ID receiver, InstantMessage iMsg);
 
     /*
-     *  6. Encode message key to String (Base64)
+     *  6. Encode 'message.key' to String (Base64)
+     *
+     * @param iMsg - instant message object
+     * @param data - encrypted symmetric key data
+     * @return String object
      */
+    //Object encodeKey(byte[] data, InstantMessage iMsg);
 }

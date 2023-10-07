@@ -55,7 +55,12 @@ public interface ReliableMessageDelegate/* extends SecureMessageDelegate*/ {
 
     /*
      *  1. Decode 'message.signature' from String (Base64)
+     *
+     * @param signature - base64 string object
+     * @param rMsg - reliable message
+     * @return signature data
      */
+    //byte[] decodeSignature(Object signature, ReliableMessage rMsg);
 
     /**
      *  2. Verify the message data and signature with sender's public key

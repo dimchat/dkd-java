@@ -55,9 +55,18 @@ public interface SecureMessageDelegate {
      *    +----------+
      */
 
+    //
+    //  Decrypt Key
+    //
+
     /*
      *  1. Decode 'message.key' to encrypted symmetric key data
+     *
+     * @param key - base64 string object
+     * @param sMsg - secure message object
+     * @return encrypted symmetric key data
      */
+    //byte[] decodeKey(Object key, SecureMessage sMsg);
 
     /**
      *  2. Decrypt 'message.key' with receiver's private key
@@ -79,9 +88,18 @@ public interface SecureMessageDelegate {
      */
     SymmetricKey deserializeKey(byte[] key, SecureMessage sMsg);
 
+    //
+    //  Decrypt Content
+    //
+
     /*
      *  4. Decode 'message.data' to encrypted content data
+     *
+     * @param data - base64 string object
+     * @param sMsg - secure message object
+     * @return encrypted content data
      */
+    //byte[] decodeData(Object data, SecureMessage sMsg);
 
     /**
      *  5. Decrypt 'message.data' with symmetric key
@@ -117,6 +135,10 @@ public interface SecureMessageDelegate {
      *                      +----------+
      */
 
+    //
+    //  Signature
+    //
+
     /**
      *  1. Sign 'message.data' with sender's private key
      *
@@ -128,5 +150,10 @@ public interface SecureMessageDelegate {
 
     /*
      *  2. Encode 'message.signature' to String (Base64)
+     *
+     * @param signature - signature of message.data
+     * @param sMsg - secure message object
+     * @return String object
      */
+    //Object encodeSignature(byte[] signature, SecureMessage sMsg);
 }

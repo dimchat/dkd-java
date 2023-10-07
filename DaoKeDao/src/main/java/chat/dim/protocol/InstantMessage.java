@@ -94,7 +94,7 @@ public interface InstantMessage extends Message {
          *
          * @param msgType - content type
          * @param now     - message time
-         * @return SN (serial number as msg id)
+         * @return SN (uint64, serial number as msg id)
          */
         long generateSerialNumber(int msgType, Date now);
 

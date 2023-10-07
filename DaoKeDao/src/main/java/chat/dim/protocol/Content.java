@@ -42,14 +42,15 @@ import chat.dim.type.Mapper;
  *  This class is for creating message content
  *
  *  data format: {
- *      'type'    : 0x00,            // message type
- *      'sn'      : 0,               // serial number
+ *      'type'    : 0x00,           // message type
+ *      'sn'      : 0,              // serial number
  *
- *      'group'   : 'Group ID',      // for group message
+ *      'time'    : 123,            // message time
+ *      'group'   : 'Group ID',     // for group message
  *
  *      //-- message info
- *      'text'    : 'text',          // for text message
- *      'command' : 'Command Name',  // for system command
+ *      'text'    : 'text',         // for text message
+ *      'command' : 'Command Name'  // for system command
  *      //...
  *  }
  */
@@ -80,10 +81,6 @@ public interface Content extends Mapper {
     static Factory getFactory(int type) {
         FactoryManager man = FactoryManager.getInstance();
         return man.generalFactory.getContentFactory(type);
-    }
-    static Factory getFactory(ContentType type) {
-        FactoryManager man = FactoryManager.getInstance();
-        return man.generalFactory.getContentFactory(type.value);
     }
     static void setFactory(int type, Factory factory) {
         FactoryManager man = FactoryManager.getInstance();
