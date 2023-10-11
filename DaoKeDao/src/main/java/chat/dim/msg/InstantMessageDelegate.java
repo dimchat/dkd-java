@@ -81,8 +81,8 @@ public interface InstantMessageDelegate {
     /*
      *  3. Encode 'message.data' to String (Base64)
      *
-     * @param iMsg - instant message object
      * @param data - encrypted content data
+     * @param iMsg - instant message object
      * @return String object
      */
     //Object encodeData(byte[] data, InstantMessage iMsg);
@@ -113,8 +113,8 @@ public interface InstantMessageDelegate {
     /*
      *  6. Encode 'message.key' to String (Base64)
      *
-     * @param iMsg - instant message object
      * @param data - encrypted symmetric key data
+     * @param iMsg - instant message object
      * @return String object
      */
     //Object encodeKey(byte[] data, InstantMessage iMsg);

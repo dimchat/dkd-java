@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.msg.FactoryManager;
+import chat.dim.msg.MessageFactoryManager;
 
 /**
  *  Instant Message
@@ -61,25 +61,25 @@ public interface InstantMessage extends Message {
     //  Factory methods
     //
     static InstantMessage create(Envelope head, Content body) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.createInstantMessage(head, body);
     }
     static InstantMessage parse(Object msg) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.parseInstantMessage(msg);
     }
 
     static long generateSerialNumber(int msgType, Date now) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.generateSerialNumber(msgType, now);
     }
 
     static Factory getFactory() {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.getInstantMessageFactory();
     }
     static void setFactory(Factory factory) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         man.generalFactory.setInstantMessageFactory(factory);
     }
 

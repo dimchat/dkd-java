@@ -47,7 +47,7 @@ import chat.dim.type.Wrapper;
  *  Message GeneralFactory
  *  ~~~~~~~~~~~~~~~~~~~~~~
  */
-public class GeneralFactory {
+public class MessageGeneralFactory {
 
     private final Map<Integer, Content.Factory> contentFactories = new HashMap<>();
 
@@ -86,11 +86,12 @@ public class GeneralFactory {
         }
         // get factory by content type
         int type = getContentType(info, 0);
+        assert type > 0 : "content error: " + content;
         Content.Factory factory = getContentFactory(type);
-        if (factory == null && type != 0) {
+        if (factory == null) {
             factory = getContentFactory(0);  // unknown
+            assert factory != null : "default content factory not found";
         }
-        assert factory != null : "cannot parse content: " + content;
         return factory.parseContent(info);
     }
 

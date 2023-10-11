@@ -32,7 +32,7 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
-import chat.dim.msg.FactoryManager;
+import chat.dim.msg.MessageFactoryManager;
 
 /**
  *  Secure Message
@@ -65,16 +65,16 @@ public interface SecureMessage extends Message {
     //  Factory method
     //
     static SecureMessage parse(Object msg) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.parseSecureMessage(msg);
     }
 
     static Factory getFactory() {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.getSecureMessageFactory();
     }
     static void setFactory(Factory factory) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         man.generalFactory.setSecureMessageFactory(factory);
     }
 

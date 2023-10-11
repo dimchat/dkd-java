@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.msg.FactoryManager;
+import chat.dim.msg.MessageFactoryManager;
 import chat.dim.type.Mapper;
 
 /**
@@ -84,20 +84,20 @@ public interface Envelope extends Mapper {
     //  Factory methods
     //
     static Envelope create(ID from, ID to, Date when) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.createEnvelope(from, to, when);
     }
     static Envelope parse(Object env) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.parseEnvelope(env);
     }
 
     static Factory getFactory() {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         return man.generalFactory.getEnvelopeFactory();
     }
     static void setFactory(Factory factory) {
-        FactoryManager man = FactoryManager.getInstance();
+        MessageFactoryManager man = MessageFactoryManager.getInstance();
         man.generalFactory.setEnvelopeFactory(factory);
     }
 

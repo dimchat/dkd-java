@@ -34,13 +34,13 @@ package chat.dim.msg;
  *  Message FactoryManager
  *  ~~~~~~~~~~~~~~~~~~~~~~
  */
-public enum FactoryManager {
+public enum MessageFactoryManager {
 
     INSTANCE;
 
-    public static FactoryManager getInstance() {
+    public static MessageFactoryManager getInstance() {
         return INSTANCE;
     }
 
-    public GeneralFactory generalFactory = new GeneralFactory();
+    public MessageGeneralFactory generalFactory = new MessageGeneralFactory();
 }
