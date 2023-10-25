@@ -62,7 +62,7 @@ public interface SecureMessageDelegate {
     /*
      *  1. Decode 'message.key' to encrypted symmetric key data
      *
-     * @param key - base64 string object
+     * @param key  - base64 string object
      * @param sMsg - secure message object
      * @return encrypted symmetric key data
      */
@@ -152,7 +152,7 @@ public interface SecureMessageDelegate {
      *  2. Encode 'message.signature' to String (Base64)
      *
      * @param signature - signature of message.data
-     * @param sMsg - secure message object
+     * @param sMsg      - secure message object
      * @return String object
      */
     //Object encodeSignature(byte[] signature, SecureMessage sMsg);

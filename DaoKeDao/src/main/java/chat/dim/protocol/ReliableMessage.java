@@ -59,26 +59,6 @@ public interface ReliableMessage extends SecureMessage {
 
     byte[] getSignature();
 
-    /**
-     *  Sender's Meta
-     *  ~~~~~~~~~~~~~
-     *  Extends for the first message package of 'Handshake' protocol.
-     *
-     * @param meta - Meta
-     */
-    void setMeta(Meta meta);
-    Meta getMeta();
-
-    /**
-     *  Sender's Visa
-     *  ~~~~~~~~~~~~~
-     *  Extends for the first message package of 'Handshake' protocol.
-     *
-     * @param doc - Visa
-     */
-    void setVisa(Visa doc);
-    Visa getVisa();
-
     //
     //  Factory method
     //
