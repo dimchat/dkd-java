@@ -54,8 +54,10 @@ public interface InstantMessage extends Message {
      *  Message content
      */
     Content getContent();
+    /*/
     // only for rebuild content
     void setContent(Content body);
+    /*/
 
     //
     //  Factory methods

@@ -79,6 +79,8 @@ package chat.dim.protocol;
  */
 public enum ContentType {
 
+    ANY     (0x00), // 0000 0000 (Undefined)
+
     TEXT    (0x01), // 0000 0001
 
     FILE    (0x10), // 0001 0000
@@ -107,16 +109,16 @@ public enum ContentType {
     // Application Customized
     APPLICATION      (0xA0), // 1010 0000 (Application 0nly, Reserved)
     //APPLICATION_1  (0xA1), // 1010 0001 (Reserved)
-                             // 1010 ???? (Reserved)
+    // ...                   // 1010 ???? (Reserved)
     //APPLICATION_15 (0xAF), // 1010 1111 (Reserved)
 
     //CUSTOMIZED_0   (0xC0), // 1100 0000 (Reserved)
     //CUSTOMIZED_1   (0xC1), // 1100 0001 (Reserved)
-                             // 1100 ???? (Reserved)
+    // ...                   // 1100 ???? (Reserved)
     ARRAY            (0xCA), // 1100 1010 (Content Array)
-                             // 1100 ???? (Reserved)
+    // ...                   // 1100 ???? (Reserved)
     CUSTOMIZED       (0xCC), // 1100 1100 (Customized Content)
-                             // 1100 ???? (Reserved)
+    // ...                   // 1100 ???? (Reserved)
     //CUSTOMIZED_15  (0xCF), // 1100 1111 (Reserved)
 
     // Top-Secret message forward by proxy (MTA)

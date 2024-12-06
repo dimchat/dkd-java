@@ -86,7 +86,7 @@ public class MessageGeneralFactory {
         }
         // get factory by content type
         int type = getContentType(info, 0);
-        assert type > 0 : "content error: " + content;
+        //assert type > 0 : "content error: " + content;
         Content.Factory factory = getContentFactory(type);
         if (factory == null) {
             factory = getContentFactory(0);  // unknown
