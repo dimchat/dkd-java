@@ -119,7 +119,7 @@ public enum ContentType {
     // ...                   // 1100 ???? (Reserved)
     CUSTOMIZED       (0xCC), // 1100 1100 (Customized Content)
     // ...                   // 1100 ???? (Reserved)
-    //CUSTOMIZED_15  (0xCF), // 1100 1111 (Reserved)
+    COMBINE_FORWARD  (0xCF), // 1100 1111 (Combine and Forward)
 
     // Top-Secret message forward by proxy (MTA)
     FORWARD (0xFF); // 1111 1111
