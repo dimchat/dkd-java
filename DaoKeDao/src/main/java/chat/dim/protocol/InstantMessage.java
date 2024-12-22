@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.msg.MessageFactoryManager;
+import chat.dim.plugins.MessageSharedHolder;
 
 /**
  *  Instant Message
@@ -63,26 +63,21 @@ public interface InstantMessage extends Message {
     //  Factory methods
     //
     static InstantMessage create(Envelope head, Content body) {
-        MessageFactoryManager man = MessageFactoryManager.getInstance();
-        return man.generalFactory.createInstantMessage(head, body);
+        return MessageSharedHolder.helper.createInstantMessage(head, body);
     }
     static InstantMessage parse(Object msg) {
-        MessageFactoryManager man = MessageFactoryManager.getInstance();
-        return man.generalFactory.parseInstantMessage(msg);
+        return MessageSharedHolder.helper.parseInstantMessage(msg);
     }
 
     static long generateSerialNumber(int msgType, Date now) {
-        MessageFactoryManager man = MessageFactoryManager.getInstance();
-        return man.generalFactory.generateSerialNumber(msgType, now);
+        return MessageSharedHolder.helper.generateSerialNumber(msgType, now);
     }
 
     static Factory getFactory() {
-        MessageFactoryManager man = MessageFactoryManager.getInstance();
-        return man.generalFactory.getInstantMessageFactory();
+        return MessageSharedHolder.helper.getInstantMessageFactory();
     }
     static void setFactory(Factory factory) {
-        MessageFactoryManager man = MessageFactoryManager.getInstance();
-        man.generalFactory.setInstantMessageFactory(factory);
+        MessageSharedHolder.helper.setInstantMessageFactory(factory);
     }
 
     /**
@@ -117,4 +112,5 @@ public interface InstantMessage extends Message {
          */
         InstantMessage parseInstantMessage(Map<String, Object> msg);
     }
+
 }

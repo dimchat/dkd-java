@@ -28,19 +28,14 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.msg;
+package chat.dim.plugins;
 
 /**
  *  Message FactoryManager
  *  ~~~~~~~~~~~~~~~~~~~~~~
  */
-public enum MessageFactoryManager {
+public final class MessageSharedHolder {
 
-    INSTANCE;
+    public static MessageHelper helper = null;
 
-    public static MessageFactoryManager getInstance() {
-        return INSTANCE;
-    }
-
-    public MessageGeneralFactory generalFactory = new MessageGeneralFactory();
 }

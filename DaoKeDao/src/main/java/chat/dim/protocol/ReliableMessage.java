@@ -32,7 +32,7 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
-import chat.dim.msg.MessageFactoryManager;
+import chat.dim.plugins.MessageSharedHolder;
 
 /**
  *  Reliable Message signed by an asymmetric key
@@ -63,17 +63,14 @@ public interface ReliableMessage extends SecureMessage {
     //  Factory method
     //
     static ReliableMessage parse(Object msg) {
-        MessageFactoryManager man = MessageFactoryManager.getInstance();
-        return man.generalFactory.parseReliableMessage(msg);
+        return MessageSharedHolder.helper.parseReliableMessage(msg);
     }
 
     static Factory getFactory() {
-        MessageFactoryManager man = MessageFactoryManager.getInstance();
-        return man.generalFactory.getReliableMessageFactory();
+        return MessageSharedHolder.helper.getReliableMessageFactory();
     }
     static void setFactory(Factory factory) {
-        MessageFactoryManager man = MessageFactoryManager.getInstance();
-        man.generalFactory.setReliableMessageFactory(factory);
+        MessageSharedHolder.helper.setReliableMessageFactory(factory);
     }
 
     /**
@@ -90,4 +87,5 @@ public interface ReliableMessage extends SecureMessage {
          */
         ReliableMessage parseReliableMessage(Map<String, Object> msg);
     }
+
 }
