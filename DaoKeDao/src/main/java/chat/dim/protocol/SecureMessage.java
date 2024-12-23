@@ -32,7 +32,7 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
-import chat.dim.plugins.MessageSharedHolder;
+import chat.dim.plugins.SharedMessageHolder;
 
 /**
  *  Secure Message
@@ -65,14 +65,27 @@ public interface SecureMessage extends Message {
     //  Factory method
     //
     static SecureMessage parse(Object msg) {
-        return MessageSharedHolder.helper.parseSecureMessage(msg);
+        return SharedMessageHolder.secureHelper.parseSecureMessage(msg);
     }
 
     static Factory getFactory() {
-        return MessageSharedHolder.helper.getSecureMessageFactory();
+        return SharedMessageHolder.secureHelper.getSecureMessageFactory();
     }
     static void setFactory(Factory factory) {
-        MessageSharedHolder.helper.setSecureMessageFactory(factory);
+        SharedMessageHolder.secureHelper.setSecureMessageFactory(factory);
+    }
+
+    /**
+     *  General Helper
+     *  ~~~~~~~~~~~~~~
+     */
+    interface Helper {
+
+        void setSecureMessageFactory(Factory factory);
+        Factory getSecureMessageFactory();
+
+        SecureMessage parseSecureMessage(Object msg);
+
     }
 
     /**

@@ -30,12 +30,27 @@
  */
 package chat.dim.plugins;
 
+import chat.dim.protocol.Content;
+import chat.dim.protocol.Envelope;
+import chat.dim.protocol.InstantMessage;
+import chat.dim.protocol.ReliableMessage;
+import chat.dim.protocol.SecureMessage;
+
 /**
  *  Message FactoryManager
  *  ~~~~~~~~~~~~~~~~~~~~~~
  */
-public final class MessageSharedHolder {
+public final class SharedMessageHolder {
 
-    public static MessageHelper helper = null;
+    public static Content.Helper contentHelper = null;
+
+    public static Envelope.Helper envelopeHelper = null;
+
+    public static InstantMessage.Helper instantHelper = null;
+    public static SecureMessage.Helper secureHelper = null;
+    public static ReliableMessage.Helper reliableHelper = null;
+
+    // general helper
+    public static GeneralMessageHelper helper = null;
 
 }

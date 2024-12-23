@@ -30,78 +30,21 @@
  */
 package chat.dim.plugins;
 
-import java.util.Date;
 import java.util.Map;
-
-import chat.dim.protocol.Content;
-import chat.dim.protocol.Envelope;
-import chat.dim.protocol.ID;
-import chat.dim.protocol.InstantMessage;
-import chat.dim.protocol.ReliableMessage;
-import chat.dim.protocol.SecureMessage;
 
 /**
  *  Message GeneralFactory
  *  ~~~~~~~~~~~~~~~~~~~~~~
  */
-public interface MessageHelper {
+public interface GeneralMessageHelper/* extends Content.Helper, Envelope.Helper,
+                                        InstantMessage.Helper,
+                                        SecureMessage.Helper,
+                                        ReliableMessage.Helper */{
 
     //
-    //  Content
+    //  Message Type
     //
-
-    void setContentFactory(int type, Content.Factory factory);
-
-    Content.Factory getContentFactory(int type);
 
     int getContentType(Map<?, ?> content, int defaultValue);
-
-    Content parseContent(Object content);
-
-    //
-    //  Envelope
-    //
-
-    void setEnvelopeFactory(Envelope.Factory factory);
-
-    Envelope.Factory getEnvelopeFactory();
-
-    Envelope createEnvelope(ID from, ID to, Date when);
-
-    Envelope parseEnvelope(Object env);
-
-    //
-    //  InstantMessage
-    //
-
-    void setInstantMessageFactory(InstantMessage.Factory factory);
-
-    InstantMessage.Factory getInstantMessageFactory();
-
-    InstantMessage createInstantMessage(Envelope head, Content body);
-
-    InstantMessage parseInstantMessage(Object msg);
-
-    long generateSerialNumber(int msgType, Date now);
-
-    //
-    //  SecureMessage
-    //
-
-    void setSecureMessageFactory(SecureMessage.Factory factory);
-
-    SecureMessage.Factory getSecureMessageFactory();
-
-    SecureMessage parseSecureMessage(Object msg);
-
-    //
-    //  ReliableMessage
-    //
-
-    void setReliableMessageFactory(ReliableMessage.Factory factory);
-
-    ReliableMessage.Factory getReliableMessageFactory();
-
-    ReliableMessage parseReliableMessage(Object msg);
 
 }
