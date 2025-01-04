@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.plugins.SharedMessageHolder;
+import chat.dim.plugins.SharedMessageExtensions;
 import chat.dim.type.Mapper;
 
 /**
@@ -84,17 +84,17 @@ public interface Envelope extends Mapper {
     //  Factory methods
     //
     static Envelope create(ID from, ID to, Date when) {
-        return SharedMessageHolder.envelopeHelper.createEnvelope(from, to, when);
+        return SharedMessageExtensions.envelopeHelper.createEnvelope(from, to, when);
     }
     static Envelope parse(Object env) {
-        return SharedMessageHolder.envelopeHelper.parseEnvelope(env);
+        return SharedMessageExtensions.envelopeHelper.parseEnvelope(env);
     }
 
     static Factory getFactory() {
-        return SharedMessageHolder.envelopeHelper.getEnvelopeFactory();
+        return SharedMessageExtensions.envelopeHelper.getEnvelopeFactory();
     }
     static void setFactory(Factory factory) {
-        SharedMessageHolder.envelopeHelper.setEnvelopeFactory(factory);
+        SharedMessageExtensions.envelopeHelper.setEnvelopeFactory(factory);
     }
 
     /**

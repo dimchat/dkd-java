@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.plugins.SharedMessageHolder;
+import chat.dim.plugins.SharedMessageExtensions;
 
 /**
  *  Instant Message
@@ -63,21 +63,21 @@ public interface InstantMessage extends Message {
     //  Factory methods
     //
     static InstantMessage create(Envelope head, Content body) {
-        return SharedMessageHolder.instantHelper.createInstantMessage(head, body);
+        return SharedMessageExtensions.instantHelper.createInstantMessage(head, body);
     }
     static InstantMessage parse(Object msg) {
-        return SharedMessageHolder.instantHelper.parseInstantMessage(msg);
+        return SharedMessageExtensions.instantHelper.parseInstantMessage(msg);
     }
 
     static long generateSerialNumber(int msgType, Date now) {
-        return SharedMessageHolder.instantHelper.generateSerialNumber(msgType, now);
+        return SharedMessageExtensions.instantHelper.generateSerialNumber(msgType, now);
     }
 
     static Factory getFactory() {
-        return SharedMessageHolder.instantHelper.getInstantMessageFactory();
+        return SharedMessageExtensions.instantHelper.getInstantMessageFactory();
     }
     static void setFactory(Factory factory) {
-        SharedMessageHolder.instantHelper.setInstantMessageFactory(factory);
+        SharedMessageExtensions.instantHelper.setInstantMessageFactory(factory);
     }
 
     /**

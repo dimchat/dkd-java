@@ -40,7 +40,7 @@ import chat.dim.protocol.SecureMessage;
  *  Message FactoryManager
  *  ~~~~~~~~~~~~~~~~~~~~~~
  */
-public final class SharedMessageHolder {
+public final class SharedMessageExtensions {
 
     public static Content.Helper contentHelper = null;
 

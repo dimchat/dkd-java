@@ -33,7 +33,7 @@ package chat.dim.protocol;
 import java.util.Date;
 import java.util.Map;
 
-import chat.dim.plugins.SharedMessageHolder;
+import chat.dim.plugins.SharedMessageExtensions;
 import chat.dim.type.Mapper;
 
 /**
@@ -74,14 +74,14 @@ public interface Content extends Mapper {
     //  Factory method
     //
     static Content parse(Object content) {
-        return SharedMessageHolder.contentHelper.parseContent(content);
+        return SharedMessageExtensions.contentHelper.parseContent(content);
     }
 
     static Factory getFactory(int type) {
-        return SharedMessageHolder.contentHelper.getContentFactory(type);
+        return SharedMessageExtensions.contentHelper.getContentFactory(type);
     }
     static void setFactory(int type, Factory factory) {
-        SharedMessageHolder.contentHelper.setContentFactory(type, factory);
+        SharedMessageExtensions.contentHelper.setContentFactory(type, factory);
     }
 
     /**
