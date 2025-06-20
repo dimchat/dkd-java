@@ -77,8 +77,8 @@ public interface Envelope extends Mapper {
      *  we pick out the content type and set it in envelope
      *  to let the station do its job.
      */
-    int getType();
-    void setType(int type);
+    String getType();
+    void setType(String type);
 
     //
     //  Factory methods

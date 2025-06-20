@@ -82,6 +82,6 @@ public interface Message extends Mapper {
     Date getTime();    // content.time or envelope.time
 
     ID getGroup();     // content.group or envelope.group
-    int getType();     // content.type or envelope.type
+    String getType();  // content.type or envelope.type
 
 }

@@ -77,61 +77,51 @@ package chat.dim.protocol;
  *
  *      (All above are just some advices to help choosing numbers :P)
  */
-public enum ContentType {
+public interface ContentType {
 
-    ANY     (0x00), // 0000 0000 (Undefined)
+    String ANY       = "" + (0x00); // 0000 0000 (Undefined)
 
-    TEXT    (0x01), // 0000 0001
+    String TEXT      = "" + (0x01); // 0000 0001
 
-    FILE    (0x10), // 0001 0000
-    IMAGE   (0x12), // 0001 0010
-    AUDIO   (0x14), // 0001 0100
-    VIDEO   (0x16), // 0001 0110
+    String FILE      = "" + (0x10); // 0001 0000
+    String IMAGE     = "" + (0x12); // 0001 0010
+    String AUDIO     = "" + (0x14); // 0001 0100
+    String VIDEO     = "" + (0x16); // 0001 0110
 
     // Web Page
-    PAGE    (0x20), // 0010 0000
+    String PAGE      = "" + (0x20); // 0010 0000
 
     // Name Card
-    NAME_CARD (0x33), // 0011 0011
+    String NAME_CARD = "" + (0x33); // 0011 0011
 
     // Quote a message before and reply it with text
-    QUOTE     (0x37), // 0011 0111
+    String QUOTE     = "" + (0x37); // 0011 0111
 
-    MONEY         (0x40), // 0100 0000
-    TRANSFER      (0x41), // 0100 0001
-    LUCKY_MONEY   (0x42), // 0100 0010
-    CLAIM_PAYMENT (0x48), // 0100 1000 (Claim for Payment)
-    SPLIT_BILL    (0x49), // 0100 1001 (Split the Bill)
+    String MONEY         = "" + (0x40); // 0100 0000
+    String TRANSFER      = "" + (0x41); // 0100 0001
+    String LUCKY_MONEY   = "" + (0x42); // 0100 0010
+    String CLAIM_PAYMENT = "" + (0x48); // 0100 1000 (Claim for Payment)
+    String SPLIT_BILL    = "" + (0x49); // 0100 1001 (Split the Bill)
 
-    COMMAND (0x88), // 1000 1000
-    HISTORY (0x89), // 1000 1001 (Entity History Command)
+    String COMMAND       = "" + (0x88); // 1000 1000
+    String HISTORY       = "" + (0x89); // 1000 1001 (Entity History Command)
 
     // Application Customized
-    APPLICATION      (0xA0), // 1010 0000 (Application 0nly, Reserved)
-    //APPLICATION_1  (0xA1), // 1010 0001 (Reserved)
-    // ...                   // 1010 ???? (Reserved)
-    //APPLICATION_15 (0xAF), // 1010 1111 (Reserved)
+    String APPLICATION      = "" + (0xA0); // 1010 0000 (Application 0nly, Reserved)
+    //String APPLICATION_1  = "" + (0xA1); // 1010 0001 (Reserved)
+    //       ...                           // 1010 ???? (Reserved)
+    //String APPLICATION_15 = "" + (0xAF); // 1010 1111 (Reserved)
 
-    //CUSTOMIZED_0   (0xC0), // 1100 0000 (Reserved)
-    //CUSTOMIZED_1   (0xC1), // 1100 0001 (Reserved)
-    // ...                   // 1100 ???? (Reserved)
-    ARRAY            (0xCA), // 1100 1010 (Content Array)
-    // ...                   // 1100 ???? (Reserved)
-    CUSTOMIZED       (0xCC), // 1100 1100 (Customized Content)
-    // ...                   // 1100 ???? (Reserved)
-    COMBINE_FORWARD  (0xCF), // 1100 1111 (Combine and Forward)
+    //String CUSTOMIZED_0   = "" + (0xC0); // 1100 0000 (Reserved)
+    //String CUSTOMIZED_1   = "" + (0xC1); // 1100 0001 (Reserved)
+    //     .....                           // 1100 ???? (Reserved)
+    String ARRAY            = "" + (0xCA); // 1100 1010 (Content Array)
+    //     ...                             // 1100 ???? (Reserved)
+    String CUSTOMIZED       = "" + (0xCC); // 1100 1100 (Customized Content)
+    //     ...                             // 1100 ???? (Reserved)
+    String COMBINE_FORWARD  = "" + (0xCF); // 1100 1111 (Combine and Forward)
 
     // Top-Secret message forward by proxy (MTA)
-    FORWARD (0xFF); // 1111 1111
+    String FORWARD          = "" + (0xFF); // 1111 1111
 
-    // Message Type
-    public final int value;
-
-    ContentType(int type) {
-        value = type;
-    }
-
-    public boolean equals(int other) {
-        return value == other;
-    }
 }

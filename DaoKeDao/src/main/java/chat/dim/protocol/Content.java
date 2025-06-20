@@ -42,7 +42,7 @@ import chat.dim.type.Mapper;
  *  This class is for creating message content
  *
  *  data format: {
- *      'type'    : 0x00,           // message type
+ *      'type'    : 0,              // message type
  *      'sn'      : 0,              // serial number
  *
  *      'time'    : 123,            // message time
@@ -57,7 +57,7 @@ import chat.dim.type.Mapper;
 public interface Content extends Mapper {
 
     // content type
-    int getType();
+    String getType();
 
     // serial number as message id
     long getSerialNumber();
@@ -77,10 +77,10 @@ public interface Content extends Mapper {
         return SharedMessageExtensions.contentHelper.parseContent(content);
     }
 
-    static Factory getFactory(int type) {
+    static Factory getFactory(String type) {
         return SharedMessageExtensions.contentHelper.getContentFactory(type);
     }
-    static void setFactory(int type, Factory factory) {
+    static void setFactory(String type, Factory factory) {
         SharedMessageExtensions.contentHelper.setContentFactory(type, factory);
     }
 
@@ -90,8 +90,8 @@ public interface Content extends Mapper {
      */
     interface Helper {
 
-        void setContentFactory(int type, Factory factory);
-        Factory getContentFactory(int type);
+        void setContentFactory(String type, Factory factory);
+        Factory getContentFactory(String type);
 
         Content parseContent(Object content);
 
