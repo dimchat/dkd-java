@@ -34,7 +34,6 @@ import java.util.Map;
 
 /**
  *  Message GeneralFactory
- *  ~~~~~~~~~~~~~~~~~~~~~~
  */
 public interface GeneralMessageHelper/* extends Content.Helper, Envelope.Helper,
                                         InstantMessage.Helper,

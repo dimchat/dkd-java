@@ -38,15 +38,18 @@ import chat.dim.type.Mapper;
 
 /**
  *  Envelope for message
- *  ~~~~~~~~~~~~~~~~~~~~
- *  This class is used to create a message envelope
- *  which contains 'sender', 'receiver' and 'time'
+ *  <p>
+ *      This class is used to create a message envelope
+ *      which contains 'sender', 'receiver' and 'time'
+ *  </p>
  *
+ *  <blockquote><pre>
  *  data format: {
  *      sender   : "moki@xxx",
  *      receiver : "hulk@yyy",
  *      time     : 123
  *  }
+ *  </pre></blockquote>
  */
 public interface Envelope extends Mapper {
 
@@ -99,7 +102,6 @@ public interface Envelope extends Mapper {
 
     /**
      *  General Helper
-     *  ~~~~~~~~~~~~~~
      */
     interface Helper {
 
@@ -114,7 +116,6 @@ public interface Envelope extends Mapper {
 
     /**
      *  Envelope Factory
-     *  ~~~~~~~~~~~~~~~~
      */
     interface Factory {
 

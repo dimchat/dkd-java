@@ -38,11 +38,13 @@ import chat.dim.type.Mapper;
 
 /**
  *  Message Content
- *  ~~~~~~~~~~~~~~~
- *  This class is for creating message content
+ *  <p>
+ *      This class is for creating message content
+ *  </p>
  *
+ *  <blockquote><pre>
  *  data format: {
- *      'type'    : 0,              // message type
+ *      'type'    : i2s(0),         // message type
  *      'sn'      : 0,              // serial number
  *
  *      'time'    : 123,            // message time
@@ -53,6 +55,7 @@ import chat.dim.type.Mapper;
  *      'command' : 'Command Name'  // for system command
  *      //...
  *  }
+ *  </pre></blockquote>
  */
 public interface Content extends Mapper {
 
@@ -86,7 +89,6 @@ public interface Content extends Mapper {
 
     /**
      *  General Helper
-     *  ~~~~~~~~~~~~~~
      */
     interface Helper {
 
@@ -99,7 +101,6 @@ public interface Content extends Mapper {
 
     /**
      *  Content Factory
-     *  ~~~~~~~~~~~~~~~
      */
     interface Factory {
 

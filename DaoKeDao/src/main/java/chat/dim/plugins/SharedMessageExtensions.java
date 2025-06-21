@@ -38,7 +38,6 @@ import chat.dim.protocol.SecureMessage;
 
 /**
  *  Message FactoryManager
- *  ~~~~~~~~~~~~~~~~~~~~~~
  */
 public final class SharedMessageExtensions {
 

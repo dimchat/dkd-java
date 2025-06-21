@@ -56,11 +56,15 @@ import chat.dim.type.Mapper;
 
 /**
  *  Message with Envelope
- *  ~~~~~~~~~~~~~~~~~~~~~
- *  Base classes for messages
- *  This class is used to create a message
- *  with the envelope fields, such as 'sender', 'receiver', and 'time'
+ *  <p>
+ *      Base classes for messages
+ *  </p>
+ *  <p>
+ *      This class is used to create a message
+ *      with the envelope fields, such as 'sender', 'receiver', and 'time'
+ *  </p>
  *
+ *  <blockquote><pre>
  *  data format: {
  *      //-- envelope
  *      sender   : "moki@xxx",
@@ -69,6 +73,7 @@ import chat.dim.type.Mapper;
  *      //-- body
  *      ...
  *  }
+ *  </pre></blockquote>
  */
 public interface Message extends Mapper {
 

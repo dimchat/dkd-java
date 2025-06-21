@@ -37,8 +37,8 @@ import chat.dim.plugins.SharedMessageExtensions;
 
 /**
  *  Instant Message
- *  ~~~~~~~~~~~~~~~
  *
+ *  <blockquote><pre>
  *  data format: {
  *      //-- envelope
  *      sender   : "moki@xxx",
@@ -47,6 +47,7 @@ import chat.dim.plugins.SharedMessageExtensions;
  *      //-- content
  *      content  : {...}
  *  }
+ *  </pre></blockquote>
  */
 public interface InstantMessage extends Message {
 
@@ -82,7 +83,6 @@ public interface InstantMessage extends Message {
 
     /**
      *  General Helper
-     *  ~~~~~~~~~~~~~~
      */
     interface Helper {
 
@@ -99,7 +99,6 @@ public interface InstantMessage extends Message {
 
     /**
      *  Message Factory
-     *  ~~~~~~~~~~~~~~~
      */
     interface Factory {
 

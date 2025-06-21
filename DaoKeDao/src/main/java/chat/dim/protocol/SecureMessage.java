@@ -36,9 +36,11 @@ import chat.dim.plugins.SharedMessageExtensions;
 
 /**
  *  Secure Message
- *  ~~~~~~~~~~~~~~
- *  Instant Message encrypted by a symmetric key
+ *  <p>
+ *      Instant Message encrypted by a symmetric key
+ *  </p>
  *
+ *  <blockquote><pre>
  *  data format: {
  *      //-- envelope
  *      sender   : "moki@xxx",
@@ -51,6 +53,7 @@ import chat.dim.plugins.SharedMessageExtensions;
  *          "ID1": "key1", // base64_encode(asymmetric_encrypt(password))
  *      }
  *  }
+ *  </pre></blockquote>
  */
 public interface SecureMessage extends Message {
 
@@ -77,7 +80,6 @@ public interface SecureMessage extends Message {
 
     /**
      *  General Helper
-     *  ~~~~~~~~~~~~~~
      */
     interface Helper {
 
@@ -90,7 +92,6 @@ public interface SecureMessage extends Message {
 
     /**
      *  Message Factory
-     *  ~~~~~~~~~~~~~~~
      */
     interface Factory {
 

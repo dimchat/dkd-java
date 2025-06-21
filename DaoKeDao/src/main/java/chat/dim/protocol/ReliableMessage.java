@@ -36,10 +36,12 @@ import chat.dim.plugins.SharedMessageExtensions;
 
 /**
  *  Reliable Message signed by an asymmetric key
- *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *  This class is used to sign the SecureMessage
- *  It contains a 'signature' field which signed with sender's private key
+ *  <p>
+ *      This class is used to sign the SecureMessage.
+ *      It contains a 'signature' field which signed with sender's private key
+ *  </p>
  *
+ *  <blockquote><pre>
  *  data format: {
  *      //-- envelope
  *      sender   : "moki@xxx",
@@ -54,6 +56,7 @@ import chat.dim.plugins.SharedMessageExtensions;
  *      //-- signature
  *      signature: "..."   // base64_encode(asymmetric_sign(data))
  *  }
+ *  </pre></blockquote>
  */
 public interface ReliableMessage extends SecureMessage {
 
@@ -75,7 +78,6 @@ public interface ReliableMessage extends SecureMessage {
 
     /**
      *  General Helper
-     *  ~~~~~~~~~~~~~~
      */
     interface Helper {
 
@@ -88,7 +90,6 @@ public interface ReliableMessage extends SecureMessage {
 
     /**
      *  Message Factory
-     *  ~~~~~~~~~~~~~~~
      */
     interface Factory {
 
