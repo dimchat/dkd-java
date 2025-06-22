@@ -30,7 +30,9 @@
  */
 package chat.dim.protocol;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import chat.dim.plugins.SharedMessageExtensions;
@@ -61,8 +63,33 @@ public interface InstantMessage extends Message {
     /*/
 
     //
+    //  Conveniences
+    //
+
+    static List<InstantMessage> convert(Iterable<?> messages) {
+        List<InstantMessage> array = new ArrayList<>();
+        InstantMessage msg;
+        for (Object item : messages) {
+            msg = parse(item);
+            if (msg == null) {
+                continue;
+            }
+            array.add(msg);
+        }
+        return array;
+    }
+    static List<Map<String, Object>> revert(Iterable<InstantMessage> messages) {
+        List<Map<String, Object>> array = new ArrayList<>();
+        for (InstantMessage msg : messages) {
+            array.add(msg.toMap());
+        }
+        return array;
+    }
+
+    //
     //  Factory methods
     //
+
     static InstantMessage create(Envelope head, Content body) {
         return SharedMessageExtensions.instantHelper.createInstantMessage(head, body);
     }

@@ -30,6 +30,8 @@
  */
 package chat.dim.protocol;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import chat.dim.plugins.SharedMessageExtensions;
@@ -63,8 +65,33 @@ public interface ReliableMessage extends SecureMessage {
     byte[] getSignature();
 
     //
-    //  Factory method
+    //  Conveniences
     //
+
+    static List<ReliableMessage> convert(Iterable<?> messages) {
+        List<ReliableMessage> array = new ArrayList<>();
+        ReliableMessage msg;
+        for (Object item : messages) {
+            msg = parse(item);
+            if (msg == null) {
+                continue;
+            }
+            array.add(msg);
+        }
+        return array;
+    }
+    static List<Map<String, Object>> revert(Iterable<ReliableMessage> messages) {
+        List<Map<String, Object>> array = new ArrayList<>();
+        for (ReliableMessage msg : messages) {
+            array.add(msg.toMap());
+        }
+        return array;
+    }
+
+    //
+    //  Factory methods
+    //
+
     static ReliableMessage parse(Object msg) {
         return SharedMessageExtensions.reliableHelper.parseReliableMessage(msg);
     }

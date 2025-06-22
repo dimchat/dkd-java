@@ -30,7 +30,9 @@
  */
 package chat.dim.protocol;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import chat.dim.plugins.SharedMessageExtensions;
@@ -74,8 +76,33 @@ public interface Content extends Mapper {
     void setGroup(ID group);
 
     //
-    //  Factory method
+    //  Conveniences
     //
+
+    static List<Content> convert(Iterable<?> contents) {
+        List<Content> array = new ArrayList<>();
+        Content msg;
+        for (Object item : contents) {
+            msg = parse(item);
+            if (msg == null) {
+                continue;
+            }
+            array.add(msg);
+        }
+        return array;
+    }
+    static List<Map<String, Object>> revert(Iterable<Content> contents) {
+        List<Map<String, Object>> array = new ArrayList<>();
+        for (Content item : contents) {
+            array.add(item.toMap());
+        }
+        return array;
+    }
+
+    //
+    //  Factory methods
+    //
+
     static Content parse(Object content) {
         return SharedMessageExtensions.contentHelper.parseContent(content);
     }
