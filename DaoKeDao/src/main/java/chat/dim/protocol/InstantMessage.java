@@ -97,7 +97,7 @@ public interface InstantMessage extends Message {
         return SharedMessageExtensions.instantHelper.parseInstantMessage(msg);
     }
 
-    static long generateSerialNumber(String msgType, Date now) {
+    static Long generateSerialNumber(String msgType, Date now) {
         return SharedMessageExtensions.instantHelper.generateSerialNumber(msgType, now);
     }
 
@@ -120,7 +120,7 @@ public interface InstantMessage extends Message {
 
         InstantMessage parseInstantMessage(Object msg);
 
-        long generateSerialNumber(String msgType, Date now);
+        Long generateSerialNumber(String msgType, Date now);
 
     }
 
@@ -136,7 +136,7 @@ public interface InstantMessage extends Message {
          * @param now     - message time
          * @return SN (uint64, serial number as msg id)
          */
-        long generateSerialNumber(String msgType, Date now);
+        Long generateSerialNumber(String msgType, Date now);
 
         /**
          *  Create instant message with envelope & content

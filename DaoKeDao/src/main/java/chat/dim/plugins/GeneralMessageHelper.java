@@ -44,6 +44,6 @@ public interface GeneralMessageHelper/* extends Content.Helper, Envelope.Helper,
     //  Message Type
     //
 
-    String getContentType(Map<?, ?> content, String defaultValue);
+    String getContentType(Map<?, ?> content, String defaultValueIfNull);
 
 }

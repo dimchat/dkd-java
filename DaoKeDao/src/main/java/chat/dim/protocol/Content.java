@@ -65,7 +65,7 @@ public interface Content extends Mapper {
     String getType();
 
     // serial number as message id
-    long getSerialNumber();
+    Long getSerialNumber();
 
     // message time
     Date getTime();
