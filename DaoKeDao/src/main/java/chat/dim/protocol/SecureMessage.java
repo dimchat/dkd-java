@@ -65,7 +65,7 @@ public interface SecureMessage extends Message {
     Map<String, Object> getEncryptedKeys();
 
     //
-    //  Factory method
+    //  Factory methods
     //
     static SecureMessage parse(Object msg) {
         return SharedMessageExtensions.secureHelper.parseSecureMessage(msg);
