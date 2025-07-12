@@ -79,18 +79,6 @@ public interface SecureMessage extends Message {
     }
 
     /**
-     *  General Helper
-     */
-    interface Helper {
-
-        void setSecureMessageFactory(Factory factory);
-        Factory getSecureMessageFactory();
-
-        SecureMessage parseSecureMessage(Object msg);
-
-    }
-
-    /**
      *  Message Factory
      */
     interface Factory {

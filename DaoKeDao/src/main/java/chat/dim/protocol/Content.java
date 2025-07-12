@@ -50,7 +50,7 @@ import chat.dim.type.Mapper;
  *      'sn'      : 0,              // serial number
  *
  *      'time'    : 123,            // message time
- *      'group'   : 'Group ID',     // for group message
+ *      'group'   : '{GroupID}',    // for group message
  *
  *      //-- message info
  *      'text'    : 'text',         // for text message
@@ -65,7 +65,7 @@ public interface Content extends Mapper {
     String getType();
 
     // serial number as message id
-    Long getSerialNumber();
+    long getSerialNumber();
 
     // message time
     Date getTime();
@@ -79,17 +79,17 @@ public interface Content extends Mapper {
     //  Conveniences
     //
 
-    static List<Content> convert(Iterable<?> contents) {
-        List<Content> array = new ArrayList<>();
+    static List<Content> convert(Iterable<?> array) {
+        List<Content> contents = new ArrayList<>();
         Content msg;
-        for (Object item : contents) {
+        for (Object item : array) {
             msg = parse(item);
             if (msg == null) {
                 continue;
             }
-            array.add(msg);
+            contents.add(msg);
         }
-        return array;
+        return contents;
     }
     static List<Map<String, Object>> revert(Iterable<Content> contents) {
         List<Map<String, Object>> array = new ArrayList<>();
@@ -112,18 +112,6 @@ public interface Content extends Mapper {
     }
     static void setFactory(String type, Factory factory) {
         SharedMessageExtensions.contentHelper.setContentFactory(type, factory);
-    }
-
-    /**
-     *  General Helper
-     */
-    interface Helper {
-
-        void setContentFactory(String type, Factory factory);
-        Factory getContentFactory(String type);
-
-        Content parseContent(Object content);
-
     }
 
     /**

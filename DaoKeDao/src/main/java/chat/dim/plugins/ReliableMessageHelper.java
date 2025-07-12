@@ -2,12 +2,12 @@
  *
  *  Dao-Ke-Dao: Universal Message Module
  *
- *                                Written in 2022 by Moky <albert.moky@gmail.com>
+ *                                Written in 2025 by Moky <albert.moky@gmail.com>
  *
  * ==============================================================================
  * The MIT License (MIT)
  *
- * Copyright (c) 2022 Albert Moky
+ * Copyright (c) 2025 Albert Moky
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,20 +30,13 @@
  */
 package chat.dim.plugins;
 
-import java.util.Map;
+import chat.dim.protocol.ReliableMessage;
 
-/**
- *  Message GeneralFactory
- */
-public interface GeneralMessageHelper/* extends Content.Helper, Envelope.Helper,
-                                        InstantMessage.Helper,
-                                        SecureMessage.Helper,
-                                        ReliableMessage.Helper */{
+public interface ReliableMessageHelper {
 
-    //
-    //  Message Type
-    //
+    void setReliableMessageFactory(ReliableMessage.Factory factory);
+    ReliableMessage.Factory getReliableMessageFactory();
 
-    String getContentType(Map<?, ?> content, String defaultValueIfNull);
+    ReliableMessage parseReliableMessage(Object msg);
 
 }

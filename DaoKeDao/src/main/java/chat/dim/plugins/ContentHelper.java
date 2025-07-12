@@ -2,12 +2,12 @@
  *
  *  Dao-Ke-Dao: Universal Message Module
  *
- *                                Written in 2022 by Moky <albert.moky@gmail.com>
+ *                                Written in 2025 by Moky <albert.moky@gmail.com>
  *
  * ==============================================================================
  * The MIT License (MIT)
  *
- * Copyright (c) 2022 Albert Moky
+ * Copyright (c) 2025 Albert Moky
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,20 +30,13 @@
  */
 package chat.dim.plugins;
 
-/**
- *  Message FactoryManager
- */
-public final class SharedMessageExtensions {
+import chat.dim.protocol.Content;
 
-    public static ContentHelper contentHelper = null;
+public interface ContentHelper {
 
-    public static EnvelopeHelper envelopeHelper = null;
+    void setContentFactory(String type, Content.Factory factory);
+    Content.Factory getContentFactory(String type);
 
-    public static InstantMessageHelper instantHelper = null;
-    public static SecureMessageHelper secureHelper = null;
-    public static ReliableMessageHelper reliableHelper = null;
-
-    // general helper
-    public static MessageHelper helper = null;
+    Content parseContent(Object content);
 
 }

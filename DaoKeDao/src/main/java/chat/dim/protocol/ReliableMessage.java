@@ -68,17 +68,17 @@ public interface ReliableMessage extends SecureMessage {
     //  Conveniences
     //
 
-    static List<ReliableMessage> convert(Iterable<?> messages) {
-        List<ReliableMessage> array = new ArrayList<>();
+    static List<ReliableMessage> convert(Iterable<?> array) {
+        List<ReliableMessage> messages = new ArrayList<>();
         ReliableMessage msg;
-        for (Object item : messages) {
+        for (Object item : array) {
             msg = parse(item);
             if (msg == null) {
                 continue;
             }
-            array.add(msg);
+            messages.add(msg);
         }
-        return array;
+        return messages;
     }
     static List<Map<String, Object>> revert(Iterable<ReliableMessage> messages) {
         List<Map<String, Object>> array = new ArrayList<>();
@@ -101,18 +101,6 @@ public interface ReliableMessage extends SecureMessage {
     }
     static void setFactory(Factory factory) {
         SharedMessageExtensions.reliableHelper.setReliableMessageFactory(factory);
-    }
-
-    /**
-     *  General Helper
-     */
-    interface Helper {
-
-        void setReliableMessageFactory(Factory factory);
-        Factory getReliableMessageFactory();
-
-        ReliableMessage parseReliableMessage(Object msg);
-
     }
 
     /**

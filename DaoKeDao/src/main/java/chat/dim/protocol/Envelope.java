@@ -101,20 +101,6 @@ public interface Envelope extends Mapper {
     }
 
     /**
-     *  General Helper
-     */
-    interface Helper {
-
-        void setEnvelopeFactory(Factory factory);
-        Factory getEnvelopeFactory();
-
-        Envelope createEnvelope(ID from, ID to, Date when);
-
-        Envelope parseEnvelope(Object env);
-
-    }
-
-    /**
      *  Envelope Factory
      */
     interface Factory {

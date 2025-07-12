@@ -66,17 +66,17 @@ public interface InstantMessage extends Message {
     //  Conveniences
     //
 
-    static List<InstantMessage> convert(Iterable<?> messages) {
-        List<InstantMessage> array = new ArrayList<>();
+    static List<InstantMessage> convert(Iterable<?> array) {
+        List<InstantMessage> messages = new ArrayList<>();
         InstantMessage msg;
-        for (Object item : messages) {
+        for (Object item : array) {
             msg = parse(item);
             if (msg == null) {
                 continue;
             }
-            array.add(msg);
+            messages.add(msg);
         }
-        return array;
+        return messages;
     }
     static List<Map<String, Object>> revert(Iterable<InstantMessage> messages) {
         List<Map<String, Object>> array = new ArrayList<>();
@@ -97,7 +97,7 @@ public interface InstantMessage extends Message {
         return SharedMessageExtensions.instantHelper.parseInstantMessage(msg);
     }
 
-    static Long generateSerialNumber(String msgType, Date now) {
+    static long generateSerialNumber(String msgType, Date now) {
         return SharedMessageExtensions.instantHelper.generateSerialNumber(msgType, now);
     }
 
@@ -106,22 +106,6 @@ public interface InstantMessage extends Message {
     }
     static void setFactory(Factory factory) {
         SharedMessageExtensions.instantHelper.setInstantMessageFactory(factory);
-    }
-
-    /**
-     *  General Helper
-     */
-    interface Helper {
-
-        void setInstantMessageFactory(Factory factory);
-        Factory getInstantMessageFactory();
-
-        InstantMessage createInstantMessage(Envelope head, Content body);
-
-        InstantMessage parseInstantMessage(Object msg);
-
-        Long generateSerialNumber(String msgType, Date now);
-
     }
 
     /**
@@ -136,7 +120,7 @@ public interface InstantMessage extends Message {
          * @param now     - message time
          * @return SN (uint64, serial number as msg id)
          */
-        Long generateSerialNumber(String msgType, Date now);
+        long generateSerialNumber(String msgType, Date now);
 
         /**
          *  Create instant message with envelope & content
