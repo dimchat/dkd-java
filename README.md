@@ -1,27 +1,37 @@
 # Dao Ke Dao (道可道) -- Message Module (Java)
 
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/dimchat/dkd-java/blob/master/LICENSE)
-[![Version](https://img.shields.io/badge/alpha-0.5.1-red.svg)](https://github.com/dimchat/dkd-java/wiki)
+[![License](https://img.shields.io/github/license/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/dimchat/dkd-java/pulls)
 [![Platform](https://img.shields.io/badge/Platform-Java%208-brightgreen.svg)](https://github.com/dimchat/dkd-java/wiki)
+[![Issues](https://img.shields.io/github/issues/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/issues)
+[![Repo Size](https://img.shields.io/github/repo-size/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/archive/refs/heads/main.zip)
+[![Tags](https://img.shields.io/github/tag/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/tags)
+[![Version](https://img.shields.io/maven-central/v/chat.dim/DaoKeDao)](https://mvnrepository.com/artifact/chat.dim/DaoKeDao)
+
+[![Watchers](https://img.shields.io/github/watchers/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/watchers)
+[![Forks](https://img.shields.io/github/forks/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/forks)
+[![Stars](https://img.shields.io/github/stars/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/stargazers)
+[![Followers](https://img.shields.io/github/followers/dimchat)](https://github.com/orgs/dimchat/followers)
 
 This [document](https://github.com/dimchat/DIMP/blob/master/DaoKeDao-Message.md) introduces a common **Message Module** for decentralized instant messaging.
 
-Copyright &copy; 2018-2019 Albert Moky
+## Features
 
 - [Envelope](#envelope)
     - Sender
     - Receiver
-    - Time
+    - Time (same value from content.time)
 - [Content](#content)
     - [Type](#content-type)
     - Serial Number
+    - Time
+    - Group _(Optional)_
 - [Message](#message)
     - [Instant Message](#instant-message)
     - [Secure Message](#secure-message)
     - [Reliable Message](#reliable-message)
 
-## <span id="envelope">0. Envelope </span>
+## Envelope
 
 ### Message Envelope
 
@@ -34,7 +44,7 @@ Copyright &copy; 2018-2019 Albert Moky
 }
 ```
 
-## <span id="content">1. Content</span>
+## Content
 
 ```javascript
 /* example */
@@ -46,35 +56,57 @@ Copyright &copy; 2018-2019 Albert Moky
 }
 ```
 
-### <span id="content-type">Message Content Type</span>
+### Content Type
 
 ```java
 public enum ContentType {
 
-    UNKNOWN (0x00),
+    ANY       (0x00), // 0000 0000 (Undefined)
 
-    TEXT    (0x01), // 0000 0001
+    TEXT      (0x01), // 0000 0001
 
-    FILE    (0x10), // 0001 0000
-    IMAGE   (0x12), // 0001 0010
-    AUDIO   (0x14), // 0001 0100
-    VIDEO   (0x16), // 0001 0110
+    FILE      (0x10), // 0001 0000
+    IMAGE     (0x12), // 0001 0010
+    AUDIO     (0x14), // 0001 0100
+    VIDEO     (0x16), // 0001 0110
 
-    // web page
-    PAGE    (0x20), // 0010 0000
+    // Web Page
+    PAGE      (0x20), // 0010 0000
+    
+    // Name Card
+    NAME_CARD (0x33), // 0011 0011
 
-    // quote a message before and reply it with text
-    QUOTE   (0x37), // 0011 0111
+    // Quote a message before and reply it with text
+    QUOTE     (0x37), // 0011 0111
 
-    MONEY   (0x40), // 0100 0000
-//    LUCKY   (0x41), // 0100 0001
-//    TRANSFER(0x42), // 0100 0010
+    // Money
+    MONEY         (0x40), // 0100 0000
+    TRANSFER      (0x41), // 0100 0001
+    LUCKY_MONEY   (0x42), // 0100 0010
+    CLAIM_PAYMENT (0x48), // 0100 1000 (Claim for Payment)
+    SPLIT_BILL    (0x49), // 0100 1001 (Split the Bill)
 
-    COMMAND (0x88), // 1000 1000
-    HISTORY (0x89), // 1000 1001 (Entity history command)
+    // Command
+    COMMAND       (0x88), // 1000 1000
+    HISTORY       (0x89), // 1000 1001 (Entity history command)
 
-    // top-secret message forward by proxy (Service Provider)
-    FORWARD (0xFF); // 1111 1111
+    // Application Customized
+    APPLICATION       (0xA0), // 1010 0000 (Application 0nly, Reserved)
+    // APPLICATION_1  (0xA1), // 1010 0001 (Reserved)
+    // ...                    // 1010 ???? (Reserved)
+    // APPLICATION_15 (0xAF), // 1010 1111 (Reserved)
+
+    // CUSTOMIZED_0   (0xC0), // 1100 0000 (Reserved)
+    // CUSTOMIZED_1   (0xC1), // 1100 0001 (Reserved)
+    // ...                    // 1100 ???? (Reserved)
+    ARRAY             (0xCA), // 1100 1010 (Content Array)
+    // ...                    // 1100 ???? (Reserved)
+    CUSTOMIZED        (0xCC), // 1100 1100 (Customized Content)
+    // ...                    // 1100 ???? (Reserved)
+    COMBINE_FORWARD   (0xCF), // 1100 1111 (Combine and Forward)
+
+    /// Top-Secret message forward by proxy (MTA)
+    FORWARD           (0xFF); // 1111 1111
 
     public final int value;
 
@@ -84,7 +116,7 @@ public enum ContentType {
 }
 ```
 
-## <span id="message">2. Message</span>
+## Message
 
 When the user want to send out a message, the client needs TWO steps before sending it:
 
@@ -117,7 +149,7 @@ Accordingly, when the client received a message, it needs TWO steps to extract t
 
 ```
 
-### <span id="instant-message">Instant Message</span>
+### Instant Message
 
 ```javascript
 /* example */
@@ -138,7 +170,7 @@ Accordingly, when the client received a message, it needs TWO steps to extract t
 
 content -> JsON string: ```{"sn":412968873,"text":"Hey guy!","type":1}```
 
-### <span id="secure-message">Secure Message</span>
+### Secure Message
 
 ```javascript
 /**
@@ -160,7 +192,7 @@ content -> JsON string: ```{"sn":412968873,"text":"Hey guy!","type":1}```
 }
 ```
 
-### <span id="reliable-message">Reliable Message</span>
+### Reliable Message
 
 ```javascript
 /**
@@ -181,3 +213,8 @@ content -> JsON string: ```{"sn":412968873,"text":"Hey guy!","type":1}```
 ```
 
 (All data encode with **BASE64** algorithm as default)
+
+----
+
+Copyright &copy; 2018-2025 Albert Moky
+[![Followers](https://img.shields.io/github/followers/moky)](https://github.com/moky?tab=followers)
