@@ -44,6 +44,6 @@ public final class SharedMessageExtensions {
     public static ReliableMessageHelper reliableHelper = null;
 
     // general helper
-    public static MessageHelper helper = null;
+    public static GeneralMessageHelper helper = null;
 
 }

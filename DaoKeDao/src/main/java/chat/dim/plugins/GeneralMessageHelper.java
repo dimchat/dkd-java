@@ -35,10 +35,10 @@ import java.util.Map;
 /**
  *  Message GeneralFactory
  */
-public interface MessageHelper/* extends Content.Helper, Envelope.Helper,
-                                         InstantMessage.Helper,
-                                         SecureMessage.Helper,
-                                         ReliableMessage.Helper */{
+public interface GeneralMessageHelper/* extends Content.Helper, Envelope.Helper,
+                                                InstantMessage.Helper,
+                                                SecureMessage.Helper,
+                                                ReliableMessage.Helper */{
 
     //
     //  Message Type
