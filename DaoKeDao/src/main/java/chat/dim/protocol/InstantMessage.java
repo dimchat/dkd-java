@@ -123,7 +123,7 @@ public interface InstantMessage extends Message {
         long generateSerialNumber(String msgType, Date now);
 
         /**
-         *  Create instant message with envelope & content
+         *  Create instant message with envelope &amp; content
          *
          * @param head - message envelope
          * @param body - message content

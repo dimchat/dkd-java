@@ -4,7 +4,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/dimchat/dkd-java/pulls)
 [![Platform](https://img.shields.io/badge/Platform-Java%208-brightgreen.svg)](https://github.com/dimchat/dkd-java/wiki)
 [![Issues](https://img.shields.io/github/issues/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/issues)
-[![Repo Size](https://img.shields.io/github/repo-size/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/archive/refs/heads/main.zip)
+[![Repo Size](https://img.shields.io/github/repo-size/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/archive/refs/heads/master.zip)
 [![Tags](https://img.shields.io/github/tag/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/tags)
 [![Version](https://img.shields.io/maven-central/v/chat.dim/DaoKeDao)](https://mvnrepository.com/artifact/chat.dim/DaoKeDao)
 
