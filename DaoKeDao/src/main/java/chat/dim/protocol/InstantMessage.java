@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import chat.dim.plugins.SharedMessageExtensions;
+import chat.dim.ext.SharedMessageExtensions;
 
 /**
  *  Instant Message

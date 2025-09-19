@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import chat.dim.plugins.SharedMessageExtensions;
+import chat.dim.ext.SharedMessageExtensions;
 
 /**
  *  Reliable Message signed by an asymmetric key

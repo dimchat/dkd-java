@@ -13,7 +13,7 @@
 [![Stars](https://img.shields.io/github/stars/dimchat/dkd-java)](https://github.com/dimchat/dkd-java/stargazers)
 [![Followers](https://img.shields.io/github/followers/dimchat)](https://github.com/orgs/dimchat/followers)
 
-This [document](https://github.com/dimchat/DIMP/blob/master/DaoKeDao-Message.md) introduces a common **Message Module** for decentralized instant messaging.
+This [document](https://github.com/moky/DIMP/blob/master/DaoKeDao-Message.md) introduces a common **Message Module** for decentralized instant messaging.
 
 ## Features
 

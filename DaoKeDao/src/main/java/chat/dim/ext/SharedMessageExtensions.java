@@ -28,22 +28,22 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.plugins;
-
-import java.util.Map;
+package chat.dim.ext;
 
 /**
- *  Message GeneralFactory
+ *  Message FactoryManager
  */
-public interface GeneralMessageHelper/* extends Content.Helper, Envelope.Helper,
-                                                InstantMessage.Helper,
-                                                SecureMessage.Helper,
-                                                ReliableMessage.Helper */{
+public final class SharedMessageExtensions {
 
-    //
-    //  Message Type
-    //
+    public static ContentHelper contentHelper = null;
 
-    String getContentType(Map<?, ?> content, String defaultValue);
+    public static EnvelopeHelper envelopeHelper = null;
+
+    public static InstantMessageHelper instantHelper = null;
+    public static SecureMessageHelper secureHelper = null;
+    public static ReliableMessageHelper reliableHelper = null;
+
+    // general helper
+    public static GeneralMessageHelper helper = null;
 
 }

@@ -32,7 +32,7 @@ package chat.dim.protocol;
 
 import java.util.Map;
 
-import chat.dim.plugins.SharedMessageExtensions;
+import chat.dim.ext.SharedMessageExtensions;
 
 /**
  *  Secure Message

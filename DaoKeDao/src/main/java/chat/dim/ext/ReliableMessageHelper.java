@@ -28,15 +28,15 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.plugins;
+package chat.dim.ext;
 
-import chat.dim.protocol.SecureMessage;
+import chat.dim.protocol.ReliableMessage;
 
-public interface SecureMessageHelper {
+public interface ReliableMessageHelper {
 
-    void setSecureMessageFactory(SecureMessage.Factory factory);
-    SecureMessage.Factory getSecureMessageFactory();
+    void setReliableMessageFactory(ReliableMessage.Factory factory);
+    ReliableMessage.Factory getReliableMessageFactory();
 
-    SecureMessage parseSecureMessage(Object msg);
+    ReliableMessage parseReliableMessage(Object msg);
 
 }
