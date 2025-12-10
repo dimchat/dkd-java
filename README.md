@@ -49,7 +49,7 @@ This [document](https://github.com/moky/DIMP/blob/master/DaoKeDao-Message.md) in
 ```javascript
 /* example */
 {
-    "type"     : 0x01,      // message type
+    "type"     : "1",       // message type
     "sn"       : 412968873, // serial number (message ID in conversation)
     
     "text"     : "Hey guy!"
@@ -128,7 +128,7 @@ Accordingly, when the client received a message, it needs TWO steps to extract t
 1. Verify the **Reliable Message** to **Secure Message**;
 2. Decrypt the **Secure Message** to **Instant Message**.
 
-```javascript
+```
     Message Transforming
     ~~~~~~~~~~~~~~~~~~~~
 
@@ -161,7 +161,7 @@ Accordingly, when the client received a message, it needs TWO steps to extract t
     
     //-------- body (content) ---------
     "content"  : {
-        "type" : 0x01,      // message type
+        "type" : "1",       // message type
         "sn"   : 412968873, // serial number (ID)
         "text" : "Hey guy!"
     }
