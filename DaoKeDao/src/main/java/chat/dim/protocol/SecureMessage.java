@@ -43,14 +43,15 @@ import chat.dim.ext.SharedMessageExtensions;
  *  <blockquote><pre>
  *  data format: {
  *      //-- envelope
- *      sender   : "moki@xxx",
- *      receiver : "hulk@yyy",
- *      time     : 123,
+ *      "sender"   : "moki@xxx",
+ *      "receiver" : "hulk@yyy",
+ *      "time"     : 123,
+ *
  *      //-- content data and key/keys
- *      data     : "...",  // base64_encode( symmetric_encrypt(content))
- *      key      : "...",  // base64_encode(asymmetric_encrypt(password))
- *      keys     : {
- *          "ID1": "key1", // base64_encode(asymmetric_encrypt(password))
+ *      "data"     : "...",  // base64_encode( symmetric_encrypt(content))
+ *      "keys"     : {
+ *          "{ID}"   : "...",  // base64_encode(asymmetric_encrypt(pwd))
+ *          "digest" : "..."   // hash(pwd.data)
  *      }
  *  }
  *  </pre></blockquote>
@@ -58,8 +59,6 @@ import chat.dim.ext.SharedMessageExtensions;
 public interface SecureMessage extends Message {
 
     byte[] getData();
-
-    byte[] getEncryptedKey();
 
     // String => String
     Map<String, Object> getEncryptedKeys();
