@@ -63,7 +63,7 @@ import chat.dim.ext.SharedMessageExtensions;
  */
 public interface ReliableMessage extends SecureMessage {
 
-    byte[] getSignature();
+    TransportableData getSignature();
 
     //
     //  Conveniences

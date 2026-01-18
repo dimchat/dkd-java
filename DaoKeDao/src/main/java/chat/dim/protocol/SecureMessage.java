@@ -58,7 +58,7 @@ import chat.dim.ext.SharedMessageExtensions;
  */
 public interface SecureMessage extends Message {
 
-    byte[] getData();
+    TransportableData getData();
 
     // String => String
     Map<String, Object> getEncryptedKeys();
